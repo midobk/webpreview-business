@@ -1,26 +1,49 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface Lead {
   id: string;
-  businessName: string;
-  email: string;
-  website: string;
-  message: string;
-  status: string;
-  createdAt: string;
+  business_name?: string;
+  businessName?: string;
+  slug?: string;
+  industry?: string;
+  city?: string;
+  province?: string;
+  email?: string;
+  email_source_url?: string;
+  website_url?: string | null;
+  website_status?: string;
+  lead_score?: number;
+  score_reasoning?: string;
+  contact_safety_status?: string;
+  status?: string;
+  notes?: string;
+  created_at?: string;
+  updated_at?: string;
+  services?: string[];
+  description?: string;
+  phone?: string;
+  source_urls?: string[];
 }
 
 interface Prototype {
   id: string;
-  leadId: string;
-  title: string;
-  prototypeUrl: string;
-  screenshotUrl: string;
-  showcaseEligible: boolean;
-  createdAt: string;
+  lead_id?: string;
+  title?: string;
+  prototype_url?: string;
+  screenshot_url?: string;
+  design_summary?: string;
+  prototype_score?: number;
+  generation_model?: string;
+  generation_status?: string;
+  watermark_enabled?: boolean;
+  demo_locked?: boolean;
+  showcase_eligible?: boolean | null;
+  showcase_approved?: boolean;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export default function AdminDashboard() {
@@ -28,40 +51,112 @@ export default function AdminDashboard() {
   const [prototypes, setPrototypes] = useState<Prototype[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [selectedPrototype, setSelectedPrototype] = useState<Prototype | null>(null);
+  const [noteText, setNoteText] = useState('');
+  const [updating, setUpdating] = useState(false);
+  const [activeTab, setActiveTab] = useState<'leads' | 'prototypes'>('leads');
   const router = useRouter();
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
-      // Fetch leads
-      const leadsResponse = await fetch('/api/admin/leads');
-      if (!leadsResponse.ok) {
-        throw new Error('Failed to fetch leads');
-      }
-      const leadsData = await leadsResponse.json();
-      setLeads(leadsData);
-
-      // Fetch prototypes
-      const prototypesResponse = await fetch('/api/admin/prototypes');
-      if (!prototypesResponse.ok) {
-        throw new Error('Failed to fetch prototypes');
-      }
-      const prototypesData = await prototypesResponse.json();
-      setPrototypes(prototypesData);
+      const [leadsRes, protoRes] = await Promise.all([
+        fetch('/api/admin/leads'),
+        fetch('/api/admin/prototypes'),
+      ]);
+      
+      if (!leadsRes.ok) throw new Error('Failed to fetch leads');
+      const leadsData = await leadsRes.json();
+      setLeads(Array.isArray(leadsData) ? leadsData : []);
+      
+      if (!protoRes.ok) throw new Error('Failed to fetch prototypes');
+      const protoData = await protoRes.json();
+      setPrototypes(Array.isArray(protoData) ? protoData : []);
     } catch (err) {
       setError('Failed to load data');
       console.error(err);
     } finally {
       setLoading(false);
     }
+  }, []);
+
+  useEffect(() => { fetchData(); }, [fetchData]);
+
+  const updateLeadStatus = async (id: string, status: string) => {
+    setUpdating(true);
+    try {
+      await fetch('/api/admin/leads', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status }),
+      });
+      setLeads(prev => prev.map(l => l.id === id ? { ...l, status } : l));
+      if (selectedLead?.id === id) setSelectedLead(prev => prev ? { ...prev, status } : null);
+    } catch (err) {
+      console.error('Update failed:', err);
+    } finally {
+      setUpdating(false);
+    }
   };
 
-  const handleLogout = () => {
-    // In a real app, you would clear the session
+  const saveNote = async (id: string) => {
+    setUpdating(true);
+    try {
+      await fetch('/api/admin/leads', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, notes: noteText }),
+      });
+      setLeads(prev => prev.map(l => l.id === id ? { ...l, notes: noteText } : l));
+      if (selectedLead?.id === id) setSelectedLead(prev => prev ? { ...prev, notes: noteText } : null);
+    } catch (err) {
+      console.error('Save note failed:', err);
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const toggleShowcase = async (id: string, approved: boolean) => {
+    setUpdating(true);
+    try {
+      await fetch('/api/admin/prototypes', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, showcase_approved: approved }),
+      });
+      setPrototypes(prev => prev.map(p => p.id === id ? { ...p, showcase_approved: approved } : p));
+    } catch (err) {
+      console.error('Toggle failed:', err);
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/admin/login', { method: 'DELETE' });
+    } catch (e) {}
     router.push('/admin');
+  };
+
+  const getLeadName = (l: Lead) => l.business_name || l.businessName || 'Unknown';
+  const getLeadScore = (l: Lead) => l.lead_score ?? 0;
+  const getLeadStatus = (l: Lead) => l.status || 'unknown';
+  const getPrototypeSlug = (p: Prototype) => {
+    const lead = leads.find(l => l.id === p.lead_id);
+    return lead?.slug || '';
+  };
+
+  const statusColors: Record<string, string> = {
+    discovered: 'bg-blue-100 text-blue-800',
+    ready_for_prototype: 'bg-purple-100 text-purple-800',
+    prototype_generated: 'bg-indigo-100 text-indigo-800',
+    contacted: 'bg-yellow-100 text-yellow-800',
+    replied: 'bg-cyan-100 text-cyan-800',
+    won: 'bg-green-100 text-green-800',
+    lost: 'bg-red-100 text-red-800',
+    do_not_contact: 'bg-gray-300 text-gray-800',
+    new: 'bg-blue-100 text-blue-800',
   };
 
   if (loading) {
@@ -75,259 +170,262 @@ export default function AdminDashboard() {
     );
   }
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="max-w-md w-full bg-white p-8 rounded-lg shadow">
-          <div className="text-center">
-            <div className="mx-auto h-12 w-12 rounded-full bg-red-100 flex items-center justify-center">
-              <svg className="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h3 className="mt-4 text-lg font-medium text-gray-900">Error loading data</h3>
-            <p className="mt-2 text-sm text-gray-500">{error}</p>
-            <div className="mt-6">
-              <button
-                onClick={fetchData}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Retry
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">SiteSprint Admin Dashboard</h1>
-          <button
-            onClick={handleLogout}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
+      <header className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+          <div className="flex items-center gap-3">
+            <div className="bg-indigo-600 text-white font-bold w-9 h-9 rounded-lg flex items-center justify-center text-lg">S</div>
+            <h1 className="text-xl font-bold text-gray-900">SiteSprint Admin</h1>
+          </div>
+          <button onClick={handleLogout} className="text-sm text-gray-600 hover:text-gray-900 px-3 py-1.5 rounded border border-gray-300 hover:bg-gray-50">
             Logout
           </button>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         {/* Stats */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="px-4 py-5 sm:p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0 bg-indigo-500 rounded-md p-3">
-                  <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Total Leads</dt>
-                    <dd className="flex items-baseline">
-                      <div className="text-2xl font-semibold text-gray-900">{leads.length}</div>
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+            <p className="text-sm text-gray-500">Total Leads</p>
+            <p className="text-2xl font-bold text-gray-900">{leads.length}</p>
           </div>
-
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="px-4 py-5 sm:p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0 bg-green-500 rounded-md p-3">
-                  <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Prototypes</dt>
-                    <dd className="flex items-baseline">
-                      <div className="text-2xl font-semibold text-gray-900">{prototypes.length}</div>
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
+          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+            <p className="text-sm text-gray-500">Prototypes</p>
+            <p className="text-2xl font-bold text-gray-900">{prototypes.length}</p>
           </div>
-
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="px-4 py-5 sm:p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0 bg-yellow-500 rounded-md p-3">
-                  <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                  </svg>
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">New Leads</dt>
-                    <dd className="flex items-baseline">
-                      <div className="text-2xl font-semibold text-gray-900">
-                        {leads.filter(lead => lead.status === 'new').length}
-                      </div>
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
+          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+            <p className="text-sm text-gray-500">Ready for Prototype</p>
+            <p className="text-2xl font-bold text-indigo-600">
+              {leads.filter(l => getLeadStatus(l) === 'ready_for_prototype').length}
+            </p>
           </div>
-
-          <div className="bg-white overflow-hidden shadow rounded-lg">
-            <div className="px-4 py-5 sm:p-6">
-              <div className="flex items-center">
-                <div className="flex-shrink-0 bg-blue-500 rounded-md p-3">
-                  <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
-                  </svg>
-                </div>
-                <div className="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">Showcase Eligible</dt>
-                    <dd className="flex items-baseline">
-                      <div className="text-2xl font-semibold text-gray-900">
-                        {prototypes.filter(p => p.showcaseEligible).length}
-                      </div>
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
+          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+            <p className="text-sm text-gray-500">Avg Lead Score</p>
+            <p className="text-2xl font-bold text-green-600">
+              {leads.length ? Math.round(leads.reduce((s, l) => s + getLeadScore(l), 0) / leads.length) : 0}
+            </p>
           </div>
         </div>
 
-        {/* Leads Table */}
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-8">
-          <div className="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Leads</h3>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">Recent business leads</p>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Business
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Email
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {leads.map((lead) => (
-                  <tr key={lead.id}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">{lead.businessName}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{lead.email}</div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                        ${lead.status === 'new' ? 'bg-blue-100 text-blue-800' : 
-                          lead.status === 'contacted' ? 'bg-yellow-100 text-yellow-800' : 
-                          lead.status === 'converted' ? 'bg-green-100 text-green-800' : 
-                          'bg-gray-100 text-gray-800'}`}>
-                        {lead.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {new Date(lead.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <a href="#" className="text-indigo-600 hover:text-indigo-900">View</a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        {/* Tabs */}
+        <div className="flex gap-1 mb-4 border-b border-gray-200">
+          <button
+            onClick={() => setActiveTab('leads')}
+            className={`px-4 py-2 text-sm font-medium border-b-2 ${activeTab === 'leads' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+          >
+            Leads ({leads.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('prototypes')}
+            className={`px-4 py-2 text-sm font-medium border-b-2 ${activeTab === 'prototypes' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700'}`}
+          >
+            Prototypes ({prototypes.length})
+          </button>
         </div>
 
-        {/* Prototypes Table */}
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-          <div className="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Prototypes</h3>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">Generated website prototypes</p>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Title
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Business
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Preview
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Showcase
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date
-                  </th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {prototypes.map((prototype) => {
-                  const lead = leads.find(l => l.id === prototype.leadId);
-                  return (
-                    <tr key={prototype.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">{prototype.title}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{lead?.businessName || 'Unknown'}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <a href={prototype.prototypeUrl} target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-900">
-                          View Preview
-                        </a>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                          ${prototype.showcaseEligible ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
-                          {prototype.showcaseEligible ? 'Eligible' : 'Not Eligible'}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(prototype.createdAt).toLocaleDateString()}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
-                        <a href="#" className="text-red-600 hover:text-red-900">Delete</a>
-                      </td>
+        {/* Leads Tab */}
+        {activeTab === 'leads' && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Lead List */}
+            <div className="lg:col-span-2 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Business</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Industry</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Score</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Website</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {leads.map((lead) => (
+                      <tr
+                        key={lead.id}
+                        onClick={() => { setSelectedLead(lead); setNoteText(lead.notes || ''); }}
+                        className={`cursor-pointer hover:bg-gray-50 ${selectedLead?.id === lead.id ? 'bg-indigo-50' : ''}`}
+                      >
+                        <td className="px-4 py-3 whitespace-nowrap">
+                          <div className="text-sm font-medium text-gray-900">{getLeadName(lead)}</div>
+                          <div className="text-xs text-gray-500">{lead.city}, {lead.province}</div>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-600 capitalize">{lead.industry?.replace(/_/g, ' ') || '—'}</td>
+                        <td className="px-4 py-3">
+                          <span className={`text-sm font-bold ${getLeadScore(lead) >= 80 ? 'text-green-600' : getLeadScore(lead) >= 60 ? 'text-yellow-600' : 'text-gray-400'}`}>
+                            {getLeadScore(lead)}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className={`text-xs px-2 py-1 rounded-full ${lead.website_status === 'none' ? 'bg-red-100 text-red-700' : lead.website_status === 'ugly' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600'}`}>
+                            {lead.website_status || '—'}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <span className={`text-xs px-2 py-1 rounded-full ${statusColors[getLeadStatus(lead)] || 'bg-gray-100 text-gray-600'}`}>
+                            {getLeadStatus(lead).replace(/_/g, ' ')}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-gray-600">{lead.email || '—'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Lead Detail Panel */}
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 h-fit sticky top-6">
+              {selectedLead ? (
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900">{getLeadName(selectedLead)}</h3>
+                    <p className="text-sm text-gray-500">{selectedLead.city}, {selectedLead.province}</p>
+                  </div>
+
+                  <div className="space-y-2 text-sm">
+                    <div><span className="text-gray-500">Industry:</span> <span className="text-gray-900 capitalize">{selectedLead.industry?.replace(/_/g, ' ')}</span></div>
+                    <div><span className="text-gray-500">Score:</span> <span className="font-bold text-gray-900">{getLeadScore(selectedLead)}/100</span></div>
+                    <div><span className="text-gray-500">Website:</span> <span className="text-gray-900">{selectedLead.website_status || 'none'}</span></div>
+                    <div><span className="text-gray-500">Phone:</span> <span className="text-gray-900">{selectedLead.phone || '—'}</span></div>
+                    <div><span className="text-gray-500">Email:</span> <span className="text-gray-900">{selectedLead.email || '—'}</span></div>
+                    {selectedLead.email_source_url && <div><span className="text-gray-500">Email source:</span> <a href={selectedLead.email_source_url} target="_blank" className="text-indigo-600 hover:underline truncate block">{selectedLead.email_source_url}</a></div>}
+                    <div><span className="text-gray-500">Contact safety:</span> <span className="text-gray-900">{selectedLead.contact_safety_status || '—'}</span></div>
+                  </div>
+
+                  {selectedLead.services && selectedLead.services.length > 0 && (
+                    <div>
+                      <p className="text-sm text-gray-500 mb-1">Services:</p>
+                      <div className="flex flex-wrap gap-1">
+                        {selectedLead.services.map((s, i) => (
+                          <span key={i} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">{s}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {selectedLead.score_reasoning && (
+                    <div>
+                      <p className="text-sm text-gray-500 mb-1">Score reasoning:</p>
+                      <p className="text-xs text-gray-600 bg-gray-50 p-2 rounded">{selectedLead.score_reasoning}</p>
+                    </div>
+                  )}
+
+                  {selectedLead.description && (
+                    <div>
+                      <p className="text-sm text-gray-500 mb-1">Description:</p>
+                      <p className="text-sm text-gray-600">{selectedLead.description}</p>
+                    </div>
+                  )}
+
+                  {/* Status Actions */}
+                  <div>
+                    <p className="text-sm font-medium text-gray-700 mb-2">Update status:</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button onClick={() => updateLeadStatus(selectedLead.id, 'won')} disabled={updating} className="text-xs bg-green-600 text-white py-1.5 rounded hover:bg-green-700 disabled:opacity-50">✓ Won</button>
+                      <button onClick={() => updateLeadStatus(selectedLead.id, 'lost')} disabled={updating} className="text-xs bg-red-600 text-white py-1.5 rounded hover:bg-red-700 disabled:opacity-50">✗ Lost</button>
+                      <button onClick={() => updateLeadStatus(selectedLead.id, 'do_not_contact')} disabled={updating} className="text-xs bg-gray-600 text-white py-1.5 rounded hover:bg-gray-700 disabled:opacity-50">Do Not Contact</button>
+                      <button onClick={() => updateLeadStatus(selectedLead.id, 'contacted')} disabled={updating} className="text-xs bg-yellow-500 text-white py-1.5 rounded hover:bg-yellow-600 disabled:opacity-50">Mark Contacted</button>
+                    </div>
+                  </div>
+
+                  {/* Notes */}
+                  <div>
+                    <p className="text-sm font-medium text-gray-700 mb-2">Notes:</p>
+                    <textarea
+                      value={noteText}
+                      onChange={(e) => setNoteText(e.target.value)}
+                      placeholder="Add notes about this lead..."
+                      className="w-full text-sm border border-gray-300 rounded p-2 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      rows={3}
+                    />
+                    <button onClick={() => saveNote(selectedLead.id)} disabled={updating} className="mt-1 text-xs bg-indigo-600 text-white px-3 py-1.5 rounded hover:bg-indigo-700 disabled:opacity-50">
+                      Save Note
+                    </button>
+                  </div>
+
+                  {/* Source URLs */}
+                  {selectedLead.source_urls && selectedLead.source_urls.length > 0 && (
+                    <div>
+                      <p className="text-sm font-medium text-gray-700 mb-1">Sources:</p>
+                      {selectedLead.source_urls.map((url, i) => (
+                        <a key={i} href={url} target="_blank" className="text-xs text-indigo-600 hover:underline block truncate">{url}</a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-gray-400 text-sm">Select a lead to view details</p>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Prototypes Tab */}
+        {activeTab === 'prototypes' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {prototypes.map((proto) => {
+              const lead = leads.find(l => l.id === proto.lead_id);
+              const slug = lead?.slug || '';
+              return (
+                <div key={proto.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                  {/* Screenshot */}
+                  <div className="bg-gray-100 h-48 flex items-center justify-center overflow-hidden">
+                    {proto.screenshot_url ? (
+                      <img src={proto.screenshot_url} alt={proto.title} className="w-full h-full object-cover object-top" />
+                    ) : (
+                      <span className="text-gray-400 text-sm">No screenshot</span>
+                    )}
+                  </div>
+
+                  {/* Info */}
+                  <div className="p-4 space-y-3">
+                    <div>
+                      <h3 className="font-bold text-gray-900 text-sm">{proto.title || 'Untitled'}</h3>
+                      <p className="text-xs text-gray-500">{lead ? getLeadName(lead) : 'Unknown business'}</p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 text-xs">
+                      {proto.generation_model && <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded">{proto.generation_model.split('/').pop()}</span>}
+                      {proto.watermark_enabled && <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded">Watermarked</span>}
+                      {proto.demo_locked && <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded">Demo Locked</span>}
+                      {proto.generation_status && <span className={`px-2 py-0.5 rounded ${proto.generation_status === 'complete' || proto.generation_status === 'generated' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>{proto.generation_status}</span>}
+                    </div>
+
+                    {proto.design_summary && <p className="text-xs text-gray-600">{proto.design_summary}</p>}
+
+                    {/* Actions */}
+                    <div className="flex gap-2 pt-2 border-t border-gray-100">
+                      <a href={`/preview/${slug}`} target="_blank" className="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded hover:bg-indigo-700 flex-1 text-center">
+                        Open Preview
+                      </a>
+                      {proto.showcase_approved ? (
+                        <button onClick={() => toggleShowcase(proto.id, false)} disabled={updating} className="text-xs bg-green-100 text-green-700 px-3 py-1.5 rounded hover:bg-green-200">
+                          ✓ Showcase On
+                        </button>
+                      ) : (
+                        <button onClick={() => toggleShowcase(proto.id, true)} disabled={updating} className="text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded hover:bg-gray-200">
+                          Approve Showcase
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+            {prototypes.length === 0 && (
+              <div className="col-span-full text-center py-12">
+                <p className="text-gray-400">No prototypes yet</p>
+              </div>
+            )}
+          </div>
+        )}
       </main>
     </div>
   );
