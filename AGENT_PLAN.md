@@ -719,3 +719,18 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 - Verifications: `tsc --noEmit` clean, `next build` success (17/17 static pages generated), `next start` returns HTTP 200 with full page rendering (h1, brand-gradient, reveal classes, FAQ details, pricing featured tier).
 - Pushed to origin/main. Commit: 6687fa1.
 - Next: Agent registration (final remaining tracked item)
+
+---
+
+### 2026-06-22 08:35 EDT — Agent registration (cron run)
+- Model: GLM 5.2 (default for the new `sitesprint` isolated agent)
+- Files: IDENTITY.md (new, 2.3 KB), SYSTEM.md (new, 7.7 KB), README.md (updated), AGENT_PLAN.md (this entry + Progress Tracker flip)
+- Commands run:
+  - `openclaw agents add sitesprint --workspace ~/.openclaw/workspace/webpreview-business --model ollama/glm-5.2:cloud --non-interactive` → agent created
+  - `openclaw agents set-identity --agent sitesprint --from-identity` → 🚀 SiteSprint identity applied
+  - `openclaw agents list` / `bindings --agent sitesprint` → confirms registration (Model: ollama/glm-5.2:cloud, Routing rules: 0 / cron-only)
+- Verification: agent registered, identity parsed from IDENTITY.md, model persisted. Second `add` returns "already exists" — confirms persistence.
+- SYSTEM.md covers: identity, operating rules (one task per run, verify before claiming, contact-safety gate), model assignment table, project quick-ref, decision modes, contact-safety checklist, outreach style, infrastructure status (image providers DOWN), approval checkpoints, task lifecycle, tone reminders.
+- README.md updated with new "Agent Operations" section + cross-refs to AGENT_PLAN.md / SYSTEM.md / IDENTITY.md / SECURITY_REVIEW.md.
+- Progress Tracker: "Agent registration" item now ✅ done. All tracked items complete.
+- Next: cron continues into infrastructure-only work or waits for the next user task. No outstanding items from this cron prompt.

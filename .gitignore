@@ -34,6 +34,13 @@ yarn-error.log*
 .env*
 !.env.example
 
+# openclaw workspace-setup state + generic templates (project keeps its own IDENTITY.md / SYSTEM.md / AGENT_PLAN.md)
+/.openclaw/
+/HEARTBEAT.md
+/SOUL.md
+/USER.md
+/TOOLS.md
+
 # vercel
 .vercel
 
