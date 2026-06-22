@@ -561,7 +561,7 @@ Checklist:
 - [x] Phase 3
 - [x] Phase 4
 - [x] Phase 5
-- [ ] Phase 6+7
+- [x] Phase 6+7 (Preview Hosting + Screenshots)
 - [ ] Phase 8+9
 - [ ] Phase 10
 - [ ] Phase 11
@@ -588,6 +588,7 @@ Checklist:
 | 2026-06-22 | browser-tool | Phase 3: Lead discovery for Cornwall, ON | data/leads.json, logs/agent-runs.md | Phase 4 - Lead Scoring | None |
 | 2026-06-22 | DeepSeek V4 Flash | Phase 4: Lead scoring for 5 leads | data/leads.json, logs/decisions.md | Phase 5 - Prototype Generation | None |
 | 2026-06-22 | MiniMax M3 | Phase 5: Prototype generation for Seaway Cleaning Services | data/prototypes.json, data/prototypes/seaway-cleaning-services/ | Phase 6 - Preview Hosting | None |
+| 2026-06-22 | GLM 5.2 | Phase 6+7: Preview hosting + screenshots | app/preview/[slug]/page.tsx, scripts/screenshot/capture.js | Phase 8 - Public Brand Website | None |
 ---
 
 ## 14. Approval Checkpoints
