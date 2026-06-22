@@ -1,3 +1,4 @@
+// Node.js-only auth utilities (for API routes — NOT for middleware)
 import bcrypt from 'bcrypt';
 import fs from 'fs';
 import path from 'path';
@@ -13,14 +14,8 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
   return await bcrypt.compare(password, hash);
 }
 
-// Get the password hash
-export function getPasswordHash(): string | null {
-  // First check environment variable
-  if (process.env.PASSWORD_HASH) {
-    return process.env.PASSWORD_HASH;
-  }
-  
-  // Then check password file
+// Get password hash from file (Node.js only)
+export function getPasswordHashFromFile(): string | null {
   try {
     const passwordPath = path.join(process.cwd(), '.password');
     if (fs.existsSync(passwordPath)) {
@@ -29,11 +24,23 @@ export function getPasswordHash(): string | null {
   } catch (error) {
     console.error('Error reading password file:', error);
   }
-  
   return null;
 }
 
-// Check if admin password is set
+// Get password hash from env or file (Node.js context only)
+export function getPasswordHash(): string | null {
+  if (process.env.PASSWORD_HASH) {
+    return process.env.PASSWORD_HASH;
+  }
+  return getPasswordHashFromFile();
+}
+
+// Check if admin password is set (Node.js context)
 export function isPasswordSet(): boolean {
   return getPasswordHash() !== null;
+}
+
+// Alias for clarity
+export function isPasswordSetNode(): boolean {
+  return isPasswordSet();
 }

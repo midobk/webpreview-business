@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { isPasswordSet } from '@/lib/auth';
+import { isPasswordSet } from '@/lib/auth-edge';
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {

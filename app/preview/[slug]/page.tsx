@@ -1,32 +1,23 @@
 import { notFound } from 'next/navigation';
 import path from 'path';
 import fs from 'fs';
+import { readdir } from 'fs/promises';
 
-// Define the type for our params
-interface Params {
-  slug: string;
-}
-
-// Define the type for our props
 interface PreviewPageProps {
-  params: Params;
+  params: Promise<{ slug: string }>;
 }
 
 export default async function PreviewPage({ params }: PreviewPageProps) {
-  const { slug } = params;
+  const { slug } = await params;
 
-  // Construct the path to the prototype HTML file
   const prototypePath = path.join(process.cwd(), 'data', 'prototypes', slug, 'index.html');
 
-  // Check if the file exists
   if (!fs.existsSync(prototypePath)) {
     notFound();
   }
 
-  // Read the HTML content
   const htmlContent = fs.readFileSync(prototypePath, 'utf8');
 
-  // Extract the title from the HTML
   const titleMatch = htmlContent.match(/<title>(.*?)<\/title>/i);
   const title = titleMatch ? titleMatch[1] : `Preview for ${slug}`;
 
@@ -42,25 +33,19 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
   );
 }
 
-// Generate static params for all existing prototypes
 export async function generateStaticParams() {
   const prototypesDir = path.join(process.cwd(), 'data', 'prototypes');
   
-  // Check if the prototypes directory exists
   if (!fs.existsSync(prototypesDir)) {
     return [];
   }
 
-  // Read all prototype directories
-  const prototypeDirs = fs.readdirSync(prototypesDir);
-  
-  // Filter out only directories
-  const slugs = prototypeDirs.filter(dir => 
-    fs.statSync(path.join(prototypesDir, dir)).isDirectory()
-  );
-
-  // Return the slugs as params
-  return slugs.map(slug => ({
-    slug,
-  }));
+  try {
+    const entries = await readdir(prototypesDir, { withFileTypes: true });
+    return entries
+      .filter(dirent => dirent.isDirectory())
+      .map(dirent => ({ slug: dirent.name }));
+  } catch {
+    return [];
+  }
 }
