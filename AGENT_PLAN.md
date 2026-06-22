@@ -568,7 +568,7 @@ Checklist:
 - [x] Phase 10 (outreach templates + safety gate — deterministic A/B across 4 angles, contact-safety validator, smoke-tested against 16 leads: 2 safe / 14 blocked for the right reasons)
 - [x] Phase 11 (showcase page — live at /showcase with 2 anonymized prototypes, generic labels, secure image proxy with path-traversal protection, empty-state + grid layouts)
 - [x] Phase 12 (security review — found 1 critical / 1 medium / 2 low / 3 informational, fixed all high+low+medium; auth check on /api/admin/leads + /api/admin/prototypes, logout endpoint, removed console.log PII; docs/SECURITY_REVIEW.md)
-- [ ] Polish homepage with MiniMax M3 (cron job)
+- [x] Polish homepage with MiniMax M3 (gradient hero with animated mesh + drifting blobs + mock browser preview + demo lock banner; trust badge strip; 6-card features grid; 3-step how-it-works with connector; 3 testimonial cards with gradient initials; 3-tier pricing (Preview/Managed/One-time) with featured "Most popular"; 6-Q FAQ accordion; gradient form CTA; full MetaSEO with Plus Jakarta Sans display font. tsc clean, next build success, HTTP 200 with all sections rendered.)
 - [x] Scripts: discover, score, generate (already done from earlier phases)
 - [x] .env.example (137 lines, 8 sections with comments, all providers documented, .gitignore exception added so it can be committed)
 - [ ] Agent registration (after infrastructure complete)
@@ -713,3 +713,9 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 8. **Hosting:** Vercel (npx available)
 9. **Dashboard:** Next.js + simple password middleware
 10. **Data:** JSON files for MVP, Supabase when scaling
+### 2026-06-22 07:35 EDT — Polish homepage (cron run)
+- Model: GLM 5.2 (continuing previous in-progress design from earlier run; previous version had mesh+blob animations already, this run finalized it)
+- Files: app/page.tsx, app/layout.tsx, app/globals.css, scripts/screenshot/capture-page.js, logs/homepage-*.png
+- Verifications: `tsc --noEmit` clean, `next build` success (17/17 static pages generated), `next start` returns HTTP 200 with full page rendering (h1, brand-gradient, reveal classes, FAQ details, pricing featured tier).
+- Pushed to origin/main. Commit: 6687fa1.
+- Next: Agent registration (final remaining tracked item)
