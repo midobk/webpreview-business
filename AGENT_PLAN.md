@@ -558,28 +558,41 @@ Checklist:
 
 ### Current Status
 - [x] Phase 0+1+2 complete (scaffold + docs + sample data + repo created)
-- [x] Phase 3
-- [x] Phase 4
-- [x] Phase 5
-- [x] Phase 6+7 (Preview Hosting + Screenshots)
-- [x] Phase 8 (Public Brand Website)
-- [x] Phase 9 (Private Dashboard)
-- [ ] Phase 10
-- [ ] Phase 11
-- [ ] Phase 12
+- [x] Phase 3 complete (browser-based lead discovery, 8 leads found)
+- [x] Phase 4 complete (lead scoring implemented)
+- [x] Phase 5 complete (MiniMax M3 prototype generated, 8.5/10)
+- [x] Phase 6+7 complete (preview hosting on Vercel, Playwright screenshots)
+- [x] Phase 8 complete (public brand website live)
+- [x] Phase 9 complete (admin dashboard with working features — status updates, notes, showcase approval, prototype cards)
+- [x] Vercel project created and deployed (https://webpreview-business.vercel.app)
+- [ ] Phase 10 (outreach templates + safety gate — cron job working on it)
+- [ ] Phase 11 (showcase page — cron job working on it)
+- [ ] Phase 12 (security review — cron job working on it)
+- [ ] Polish homepage with MiniMax M3 (cron job)
+- [ ] Scripts: discover, score, generate (cron job)
+- [ ] .env.example (cron job)
+- [ ] Agent registration (after infrastructure complete)
 
 ### Infrastructure Issues (track for later)
-- [ ] **Google Gemini API key suspended** — image_generate returns HTTP 403 PERMISSION_DENIED. Key AIzaSy…YCUU is suspended. Needs investigation/unsuspension in Google Cloud Console.
-- [ ] **OpenAI image generation at usage limit** — gpt-image-2 returns HTTP 429 usage_limit_reached. Needs plan check or billing update.
-- [ ] **OpenRouter out of credits** — returns HTTP 402, only 46 tokens available. Needs top-up at openrouter.ai/settings/credits.
-- [ ] **Google Places API key** — not yet set up. $200/mo permanent free credit. User needs to create Google Cloud account with billing enabled.
-- [ ] **Yelp Fusion API** — NOT free, 30-day trial only then paid. Skip.
+- [ ] **Google Gemini API key suspended** — image_generate returns HTTP 403 PERMISSION_DENIED. Needs investigation in Google Cloud Console.
+- [ ] **OpenAI image generation at usage limit** — gpt-image-2 returns HTTP 429. Needs plan check.
+- [ ] **OpenRouter out of credits** — returns HTTP 402. Needs top-up at openrouter.ai/settings/credits.
+- [ ] **Google Places API key** — not yet set up. $200/mo permanent free credit. User needs Google Cloud account with billing.
+- [ ] **AgentMail inbox** — not yet created. Needs API call once brand name confirmed.
+- [ ] **Domain registration** — name "SiteSprint" suggested, user to confirm. Register .ca domain.
+- [ ] **Yelp Fusion API** — NOT free, 30-day trial only. Skip.
 
-### Next Steps (from user feedback)
-- [ ] Register domain (name TBC — "SiteSprint" suggested)
-- [ ] Set up AgentMail inbox for outreach
-- [ ] Create Vercel project
-- [ ] Fix image generation providers (see Infrastructure Issues above)
+### Deployment
+- **URL:** https://webpreview-business.vercel.app
+- **Vercel project:** webpreview-business (under midobk)
+- **Env vars set:** PASSWORD_HASH (by user)
+- **Env vars needed:** AGENTMAIL_API_KEY, TELNYX_API_KEY, GOOGLE_PLACES_API_KEY (when available)
+
+### Overnight Cron (running until 10 AM EDT 2026-06-22)
+- Job: sitesprint-hourly-build (ID: 1cdc0270-472e-4362-b49d-31f18916b78a)
+- Model: MiniMax M3 (primary), GLM 5.2 (fallback), DeepSeek V4 Flash (fallback)
+- Tasks: Phase 10-12, homepage polish, scripts, .env.example, agent registration
+- Sends Telegram updates to 7264128352 after each task
 
 ### Agent Run Log
 
@@ -592,6 +605,9 @@ Checklist:
 | 2026-06-22 | GLM 5.2 | Phase 6+7: Preview hosting + screenshots | app/preview/[slug]/page.tsx, scripts/screenshot/capture.js | Phase 8 - Public Brand Website | None |
 | 2026-06-22 | MiniMax M3 | Phase 8: Public brand website | app/page.tsx, app/api/leads/route.ts | Phase 9 - Private Dashboard | None |
 | 2026-06-22 | GLM 5.2 | Phase 9: Private dashboard | app/admin/page.tsx, app/admin/dashboard/page.tsx, app/api/admin/* | Phase 10 - Outreach MVP | None |
+| 2026-06-22 | GLM 5.2 | Fix admin auth for Vercel (env-var based, session cookie, no file writes) | lib/auth-edge.ts, lib/auth.ts, middleware.ts, app/api/admin/* | Deploy to Vercel | None |
+| 2026-06-22 | GLM 5.2 | Vercel project created and deployed to production | — | Agent registration | None |
+| 2026-06-22 | GLM 5.2 | Rebuilt dashboard with working features (status updates, notes, showcase approval, prototype cards) | app/admin/dashboard/page.tsx, app/api/admin/leads/route.ts, app/api/admin/prototypes/route.ts | Cron jobs continue Phase 10-12 overnight | None |
 ---
 
 ## 14. Approval Checkpoints
