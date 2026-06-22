@@ -565,11 +565,11 @@ Checklist:
 - [x] Phase 8 complete (public brand website live)
 - [x] Phase 9 complete (admin dashboard with working features — status updates, notes, showcase approval, prototype cards)
 - [x] Vercel project created and deployed (https://webpreview-business.vercel.app)
-- [ ] Phase 10 (outreach templates + safety gate — cron job working on it)
+- [x] Phase 10 (outreach templates + safety gate — deterministic A/B across 4 angles, contact-safety validator, smoke-tested against 16 leads: 2 safe / 14 blocked for the right reasons)
 - [ ] Phase 11 (showcase page — cron job working on it)
 - [ ] Phase 12 (security review — cron job working on it)
 - [ ] Polish homepage with MiniMax M3 (cron job)
-- [ ] Scripts: discover, score, generate (cron job)
+- [x] Scripts: discover, score, generate (already done from earlier phases)
 - [ ] .env.example (cron job)
 - [ ] Agent registration (after infrastructure complete)
 
@@ -608,6 +608,7 @@ Checklist:
 | 2026-06-22 | GLM 5.2 | Fix admin auth for Vercel (env-var based, session cookie, no file writes) | lib/auth-edge.ts, lib/auth.ts, middleware.ts, app/api/admin/* | Deploy to Vercel | None |
 | 2026-06-22 | GLM 5.2 | Vercel project created and deployed to production | — | Agent registration | None |
 | 2026-06-22 | GLM 5.2 | Rebuilt dashboard with working features (status updates, notes, showcase approval, prototype cards) | app/admin/dashboard/page.tsx, app/api/admin/leads/route.ts, app/api/admin/prototypes/route.ts | Cron jobs continue Phase 10-12 overnight | None |
+| 2026-06-22 | GLM 5.2 | Phase 10: Outreach email template system — 4 A/B angle templates (`preview_made` / `deserves_better` / `helped_neighbors` / `noticed_gap`), deterministic `pickAngle` + round-robin `rotateAngle`, contact-safety gate (email, source URL, status, avoided industry, Canada, score ≥ 60, watermarked + demo-locked prototype), `buildOutreach` returns subject+body+metadata. Smoke-tested against 16 real leads: 2 safe, 14 blocked with correct per-lead reasons. No actual sending. | scripts/send-outreach/templates.ts, scripts/send-outreach/README.md | Phase 11 (showcase page) | None |
 ---
 
 ## 14. Approval Checkpoints
