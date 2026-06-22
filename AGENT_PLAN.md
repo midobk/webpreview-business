@@ -562,7 +562,8 @@ Checklist:
 - [x] Phase 4
 - [x] Phase 5
 - [x] Phase 6+7 (Preview Hosting + Screenshots)
-- [ ] Phase 8+9
+- [x] Phase 8 (Public Brand Website)
+- [ ] Phase 9 (Private Dashboard)
 - [ ] Phase 10
 - [ ] Phase 11
 - [ ] Phase 12
@@ -589,6 +590,7 @@ Checklist:
 | 2026-06-22 | DeepSeek V4 Flash | Phase 4: Lead scoring for 5 leads | data/leads.json, logs/decisions.md | Phase 5 - Prototype Generation | None |
 | 2026-06-22 | MiniMax M3 | Phase 5: Prototype generation for Seaway Cleaning Services | data/prototypes.json, data/prototypes/seaway-cleaning-services/ | Phase 6 - Preview Hosting | None |
 | 2026-06-22 | GLM 5.2 | Phase 6+7: Preview hosting + screenshots | app/preview/[slug]/page.tsx, scripts/screenshot/capture.js | Phase 8 - Public Brand Website | None |
+| 2026-06-22 | MiniMax M3 | Phase 8: Public brand website | app/page.tsx, app/api/leads/route.ts | Phase 9 - Private Dashboard | None |
 ---
 
 ## 14. Approval Checkpoints
