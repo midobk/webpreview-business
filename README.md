@@ -24,8 +24,20 @@ Autonomous AI pipeline that finds Canadian small businesses with no/ugly/broken 
 ## Project Structure
 See `AGENT_PLAN.md` for the full living project plan.
 
-## Status
-Phase 0 (tool research) complete. Phase 1 (scaffolding) in progress.
+## Current Status
+Phases 0-9 complete:
+- ✅ Tool research and scaffolding
+- ✅ Lead discovery and scoring
+- ✅ Prototype generation
+- ✅ Preview hosting and screenshots
+- ✅ Public brand website
+- ✅ Private admin dashboard
+
+## Setup
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Set up admin password by visiting `/admin/setup`
+4. Start the development server: `npm run dev`
 
 ## License
 Private — not for redistribution.
