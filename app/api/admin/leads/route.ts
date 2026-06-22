@@ -1,21 +1,72 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth-server';
-import { getSyncedLeads } from '@/lib/sync';
+import { getLeads, getPrototypes, getOutreachLog, DATA_GENERATED_AT } from '@/lib/data-source';
 
 // GET /api/admin/leads - Fetch all leads merged with prototype + outreach state
 export async function GET(request: Request) {
   const denied = requireAdmin(request);
   if (denied) return denied;
   try {
-    const leads = await getSyncedLeads();
-    return NextResponse.json(leads);
+    const [leads, prototypes, outreachLog] = await Promise.all([
+      getLeads(),
+      getPrototypes(),
+      getOutreachLog(),
+    ]);
+
+    const outreachRecords = outreachLog?.logs ?? outreachLog ?? [];
+
+    // Map prototypes to leads
+    const prototypeByLead = new Map<string, any[]>();
+    for (const p of prototypes) {
+      const list = prototypeByLead.get(p.lead_id) ?? [];
+      list.push(p);
+      prototypeByLead.set(p.lead_id, list);
+    }
+
+    // Map outreach to leads
+    const outreachByLead = new Map<string, any[]>();
+    for (const r of outreachRecords) {
+      const list = outreachByLead.get(r.lead_id) ?? [];
+      list.push(r);
+      outreachByLead.set(r.lead_id, list);
+    }
+
+    const synced = leads.map((lead: any) => {
+      const protos = prototypeByLead.get(lead.id) ?? [];
+      const completedProto = protos.find((p) => p.generation_status === "completed");
+      const lastProto = protos[protos.length - 1];
+      const records = outreachByLead.get(lead.id) ?? [];
+
+      const sorted = [...records].sort((a, b) =>
+        (b.created_at || "").localeCompare(a.created_at || "")
+      );
+      const lastRecord = sorted[0];
+
+      return {
+        ...lead,
+        has_prototype: protos.length > 0,
+        variant_count: protos.length,
+        prototype_id: lastProto?.id ?? null,
+        prototype_url: completedProto?.prototype_url ?? null,
+        prototype_score: completedProto?.prototype_score ?? null,
+        prototype_status: completedProto?.generation_status ?? "none",
+        prototype_anonymized: completedProto?.anonymized ?? false,
+        outreach_status: lastRecord?.status ?? "none",
+        outreach_id: lastRecord?.id ?? null,
+      };
+    });
+
+    return NextResponse.json(synced);
   } catch (error) {
     console.error('Error fetching leads:', error);
-    return NextResponse.json({ error: 'Failed to fetch leads' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch leads', detail: String(error), bundle_generated_at: DATA_GENERATED_AT }, { status: 500 });
   }
 }
 
-// PATCH /api/admin/leads - Update a lead's status or notes (admin-only)
+// PATCH /api/admin/leads - Update a lead's status or notes
+// Phase 1 (hacky): write attempts only persist on local filesystem; on Vercel
+// changes live in memory for the request but don't persist (Patches work locally
+// for testing, Supabase replaces this in Phase 2).
 export async function PATCH(request: Request) {
   const denied = requireAdmin(request);
   if (denied) return denied;
@@ -29,7 +80,7 @@ export async function PATCH(request: Request) {
     const leadsPath = path.join(process.cwd(), 'data', 'leads.json');
 
     if (!(await fsAccess(leadsPath))) {
-      return NextResponse.json({ error: 'No leads found' }, { status: 404 });
+      return NextResponse.json({ error: 'No leads found (Phase 1: build-bundle only — use Supabase for writes)' }, { status: 404 });
     }
 
     const leadsData = await fs.readFile(leadsPath, 'utf8');
@@ -47,7 +98,11 @@ export async function PATCH(request: Request) {
     try {
       await fs.writeFile(leadsPath, JSON.stringify(leads, null, 2));
     } catch (e) {
-      // Vercel read-only filesystem — return success anyway, changes are in-memory
+      // Vercel read-only filesystem — Phase 2 (Supabase) will fix this
+      return NextResponse.json({
+        success: false,
+        message: 'Phase 1 hacky build: writes not persisted on Vercel. Use local dev or wait for Supabase.',
+      });
     }
 
     return NextResponse.json({ success: true, lead: leads[leadIndex] });

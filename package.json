@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "screenshot": "node scripts/screenshot/capture.js"
+    "screenshot": "node scripts/screenshot/capture.js",
+    "prebuild": "node scripts/build-data-bundle.js",
+    "build:data": "node scripts/build-data-bundle.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

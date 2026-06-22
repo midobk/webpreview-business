@@ -86,13 +86,23 @@ async function loadShowcase(): Promise<
   const prototypesPath = path.join(repoRoot, 'data', 'prototypes.json');
   const leadsPath = path.join(repoRoot, 'data', 'leads.json');
 
-  const [protoRaw, leadsRaw] = await Promise.all([
-    fs.readFile(prototypesPath, 'utf8').catch(() => '[]'),
-    fs.readFile(leadsPath, 'utf8').catch(() => '[]'),
-  ]);
+  // Try filesystem first (dev), fall back to build bundle (production / Vercel)
+  let allPrototypes: Prototype[];
+  let allLeads: Lead[];
 
-  const allPrototypes: Prototype[] = JSON.parse(protoRaw);
-  const allLeads: Lead[] = JSON.parse(leadsRaw);
+  try {
+    const [protoRaw, leadsRaw] = await Promise.all([
+      fs.readFile(prototypesPath, 'utf8'),
+      fs.readFile(leadsPath, 'utf8'),
+    ]);
+    allPrototypes = JSON.parse(protoRaw);
+    allLeads = JSON.parse(leadsRaw);
+  } catch {
+    // Filesystem read failed (likely Vercel serverless runtime) — use embedded bundle
+    const { leads: bundleLeads, prototypes: bundlePrototypes } = await import('@/lib/data-bundle/bundle');
+    allPrototypes = bundlePrototypes as Prototype[];
+    allLeads = bundleLeads as Lead[];
+  }
 
   const leadsById = new Map(allLeads.map((l) => [l.id, l]));
 
