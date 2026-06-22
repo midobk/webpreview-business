@@ -27,14 +27,14 @@
       "Engine diagnostics",
       "General maintenance"
     ],
-    "lead_score": 78,
-    "score_reasoning": "No website (20), no public email (0), basic info (8), clear services (10), simple fit (15), good visual potential (10), Canada (10), small business (10), social present (3), some reviews (3) = 89... adjusted to 78 due to no email found",
     "complexity_level": "simple",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": "No public email found \u2014 would need phone contact or social DM",
-    "status": "discovered",
     "created_at": "2026-06-22T00:00:00Z",
-    "updated_at": "2026-06-22T00:00:00Z"
+    "updated_at": "2026-06-22T21:58:29.999855+00:00Z",
+    "lead_score": 84,
+    "score_reasoning": "No website (20), No public email (0), Basic info (8), Clear services (10), Simple landing-page fit (15), Moderate visual potential (8), Canada-based (10), Small business (10), Some social presence (3), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-002",
@@ -62,14 +62,14 @@
       "Move-in/move-out",
       "Deep cleaning"
     ],
-    "lead_score": 92,
-    "score_reasoning": "No website (20), public email (20), rich info (15), clear services (10), simple fit (15), strong visual potential (15), Canada (10), small business (10), no social (0), some reviews (3) = 118... capped at 92. Excellent lead.",
     "complexity_level": "simple",
     "contact_safety_status": "pass",
     "contact_safety_reasoning": "Public business email found on Yelp. Not in avoided industry. Safe to contact.",
-    "status": "prototype_generated",
     "created_at": "2026-06-22T00:00:00Z",
-    "updated_at": "2026-06-22T03:27:54.539951+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.001522+00:00Z",
+    "lead_score": 100,
+    "score_reasoning": "No website (20), Public email (20), Rich info (15), Clear services (10), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), Some reviews (3)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-003",
@@ -102,14 +102,14 @@
       "Treatments",
       "Highlights"
     ],
-    "lead_score": 88,
-    "score_reasoning": "Ugly/outdated website (10), public email (20), rich info + social (15), clear services (10), simple fit (15), strong visual potential (15), Canada (10), small business (10), active social (5), good reviews (3) = 113... capped at 88. Great lead with visual potential.",
     "complexity_level": "simple",
     "contact_safety_status": "pass",
     "contact_safety_reasoning": "Public email on Facebook. Not avoided industry. Safe to contact.",
-    "status": "prototype_generated",
     "created_at": "2026-06-22T00:00:00Z",
-    "updated_at": "2026-06-22T03:33:09.011323+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.002972+00:00Z",
+    "lead_score": 100,
+    "score_reasoning": "Ugly/outdated website (10), Public email (20), Rich info (15), Clear services (10), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), Some social presence (3), Some reviews (3)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-004",
@@ -132,14 +132,14 @@
     ],
     "description": "Local cleaning business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 70,
-    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "pending_review",
     "created_at": "2026-06-22T03:26:01.016366+00:00Z",
-    "updated_at": "2026-06-22T03:26:40.947553+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.003942+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-005",
@@ -162,14 +162,14 @@
     ],
     "description": "Local barber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 50,
-    "score_reasoning": "Decent website (0), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "flag_for_review",
     "created_at": "2026-06-22T03:26:01.016405+00:00Z",
-    "updated_at": "2026-06-22T03:26:40.947870+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.004861+00:00Z",
+    "lead_score": 50,
+    "score_reasoning": "Decent website (0), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-006",
@@ -192,14 +192,14 @@
     ],
     "description": "Local landscaping business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 56,
-    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "flag_for_review",
     "created_at": "2026-06-22T03:26:01.016417+00:00Z",
-    "updated_at": "2026-06-22T03:26:40.948677+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.005692+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-007",
@@ -222,14 +222,14 @@
     ],
     "description": "Local restaurant business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 50,
-    "score_reasoning": "Decent website (0), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "flag_for_review",
     "created_at": "2026-06-22T03:26:01.016426+00:00Z",
-    "updated_at": "2026-06-22T03:26:40.949077+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.007034+00:00Z",
+    "lead_score": 50,
+    "score_reasoning": "Decent website (0), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-008",
@@ -252,14 +252,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 53,
-    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "flag_for_review",
     "created_at": "2026-06-22T03:26:01.016433+00:00Z",
-    "updated_at": "2026-06-22T03:26:40.950561+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.007706+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-009",
@@ -282,14 +282,14 @@
     ],
     "description": "Local cleaning business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 50,
-    "score_reasoning": "Decent website (0), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "flag_for_review",
     "created_at": "2026-06-22T03:32:20.803881+00:00Z",
-    "updated_at": "2026-06-22T03:32:44.225622+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.008672+00:00Z",
+    "lead_score": 50,
+    "score_reasoning": "Decent website (0), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-010",
@@ -312,14 +312,14 @@
     ],
     "description": "Local salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 70,
-    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "pending_review",
     "created_at": "2026-06-22T03:32:20.803951+00:00Z",
-    "updated_at": "2026-06-22T03:32:44.225831+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.009875+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-011",
@@ -342,14 +342,14 @@
     ],
     "description": "Local auto_repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 43,
-    "score_reasoning": "Decent website (0), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "save_for_later",
     "created_at": "2026-06-22T03:32:20.803973+00:00Z",
-    "updated_at": "2026-06-22T03:32:44.226389+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.010961+00:00Z",
+    "lead_score": 43,
+    "score_reasoning": "Decent website (0), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-012",
@@ -372,14 +372,14 @@
     ],
     "description": "Local landscaping business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 56,
-    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "flag_for_review",
     "created_at": "2026-06-22T03:32:20.804003+00:00Z",
-    "updated_at": "2026-06-22T03:32:44.227094+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.011812+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-013",
@@ -402,14 +402,14 @@
     ],
     "description": "Local restaurant business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 70,
-    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "pending_review",
     "created_at": "2026-06-22T03:32:20.804024+00:00Z",
-    "updated_at": "2026-06-22T03:32:44.227542+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.013001+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-014",
@@ -432,14 +432,14 @@
     ],
     "description": "Local barber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 70,
-    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "pending_review",
     "created_at": "2026-06-22T03:32:20.804039+00:00Z",
-    "updated_at": "2026-06-22T03:32:44.228187+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.013730+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-015",
@@ -462,14 +462,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 33,
-    "score_reasoning": "Decent website (0), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "ignore",
     "created_at": "2026-06-22T03:32:20.804065+00:00Z",
-    "updated_at": "2026-06-22T03:32:44.228647+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.014826+00:00Z",
+    "lead_score": 33,
+    "score_reasoning": "Decent website (0), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ignore"
   },
   {
     "id": "lead-016",
@@ -492,14 +492,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 53,
-    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "flag_for_review",
     "created_at": "2026-06-22T03:32:20.804081+00:00Z",
-    "updated_at": "2026-06-22T03:32:44.229293+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.015853+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-017",
@@ -529,14 +529,14 @@
     ],
     "description": "Local coffee shop business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T18:41:35.218297+00:00Z",
-    "updated_at": "2026-06-22T18:41:35.218327+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.016937+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-018",
@@ -569,14 +569,14 @@
     ],
     "description": "Local coffee shop business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T18:41:35.218353+00:00Z",
-    "updated_at": "2026-06-22T18:41:35.218358+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.017815+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-019",
@@ -609,14 +609,14 @@
     ],
     "description": "Local coffee shop business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T18:41:35.218385+00:00Z",
-    "updated_at": "2026-06-22T18:41:35.218391+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.018929+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-020",
@@ -649,14 +649,14 @@
     ],
     "description": "Local coffee shop business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T18:41:35.218409+00:00Z",
-    "updated_at": "2026-06-22T18:41:35.218413+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.020287+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-021",
@@ -689,14 +689,14 @@
     ],
     "description": "Local coffee shop business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T18:41:35.218428+00:00Z",
-    "updated_at": "2026-06-22T18:41:35.218432+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.021394+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-022",
@@ -730,14 +730,14 @@
     ],
     "description": "Local coffee shop business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T18:41:35.218446+00:00Z",
-    "updated_at": "2026-06-22T18:41:35.218449+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.022563+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-023",
@@ -770,14 +770,14 @@
     ],
     "description": "Local coffee shop business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T18:41:35.218461+00:00Z",
-    "updated_at": "2026-06-22T18:41:35.218465+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.023483+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-024",
@@ -808,14 +808,14 @@
     ],
     "description": "Local coffee shop business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T18:41:35.218476+00:00Z",
-    "updated_at": "2026-06-22T18:41:35.218490+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.024775+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-025",
@@ -847,14 +847,14 @@
     ],
     "description": "Local coffee shop business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T18:41:35.218506+00:00Z",
-    "updated_at": "2026-06-22T18:41:35.218509+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.025599+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-026",
@@ -883,14 +883,14 @@
     ],
     "description": "Local cleaning service business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:20.962701+00:00Z",
-    "updated_at": "2026-06-22T19:02:20.962730+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.026853+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Basic info (8), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-027",
@@ -919,14 +919,14 @@
     ],
     "description": "Local cleaning service business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:20.962756+00:00Z",
-    "updated_at": "2026-06-22T19:02:20.962762+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.027802+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Basic info (8), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-028",
@@ -955,14 +955,14 @@
     ],
     "description": "Local cleaning service business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:20.962796+00:00Z",
-    "updated_at": "2026-06-22T19:02:20.962801+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.028603+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Basic info (8), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-029",
@@ -991,14 +991,14 @@
     ],
     "description": "Local cleaning service business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:20.962824+00:00Z",
-    "updated_at": "2026-06-22T19:02:20.962829+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.029561+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Basic info (8), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-030",
@@ -1027,14 +1027,14 @@
     ],
     "description": "Local cleaning service business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:20.962841+00:00Z",
-    "updated_at": "2026-06-22T19:02:20.962844+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.030562+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Basic info (8), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-031",
@@ -1064,14 +1064,14 @@
     ],
     "description": "Local cleaning service business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:20.962854+00:00Z",
-    "updated_at": "2026-06-22T19:02:20.962857+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.031435+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Basic info (8), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-032",
@@ -1100,14 +1100,14 @@
     ],
     "description": "Local cleaning service business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:20.962867+00:00Z",
-    "updated_at": "2026-06-22T19:02:20.962893+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.032615+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Basic info (8), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-033",
@@ -1136,14 +1136,14 @@
     ],
     "description": "Local cleaning service business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:20.962912+00:00Z",
-    "updated_at": "2026-06-22T19:02:20.962916+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.033494+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Basic info (8), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-034",
@@ -1172,14 +1172,14 @@
     ],
     "description": "Local cleaning service business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:20.962928+00:00Z",
-    "updated_at": "2026-06-22T19:02:20.962932+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.035291+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Basic info (8), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-035",
@@ -1208,14 +1208,14 @@
     ],
     "description": "Local cleaning service business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:20.962951+00:00Z",
-    "updated_at": "2026-06-22T19:02:20.962956+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.037505+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Basic info (8), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-036",
@@ -1246,14 +1246,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049270+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049293+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.038459+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-037",
@@ -1284,14 +1284,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049319+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049324+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.039668+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-038",
@@ -1323,14 +1323,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049339+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049343+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.041147+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-039",
@@ -1361,14 +1361,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049357+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049361+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.042146+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-040",
@@ -1400,14 +1400,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049374+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049378+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.043441+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-041",
@@ -1438,14 +1438,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049390+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049394+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.044508+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-042",
@@ -1476,14 +1476,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049406+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049409+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.045809+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-043",
@@ -1515,14 +1515,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049423+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049426+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.047231+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-044",
@@ -1554,14 +1554,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049438+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049442+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.048924+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-045",
@@ -1592,14 +1592,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049453+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049457+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.050124+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-046",
@@ -1630,14 +1630,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049468+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049472+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.052143+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-047",
@@ -1668,14 +1668,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049485+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049488+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.053363+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-048",
@@ -1706,14 +1706,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049510+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049517+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.054460+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-049",
@@ -1745,14 +1745,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049566+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049576+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.055537+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-050",
@@ -1784,14 +1784,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049594+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049598+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.056975+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-051",
@@ -1822,14 +1822,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049612+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049616+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.058164+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-052",
@@ -1860,14 +1860,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049628+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049632+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.059339+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-053",
@@ -1899,14 +1899,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049644+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049648+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.060562+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-054",
@@ -1936,14 +1936,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049659+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049663+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.061894+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-055",
@@ -1974,14 +1974,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049675+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049679+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.063135+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-056",
@@ -2012,14 +2012,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049690+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049695+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.064448+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-057",
@@ -2051,14 +2051,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049706+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049710+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.066304+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-058",
@@ -2089,14 +2089,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049721+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049724+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.068634+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-059",
@@ -2127,14 +2127,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049736+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049740+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.069828+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-060",
@@ -2166,14 +2166,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049750+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049754+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.071484+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-061",
@@ -2204,14 +2204,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049766+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049769+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.072906+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-062",
@@ -2243,14 +2243,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049795+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049801+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.073811+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-063",
@@ -2285,14 +2285,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049814+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049818+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.074803+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-064",
@@ -2324,14 +2324,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049829+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049833+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.076066+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-065",
@@ -2362,14 +2362,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049844+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049847+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.076982+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-066",
@@ -2399,14 +2399,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049858+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049862+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.077738+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-067",
@@ -2438,14 +2438,14 @@
     ],
     "description": "Local hair salon business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:26.049873+00:00Z",
-    "updated_at": "2026-06-22T19:02:26.049876+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.079109+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-068",
@@ -2475,14 +2475,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954347+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954368+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.080482+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-069",
@@ -2512,14 +2512,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954381+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954383+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.081885+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-070",
@@ -2549,14 +2549,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954390+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954392+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.083246+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-071",
@@ -2586,14 +2586,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954398+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954400+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.084779+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-072",
@@ -2623,14 +2623,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954406+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954408+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.086303+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-073",
@@ -2660,14 +2660,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954415+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954416+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.087744+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-074",
@@ -2697,14 +2697,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954422+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954424+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.089082+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-075",
@@ -2734,14 +2734,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954430+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954432+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.090383+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-076",
@@ -2771,14 +2771,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954438+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954440+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.091675+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-077",
@@ -2808,14 +2808,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954445+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954447+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.092986+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-078",
@@ -2848,14 +2848,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954454+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954456+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.094203+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-079",
@@ -2885,14 +2885,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954462+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954465+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.095628+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-080",
@@ -2922,14 +2922,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954474+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954477+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.096593+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-081",
@@ -2959,14 +2959,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954484+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954486+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.098115+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-082",
@@ -2996,14 +2996,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954492+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954494+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.099530+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-083",
@@ -3036,14 +3036,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954505+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954507+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.101118+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-084",
@@ -3073,14 +3073,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954513+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954515+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.102494+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-085",
@@ -3110,14 +3110,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954523+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954525+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.103719+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-086",
@@ -3147,14 +3147,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954534+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954537+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.104920+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-087",
@@ -3184,14 +3184,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954543+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954545+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.106742+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-088",
@@ -3221,14 +3221,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954550+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954552+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.107657+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-089",
@@ -3258,14 +3258,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954557+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954559+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.109227+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-090",
@@ -3295,14 +3295,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954565+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954566+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.110200+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-091",
@@ -3332,14 +3332,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954572+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954574+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.111241+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-092",
@@ -3369,14 +3369,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954688+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954692+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.112107+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-093",
@@ -3409,14 +3409,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954704+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954707+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.113931+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-094",
@@ -3446,14 +3446,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954725+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954729+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.115631+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-095",
@@ -3481,14 +3481,14 @@
     ],
     "description": "Local auto repair business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:30.954744+00:00Z",
-    "updated_at": "2026-06-22T19:02:30.954747+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.117001+00:00Z",
+    "lead_score": 45,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-096",
@@ -3518,14 +3518,14 @@
     ],
     "description": "Local landscaping business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:37.241374+00:00Z",
-    "updated_at": "2026-06-22T19:02:37.241398+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.117897+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-097",
@@ -3555,14 +3555,14 @@
     ],
     "description": "Local landscaping business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:37.241419+00:00Z",
-    "updated_at": "2026-06-22T19:02:37.241423+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.119561+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-098",
@@ -3591,14 +3591,14 @@
     ],
     "description": "Local landscaping business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:37.241434+00:00Z",
-    "updated_at": "2026-06-22T19:02:37.241437+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.120543+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-099",
@@ -3631,14 +3631,14 @@
     ],
     "description": "Local landscaping business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:37.241448+00:00Z",
-    "updated_at": "2026-06-22T19:02:37.241451+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.122302+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-100",
@@ -3668,14 +3668,14 @@
     ],
     "description": "Local landscaping business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:37.241461+00:00Z",
-    "updated_at": "2026-06-22T19:02:37.241463+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.125439+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-101",
@@ -3704,14 +3704,14 @@
     ],
     "description": "Local landscaping business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:37.241474+00:00Z",
-    "updated_at": "2026-06-22T19:02:37.241477+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.127299+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-102",
@@ -3740,14 +3740,14 @@
     ],
     "description": "Local landscaping business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:37.241486+00:00Z",
-    "updated_at": "2026-06-22T19:02:37.241488+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.128797+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-103",
@@ -3776,14 +3776,14 @@
     ],
     "description": "Local landscaping business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:37.241499+00:00Z",
-    "updated_at": "2026-06-22T19:02:37.241502+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.130266+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-104",
@@ -3813,14 +3813,14 @@
     ],
     "description": "Local landscaping business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:37.241511+00:00Z",
-    "updated_at": "2026-06-22T19:02:37.241514+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.131346+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-105",
@@ -3850,14 +3850,14 @@
     ],
     "description": "Local restaurant business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:42.066057+00:00Z",
-    "updated_at": "2026-06-22T19:02:42.066077+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.133313+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-106",
@@ -3887,14 +3887,14 @@
     ],
     "description": "Local restaurant business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:42.066093+00:00Z",
-    "updated_at": "2026-06-22T19:02:42.066096+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.134746+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-107",
@@ -3924,14 +3924,14 @@
     ],
     "description": "Local restaurant business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:42.066106+00:00Z",
-    "updated_at": "2026-06-22T19:02:42.066108+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.136070+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-108",
@@ -3964,14 +3964,14 @@
     ],
     "description": "Local restaurant business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:42.066117+00:00Z",
-    "updated_at": "2026-06-22T19:02:42.066119+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.137566+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-109",
@@ -4004,14 +4004,14 @@
     ],
     "description": "Local restaurant business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:42.066129+00:00Z",
-    "updated_at": "2026-06-22T19:02:42.066132+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.139114+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-110",
@@ -4042,14 +4042,14 @@
     ],
     "description": "Local restaurant business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:42.066141+00:00Z",
-    "updated_at": "2026-06-22T19:02:42.066144+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.140441+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-111",
@@ -4080,14 +4080,14 @@
     ],
     "description": "Local restaurant business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:42.066153+00:00Z",
-    "updated_at": "2026-06-22T19:02:42.066155+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.141866+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-112",
@@ -4118,14 +4118,14 @@
     ],
     "description": "Local barber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:44.551565+00:00Z",
-    "updated_at": "2026-06-22T19:02:44.551584+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.144114+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-113",
@@ -4157,14 +4157,14 @@
     ],
     "description": "Local barber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:44.551602+00:00Z",
-    "updated_at": "2026-06-22T19:02:44.551606+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.145651+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-114",
@@ -4199,14 +4199,14 @@
     ],
     "description": "Local barber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:44.551617+00:00Z",
-    "updated_at": "2026-06-22T19:02:44.551620+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.147785+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-115",
@@ -4238,14 +4238,14 @@
     ],
     "description": "Local barber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:44.551631+00:00Z",
-    "updated_at": "2026-06-22T19:02:44.551634+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.149236+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-116",
@@ -4276,14 +4276,14 @@
     ],
     "description": "Local barber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:44.551644+00:00Z",
-    "updated_at": "2026-06-22T19:02:44.551646+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.150251+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-117",
@@ -4315,14 +4315,14 @@
     ],
     "description": "Local barber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:44.551655+00:00Z",
-    "updated_at": "2026-06-22T19:02:44.551658+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.151311+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-118",
@@ -4353,14 +4353,14 @@
     ],
     "description": "Local barber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:44.551667+00:00Z",
-    "updated_at": "2026-06-22T19:02:44.551670+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.152596+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-119",
@@ -4392,14 +4392,14 @@
     ],
     "description": "Local barber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:44.551680+00:00Z",
-    "updated_at": "2026-06-22T19:02:44.551683+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.153585+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-120",
@@ -4430,14 +4430,14 @@
     ],
     "description": "Local barber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:44.551692+00:00Z",
-    "updated_at": "2026-06-22T19:02:44.551695+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.155148+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-121",
@@ -4469,14 +4469,14 @@
     ],
     "description": "Local barber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:44.551704+00:00Z",
-    "updated_at": "2026-06-22T19:02:44.551707+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.157167+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-122",
@@ -4508,14 +4508,14 @@
     ],
     "description": "Local barber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:44.551715+00:00Z",
-    "updated_at": "2026-06-22T19:02:44.551718+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.158214+00:00Z",
+    "lead_score": 70,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "ready_for_prototype"
   },
   {
     "id": "lead-123",
@@ -4545,14 +4545,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959819+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959843+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.159996+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-124",
@@ -4582,14 +4582,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959856+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959858+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.161749+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-125",
@@ -4619,14 +4619,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959872+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959875+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.162979+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-126",
@@ -4656,14 +4656,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959884+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959886+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.164158+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-127",
@@ -4693,14 +4693,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959893+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959894+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.165409+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-128",
@@ -4730,14 +4730,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959900+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959901+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.166924+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-129",
@@ -4767,14 +4767,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959907+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959909+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.168609+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-130",
@@ -4804,14 +4804,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959914+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959915+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.170030+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-131",
@@ -4841,14 +4841,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959921+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959923+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.171130+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-132",
@@ -4881,14 +4881,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959929+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959930+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.172583+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-133",
@@ -4918,14 +4918,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959935+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959937+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.174088+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-134",
@@ -4955,14 +4955,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959942+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959943+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.175729+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-135",
@@ -4991,14 +4991,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959948+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959950+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.177225+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-136",
@@ -5028,14 +5028,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.959954+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.959956+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.179454+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-137",
@@ -5065,14 +5065,14 @@
     ],
     "description": "Local plumber business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:48.960020+00:00Z",
-    "updated_at": "2026-06-22T19:02:48.960024+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.181136+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-138",
@@ -5102,14 +5102,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265495+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265514+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.182107+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-139",
@@ -5139,14 +5139,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265535+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265539+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.183780+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-140",
@@ -5176,14 +5176,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265550+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265553+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.185627+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-141",
@@ -5213,14 +5213,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265563+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265566+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.187019+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-142",
@@ -5250,14 +5250,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265574+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265577+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.188387+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-143",
@@ -5287,14 +5287,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265586+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265589+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.190063+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-144",
@@ -5324,14 +5324,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265599+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265602+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.191829+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-145",
@@ -5361,14 +5361,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265611+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265614+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.193933+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-146",
@@ -5398,14 +5398,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265623+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265626+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.195649+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-147",
@@ -5435,14 +5435,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265636+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265638+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.197589+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-148",
@@ -5472,14 +5472,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265647+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265650+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.198721+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-149",
@@ -5509,14 +5509,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265658+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265661+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.199775+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-150",
@@ -5546,14 +5546,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265669+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265672+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.200639+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-151",
@@ -5584,14 +5584,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265693+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265698+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.201574+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-152",
@@ -5621,14 +5621,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265711+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265713+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.203204+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-153",
@@ -5658,14 +5658,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265723+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265726+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.204747+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-154",
@@ -5699,14 +5699,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265735+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265738+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.206764+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-155",
@@ -5736,14 +5736,14 @@
     ],
     "description": "Local electrician business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:53.265749+00:00Z",
-    "updated_at": "2026-06-22T19:02:53.265752+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.208102+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-156",
@@ -5773,14 +5773,14 @@
     ],
     "description": "Local contractor business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:59.255596+00:00Z",
-    "updated_at": "2026-06-22T19:02:59.255621+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.209692+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-157",
@@ -5811,14 +5811,14 @@
     ],
     "description": "Local contractor business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:59.255641+00:00Z",
-    "updated_at": "2026-06-22T19:02:59.255645+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.211066+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-158",
@@ -5849,14 +5849,14 @@
     ],
     "description": "Local contractor business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:59.255657+00:00Z",
-    "updated_at": "2026-06-22T19:02:59.255661+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.212426+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-159",
@@ -5886,14 +5886,14 @@
     ],
     "description": "Local contractor business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:59.255671+00:00Z",
-    "updated_at": "2026-06-22T19:02:59.255674+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.214005+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-160",
@@ -5923,14 +5923,14 @@
     ],
     "description": "Local contractor business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:59.255684+00:00Z",
-    "updated_at": "2026-06-22T19:02:59.255687+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.215482+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-161",
@@ -5960,14 +5960,14 @@
     ],
     "description": "Local contractor business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:59.255695+00:00Z",
-    "updated_at": "2026-06-22T19:02:59.255698+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.222926+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-162",
@@ -5997,14 +5997,14 @@
     ],
     "description": "Local contractor business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:59.255707+00:00Z",
-    "updated_at": "2026-06-22T19:02:59.255711+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.224240+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-163",
@@ -6033,14 +6033,14 @@
     ],
     "description": "Local contractor business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:02:59.255719+00:00Z",
-    "updated_at": "2026-06-22T19:02:59.255722+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.225454+00:00Z",
+    "lead_score": 56,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Moderate visual potential (8), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "pending_review"
   },
   {
     "id": "lead-164",
@@ -6069,14 +6069,14 @@
     ],
     "description": "Local tutor business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:03:05.581939+00:00Z",
-    "updated_at": "2026-06-22T19:03:05.581987+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.226546+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-165",
@@ -6108,14 +6108,14 @@
     ],
     "description": "Local tutor business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:03:05.582021+00:00Z",
-    "updated_at": "2026-06-22T19:03:05.582025+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.227618+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-166",
@@ -6144,14 +6144,14 @@
     ],
     "description": "Local tutor business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:03:05.582039+00:00Z",
-    "updated_at": "2026-06-22T19:03:05.582043+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.229282+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   },
   {
     "id": "lead-167",
@@ -6184,13 +6184,13 @@
     ],
     "description": "Local tutor business in Cornwall, Ontario.",
     "services": [],
-    "lead_score": 0,
-    "score_reasoning": null,
     "complexity_level": "unknown",
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
-    "status": "discovered",
     "created_at": "2026-06-22T19:03:05.582055+00:00Z",
-    "updated_at": "2026-06-22T19:03:05.582176+00:00Z"
+    "updated_at": "2026-06-22T21:58:30.231166+00:00Z",
+    "lead_score": 53,
+    "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
+    "status": "flag_for_review"
   }
 ]

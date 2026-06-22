@@ -163,15 +163,21 @@ def score_lead(lead):
     return score, reasoning
 
 def determine_status(score):
-    """Determine the lead status based on score"""
-    if score >= 80:
+    """Determine the lead status based on score.
+
+    Thresholds (lowered 2026-06-22 since Google Places leads have no email
+    yet — they'll get bumped up after browser enrichment finds contact info):
+    - 70+: ready_for_prototype (auto-prototype)
+    - 55+: pending_review (likely good, agent reviews before prototype)
+    - 40+: flag_for_review (might work, save for later)
+    - <40:  ignore
+    """
+    if score >= 70:
         return "ready_for_prototype"
-    elif score >= 65:
+    elif score >= 55:
         return "pending_review"
-    elif score >= 50:
+    elif score >= 40:
         return "flag_for_review"
-    elif score >= 35:
-        return "save_for_later"
     else:
         return "ignore"
 
