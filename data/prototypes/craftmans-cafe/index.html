@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Craftmans Cafe — Demo Preview</title>
+  <meta name="description" content="Unofficial preview concept for Craftmans Cafe — coffee shop in Cornwall.">
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    *,*::before,*::after { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; color: #1a1a1a; }
+    a { color: inherit; }
+    img { max-width: 100%; height: auto; }
+    .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+  </style>
+</head>
+<body>
+<think>The user wants me to generate only the HTML body content for a one-page landing page for a coffee shop business. Let me carefully follow all the requirements:
+
+1. Header with watermark banner
+2. Hero section with specific elements
+3. Services section with 3-4 cards
+4. About section
+5. Booking section with Cal.com embed
+6. Footer
+
+I need to use inline CSS or a style tag in the body. The user said "no <html>, <head>, <style>" but then later said "Use inline CSS or a <style> tag in body." This is a bit contradictory but I think the instruction at the end overrides - I can use a style tag in body. Actually, re-reading: "Generate only the HTML <body> content (no <html>, <head>, <style>)" and then "Use inline CSS or a <style> tag in body." 
+
+I'll interpret this as: don't include html/head tags, but I can use a style tag inside the body OR use inline CSS. The second instruction is more specific and allows the style tag in body, so I'll include a style tag in the body for cleaner code, with some inline CSS as needed.
+
+Let me create a clean, modern, mobile-responsive design:
+
+- Hero with background image
+- Coffee shop themed colors (warm browns, cream, etc.)
+- 4 service cards (Espresso Drinks, Pastries & Baked Goods, Breakfast & Lunch, Specialty Brews)
+- About section with the Cornwall, Ontario description
+- Cal.com embed (I'll use a placeholder iframe)
+- Footer with attribution
+
+Let me write this out:</think>```html
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #2b1810; line-height: 1.6; }
+  .watermark-banner { background: #1a1a1a; color: #f5e6d3; text-align: center; padding: 10px 15px; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; border-bottom: 2px solid #c9a87c; }
+  .hero { position: relative; min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; background: linear-gradient(rgba(43, 24, 16, 0.65), rgba(43, 24, 16, 0.65)), url('./images/hero.jpg') center/cover no-repeat; color: #fff; padding: 60px 20px; }
+  .hero-content { max-width: 800px; }
+  .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 15px; font-weight: 800; letter-spacing: -1px; text-shadow: 2px 2px 8px rgba(0,0,0,0.4); }
+  .hero .tagline { font-size: clamp(1.1rem, 2.5vw, 1.5rem); margin-bottom: 35px; opacity: 0.95; font-weight: 300; }
+  .cta-btn { display: inline-block; background: #c9a87c; color: #2b1810; padding: 16px 36px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 1.05rem; border: none; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+  .cta-btn:hover { background: #b8956a; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+  .services { padding: 80px 20px; background: #faf6f0; }
+  .section-title { text-align: center; font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 50px; color: #2b1810; font-weight: 700; }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
+  .service-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: transform 0.3s ease; }
+  .service-card:hover { transform: translateY(-5px); }
+  .service-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+  .service-card h3 { padding: 20px 20px 8px; font-size: 1.3rem; color: #2b1810; }
+  .service-card p { padding: 0 20px 20px; color: #5a4a3a; font-size: 0.95rem; }
+  .about { padding: 80px 20px; background: #fff; text-align: center; }
+  .about-content { max-width: 750px; margin: 0 auto; }
+  .about p { font-size: 1.15rem; color: #4a3a2a; line-height: 1.8; }
+  .book-call { padding: 80px 20px; background: #2b1810; color: #fff; text-align: center; }
+  .book-call h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 15px; }
+  .book-call p { margin-bottom: 30px; opacity: 0.9; font-size: 1.1rem; }
+  .cal-embed { max-width: 900px; margin: 30px auto 0; background: #fff; border-radius: 12px; overflow: hidden; min-height: 500px; }
+  .cal-embed iframe { width: 100%; height: 600px; border: none; display: block; }
+  footer { background: #1a0e08; color: #c9a87c; text-align: center; padding: 25px 20px; font-size: 0.9rem; }
+  @media (max-width: 600px) { .hero { min-height: 60vh; } .services, .about, .book-call { padding: 60px 20px; } }
+</style>
+
+<header>
+  <div class="watermark-banner">Demo Preview — Claim this website to make it live</div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Craftmans Cafe</h1>
+    <p class="tagline">Cornwall's favorite spot for handcrafted coffee, fresh pastries, and community vibes.</p>
+    <button class="cta-btn" onclick="alert('Claim this website to unlock the live version'); return false;">Claim this website to unlock</button>
+  </div>
+</section>
+
+<section class="services">
+  <h2 class="section-title">What We Serve</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <img src="./images/section_1.jpg" alt="Espresso drinks">
+      <h3>Espresso & Coffee</h3>
+      <p>From rich lattes to bold americanos, every cup is crafted with locally roasted beans.</p>
+    </div>
+    <div class="service-card">
+      <img src="./images/section_2.jpg" alt="Pastries">
+      <h3>Fresh Pastries</h3>
+      <p>Buttery croissants, scones, and muffins baked fresh every morning on-site.</p>
+    </div>
+    <div class="service-card">
+      <img src="./images/section_1.jpg" alt="Breakfast">
+      <h3>Breakfast & Brunch</h3>
+      <p>Hearty plates to start your day — eggs, sandwiches, and weekend brunch specials.</p>
+    </div>
+    <div class="service-card">
+      <img src="./images/section_2.jpg" alt="Specialty drinks">
+      <h3>Specialty Drinks</h3>
+      <p>Seasonal creations, cold brews, and our signature hand-blended refreshers.</p>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <h2 class="section-title">About Us</h2>
+  <div class="about-content">
+    <p>Craftmans Cafe is a local coffee shop in the heart of Cornwall, Ontario. We're passionate about serving high-quality coffee, homemade food, and creating a warm space where neighbors become friends. Whether you're grabbing your morning cup or settling in for an afternoon chat, our doors are always open.</p>
+  </div>
+</section>
+
+<section class="book-call">
+  <h2>Want to chat?</h2>
+  <p>Let's connect and talk about how we can help your business grow.</p>
+  <button class="cta-btn" onclick="alert('Claim this website to unlock the live version'); return false;">Book a 5-min call</button>
+  <div class="cal-embed">
+    <iframe src="https://cal.com/sitesprint/intro" frameborder="0" allowfullscreen></iframe>
+  </div>
+</section>
+
+<footer>
+  <p>Concept by SiteSprint · Demo Preview</p>
+</footer>
+<div style="position:fixed;bottom:20px;right:20px;background:rgba(255,255,255,0.95);padding:8px 16px;border-radius:4px;font-size:12px;color:#666;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+  SiteSprint Preview · Craftmans Cafe
+</div>
+</body>
+</html>

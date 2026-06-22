@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Hair Salon - Premium Hair & Beauty Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        /* Demo banner */
+        .demo-banner {
+            background: #ff6b35;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        /* Watermark */
+        .watermark {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.3;
+            font-size: 24px;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 999;
+        }
+        
+        /* Main content needs to be pushed down */
+        .main-content {
+            margin-top: 50px;
+        }
+        
+        /* Hero section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/hero.jpg') center/cover;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #ff6b35;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #e55a2b;
+        }
+        
+        /* Sections */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+        }
+        
+        /* Services grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .service-card h3 {
+            margin-bottom: 15px;
+            color: #ff6b35;
+        }
+        
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .feature {
+            text-align: center;
+        }
+        
+        .feature i {
+            font-size: 3rem;
+            color: #ff6b35;
+            margin-bottom: 20px;
+        }
+        
+        /* Images */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .image-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .image-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        /* Contact form */
+        .contact-form {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        /* Demo lock message */
+        .demo-lock-message {
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid #ff6b35;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Demo Banner -->
+    <div class="demo-banner">
+        Demo Preview &mdash; Claim this website to make it live
+    </div>
+    
+    <!-- Watermark -->
+    <div class="watermark">
+        SiteSprint Preview
+    </div>
+    
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Modern Hair Salon</h1>
+                <p>Hair salon offering cuts, coloring, styling, and treatments. Walk-ins welcome. Active Instagram with photos of work.</p>
+                <a href="#" class="btn" onclick="alert('Unlock the live version to make this CTA functional'); return false;">Get Started Today</a>
+            </div>
+        </section>
+        
+        <!-- Features Section -->
+        <section>
+            <h2 class="section-title">Why Choose Us</h2>
+            <div class="features">
+                <div class="feature"><i>✓</i><h3>Experienced stylists</h3></div><div class="feature"><i>✓</i><h3>Premium products</h3></div><div class="feature"><i>✓</i><h3>Relaxing atmosphere</h3></div><div class="feature"><i>✓</i><h3>Personalized service</h3></div>
+            </div>
+        </section>
+        
+        <!-- Services Section -->
+        <section>
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card"><h3>Haircuts</h3><p>Professional haircuts service tailored to your needs.</p></div><div class="service-card"><h3>Coloring</h3><p>Professional coloring service tailored to your needs.</p></div><div class="service-card"><h3>Styling</h3><p>Professional styling service tailored to your needs.</p></div><div class="service-card"><h3>Treatments</h3><p>Professional treatments service tailored to your needs.</p></div><div class="service-card"><h3>Highlights</h3><p>Professional highlights service tailored to your needs.</p></div>
+            </div>
+        </section>
+        
+        <!-- Images Section -->
+        <section>
+            <h2 class="section-title">Our Work</h2>
+            <div class="demo-lock-message">
+                <p><strong>Demo Preview:</strong> This is an unofficial preview. Images are for demonstration purposes only.</p>
+            </div>
+            <div class="image-grid">
+                <div class="image-card"><img src="images/section_1.jpg" alt="section image"></div><div class="image-card"><img src="images/section_2.jpg" alt="section image"></div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section>
+            <h2 class="section-title">About Our Salon</h2>
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p>Hair salon offering cuts, coloring, styling, and treatments. Walk-ins welcome. Active Instagram with photos of work.</p>
+                <div class="demo-lock-message">
+                    <p><strong>Unofficial Preview:</strong> This website concept was created for Modern Hair Salon by SiteSprint. This is not the live website.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section>
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-form">
+                <div class="demo-lock-message">
+                    <p><strong>Demo Preview:</strong> Contact form is locked. Claim this website to unlock.</p>
+                </div>
+                <form onsubmit="alert('Claim this website to unlock the contact form'); return false;">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" name="phone" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required disabled></textarea>
+                    </div>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 Modern Hair Salon. All rights reserved.</p>
+            <p>[Service Area], Cornwall, Cornwall, ON K6H 4T1 | Phone: [Contact via SiteSprint]</p>
+            <div class="demo-lock-message">
+                <p><strong>Demo Preview Concept</strong> - This is not the live website. <a href="#" onclick="alert('Unlock the live version to claim this website'); return false;">Claim this website</a> to make it live.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Demo lock functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click handlers to all links and buttons
+            const links = document.querySelectorAll('a[href]:not(.demo-banner a)');
+            const buttons = document.querySelectorAll('button, input[type="submit"]');
+            
+            links.forEach(link => {
+                if (!link.href.includes('#')) {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        alert('Unlock the live version to make this link functional');
+                    });
+                }
+            });
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Claim this website to unlock this feature');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

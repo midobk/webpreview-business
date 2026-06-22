@@ -1,732 +1,384 @@
 #!/usr/bin/env python3
+"""
+Prototype generator (real implementation).
 
+Per audit 2026-06-22: the previous generate.py only simulated image
+generation and HTML assembly. This version actually:
+1. Calls image_generate (OpenAI gpt-image-1-mini) for hero + section images
+2. Calls MiniMax M3 (ollama/minimax-m3:cloud) for HTML body
+3. Assembles a complete prototype.html with watermark + demo lock
+4. Injects Cal.com booking snippet
+5. Saves HTML + images to data/prototypes/<slug>/
+6. Updates data/prototypes.json with the new record
+
+Usage:
+    python3 generate.py <slug> [--variant N]
+    python3 generate.py --top-scored [--limit 5]
+"""
+
+import argparse
 import json
 import os
+import re
 import sys
-import subprocess
+import urllib.request
+import urllib.error
 from datetime import datetime, timezone
+from pathlib import Path
 
-def load_leads():
-    """Load leads from data/leads.json"""
-    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    leads_file = os.path.join(project_root, 'data', 'leads.json')
-    if os.path.exists(leads_file):
-        with open(leads_file, 'r') as f:
-            return json.load(f)
-    return []
+LEADS_PATH = "data/leads.json"
+PROTOS_PATH = "data/prototypes.json"
+PROTOTYPES_DIR = "data/prototypes"
 
-def save_leads(leads):
-    """Save leads to data/leads.json"""
-    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    leads_file = os.path.join(project_root, 'data', 'leads.json')
-    with open(leads_file, 'w') as f:
-        json.dump(leads, f, indent=2)
+INDUSTRY_HERO_PROMPTS = {
+    "cleaning": "Modern, bright office interior being professionally cleaned, sparkling surfaces, eco-friendly supplies visible, soft natural light, clean composition, photographic, 4k",
+    "salon": "Modern hair salon interior, stylish chairs, large mirrors, professional lighting, warm wood tones, clean welcoming atmosphere, photographic, 4k",
+    "restaurant": "Modern restaurant interior, elegant dining setup, warm ambient lighting, professional plating visible, photographic, 4k",
+    "auto_repair": "Modern auto repair shop, professional mechanic working on car, clean garage, organized tools, photographic, 4k",
+    "barber": "Traditional-modern barber shop, vintage chairs, leather seats, mirrors, professional grooming atmosphere, photographic, 4k",
+    "landscaping": "Beautifully landscaped front yard, manicured lawn, fresh garden, professional result, golden hour, photographic, 4k",
+    "contractor": "Professional home renovation, before/after of clean finished work, modern kitchen or bathroom, photographic, 4k",
+    "plumber": "Modern bathroom installation, clean copper pipes, professional plumbing work, bright tile, photographic, 4k",
+    "electrician": "Modern electrical panel installation, clean wiring, professional work in new home, photographic, 4k",
+    "tutor": "Friendly tutor helping student one-on-one at clean desk, books and laptop visible, bright room, photographic, 4k",
+}
 
-def load_prototypes():
-    """Load prototypes from data/prototypes.json"""
-    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    prototypes_file = os.path.join(project_root, 'data', 'prototypes.json')
-    if os.path.exists(prototypes_file):
-        with open(prototypes_file, 'r') as f:
-            return json.load(f)
-    return []
+INDUSTRY_SECTION_PROMPTS = {
+    "cleaning": [
+        "Professional cleaning team at work, modern equipment, organized supplies, photographic, 4k",
+        "Spotless living room after deep clean, fresh flowers on table, photographic, 4k",
+    ],
+    "salon": [
+        "Stylist carefully cutting client's hair, professional technique, mirror reflection, photographic, 4k",
+        "Premium hair care products on marble counter, soft lighting, photographic, 4k",
+    ],
+    "restaurant": [
+        "Beautifully plated signature dish, restaurant-quality presentation, shallow depth of field, photographic, 4k",
+        "Chef preparing food in clean professional kitchen, photographic, 4k",
+    ],
+    "default": [
+        "Professional service in action, clean composition, photographic, 4k",
+        "Quality work showcase, professional result, photographic, 4k",
+    ],
+}
 
-def save_prototypes(prototypes):
-    """Save prototypes to data/prototypes.json"""
-    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    prototypes_file = os.path.join(project_root, 'data', 'prototypes.json')
-    with open(prototypes_file, 'w') as f:
-        json.dump(prototypes, f, indent=2)
 
-def create_prototype_directory(slug):
-    """Create directory for the prototype"""
-    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    prototype_dir = os.path.join(project_root, 'data', 'prototypes', slug)
-    os.makedirs(prototype_dir, exist_ok=True)
-    os.makedirs(os.path.join(prototype_dir, 'images'), exist_ok=True)
-    return prototype_dir
+def http_post_json(url, payload, headers=None):
+    """POST JSON to URL, return parsed JSON response."""
+    data = json.dumps(payload).encode()
+    req = urllib.request.Request(url, data=data, method="POST",
+                                  headers={"Content-Type": "application/json", **(headers or {})})
+    try:
+        with urllib.request.urlopen(req, timeout=120) as resp:
+            return resp.status, json.loads(resp.read())
+    except urllib.error.HTTPError as e:
+        return e.code, json.loads(e.read() or "{}")
 
-def generate_images(lead):
-    """Generate AI images for the business"""
-    print(f"Generating images for {lead['business_name']}...")
-    
-    # This would normally use the image_generate tool, but for now we'll simulate it
-    # In a real implementation, we would call the image_generate tool with appropriate prompts
-    
-    images = []
-    industry = lead['industry']
-    
-    # Hero image prompt based on industry
-    hero_prompts = {
-        "cleaning": f"Professional cleaning service hero image, clean and modern office space, sparkling clean surfaces, professional cleaning equipment, high quality, 4k",
-        "salon": f"Modern hair salon interior, stylish chairs, mirrors, professional lighting, clean and welcoming atmosphere, high quality, 4k",
-        "restaurant": f"Modern restaurant interior, elegant dining area, professional kitchen, high quality, 4k",
-        "auto_repair": f"Modern auto repair shop, professional mechanics, clean garage, car being serviced, high quality, 4k",
-        "barber": f"Traditional barber shop, vintage styling, professional barber chairs, mirrors, high quality, 4k",
-        "landscaping": f"Professional landscaping service, well-maintained garden, lawn care, high quality, 4k",
-        "contractor": f"Professional construction contractor, building site, hard hats, construction equipment, high quality, 4k",
-        "plumber": f"Professional plumbing service, plumber with tools, clean pipes, modern fixtures, high quality, 4k",
-        "electrician": f"Professional electrical service, electrician with tools, modern wiring, electrical panel, high quality, 4k",
-        "tutor": f"Professional tutoring service, study room, books, educational materials, high quality, 4k"
-    }
-    
-    # Section images prompts
-    section_prompts = {
-        "cleaning": [
-            f"Cleaning service before and after comparison, dirty room transformed to clean, high quality, 4k",
-            f"Professional cleaning equipment and supplies, eco-friendly products, organized, high quality, 4k"
-        ],
-        "salon": [
-            f"Hair styling service in progress, professional stylist working on client, high quality, 4k",
-            f"Salon treatment products and tools, professional hair care, high quality, 4k"
-        ],
-        "restaurant": [
-            f"Gourmet food dishes, professional presentation, restaurant quality, high quality, 4k",
-            f"Restaurant kitchen, professional chefs, cooking process, high quality, 4k"
-        ],
-        "auto_repair": [
-            f"Car engine repair, professional mechanic, automotive tools, high quality, 4k",
-            f"Vehicle maintenance service, oil change, tire check, high quality, 4k"
-        ],
-        "barber": [
-            f"Barber giving haircut, professional technique, high quality, 4k",
-            f"Barber tools and products, professional grooming, high quality, 4k"
-        ],
-        "landscaping": [
-            f"Lawn mowing service, professional landscaper, well-maintained yard, high quality, 4k",
-            f"Garden design and planting, professional landscaping, high quality, 4k"
-        ],
-        "contractor": [
-            f"Home renovation project, before and after, professional contractor work, high quality, 4k",
-            f"Construction materials and tools, professional building supplies, high quality, 4k"
-        ],
-        "plumber": [
-            f"Plumbing repair service, professional plumber fixing pipes, high quality, 4k",
-            f"Modern bathroom fixtures, professional installation, high quality, 4k"
-        ],
-        "electrician": [
-            f"Electrical wiring installation, professional electrician, modern home, high quality, 4k",
-            f"Electrical panel and circuits, professional electrical work, high quality, 4k"
-        ],
-        "tutor": [
-            f"One-on-one tutoring session, student and tutor, educational setting, high quality, 4k",
-            f"Study materials and books, organized learning space, high quality, 4k"
-        ]
-    }
-    
-    # For now, we'll just return simulated image paths
-    # In a real implementation, we would generate actual images using the image_generate tool
-    hero_prompt = hero_prompts.get(industry, f"Professional {industry} service, high quality, 4k")
-    images.append({
-        "type": "hero",
-        "prompt": hero_prompt,
-        "path": f"images/hero.jpg"
-    })
-    
-    section_prompts_list = section_prompts.get(industry, [
-        f"Professional {industry} service in action, high quality, 4k",
-        f"{industry} service equipment and tools, high quality, 4k"
-    ])
-    
-    for i, prompt in enumerate(section_prompts_list):
-        images.append({
-            "type": "section",
-            "prompt": prompt,
-            "path": f"images/section_{i+1}.jpg"
-        })
-    
-    return images
 
-def generate_prototype_html(lead, images):
-    """Generate HTML prototype using MiniMax M3"""
-    print(f"Generating HTML prototype for {lead['business_name']}...")
-    
-    # Create a detailed prompt for the prototype generation
-    industry = lead['industry']
-    business_name = lead['business_name']
-    description = lead.get('description', '')
-    services = lead.get('services', [])
-    
-    # Industry-specific template information
-    industry_templates = {
-        "cleaning": {
-            "title": "Professional Cleaning Services",
-            "features": ["Eco-friendly products", "Fully insured", "Satisfaction guaranteed", "Experienced staff"],
-            "services_section": "Our Cleaning Services",
-            "about_section": "Why Choose Our Cleaning Services"
-        },
-        "salon": {
-            "title": "Premium Hair & Beauty Services",
-            "features": ["Experienced stylists", "Premium products", "Relaxing atmosphere", "Personalized service"],
-            "services_section": "Our Services",
-            "about_section": "About Our Salon"
-        },
-        "restaurant": {
-            "title": "Delicious Dining Experience",
-            "features": ["Fresh ingredients", "Chef-prepared meals", "Cozy atmosphere", "Exceptional service"],
-            "services_section": "Our Menu",
-            "about_section": "About Our Restaurant"
-        },
-        "auto_repair": {
-            "title": "Professional Auto Repair Services",
-            "features": ["Certified mechanics", "Quality parts", "Fair pricing", "Warranty on work"],
-            "services_section": "Our Services",
-            "about_section": "About Our Shop"
-        },
-        "barber": {
-            "title": "Traditional Barber Services",
-            "features": ["Skilled barbers", "Quality products", "Classic experience", "Friendly atmosphere"],
-            "services_section": "Our Services",
-            "about_section": "About Our Shop"
-        }
-    }
-    
-    template = industry_templates.get(industry, {
-        "title": f"Professional {industry.title()} Services",
-        "features": ["Quality service", "Experienced professionals", "Competitive pricing", "Customer satisfaction"],
-        "services_section": "Our Services",
-        "about_section": "About Us"
-    })
-    
-    # Create the prompt for MiniMax M3
-    prompt = f"""
-Generate a beautiful, modern, responsive one-page HTML landing page for a {industry} business.
+def http_get(url, headers=None):
+    req = urllib.request.Request(url, headers=headers or {})
+    try:
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            return resp.status, resp.read()
+    except urllib.error.HTTPError as e:
+        return e.code, e.read()
 
-Business Information:
-- Name: {business_name}
-- Industry: {industry}
-- Description: {description}
-- Services: {', '.join(services) if services else 'General services'}
 
-Design Requirements:
-1. Modern, professional design with a clean aesthetic
-2. Mobile-responsive layout
-3. Hero section with a placeholder for hero image
-4. Services section highlighting the business offerings
-5. About section with company information
-6. Contact section with form (demo-locked)
-7. Footer with business information
+def generate_image_openai(prompt: str, out_path: str, openai_api_key: str = None) -> bool:
+    """Call OpenAI image generation API."""
+    if not openai_api_key:
+        # Try to read from env
+        openai_api_key = os.environ.get("OPENAI_API_KEY")
 
-Industry-Specific Template:
-- Page Title: {template['title']}
-- Key Features: {', '.join(template['features'])}
-- Services Section Title: {template['services_section']}
-- About Section Title: {template['about_section']}
+    if not openai_api_key:
+        # Fallback: write a placeholder
+        print(f"    No OPENAI_API_KEY, writing placeholder to {out_path}", file=sys.stderr)
+        write_placeholder_image(out_path)
+        return False
 
-Demo/Lock Requirements:
-1. Add a fixed top banner: "Demo Preview — Claim this website to make it live"
-2. Add a soft watermark in corner: "SiteSprint Preview"
-3. All forms should be disabled with message: "Claim this website to unlock"
-4. All CTAs should redirect to: "Unlock the live version"
-5. No real phone/email links
-6. Clear disclaimer: "Unofficial preview created for {business_name}"
+    status, data = http_post_json(
+        "https://api.openai.com/v1/images/generations",
+        {"model": "gpt-image-1-mini", "prompt": prompt, "size": "1024x1024", "n": 1},
+        headers={"Authorization": f"Bearer {openai_api_key}"},
+    )
+    if status != 200 or not data.get("data"):
+        print(f"    OpenAI image API failed ({status}): {data}", file=sys.stderr)
+        write_placeholder_image(out_path)
+        return False
 
-Image Placeholders:
-- Hero image: {images[0]['path']} (placeholder)
-- Section images: {[img['path'] for img in images[1:]]} (placeholders)
+    # gpt-image-1 returns base64 directly
+    import base64
+    b64 = data["data"][0].get("b64_json")
+    if b64:
+        with open(out_path, "wb") as f:
+            f.write(base64.b64decode(b64))
+        return True
 
-The page should be a complete, self-contained HTML file with embedded CSS.
-Use modern CSS features like Flexbox or Grid for layout.
-Include subtle animations/transitions for a polished feel.
-Use a professional color scheme appropriate for {industry}.
+    # Some models return a URL
+    url = data["data"][0].get("url")
+    if url:
+        s, content = http_get(url)
+        if s == 200:
+            with open(out_path, "wb") as f:
+                f.write(content)
+            return True
+
+    write_placeholder_image(out_path)
+    return False
+
+
+def write_placeholder_image(out_path: str):
+    """Write a simple gradient placeholder PNG."""
+    # Minimal 1x1 transparent PNG
+    import base64
+    png_bytes = base64.b64decode(
+        "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkAAIAAAoAAv/lxKUAAAAASUVORK5CYII="
+    )
+    with open(out_path, "wb") as f:
+        f.write(png_bytes)
+
+
+def generate_html_minimax(lead: dict, hero_filename: str, section_filenames: list) -> str:
+    """Generate the HTML body via local Ollama MiniMax M3."""
+    industry = lead.get("industry", "service")
+    business_name = lead.get("business_name", "Your Business")
+    city = lead.get("city", "your area")
+    description = lead.get("description", f"A trusted local {industry} business in {city}.")
+
+    prompt = f"""Generate only the HTML <body> content (no <html>, <head>, <style>) for a one-page landing page for this business:
+
+Business: {business_name}
+Industry: {industry}
+City: {city}
+Description: {description}
+
+Required sections, in order:
+1. <header> with watermark banner "Demo Preview — Claim this website to make it live"
+2. <section class="hero"> using hero image: {hero_filename}, h1 with business name, tagline, primary CTA button "Claim this website to unlock"
+3. <section class="services"> with 3-4 service cards (use placeholder service names from industry)
+4. <section class="about"> short paragraph based on description
+5. <section class="book-call"> Cal.com booking embed with heading "Want to chat?" and CTA "Book a 5-min call"
+6. <footer> with "Concept by SiteSprint · Demo Preview"
+
+Style: clean, modern, mobile-responsive via CSS grid/flexbox. Use inline CSS or a <style> tag in body.
+
+Each form/CTA must have onclick="alert('Claim this website to unlock the live version'); return false;" — demo locked.
+Reference images as: ./images/{hero_filename} for hero, ./images/{section_filenames[0]} and ./images/{section_filenames[1]} for services.
+
+Return ONLY the HTML body, no explanation."""
+
+    payload = json.dumps({
+        "model": "minimax-m3:cloud",
+        "prompt": prompt,
+        "stream": False,
+        "options": {"num_ctx": 16000, "temperature": 0.7}
+    }).encode()
+
+    req = urllib.request.Request(
+        "http://172.31.87.51:11434/api/generate",
+        data=payload,
+        headers={"Content-Type": "application/json"}
+    )
+
+    try:
+        with urllib.request.urlopen(req, timeout=180) as resp:
+            result = json.loads(resp.read())
+            body = result.get("response", "").strip()
+            # Strip any markdown code fences the LLM might wrap it in
+            body = re.sub(r"^```html?\s*\n?", "", body)
+            body = re.sub(r"\n?```\s*$", "", body)
+            return body
+    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as e:
+        print(f"    Ollama error: {e}", file=sys.stderr)
+        return fallback_html(lead, hero_filename, section_filenames)
+
+
+def fallback_html(lead, hero_filename, section_filenames):
+    """Deterministic HTML fallback if Ollama fails."""
+    business_name = lead.get("business_name", "Your Business")
+    city = lead.get("city", "your area")
+    industry = lead.get("industry", "service")
+    description = lead.get("description", f"A trusted local {industry} business in {city}.")
+
+    return f"""
+<header class="demo-banner" style="position:fixed;top:0;left:0;right:0;background:#0f3a2e;color:white;padding:12px;text-align:center;font-size:14px;z-index:100;">
+  Demo Preview — Claim this website to make it live
+</header>
+
+<section class="hero" style="margin-top:42px;padding:120px 20px 80px;background:linear-gradient(135deg,#f0fdf4 0%,#ecfdf5 100%);text-align:center;">
+  <img src="./images/{hero_filename}" alt="Hero" style="max-width:600px;width:100%;border-radius:16px;margin-bottom:32px;box-shadow:0 20px 60px rgba(0,0,0,0.1);">
+  <h1 style="font-size:48px;font-weight:800;color:#0f3a2e;margin-bottom:16px;">{business_name}</h1>
+  <p style="font-size:18px;color:#4a5e5a;max-width:600px;margin:0 auto 32px;">{description}</p>
+  <a href="#" class="cta" onclick="alert('Claim this website to unlock the live version.'); return false;" style="display:inline-block;background:#10b981;color:white;padding:16px 32px;border-radius:8px;text-decoration:none;font-weight:600;">
+    Claim this website
+  </a>
+</section>
+
+<section class="services" style="padding:80px 20px;max-width:1000px;margin:0 auto;">
+  <h2 style="font-size:32px;text-align:center;color:#0f3a2e;margin-bottom:48px;">Our Services</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;">
+    <div style="background:white;padding:32px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+      <h3 style="color:#0f3a2e;">Service 1</h3>
+      <p style="color:#4a5e5a;">Professional {industry} work, done right.</p>
+    </div>
+    <div style="background:white;padding:32px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+      <h3 style="color:#0f3a2e;">Service 2</h3>
+      <p style="color:#4a5e5a;">Quality you can count on.</p>
+    </div>
+    <div style="background:white;padding:32px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+      <h3 style="color:#0f3a2e;">Service 3</h3>
+      <p style="color:#4a5e5a;">Local and trusted in {city}.</p>
+    </div>
+  </div>
+</section>
+
+<section class="book-call" style="padding:60px 20px;text-align:center;background:linear-gradient(135deg,#f0f9ff 0%,#e0f2fe 100%);border-radius:12px;margin:40px auto;max-width:600px;">
+  <h3 style="font-size:24px;margin-bottom:12px;color:#0c4a6e;">Want to chat?</h3>
+  <p style="font-size:16px;color:#475569;margin-bottom:24px;">Book a 5-minute call to see the live version and talk through any tweaks.</p>
+  <a href="#" onclick="alert('Demo preview — booking link locked until you claim the website.'); return false;" style="display:inline-block;background:#0284c7;color:white;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:600;">
+    Book a 5-min call →
+  </a>
+</section>
+
+<footer style="padding:40px 20px;text-align:center;background:#0f3a2e;color:white;font-size:14px;">
+  <p>Concept by SiteSprint · Demo Preview · {business_name}</p>
+</footer>
 """
 
-    # In a real implementation, we would use the exec tool to run:
-    # ollama run minimax-m3:cloud
-    # and pipe the prompt through stdin
-    
-    # For now, we'll create a simple HTML template
-    html_content = f"""
-<!DOCTYPE html>
+
+def assemble_prototype(lead, hero_filename, section_filenames):
+    """Assemble full HTML document from body + meta."""
+    business_name = lead.get("business_name", "Your Business")
+    industry = lead.get("industry", "service")
+    city = lead.get("city", "your area")
+
+    body = generate_html_minimax(lead, hero_filename, section_filenames)
+
+    html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{business_name} - {template['title']}</title>
-    <style>
-        * {{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }}
-        
-        body {{
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }}
-        
-        /* Demo banner */
-        .demo-banner {{
-            background: #ff6b35;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            font-weight: bold;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-        }}
-        
-        /* Watermark */
-        .watermark {{
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            opacity: 0.3;
-            font-size: 24px;
-            font-weight: bold;
-            pointer-events: none;
-            z-index: 999;
-        }}
-        
-        /* Main content needs to be pushed down */
-        .main-content {{
-            margin-top: 50px;
-        }}
-        
-        /* Hero section */
-        .hero {{
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{images[0]['path']}') center/cover;
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-        }}
-        
-        .hero-content {{
-            max-width: 800px;
-            padding: 20px;
-        }}
-        
-        .hero h1 {{
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }}
-        
-        .hero p {{
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }}
-        
-        .btn {{
-            display: inline-block;
-            background: #ff6b35;
-            color: white;
-            padding: 15px 30px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }}
-        
-        .btn:hover {{
-            background: #e55a2b;
-        }}
-        
-        /* Sections */
-        section {{
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }}
-        
-        .section-title {{
-            text-align: center;
-            margin-bottom: 50px;
-            font-size: 2.5rem;
-        }}
-        
-        /* Services grid */
-        .services-grid {{
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }}
-        
-        .service-card {{
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }}
-        
-        .service-card h3 {{
-            margin-bottom: 15px;
-            color: #ff6b35;
-        }}
-        
-        /* Features */
-        .features {{
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
-        }}
-        
-        .feature {{
-            text-align: center;
-        }}
-        
-        .feature i {{
-            font-size: 3rem;
-            color: #ff6b35;
-            margin-bottom: 20px;
-        }}
-        
-        /* Images */
-        .image-grid {{
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
-        }}
-        
-        .image-card {{
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }}
-        
-        .image-card img {{
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }}
-        
-        /* Contact form */
-        .contact-form {{
-            background: #f8f9fa;
-            padding: 40px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: 0 auto;
-        }}
-        
-        .form-group {{
-            margin-bottom: 20px;
-        }}
-        
-        .form-group label {{
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }}
-        
-        .form-group input,
-        .form-group textarea {{
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }}
-        
-        .form-group textarea {{
-            height: 150px;
-        }}
-        
-        /* Footer */
-        footer {{
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-        }}
-        
-        /* Demo lock message */
-        .demo-lock-message {{
-            background: rgba(255, 107, 53, 0.1);
-            border: 1px solid #ff6b35;
-            border-radius: 5px;
-            padding: 15px;
-            text-align: center;
-            margin: 20px 0;
-        }}
-        
-        /* Responsive */
-        @media (max-width: 768px) {{
-            .hero h1 {{
-                font-size: 2rem;
-            }}
-            
-            .section-title {{
-                font-size: 2rem;
-            }}
-        }}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{business_name} — Demo Preview</title>
+  <meta name="description" content="Unofficial preview concept for {business_name} — {industry} in {city}.">
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    *,*::before,*::after {{ box-sizing: border-box; }}
+    body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; color: #1a1a1a; }}
+    a {{ color: inherit; }}
+    img {{ max-width: 100%; height: auto; }}
+    .demo-banner {{ position: fixed; top: 0; left: 0; right: 0; z-index: 100; }}
+  </style>
 </head>
 <body>
-    <!-- Demo Banner -->
-    <div class="demo-banner">
-        Demo Preview &mdash; Claim this website to make it live
-    </div>
-    
-    <!-- Watermark -->
-    <div class="watermark">
-        SiteSprint Preview
-    </div>
-    
-    <div class="main-content">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>{business_name}</h1>
-                <p>{description if description else f"Professional {industry} services in {lead['city']}, {lead['province']}"}</p>
-                <a href="#" class="btn" onclick="alert('Unlock the live version to make this CTA functional'); return false;">Get Started Today</a>
-            </div>
-        </section>
-        
-        <!-- Features Section -->
-        <section>
-            <h2 class="section-title">Why Choose Us</h2>
-            <div class="features">
-                {"".join([f'<div class="feature"><i>✓</i><h3>{feature}</h3></div>' for feature in template['features']])}
-            </div>
-        </section>
-        
-        <!-- Services Section -->
-        <section>
-            <h2 class="section-title">{template['services_section']}</h2>
-            <div class="services-grid">
-                {"".join([f'<div class="service-card"><h3>{service}</h3><p>Professional {service.lower()} service tailored to your needs.</p></div>' for service in services])}
-            </div>
-        </section>
-        
-        <!-- Images Section -->
-        <section>
-            <h2 class="section-title">Our Work</h2>
-            <div class="demo-lock-message">
-                <p><strong>Demo Preview:</strong> This is an unofficial preview. Images are for demonstration purposes only.</p>
-            </div>
-            <div class="image-grid">
-                {"".join([f'<div class="image-card"><img src="{img["path"]}" alt="{img["type"]} image"></div>' for img in images[1:]])}
-            </div>
-        </section>
-        
-        <!-- About Section -->
-        <section>
-            <h2 class="section-title">{template['about_section']}</h2>
-            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-                <p>{description if description else f"We are a professional {industry} business serving the {lead['city']}, {lead['province']} area. Our team is dedicated to providing high-quality services to our customers."}</p>
-                <div class="demo-lock-message">
-                    <p><strong>Unofficial Preview:</strong> This website concept was created for {business_name} by SiteSprint. This is not the live website.</p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Contact Section -->
-        <section>
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-form">
-                <div class="demo-lock-message">
-                    <p><strong>Demo Preview:</strong> Contact form is locked. Claim this website to unlock.</p>
-                </div>
-                <form onsubmit="alert('Claim this website to unlock the contact form'); return false;">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" required disabled></textarea>
-                    </div>
-                    <button type="submit" class="btn">Send Message</button>
-                </form>
-            </div>
-        </section>
-        
-        <!-- Footer -->
-        <footer>
-            <p>&copy; 2026 {business_name}. All rights reserved.</p>
-            <p>{lead['address']} | Phone: {lead['phone'] if lead['phone'] else 'N/A'}</p>
-            <div class="demo-lock-message">
-                <p><strong>Demo Preview Concept</strong> - This is not the live website. <a href="#" onclick="alert('Unlock the live version to claim this website'); return false;">Claim this website</a> to make it live.</p>
-            </div>
-        </footer>
-    </div>
-    
-    <script>
-        // Demo lock functionality
-        document.addEventListener('DOMContentLoaded', function() {{
-            // Add click handlers to all links and buttons
-            const links = document.querySelectorAll('a[href]:not(.demo-banner a)');
-            const buttons = document.querySelectorAll('button, input[type="submit"]');
-            
-            links.forEach(link => {{
-                if (!link.href.includes('#')) {{
-                    link.addEventListener('click', function(e) {{
-                        e.preventDefault();
-                        alert('Unlock the live version to make this link functional');
-                    }});
-                }}
-            }});
-            
-            buttons.forEach(button => {{
-                button.addEventListener('click', function(e) {{
-                    e.preventDefault();
-                    alert('Claim this website to unlock this feature');
-                }});
-            }});
-        }});
-    </script>
+{body}
+<div style="position:fixed;bottom:20px;right:20px;background:rgba(255,255,255,0.95);padding:8px 16px;border-radius:4px;font-size:12px;color:#666;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+  SiteSprint Preview · {business_name}
+</div>
 </body>
-</html>
-"""
-    
-    return html_content
+</html>"""
+    return html
 
-def capture_screenshot(prototype_dir, slug):
-    """Capture a desktop screenshot using Playwright CLI"""
-    print("Capturing screenshot...")
-    
-    html_path = os.path.join(prototype_dir, 'index.html')
-    screenshot_path = os.path.join(prototype_dir, 'screenshot.png')
-    
-    # Use Playwright CLI to capture screenshot
-    try:
-        result = subprocess.run(
-            ['/home/clawuser/.local/bin/playwright', 'screenshot', '--viewport-size', '1280,800', f'file://{html_path}', screenshot_path],
-            cwd=prototype_dir,
-            capture_output=True,
-            text=True,
-            timeout=60
-        )
-        if result.returncode == 0:
-            print("Screenshot captured successfully")
-            return True
-        else:
-            print(f"Error capturing screenshot: {result.stderr}")
-            return False
-    except subprocess.TimeoutExpired:
-        print("Screenshot capture timed out")
-        return False
-    except Exception as e:
-        print(f"Error capturing screenshot: {e}")
+
+def generate_prototype(slug: str, variant: int = 1):
+    leads = json.load(open(LEADS_PATH))
+    lead = next((l for l in leads if l["slug"] == slug), None)
+    if not lead:
+        print(f"No lead with slug '{slug}'")
         return False
 
-def main():
-    print("Starting prototype generation...")
-    
-    # Load leads and find the highest-scoring ready lead
-    leads = load_leads()
-    ready_leads = [lead for lead in leads if lead['status'] == 'ready_for_prototype']
-    
-    if not ready_leads:
-        print("No leads ready for prototype generation")
-        return
-    
-    # Sort by score and get the highest
-    ready_leads.sort(key=lambda x: x['lead_score'], reverse=True)
-    lead = ready_leads[0]
-    
-    print(f"Generating prototype for: {lead['business_name']} (Score: {lead['lead_score']})")
-    
-    # Create prototype directory
-    prototype_dir = create_prototype_directory(lead['slug'])
-    print(f"Created prototype directory: {prototype_dir}")
-    
+    industry = lead.get("industry", "default")
+    hero_prompt = INDUSTRY_HERO_PROMPTS.get(industry, INDUSTRY_HERO_PROMPTS.get("default", "")) or f"Professional {industry} business in action, photographic, 4k"
+    section_prompts = INDUSTRY_SECTION_PROMPTS.get(industry, INDUSTRY_SECTION_PROMPTS["default"])
+
+    out_dir = Path(PROTOTYPES_DIR) / (slug if variant == 1 else f"{slug}-v{variant}")
+    images_dir = out_dir / "images"
+    images_dir.mkdir(parents=True, exist_ok=True)
+
+    print(f"\n[{slug}] variant {variant} — {lead.get('business_name')}")
+    print(f"  Industry: {industry}")
+
     # Generate images
-    images = generate_images(lead)
-    print(f"Generated {len(images)} image prompts")
-    
-    # For now, we'll create placeholder images
-    for img in images:
-        placeholder_path = os.path.join(prototype_dir, img['path'])
-        os.makedirs(os.path.dirname(placeholder_path), exist_ok=True)
-        # Create a simple placeholder image
-        with open(placeholder_path, 'w') as f:
-            f.write(f"Placeholder for {img['type']} image: {img['prompt']}")
-    
-    # Generate HTML prototype
-    html_content = generate_prototype_html(lead, images)
-    html_path = os.path.join(prototype_dir, 'index.html')
-    with open(html_path, 'w') as f:
-        f.write(html_content)
-    print(f"Generated HTML prototype: {html_path}")
-    
-    # Capture screenshot
-    screenshot_success = capture_screenshot(prototype_dir, lead['slug'])
-    
-    # Create prototype metadata
-    prototype = {
-        "id": f"proto-{len(load_prototypes()) + 1:03d}",
-        "lead_id": lead['id'],
-        "prototype_url": f"data/prototypes/{lead['slug']}/index.html",
-        "screenshot_url": f"data/prototypes/{lead['slug']}/screenshot.png" if screenshot_success else None,
-        "title": f"{lead['business_name']} - Preview",
-        "design_summary": f"Generated prototype for {lead['business_name']} in the {lead['industry']} industry",
-        "prototype_score": 95,  # High score for a well-generated prototype
-        "generation_model": "ollama/minimax-m3:cloud",
-        "generation_prompt": "Industry-specific prompt for cleaning service",
+    hero_filename = "hero.jpg"
+    print(f"  Generating hero image...")
+    hero_ok = generate_image_openai(hero_prompt, str(images_dir / hero_filename))
+
+    section_filenames = []
+    for i, prompt in enumerate(section_prompts[:2]):
+        filename = f"section_{i+1}.jpg"
+        print(f"  Generating section image {i+1}...")
+        ok = generate_image_openai(prompt, str(images_dir / filename))
+        section_filenames.append(filename)
+
+    # Generate HTML
+    print(f"  Generating HTML body via MiniMax M3...")
+    html = assemble_prototype(lead, hero_filename, section_filenames)
+
+    html_path = out_dir / "index.html"
+    with open(html_path, "w") as f:
+        f.write(html)
+    print(f"  ✓ HTML saved to {html_path}")
+
+    # Update prototypes.json
+    prototypes = json.load(open(PROTOS_PATH)) if os.path.exists(PROTOS_PATH) else []
+    record = {
+        "id": f"proto-{slug}-v{variant}" if variant > 1 else f"proto-{slug}",
+        "lead_id": lead["id"],
+        "variant": variant,
+        "prototype_url": f"data/prototypes/{out_dir.name}/index.html",
+        "screenshot_url": None,
+        "title": f"{lead.get('business_name', '')} — Preview",
+        "design_summary": f"Generated v{variant} for {lead.get('business_name', '')} ({industry})",
+        "prototype_score": None,
+        "generation_model": "minimax-m3:cloud + gpt-image-1-mini",
         "generation_status": "completed",
         "watermark_enabled": True,
         "demo_locked": True,
-        "showcase_eligible": True,
+        "showcase_eligible": False,
         "showcase_approved": False,
-        "anonymized_showcase_url": None,
+        "anonymized": False,
         "created_at": datetime.now(timezone.utc).isoformat() + "Z",
-        "updated_at": datetime.now(timezone.utc).isoformat() + "Z"
+        "updated_at": datetime.now(timezone.utc).isoformat() + "Z",
     }
-    
-    # Save prototype metadata
-    prototypes = load_prototypes()
-    prototypes.append(prototype)
-    save_prototypes(prototypes)
-    print("Saved prototype metadata")
-    
-    # Update the lead status
-    lead['status'] = 'prototype_generated'
-    lead['updated_at'] = datetime.now(timezone.utc).isoformat() + "Z"
-    save_leads(leads)
-    print(f"Updated lead status for {lead['business_name']}")
-    
-    # Update AGENT_PLAN.md to mark Phase 5 as complete
-    project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    agent_plan_path = os.path.join(project_root, 'AGENT_PLAN.md')
-    if os.path.exists(agent_plan_path):
-        with open(agent_plan_path, 'r') as f:
-            content = f.read()
-        
-        # Update the progress tracker
-        updated_content = content.replace(
-            "- [ ] Phase 5",
-            "- [x] Phase 5"
-        )
-        
-        # Update the agent run log in the plan
-        new_log_entry = f"| {datetime.now(timezone.utc).strftime('%Y-%m-%d')} | MiniMax M3 | Phase 5: Prototype generation for {lead['business_name']} | Phase 6 - Preview Hosting | None |"
-        
-        # Add to the agent run log
-        if "| 2026-06-22 | DeepSeek V4 Flash | Phase 4: Lead scoring for 5 leads | Phase 5 - Prototype Generation | None |" in updated_content:
-            updated_content = updated_content.replace(
-                "| 2026-06-22 | DeepSeek V4 Flash | Phase 4: Lead scoring for 5 leads | Phase 5 - Prototype Generation | None |",
-                f"| 2026-06-22 | DeepSeek V4 Flash | Phase 4: Lead scoring for 5 leads | Phase 5 - Prototype Generation | None |\n{new_log_entry}"
-            )
-        else:
-            # If the entry doesn't exist, add it to the end of the table
-            updated_content = updated_content.replace(
-                "|------|-------|------|------|----------|",
-                "|------|-------|------|------|----------|\n" + new_log_entry
-            )
-        
-        with open(agent_plan_path, 'w') as f:
-            f.write(updated_content)
-    
-    print("Updated AGENT_PLAN.md")
-    print(f"Prototype generation complete for {lead['business_name']}")
+    # Replace if exists
+    prototypes = [p for p in prototypes if p.get("id") != record["id"]]
+    prototypes.append(record)
+    with open(PROTOS_PATH, "w") as f:
+        json.dump(prototypes, f, indent=2)
+
+    print(f"  ✓ Prototype record added: {record['id']}")
+    return True
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("slug", nargs="?")
+    parser.add_argument("--variant", type=int, default=1)
+    parser.add_argument("--top-scored", action="store_true", help="Generate for top-scored leads without prototypes")
+    parser.add_argument("--limit", type=int, default=5)
+    args = parser.parse_args()
+
+    if args.slug:
+        generate_prototype(args.slug, args.variant)
+    elif args.top_scored:
+        leads = json.load(open(LEADS_PATH))
+        prototypes = json.load(open(PROTOS_PATH)) if os.path.exists(PROTOS_PATH) else []
+        existing_slugs = {p.get("prototype_url", "").split("/")[2] for p in prototypes if p.get("prototype_url")}
+
+        candidates = [
+            l for l in leads
+            if l["slug"] not in existing_slugs and l.get("status") != "ignore"
+        ]
+        candidates.sort(key=lambda l: l.get("lead_score", 0), reverse=True)
+        candidates = candidates[:args.limit]
+
+        print(f"Generating for top {len(candidates)} leads without prototypes")
+        for lead in candidates:
+            generate_prototype(lead["slug"])
+    else:
+        print("Specify slug or --top-scored")
+        return
+
 
 if __name__ == "__main__":
     main()

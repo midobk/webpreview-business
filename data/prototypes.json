@@ -12,11 +12,18 @@
     "generation_status": "pending",
     "watermark_enabled": true,
     "demo_locked": true,
-    "showcase_eligible": null,
+    "showcase_eligible": true,
     "showcase_approved": false,
     "anonymized_showcase_url": null,
     "created_at": "2026-06-22T00:00:00Z",
-    "updated_at": "2026-06-22T00:00:00Z"
+    "updated_at": "2026-06-22T00:00:00Z",
+    "showcase_score": 92,
+    "showcase_issues": [
+      "Uses CSS gradient backgrounds instead of real images (acceptable but lower visual richness)"
+    ],
+    "showcase_anonymized_html_path": "data/prototypes-anonymized/seaway-cleaning-services/index.html",
+    "anonymized": true,
+    "showcase_scored_at": "2026-06-22T21:33:15.614416+00:00Z"
   },
   {
     "id": "proto-002",
@@ -35,7 +42,14 @@
     "showcase_approved": true,
     "anonymized_showcase_url": null,
     "created_at": "2026-06-22T03:27:54.539487+00:00Z",
-    "updated_at": "2026-06-22T03:27:54.539540+00:00Z"
+    "updated_at": "2026-06-22T03:27:54.539540+00:00Z",
+    "showcase_score": 92,
+    "showcase_issues": [
+      "Uses CSS gradient backgrounds instead of real images (acceptable but lower visual richness)"
+    ],
+    "showcase_anonymized_html_path": "data/prototypes-anonymized/seaway-cleaning-services/index.html",
+    "anonymized": true,
+    "showcase_scored_at": "2026-06-22T21:33:15.626028+00:00Z"
   },
   {
     "id": "proto-003",
@@ -54,6 +68,30 @@
     "showcase_approved": true,
     "anonymized_showcase_url": null,
     "created_at": "2026-06-22T03:33:09.010954+00:00Z",
-    "updated_at": "2026-06-22T03:33:09.010979+00:00Z"
+    "updated_at": "2026-06-22T03:33:09.010979+00:00Z",
+    "showcase_score": 100,
+    "showcase_issues": [],
+    "showcase_anonymized_html_path": "data/prototypes-anonymized/bellas-hair-studio/index.html",
+    "anonymized": true,
+    "showcase_scored_at": "2026-06-22T21:33:15.631307+00:00Z"
+  },
+  {
+    "id": "proto-craftmans-cafe",
+    "lead_id": "lead-017",
+    "variant": 1,
+    "prototype_url": "data/prototypes/craftmans-cafe/index.html",
+    "screenshot_url": null,
+    "title": "Craftmans Cafe \u2014 Preview",
+    "design_summary": "Generated v1 for Craftmans Cafe (coffee shop)",
+    "prototype_score": null,
+    "generation_model": "minimax-m3:cloud + gpt-image-1-mini",
+    "generation_status": "completed",
+    "watermark_enabled": true,
+    "demo_locked": true,
+    "showcase_eligible": false,
+    "showcase_approved": false,
+    "anonymized": false,
+    "created_at": "2026-06-22T21:39:17.552767+00:00Z",
+    "updated_at": "2026-06-22T21:39:17.552789+00:00Z"
   }
 ]

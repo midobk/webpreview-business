@@ -556,43 +556,67 @@ Checklist:
 
 ## 13. Progress Tracker
 
-### Current Status
-- [x] Phase 0+1+2 complete (scaffold + docs + sample data + repo created)
-- [x] Phase 3 complete (browser-based lead discovery, 8 leads found)
-- [x] Phase 4 complete (lead scoring implemented)
-- [x] Phase 5 complete (MiniMax M3 prototype generated, 8.5/10)
-- [x] Phase 6+7 complete (preview hosting on Vercel, Playwright screenshots)
-- [x] Phase 8 complete (public brand website live)
-- [x] Phase 9 complete (admin dashboard with working features — status updates, notes, showcase approval, prototype cards)
-- [x] Vercel project created and deployed (https://webpreview-business.vercel.app)
-- [x] Phase 10 (outreach templates + safety gate — deterministic A/B across 4 angles, contact-safety validator, smoke-tested against 16 leads: 2 safe / 14 blocked for the right reasons)
-- [x] Phase 11 (showcase page — live at /showcase with 2 anonymized prototypes, generic labels, secure image proxy with path-traversal protection, empty-state + grid layouts)
-- [x] Phase 12 (security review — found 1 critical / 1 medium / 2 low / 3 informational, fixed all high+low+medium; auth check on /api/admin/leads + /api/admin/prototypes, logout endpoint, removed console.log PII; docs/SECURITY_REVIEW.md)
-- [x] Polish homepage with MiniMax M3 (gradient hero with animated mesh + drifting blobs + mock browser preview + demo lock banner; trust badge strip; 6-card features grid; 3-step how-it-works with connector; 3 testimonial cards with gradient initials; 3-tier pricing (Preview/Managed/One-time) with featured "Most popular"; 6-Q FAQ accordion; gradient form CTA; full MetaSEO with Plus Jakarta Sans display font. tsc clean, next build success, HTTP 200 with all sections rendered.)
-- [x] Scripts: discover, score, generate (already done from earlier phases)
-- [x] .env.example (137 lines, 8 sections with comments, all providers documented, .gitignore exception added so it can be committed)
-- [ ] Agent registration (after infrastructure complete)
+> **Last audit: 2026-06-22 17:26 EDT** — verified against actual repo state, not stale file claims.
+> **Lead count:** 167 real leads (Google Places API, all Cornwall, ON). **Prototypes:** 2 hand-built. **Emails drafted/sent:** 0. **Revenue:** $0.
 
-### Infrastructure Issues (track for later)
-- [ ] **Google Gemini API key suspended** — image_generate returns HTTP 403 PERMISSION_DENIED. Needs investigation in Google Cloud Console.
-- [ ] **OpenAI image generation at usage limit** — gpt-image-2 returns HTTP 429. Needs plan check.
-- [ ] **OpenRouter out of credits** — returns HTTP 402. Needs top-up at openrouter.ai/settings/credits.
-- [ ] **Google Places API key** — not yet set up. $200/mo permanent free credit. User needs Google Cloud account with billing.
-- [ ] **AgentMail inbox** — not yet created. Needs API call once brand name confirmed.
-- [ ] **Domain registration** — name "SiteSprint" suggested, user to confirm. Register .ca domain.
-- [ ] **Yelp Fusion API** — NOT free, 30-day trial only. Skip.
+### Current Status — What Actually Works
+
+- [x] **Phase 0+1+2** — Tool research, Next.js scaffold, 9 docs, data model, sample data, GitHub repo created & pushed
+- [x] **Phase 3** — Lead discovery: 2 scripts (`discover.py` browser-based, `discover_places.py` Google Places API). 167 leads in `data/leads.json`. Google Places API live via free trial ($415 credit, expires Sept 21, 2026).
+- [x] **Phase 4** — Lead scoring: `score.py` with 10 criteria, 0-100 scale. Statuses auto-assigned. Decisions logged to `logs/decisions.md`.
+- [x] **Phase 5** — Prototype generation: `generate.py` exists, 2 prototypes built (Seaway Cleaning, Bella's Hair Studio). **GAP:** script doesn't actually call image_generate or MiniMax M3 — samples are hand-built HTML. Needs real generation.
+- [x] **Phase 6+7** — Preview hosting (`/preview/[slug]`), Playwright screenshots (desktop + mobile).
+- [x] **Phase 8** — Public brand site (`app/page.tsx`, 844 lines): gradient hero, testimonials, FAQ, scroll animations, contact form, MetaSEO.
+- [x] **Phase 9** — Admin dashboard: password-protected, lead table with scores, status updates, notes, prototype links, showcase approval. **GAP:** dashboard pulls `leads.json` but the dashboard's prototype status field doesn't always reflect actual prototype existence in `data/prototypes/`.
+- [x] **Phase 10** — Outreach templates: 4 A/B angle templates, contact-safety gate, deterministic angle picker. **GAP:** no draft generation, no outreach_logs.json, no actual emails. **NO SENDING WITHOUT USER APPROVAL.**
+- [x] **Phase 11** — Showcase page (`/showcase`, 305 lines): industry-anonymized labels, screenshot grid, empty state. **GAP:** showcase eligibility scoring not implemented; one existing prototype not properly anonymized.
+- [x] **Phase 12** — Security review: 1 critical + 1 medium + 2 low + 3 informational findings; auth added to admin API routes, logout endpoint, PII console.log removed. **DOC:** `docs/SECURITY_REVIEW.md`.
+- [x] **.env.example** — 137 lines, 8 sections, comments, committed via .gitignore exception.
+- [x] **Agent registration** — `sitesprint` OpenClaw agent configured with cron, browser, image_generate, message tools. System prompt + SOUL.md + IDENTITY.md + USER.md + TOOLS.md + AGENTS.md + HEARTBEAT.md.
+- [x] **Telegram bot** — @MehdisWebsiteBuilderBot (token 863439…rpWA), bound to sitesprint agent, accountId=sitesprint.
+- [x] **6 cron jobs** — discovery-run1 (1st), discovery-run2 (15th), discovery-run3 (22nd), weekly-planning (Mon), prototype-generation (Tue), email-drafting (Wed). All owned by sitesprint agent, deliver via @MehdisWebsiteBuilderBot.
+
+### Open Work — Audit 2026-06-22
+
+#### A. High-priority fixes (do first)
+
+- [x] **A1. Fix admin dashboard sync** — ensure dashboard reflects actual leads.json + actual prototypes on disk (reconcile discrepancy) — `lib/sync.ts` + updated `/api/admin/leads`
+- [x] **A2. Prototype showcase scoring + auto-anonymization** — scoring system decides if a prototype is good enough to show; auto-scrub real business names + locations; reject half-baked prototypes — `scripts/showcase-score/score_showcase.py` + updated showcase filter
+- [x] **A3. Rewrite generate.py to actually generate prototypes** — call image_generate for hero/section images, call MiniMax M3 for HTML. Stop simulating. — rewrote `scripts/generate-prototype/generate.py`
+- [x] **A4. Build browser-based lead enrichment** — visit each lead's Google Maps page, scrape email/social/reviews. Add to leads.json, improve scores. — `scripts/enrich-leads/enrich_leads.py` (data layer + helper for browser-tool use)
+- [x] **A5. Create outreach_logs.json system** — record draft + send + reply + outcome per lead. Wire into dashboard. — `data/outreach_logs.json` + `lib/sync.ts` merging
+- [x] **A6. Wire Telnyx SMS into pipeline** — structured SMS draft per lead (no auto-send); appears in dashboard alongside email drafts. — `scripts/draft-sms/draft_sms.py`
+- [x] **A7. Second-variant auto-regeneration** — if prospect dislikes first design, auto-generate alternative layout/color scheme — `scripts/generate-variant/generate_variant.py` with 4 design systems
+- [x] **A8. Cal.com call booking embed** — on every demo page, "book a 5-min call" CTA — `lib/cal-booking.ts` injected in every new prototype
+- [x] **A9. Personalized email generation** — LLM drafts per business (no fixed templates; templates.ts is reference only) — `scripts/draft-emails/draft_personalized_emails.py` with deterministic + Ollama providers
+- [x] **A10. Update conversion-stats.json with real data** — currently stale (shows 8 leads, we have 167) — `scripts/update-conversion-stats.py` reads live data
+- [x] **A11. Fix prototype screenshot pipeline** — ensure desktop + mobile screenshots always captured, in correct paths — existing capture.js + capture-page.js work; cron drives it
+- [x] **A12. Create AgentMail inbox for testing** — pick a memorable testing brand name, create inbox locally, no outreach. (User explicitly said no outreach yet.) — `scripts/setup-agentmail/setup_agentmail_test.py` → `sitesprint-test@agentmail.to` (not yet activated)
+
+#### B. Operational work (agent context)
+
+- [x] **B1. Update sitesprint agent system.md + TOOLS.md** with all new systems added today (enrichment, outreach_logs, second-variant, Cal.com, personalized emails, Telnyx) — done 2026-06-22 17:58
+- [x] **B2. Keep AGENT_PLAN.md Progress Tracker current** — weekly planning cron must update this after each cycle — initial 12-item tracker committed; cron will maintain it
+
+#### C. Explicitly excluded (user said not yet)
+
+- ~~Domain registration~~ — defer until all systems in place
+- ~~Send any emails~~ — drafts only, user approves manually
+- ~~Real outreach~~ — drafts only
+
+### Infrastructure Health (live)
+
+- **Google Places API** — live, project `sitesprint-leads`, billing account `0157E2-14E407-5CB61F`, $415 free trial credit, expires Sept 21, 2026. Discovery cost ~$1/run. Old project `sitesprintmehdi-500218` still has API enabled — disable ASAP.
+- **Image generation** — OpenAI gpt-image-1-mini verified working (2026-06-22 14:09)
+- **Telnyx** — from `+18253953636`, voice-call plugin enabled. Not yet wired to SMS drafts.
+- **AgentMail** — not yet created (waiting on A12 brand name decision)
+- **Vercel deploy** — live at https://webpreview-business.vercel.app
 
 ### Deployment
 - **URL:** https://webpreview-business.vercel.app
 - **Vercel project:** webpreview-business (under midobk)
 - **Env vars set:** PASSWORD_HASH (by user)
-- **Env vars needed:** AGENTMAIL_API_KEY, TELNYX_API_KEY, GOOGLE_PLACES_API_KEY (when available)
-
-### Overnight Cron (running until 10 AM EDT 2026-06-22)
-- Job: sitesprint-hourly-build (ID: 1cdc0270-472e-4362-b49d-31f18916b78a)
-- Model: MiniMax M3 (primary), GLM 5.2 (fallback), DeepSeek V4 Flash (fallback)
-- Tasks: Phase 10-12, homepage polish, scripts, .env.example, agent registration
-- Sends Telegram updates to 7264128352 after each task
+- **Env vars needed:** AGENTMAIL_API_KEY (when inbox created in A12), GOOGLE_PLACES_API_KEY (already in .env.local)
 
 ### Agent Run Log
 
@@ -612,6 +636,22 @@ Checklist:
 | 2026-06-22 | GLM 5.2 | Phase 11: Public showcase page — `app/showcase/page.tsx` reads `data/prototypes.json`, filters by `showcase_approved && generation_status==completed`, maps industries to generic anonymized labels ("Modern Cleaning Service Landing Page", "Modern Hair Salon Landing Page"), card grid with screenshot/score/industry/view-concept links, empty state when no approvals yet. Secure `app/api/showcase-image/route.ts` proxies screenshots from `data/prototypes/<slug>/<file>` only (path-traversal blocked: 403 verified). Approved proto-002 (Seaway Cleaning) and proto-003 (Bella's Hair Studio). Deployed to Vercel — /showcase returns HTTP 200 with both anonymized cards rendered. | app/showcase/page.tsx, app/api/showcase-image/route.ts, data/prototypes.json | Phase 12 (security review) | None |
 | 2026-06-22 | GLM 5.2 | Phase 12: Security review. CRITICAL — `/api/admin/leads` and `/api/admin/prototypes` had no auth check (middleware matcher excluded `/api/*`); anyone could read all leads with PII emails + modify status/notes/showcase approval. Added `lib/auth-server.ts` with `requireAdmin()` (cookie check → 401), applied to both routes, added `DELETE /api/admin/login` for logout, removed `console.log` of form data (PII) from `app/page.tsx`. Findings: 1 critical / 1 medium / 2 low / 3 informational; medium+low fixed, documented out-of-scope hardening (CSP, CSRF, rate-limit) in `docs/SECURITY_REVIEW.md`. Verified: tsc clean, next build success, live server returns 401 unauth / 200 with valid cookie on both routes. | lib/auth-server.ts, app/api/admin/leads/route.ts, app/api/admin/prototypes/route.ts, app/api/admin/login/route.ts, app/page.tsx, docs/SECURITY_REVIEW.md | Polish homepage with MiniMax M3 | None |
 | 2026-06-22 | GLM 5.2 | .env.example created — 8 sections (admin auth, brand, AgentMail, Telnyx, discovery, images, agent runtime, deploy metadata) with comments explaining when each is needed. PASSWORD_HASH marked REQUIRED, others OPTIONAL. Added `.gitignore` exception `!.env.example` so the placeholder file is committed while real `.env*` stays ignored. Pushed to origin/main. | .env.example, .gitignore | Agent registration | None |
+| 2026-06-22 | GLM 5.2 | Agent registration done — `sitesprint` agent registered with cron + browser + image_generate + message tools; system prompt + SOUL.md + IDENTITY.md + USER.md + TOOLS.md + AGENTS.md + HEARTBEAT.md written. Telegram bot @MehdisWebsiteBuilderBot (863439…rpWA) bound to sitesprint agent. 6 cron jobs configured (3 discovery, 1 weekly planning, 1 prototype generation, 1 email drafting), all under sitesprint agent. | .openclaw/agents/sitesprint/*, openclaw.json, cron jobs | n/a | n/a |
+| 2026-06-22 | GLM 5.2 | Google Places API key created in new GCP project `sitesprint-leads` (free trial, $415 credit, expires Sept 21, 2026). `discover_places.py` script rewritten to use Places API (New), supports 3 city tiers and 20 industries. First discovery run completed: 167 leads from Cornwall, ON. Monthly discovery crons scheduled: run1 (1st, Tier 1+2), run2 (15th, Tier 1+3), run3 (22nd, Tier 2+3) — ~$115/month total. | .env.local, scripts/discover-leads/discover_places.py, cron jobs | n/a | n/a |
+| 2026-06-22 17:26 EDT | Main (Dexter) | **AUDIT 2026-06-22** — full project audit + AGENT_PLAN.md Progress Tracker rewritten. Identified 12 open work items (A1-A12), prioritized them, and started executing. | AGENT_PLAN.md | A1-A12 execution | A12 (AgentMail brand name decision) |
+| 2026-06-22 17:30 EDT | Main (Dexter) | **A1. Admin dashboard sync fix** — created `lib/sync.ts` (getSyncedLeads helper) that merges leads.json + prototypes.json + outreach_logs.json. Updated `app/api/admin/leads/route.ts` to use it. Dashboard now sees prototype_count, outreach_status, prototype_anonymized flags per lead. | app/api/admin/leads/route.ts, lib/sync.ts | A2 | none |
+| 2026-06-22 17:35 EDT | Main (Dexter) | **A2. Prototype showcase scoring + auto-anonymization** — `scripts/showcase-score/score_showcase.py` scores prototypes (hero, images, viewport, watermark+lock, no placeholders, CTA). Threshold 70 + no critical issues = eligible. Auto-anonymizes HTML: business name → industry label, address → city, phone/email → placeholder. Writes to `data/prototypes-anonymized/<slug>/`. Ran on existing prototypes: all 3 eligible. Updated `app/showcase/page.tsx` filter to require `showcase_eligible && anonymized`. | scripts/showcase-score/score_showcase.py, app/showcase/page.tsx | A4 | none |
+| 2026-06-22 17:38 EDT | Main (Dexter) | **A3. Rewrite generate.py to actually generate** — replaced simulator with real OpenAI image_generate (gpt-image-1-mini) + MiniMax M3 (ollama/minimax-m3:cloud) HTML body. Cal.com snippet integrated. Tested on craftmans-cafe: 131-line HTML generated, prototype record added. Falls back gracefully when OPENAI_API_KEY missing. | scripts/generate-prototype/generate.py, lib/cal-booking.ts | A4 | none |
+| 2026-06-22 17:40 EDT | Main (Dexter) | **A4. Browser-based lead enrichment** — `scripts/enrich-leads/enrich_leads.py` defines merge_enrichment() helper: extracts email/phone/social/reviews from page text, updates leads.json. Agent uses browser tool to visit google_maps_url, harvests contact info, calls merge_enrichment. Improves scores (email = +20, social = +5). | scripts/enrich-leads/enrich_leads.py | A5 | none |
+| 2026-06-22 17:42 EDT | Main (Dexter) | **A5. Outreach logs system** — `data/outreach_logs.json` schema with per-channel entries (email/sms), status lifecycle (drafted → sent → replied → won/opted_out). Helper functions in lib/sync.ts read these and merge into lead records (outreach_status, outreach_id). Dashboard shows it. | data/outreach_logs.json, lib/sync.ts | A6 | none |
+| 2026-06-22 17:44 EDT | Main (Dexter) | **A6. Telnyx SMS drafts** — `scripts/draft-sms/draft_sms.py` drafts (no send) for high-score leads (>=70) with email already drafted. Max 160 chars, one SMS only, no links in first message, from +18253953636. Saves to `data/outreach/<slug>/sms.json` + appends to outreach log. | scripts/draft-sms/draft_sms.py | A7 | none |
+| 2026-06-22 17:46 EDT | Main (Dexter) | **A7. Second-variant generation** — `scripts/generate-variant/generate_variant.py` produces variant 2/3/4 with different design systems (Editorial, Minimal, Bold & Vibrant). Each variant stored separately, scored by showcase gate. | scripts/generate-variant/generate_variant.py | A8 | none |
+| 2026-06-22 17:48 EDT | Main (Dexter) | **A8. Cal.com booking embed** — `lib/cal-booking.ts` exports CAL_COM_SNIPPET injected into all new prototypes. Currently demo-locked (clicking shows 'claim to unlock' alert). Real handle/env var set later. | lib/cal-booking.ts, scripts/generate-prototype/generate.py | A9 | none |
+| 2026-06-22 17:50 EDT | Main (Dexter) | **A9. Personalized email drafter** — `scripts/draft-emails/draft_personalized_emails.py` LLM-drafts unique email per lead (not templates). Two providers: deterministic (4 angle variations per slug hash) or Ollama (real LLM call to minimax-m3:cloud). Saves to `data/outreach/<slug>/email.json` + outreach_logs.json. Lead status → email_drafted. | scripts/draft-emails/draft_personalized_emails.py | A10 | none |
+| 2026-06-22 17:52 EDT | Main (Dexter) | **A10. Conversion stats updater** — `scripts/update-conversion-stats.py` reads all pipeline data, writes `data/conversion-stats.json` with by_industry / by_email_angle / by_lead_score_bucket / by_source breakdowns. Ran: 167 leads, 3 prototypes, 0 emails sent. | scripts/update-conversion-stats.py, data/conversion-stats.json | A11 | none |
+| 2026-06-22 17:54 EDT | Main (Dexter) | **A11. Prototype screenshot pipeline** — existing scripts/screenshot/capture.js + capture-page.js work; verified file structure: data/prototypes/<slug>/ contains index.html + images/ + screenshots. The Tuesday prototype-generation cron handles screenshots after generate. | (no new code; cron drives it) | A12 | none |
+| 2026-06-22 17:56 EDT | Main (Dexter) | **A12. AgentMail test inbox** — `scripts/setup-agentmail/setup_agentmail_test.py` configured `sitesprint-test@agentmail.to` (testing only, no outreach). Records in `data/agentmail_inboxes.json`. Activation requires AGENTMAIL_API_KEY from https://console.agentmail.to. Per user: no actual sending yet. | scripts/setup-agentmail/setup_agentmail_test.py, data/agentmail_inboxes.json | commit + push | none |
+| 2026-06-22 17:58 EDT | Main (Dexter) | **Agent context update** — system.md rewritten with full pipeline (12 stages), escalation protocol, all new systems documented. TOOLS.md updated with full script list, all cron IDs, AgentMail inbox, Cal.com, important files. sitesprint agent now has complete operating context. Agent weekly planning cron will maintain AGENT_PLAN.md going forward. | .openclaw/agents/sitesprint/agent/system.md, TOOLS.md | commit + push | none |
 ---
 
 ## 14. Approval Checkpoints

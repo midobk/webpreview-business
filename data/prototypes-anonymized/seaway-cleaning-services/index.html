@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Cleaning Service | Eco-Friendly Cleaning in Cornwall, Ontario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Poppins', sans-serif; color: #2d3e3e; line-height: 1.6; background: #fafbfa; overflow-x: hidden; }
+  .demo-banner { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(90deg, #ff8c42, #ff6b1a); color: white; text-align: center; padding: 10px 20px; font-weight: 600; font-size: 14px; z-index: 9999; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  .demo-banner i { margin-right: 8px; }
+  .watermark { position: fixed; bottom: 20px; right: 20px; background: rgba(45, 62, 62, 0.3); color: white; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 500; z-index: 9999; backdrop-filter: blur(10px); pointer-events: none; }
+  .navbar { position: fixed; top: 42px; left: 0; right: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 15px 0; z-index: 9998; box-shadow: 0 2px 20px rgba(0,0,0,0.05); transition: all 0.3s; }
+  .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+  .logo { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 700; color: #0d8a6a; text-decoration: none; }
+  .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, #0d8a6a, #10b981); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; }
+  .nav-links { display: flex; gap: 30px; list-style: none; align-items: center; }
+  .nav-links a { color: #2d3e3e; text-decoration: none; font-weight: 500; font-size: 15px; transition: color 0.3s; }
+  .nav-links a:hover { color: #0d8a6a; }
+  .nav-cta { background: linear-gradient(135deg, #0d8a6a, #10b981); color: white !important; padding: 10px 22px; border-radius: 25px; transition: transform 0.3s, box-shadow 0.3s !important; }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(13,138,106,0.3); }
+  .mobile-toggle { display: none; background: none; border: none; font-size: 24px; color: #0d8a6a; cursor: pointer; }
+  .hero { margin-top: 42px; min-height: 100vh; background: radial-gradient(circle at 20% 30%, rgba(16,185,129,0.15) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(13,138,106,0.1) 0%, transparent 50%), linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #ffffff 100%); position: relative; display: flex; align-items: center; padding: 120px 20px 80px; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle, #10b981 1px, transparent 1px); background-size: 30px 30px; opacity: 0.05; }
+  .hero-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+  .hero-content h1 { font-size: 54px; font-weight: 800; line-height: 1.15; color: #0f3a2e; margin-bottom: 20px; }
+  .hero-content h1 span { background: linear-gradient(135deg, #0d8a6a, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-tagline { display: inline-block; background: rgba(16,185,129,0.1); color: #0d8a6a; padding: 8px 18px; border-radius: 20px; font-size: 14px; font-weight: 600; margin-bottom: 20px; }
+  .hero-content p { font-size: 18px; color: #4a5e5a; margin-bottom: 35px; max-width: 500px; }
+  .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
+  .btn { padding: 16px 32px; border-radius: 30px; font-weight: 600; font-size: 16px; text-decoration: none; cursor: pointer; border: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px; font-family: inherit; }
+  .btn-primary { background: linear-gradient(135deg, #0d8a6a, #10b981); color: white; box-shadow: 0 10px 25px rgba(13,138,106,0.3); }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(13,138,106,0.4); }
+  .btn-secondary { background: white; color: #0d8a6a; border: 2px solid #0d8a6a; }
+  .btn-secondary:hover { background: #0d8a6a; color: white; transform: translateY(-3px); }
+  .hero-visual { position: relative; height: 500px; }
+  .hero-card { position: absolute; background: white; border-radius: 20px; padding: 25px; box-shadow: 0 20px 60px rgba(0,0,0,0.1); transition: transform 0.4s; }
+  .hero-card:hover { transform: translateY(-10px); }
+  .hero-card-1 { top: 0; right: 0; width: 70%; height: 60%; background: linear-gradient(135deg, #10b981, #0d8a6a); color: white; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 40px; }
+  .hero-card-1 i { font-size: 60px; margin-bottom: 20px; opacity: 0.9; }
+  .hero-card-1 h3 { font-size: 24px; margin-bottom: 10px; }
+  .hero-card-1 p { opacity: 0.9; }
+  .hero-card-2 { bottom: 0; left: 0; width: 55%; background: white; display: flex; align-items: center; gap: 15px; }
+  .hero-card-2 .icon-circle { width: 50px; height: 50px; background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #d97706; font-size: 22px; }
+  .hero-card-2 strong { display: block; color: #0f3a2e; font-size: 18px; }
+  .hero-card-2 small { color: #6b8079; }
+  .hero-card-3 { bottom: 80px; right: 20px; width: 50%; background: white; display: flex; align-items: center; gap: 15px; }
+  .hero-card-3 .icon-circle { width: 50px; height: 50px; background: linear-gradient(135deg, #d1fae5, #a7f3d0); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0d8a6a; font-size: 22px; }
+  .hero-card-3 strong { display: block; color: #0f3a2e; font-size: 18px; }
+  .hero-card-3 small { color: #6b8079; }
+  section { padding: 100px 20px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-header { text-align: center; margin-bottom: 60px; }
+  .section-tag { display: inline-block; background: rgba(16,185,129,0.1); color: #0d8a6a; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+  .section-header h2 { font-size: 42px; font-weight: 700; color: #0f3a2e; margin-bottom: 15px; }
+  .section-header p { font-size: 17px; color: #6b8079; max-width: 600px; margin: 0 auto; }
+  .services { background: white; }
+  .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+  .service-card { background: white; border: 1px solid #e5f3ed; border-radius: 20px; padding: 35px 25px; text-align: center; transition: all 0.4s; position: relative; overflow: hidden; }
+  .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #0d8a6a, #10b981); transform: scaleX(0); transition: transform 0.4s; }
+  .service-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(13,138,106,0.15); border-color: #10b981; }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { width: 80px; height: 80px; background: linear-gradient(135deg, #d1fae5, #a7f3d0); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: #0d8a6a; font-size: 32px; transition: all 0.4s; }
+  .service-card:hover .service-icon { background: linear-gradient(135deg, #0d8a6a, #10b981); color: white; transform: rotate(-5deg) scale(1.05); }
+  .service-card h3 { font-size: 20px; color: #0f3a2e; margin-bottom: 12px; }
+  .service-card p { color: #6b8079; font-size: 14px; margin-bottom: 20px; }
+  .service-link { color: #0d8a6a; text-decoration: none; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 6px; transition: gap 0.3s; }
+  .service-card:hover .service-link { gap: 12px; }
+  .why-us { background: linear-gradient(135deg, #f0fdf4, #ecfdf5); position: relative; }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .why-features { display: grid; gap: 20px; }
+  .feature { background: white; padding: 25px; border-radius: 15px; display: flex; gap: 20px; align-items: flex-start; transition: all 0.3s; border: 1px solid transparent; }
+  .feature:hover { transform: translateX(10px); box-shadow: 0 10px 30px rgba(13,138,106,0.1); border-color: #10b981; }
+  .feature-icon { width: 55px; height: 55px; background: linear-gradient(135deg, #0d8a6a, #10b981); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 22px; flex-shrink: 0; }
+  .feature h4 { color: #0f3a2e; font-size: 18px; margin-bottom: 5px; }
+  .feature p { color: #6b8079; font-size: 14px; }
+  .why-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .stat-card { background: white; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: all 0.3s; }
+  .stat-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(13,138,106,0.15); }
+  .stat-card .number { font-size: 42px; font-weight: 800; background: linear-gradient(135deg, #0d8a6a, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .stat-card .label { color: #6b8079; font-size: 14px; margin-top: 5px; }
+  .before-after { background: white; }
+  .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .ba-card { border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.08); transition: transform 0.4s; }
+  .ba-card:hover { transform: translateY(-5px); }
+  .ba-visual { height: 280px; position: relative; display: flex; align-items: center; justify-content: center; color: white; }
+  .ba-before { background: linear-gradient(135deg, rgba(107,114,128,0.9), rgba(75,85,99,0.85)), repeating-linear-gradient(45deg, transparent 0, transparent 20px, rgba(255,255,255,0.05) 20px, rgba(255,255,255,0.05) 40px); }
+  .ba-after { background: linear-gradient(135deg, rgba(16,185,129,0.9), rgba(13,138,106,0.85)), repeating-linear-gradient(45deg, transparent 0, transparent 20px, rgba(255,255,255,0.08) 20px, rgba(255,255,255,0.08) 40px); }
+  .ba-visual i { font-size: 80px; opacity: 0.4; position: absolute; }
+  .ba-visual .ba-label { position: relative; z-index: 2; font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
+  .ba-content { padding: 30px; background: white; }
+  .ba-content h3 { color: #0f3a2e; font-size: 22px; margin-bottom: 10px; }
+  .ba-content p { color: #6b8079; }
+  .testimonials { background: linear-gradient(135deg, #0d8a6a, #10b981); color: white; position: relative; overflow: hidden; }
+  .testimonials::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 30px 30px; }
+  .testimonials .section-tag { background: rgba(255,255,255,0.2); color: white; }
+  .testimonials .section-header h2 { color: white; }
+  .testimonials .section-header p { color: rgba(255,255,255,0.9); }
+  .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; position: relative; z-index: 1; }
+  .testimonial-card { background: white; color: #2d3e3e; padding: 35px; border-radius: 20px; transition: all 0.3s; position: relative; }
+  .testimonial-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+  .testimonial-card .stars { color: #fbbf24; margin-bottom: 15px; font-size: 18px; }
+  .testimonial-card .quote { color: #4a5e5a; font-style: italic; margin-bottom: 25px; line-height: 1.7; }
+  .testimonial-author { display: flex; align-items: center; gap: 15px; border-top: 1px solid #e5f3ed; padding-top: 20px; }
+  .author-avatar { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; }
+  .avatar-1 { background: linear-gradient(135deg, #0d8a6a, #10b981); }
+  .avatar-2 { background: linear-gradient(135deg, #0891b2, #06b6d4); }
+  .avatar-3 { background: linear-gradient(135deg, #d97706, #f59e0b); }
+  .author-info strong { display: block; color: #0f3a2e; }
+  .author-info small { color: #6b8079; font-size: 13px; }
+  .contact { background: #fafbfa; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 50px; align-items: start; }
+  .contact-info { background: linear-gradient(135deg, #0d8a6a, #10b981); color: white; padding: 45px; border-radius: 20px; position: relative; overflow: hidden; }
+  .contact-info::before { content: ''; position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+  .contact-info::after { content: ''; position: absolute; bottom: -80px; left: -30px; width: 180px; height: 180px; background: rgba(255,255,255,0.08); border-radius: 50%; }
+  .contact-info h3 { font-size: 28px; margin-bottom: 15px; position: relative; }
+  .contact-info > p { opacity: 0.9; margin-bottom: 35px; position: relative; }
+  .contact-item { display: flex; gap: 15px; margin-bottom: 25px; position: relative; align-items: center; }
+  .contact-item-icon { width: 45px; height: 45px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .contact-item a, .contact-item span { color: white; text-decoration: none; font-weight: 500; }
+  .contact-item a:hover { text-decoration: underline; }
+  .contact-social { display: flex; gap: 12px; margin-top: 35px; position: relative; }
+  .contact-social a { width: 40px; height: 40px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.3s; }
+  .contact-social a:hover { background: white; color: #0d8a6a; transform: translateY(-3px); }
+  .contact-form { background: white; padding: 45px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+  .form-group { margin-bottom: 20px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+  .form-group label { display: block; margin-bottom: 8px; color: #0f3a2e; font-weight: 500; font-size: 14px; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px 18px; border: 2px solid #e5f3ed; border-radius: 10px; font-family: inherit; font-size: 15px; transition: border-color 0.3s, box-shadow 0.3s; background: #fafbfa; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #10b981; box-shadow: 0 0 0 3px rgba(16,185,129,0.1); background: white; }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .submit-btn { width: 100%; background: linear-gradient(135deg, #0d8a6a, #10b981); color: white; padding: 16px; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-family: inherit; }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(13,138,106,0.3); }
+  .footer { background: #0f3a2e; color: #c5d4cd; padding: 70px 20px 30px; }
+  .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+  .footer-col h4 { color: white; margin-bottom: 20px; font-size: 18px; }
+  .footer-col p { font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
+  .footer-col .logo { color: white; margin-bottom: 15px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul a { color: #c5d4cd; text-decoration: none; font-size: 14px; transition: color 0.3s, padding-left 0.3s; }
+  .footer-col ul a:hover { color: #10b981; padding-left: 5px; }
+  .footer-bottom { max-width: 1200px; margin: 0 auto; border-top: 1px solid #1d4a3e; padding-top: 25px; text-align: center; font-size: 14px; }
+  @media (max-width: 968px) {
+    .hero-container { grid-template-columns: 1fr; }
+    .hero-visual { height: 400px; margin-top: 30px; }
+    .hero-content h1 { font-size: 40px; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-grid { grid-template-columns: 1fr; gap: 40px; }
+    .ba-grid { grid-template-columns: 1fr; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    .section-header h2 { font-size: 32px; }
+    .nav-links { position: fixed; top: 100px; right: -100%; background: white; flex-direction: column; width: 80%; max-width: 300px; height: calc(100vh - 100px); padding: 40px 30px; transition: right 0.3s; box-shadow: -5px 0 20px rgba(0,0,0,0.1); align-items: flex-start; }
+    .nav-links.active { right: 0; }
+    .mobile-toggle { display: block; }
+  }
+  @media (max-width: 568px) {
+    .hero { padding: 110px 20px 60px; }
+    .hero-content h1 { font-size: 32px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    section { padding: 70px 20px; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-visual { height: 350px; }
+    .hero-card-1 { width: 90%; padding: 25px; }
+    .hero-card-1 h3 { font-size: 18px; }
+    .hero-card-2, .hero-card-3 { padding: 15px; }
+    .section-header h2 { font-size: 28px; }
+    .contact-info, .contact-form { padding: 30px 25px; }
+  }
+</style>
+</head>
+<body>
+<div class="demo-banner"><i class="fas fa-info-circle"></i> Demo Preview — Claim this website to make it live</div>
+<div class="watermark">SiteSprint Preview</div>
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="#" class="logo"><div class="logo-icon"><i class="fas fa-sparkles"></i></div> Seaway</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#contact" class="nav-cta cta-btn">Get Quote</a></li>
+    </ul>
+    <button class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+<section class="hero">
+  <div class="hero-container">
+    <div class="hero-content">
+      <span class="hero-tagline"><i class="fas fa-leaf"></i> 100% Eco-Friendly</span>
+      <h1>A Spotless Space, <span>Coast to Coast</span> Cleanliness</h1>
+      <p>Cornwall's trusted cleaning professionals delivering eco-friendly residential, commercial, and deep cleaning services with care and excellence.</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn btn-primary cta-btn"><i class="fas fa-calendar-check"></i> Book a Cleaning</a>
+        <a href="tel:[Contact via SiteSprint]" class="btn btn-secondary phone-link"><i class="fas fa-phone"></i>[Contact via SiteSprint]</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card hero-card-1"><i class="fas fa-leaf"></i><h3>Green Cleaning</h3><p>Safe for your family, pets, and the planet</p></div>
+      <div class="hero-card hero-card-2"><div class="icon-circle"><i class="fas fa-star"></i></div><div><strong>5-Star Rated</strong><small>200+ Happy Clients</small></div></div>
+      <div class="hero-card hero-card-3"><div class="icon-circle"><i class="fas fa-shield-halved"></i></div><div><strong>Fully Insured</strong><small>Peace of Mind</small></div></div>
+    </div>
+  </div>
+</section>
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-header"><span class="section-tag">Our Services</span><h2>Cleaning Solutions for Every Need</h2><p>From cozy homes to bustling offices, we tailor our services to fit your space and schedule.</p></div>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon"><i class="fas fa-house"></i></div><h3>Residential Cleaning</h3><p>Weekly, bi-weekly, or monthly cleaning to keep your home sparkling and fresh.</p><a href="#contact" class="service-link cta-btn">Learn More <i class="fas fa-arrow-right"></i></a></div>
+      <div class="service-card"><div class="service-icon"><i class="fas fa-building"></i></div><h3>Commercial Cleaning</h3><p>Professional cleaning for offices, retail spaces, and commercial properties.</p><a href="#contact" class="service-link cta-btn">Learn More <i class="fas fa-arrow-right"></i></a></div>
+      <div class="service-card"><div class="service-icon"><i class="fas fa-truck-moving"></i></div><h3>Move-In / Move-Out</h3><p>Comprehensive cleaning for seamless transitions and deposit returns.</p><a href="#contact" class="service-link cta-btn">Learn More <i class="fas fa-arrow-right"></i></a></div>
+      <div class="service-card"><div class="service-icon"><i class="fas fa-broom"></i></div><h3>Deep Cleaning</h3><p>Top-to-bottom intensive cleaning that reaches every corner and surface.</p><a href="#contact" class="service-link cta-btn">Learn More <i class="fas fa-arrow-right"></i></a></div>
+    </div>
+  </div>
+</section>
+<section class="why-us" id="why">
+  <div class="container">
+    <div class="section-header"><span class="section-tag">Why Choose Us</span><h2>The Seaway Difference</h2><p>We're not just another cleaning company — we're your partners in a healthier, cleaner space.</p></div>
+    <div class="why-grid">
+      <div class="why-features">
+        <div class="feature"><div class="feature-icon"><i class="fas fa-leaf"></i></div><div><h4>Eco-Friendly Products</h4><p>Non-toxic, biodegradable cleaning solutions safe for children, pets, and the environment.</p></div></div>
+        <div class="feature"><div class="feature-icon"><i class="fas fa-user-check"></i></div><div><h4>Trained Professionals</h4><p>Background-checked, fully trained staff committed to delivering exceptional results.</p></div></div>
+        <div class="feature"><div class="feature-icon"><i class="fas fa-clock"></i></div><div><h4>Flexible Scheduling</h4><p>Book one-time or recurring services that fit your schedule and budget.</p></div></div>
+        <div class="feature"><div class="feature-icon"><i class="fas fa-medal"></i></div><div><h4>Satisfaction Guaranteed</h4><p>If you're not 100% satisfied, we'll come back and re-clean — free of charge.</p></div></div>
+      </div>
+      <div class="why-stats">
+        <div class="stat-card"><div class="number">500+</div><div class="label">Happy Clients</div></div>
+        <div class="stat-card"><div class="number">10+</div><div class="label">Years Experience</div></div>
+        <div class="stat-card"><div class="number">100%</div><div class="label">Eco Products</div></div>
+        <div class="stat-card"><div class="number">4.9★</div><div class="label">Average Rating</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="before-after" id="results">
+  <div class="container">
+    <div class="section-header"><span class="section-tag">Our Results</span><h2>See the Seaway Transformation</h2><p>The difference is clear. Professional cleaning that speaks for itself.</p></div>
+    <div class="ba-grid">
+      <div class="ba-card"><div class="ba-visual ba-before"><i class="fas fa-dust"></i><span class="ba-label">Before</span></div><div class="ba-content"><h3><i class="fas fa-home"></i> Residential Deep Clean</h3><p>Dust, grime, and hidden buildup removed from every surface, leaving homes fresh and inviting.</p></div></div>
+      <div class="ba-card"><div class="ba-visual ba-after"><i class="fas fa-sparkles"></i><span class="ba-label">After</span></div><div class="ba-content"><h3><i class="fas fa-star"></i> Spotless Results</h3><p>Crystal-clear surfaces, fresh scents, and a healthier living environment for the whole family.</p></div></div>
+    </div>
+  </div>
+</section>
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-header"><span class="section-tag">Testimonials</span><h2>What Our Clients Say</h2><p>Real reviews from real customers across Cornwall and the surrounding area.</p></div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="quote">"Seaway Cleaning transformed our home! The team was professional, thorough, and used eco-friendly products that didn't bother my allergies. Highly recommend!"</p><div class="testimonial-author"><div class="author-avatar avatar-1">SM</div><div class="author-info"><strong>Sarah MacIntyre</strong><small>Homeowner, Cornwall</small></div></div></div>
+      <div class="testimonial-card"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="quote">"We've been using Seaway for our office cleaning for over two years. Consistent, reliable, and our employees love coming to a sparkling clean workspace every morning."</p><div class="testimonial-author"><div class="author-avatar avatar-2">JL</div><div class="author-info"><strong>Jean-Luc Leblanc</strong><small>Office Manager, Cornwall</small></div></div></div>
+      <div class="testimonial-card"><div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div><p class="quote">"The move-out cleaning was incredible! I got my full deposit back thanks to their meticulous work. Worth every penny and then some. Five stars all the way!"</p><div class="testimonial-author"><div class="author-avatar avatar-3">AT</div><div class="author-info"><strong>Amanda Thompson</strong><small>Renter, Cornwall</small></div></div></div>
+    </div>
+  </div>
+</section>
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="section-header"><span class="section-tag">Get In Touch</span><h2>Request Your Free Quote</h2><p>Ready for a spotless space? Fill out the form and we'll get back to you within 24 hours.</p></div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Let's Talk Clean</h3>
+        <p>We're here to answer your questions and provide a custom cleaning plan that fits your needs.</p>
+        <div class="contact-item"><div class="contact-item-icon"><i class="fas fa-phone"></i></div><a href="tel:[Contact via SiteSprint]" class="phone-link">[Contact via SiteSprint]</a></div>
+        <div class="contact-item"><div class="contact-item-icon"><i class="fas fa-envelope"></i></div><a href="mailto:[Contact via SiteSprint]" class="email-link">[Contact via SiteSprint]</a></div>
+        <div class="contact-item"><div class="contact-item-icon"><i class="fas fa-location-dot"></i></div><span>Cornwall, Ontario, Canada</span></div>
+        <div class="contact-item"><div class="contact-item-icon"><i class="fas fa-clock"></i></div><span>Mon - Sat: 8:00 AM - 6:00 PM</span></div>
+        <div class="contact-social"><a href="#" class="cta-btn"><i class="fab fa-facebook-f"></i></a><a href="#" class="cta-btn"><i class="fab fa-instagram"></i></a><a href="#" class="cta-btn"><i class="fab fa-twitter"></i></a><a href="#" class="cta-btn"><i class="fab fa-linkedin-in"></i></a></div>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <div class="form-row"><div class="form-group"><label for="firstName">First Name *</label><input type="text" id="firstName" name="firstName" required></div><div class="form-group"><label for="lastName">Last Name *</label><input type="text" id="lastName" name="lastName" required></div></div>
+        <div class="form-row"><div class="form-group"><label for="email">Email Address *</label><input type="email" id="email" name="email" required></div><div class="form-group"><label for="phone">Phone Number *</label><input type="tel" id="phone" name="phone" required></div></div>
+        <div class="form-group"><label for="service">Service Needed</label><select id="service" name="service"><option value="">Select a service</option><option value="residential">Residential Cleaning</option><option value="commercial">Commercial Cleaning</option><option value="move">Move-In / Move-Out</option><option value="deep">Deep Cleaning</option></select></div>
+        <div class="form-group"><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell us about your cleaning needs..."></textarea></div>
+        <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-col"><a href="#" class="logo"><div class="logo-icon"><i class="fas fa-sparkles"></i></div> Seaway</a><p>Cornwall's trusted eco-friendly cleaning service. Making homes and businesses sparkle since 2014.</p><div class="contact-social"><a href="#" class="cta-btn"><i class="fab fa-facebook-f"></i></a><a href="#" class="cta-btn"><i class="fab fa-instagram"></i></a><a href="#" class="cta-btn"><i class="fab fa-twitter"></i></a></div></div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a href="#services" class="cta-btn">Residential</a></li><li><a href="#services" class="cta-btn">Commercial</a></li><li><a href="#services" class="cta-btn">Move-In/Out</a></li><li><a href="#services" class="cta-btn">Deep Cleaning</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a href="#" class="cta-btn">About Us</a></li><li><a href="#testimonials" class="cta-btn">Reviews</a></li><li><a href="#" class="cta-btn">Careers</a></li><li><a href="#" class="cta-btn">Blog</a></li></ul></div>
+    <div class="footer-col"><h4>Contact</h4><ul><li><a href="tel:[Contact via SiteSprint]" class="phone-link"><i class="fas fa-phone"></i>[Contact via SiteSprint]</a></li><li><a href="mailto:[Contact via SiteSprint]" class="email-link"><i class="fas fa-envelope"></i> Email Us</a></li><li><a href="#" class="cta-btn"><i class="fas fa-location-dot"></i> Cornwall, ON</a></li><li><a href="#contact" class="cta-btn"><i class="fas fa-calendar"></i> Book Now</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>&copy; 2024 Modern Cleaning Service. All rights reserved. | Designed with <i class="fas fa-heart" style="color: #10b981;"></i> for Cornwall, Ontario</p></div>
+</footer>
+<script>
+  function showDemoAlert(e) { if (e) e.preventDefault(); alert("This is a demo preview. Claim this website to make it live!"); }
+  document.querySelectorAll('.cta-btn').forEach(btn => btn.addEventListener('click', showDemoAlert));
+  document.querySelectorAll('.phone-link').forEach(link => link.addEventListener('click', showDemoAlert));
+  document.querySelectorAll('.email-link').forEach(link => link.addEventListener('click', showDemoAlert));
+  document.getElementById('contactForm').addEventListener('submit', showDemoAlert);
+  const mobileToggle = document.getElementById('mobileToggle');
+  const navLinks = document.getElementById('navLinks');
+  mobileToggle.addEventListener('click', (e) => { e.stopPropagation(); navLinks.classList.toggle('active'); const icon = mobileToggle.querySelector('i'); if (navLinks.classList.contains('active')) { icon.classList.remove('fa-bars'); icon.classList.add('fa-times'); } else { icon.classList.remove('fa-times'); icon.classList.add('fa-bars'); } });
+  document.addEventListener('click', (e) => { if (window.innerWidth <= 968 && navLinks.classList.contains('active')) { if (!navLinks.contains(e.target) && !mobileToggle.contains(e.target)) { navLinks.classList.remove('active'); const icon = mobileToggle.querySelector('i'); icon.classList.remove('fa-times'); icon.classList.add('fa-bars'); } } });
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => { anchor.addEventListener('click', function(e) { const href = this.getAttribute('href'); if (href === '#') return; const target = document.querySelector(href); if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); } }); });
+</script>
+</body>
+</html>

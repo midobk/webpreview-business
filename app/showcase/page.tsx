@@ -45,6 +45,8 @@ interface Prototype {
   prototype_score: number | null;
   generation_status: string;
   showcase_approved: boolean;
+  showcase_eligible?: boolean;
+  anonymized?: boolean;
   created_at: string;
 }
 
@@ -94,9 +96,14 @@ async function loadShowcase(): Promise<
 
   const leadsById = new Map(allLeads.map((l) => [l.id, l]));
 
-  // Only show approved + completed prototypes on the public showcase
+  // Only show: approved + completed + showcase_eligible (passed the scoring gate)
+  // The scoring gate (score_showcase.py) ensures quality + proper anonymization
   const visible = allPrototypes.filter(
-    (p) => p.showcase_approved === true && p.generation_status === 'completed'
+    (p) =>
+      p.showcase_approved === true &&
+      p.generation_status === 'completed' &&
+      p.showcase_eligible === true &&
+      p.anonymized === true
   );
 
   return visible.map((p) => {

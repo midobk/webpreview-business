@@ -1,21 +1,716 @@
 {
-  "total_leads": 8,
-  "total_prototypes": 1,
+  "_meta": {
+    "generated_at": "2026-06-22T21:34:15.902484+00:00Z",
+    "data_sources": [
+      "data/leads.json",
+      "data/prototypes.json",
+      "data/outreach_logs.json"
+    ]
+  },
+  "total_leads": 167,
+  "total_prototypes": 3,
+  "total_emails_drafted": 0,
   "total_emails_sent": 0,
   "total_replies": 0,
   "total_conversions": 0,
   "by_industry": {
-    "cleaning": { "leads": 2, "prototypes": 1, "emails_sent": 0, "replies": 0, "won": 0 },
-    "auto_repair": { "leads": 1, "prototypes": 0, "emails_sent": 0, "replies": 0, "won": 0 },
-    "salon": { "leads": 1, "prototypes": 1, "emails_sent": 0, "replies": 0, "won": 0 }
+    "auto_repair": {
+      "leads": 2,
+      "prototypes": 0,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "cleaning": {
+      "leads": 3,
+      "prototypes": 1,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "salon": {
+      "leads": 2,
+      "prototypes": 1,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "barber": {
+      "leads": 13,
+      "prototypes": 0,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "landscaping": {
+      "leads": 11,
+      "prototypes": 0,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "restaurant": {
+      "leads": 9,
+      "prototypes": 0,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "electrician": {
+      "leads": 20,
+      "prototypes": 0,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "plumber": {
+      "leads": 16,
+      "prototypes": 0,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "coffee shop": {
+      "leads": 9,
+      "prototypes": 0,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "cleaning service": {
+      "leads": 10,
+      "prototypes": 0,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "hair salon": {
+      "leads": 32,
+      "prototypes": 0,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "auto repair": {
+      "leads": 28,
+      "prototypes": 0,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "contractor": {
+      "leads": 8,
+      "prototypes": 0,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "tutor": {
+      "leads": 4,
+      "prototypes": 0,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    }
   },
   "by_email_angle": {},
-  "by_lead_score_bucket": {
-    "80-100": { "sent": 0, "replied": 0, "won": 0 },
-    "65-79": { "sent": 0, "replied": 0, "won": 0 },
-    "50-64": { "sent": 0, "replied": 0, "won": 0 }
-  },
+  "by_lead_score_bucket": {},
   "by_source": {
-    "google_search": { "leads": 8, "avg_score": 78 }
+    "https://yelp.com/biz/cornwall-auto-care": {
+      "leads": 1,
+      "avg_score": 78.0
+    },
+    "https://yelp.com/biz/seaway-cleaning": {
+      "leads": 1,
+      "avg_score": 92.0
+    },
+    "https://facebook.com/bellahairstudio": {
+      "leads": 1,
+      "avg_score": 88.0
+    },
+    "https://google.com/search?q=cleaning+service+Cornwall+Ontario": {
+      "leads": 2,
+      "avg_score": 60.0
+    },
+    "https://google.com/search?q=barber+Cornwall+Ontario": {
+      "leads": 2,
+      "avg_score": 60.0
+    },
+    "https://google.com/search?q=landscaping+Cornwall+Ontario": {
+      "leads": 2,
+      "avg_score": 56.0
+    },
+    "https://google.com/search?q=restaurant+Cornwall+Ontario": {
+      "leads": 2,
+      "avg_score": 60.0
+    },
+    "https://google.com/search?q=electrician+Cornwall+Ontario": {
+      "leads": 2,
+      "avg_score": 53.0
+    },
+    "https://google.com/search?q=hair+salon+Cornwall+Ontario": {
+      "leads": 1,
+      "avg_score": 70.0
+    },
+    "https://google.com/search?q=auto+repair+Cornwall+Ontario": {
+      "leads": 1,
+      "avg_score": 43.0
+    },
+    "https://google.com/search?q=plumber+Cornwall+Ontario": {
+      "leads": 1,
+      "avg_score": 33.0
+    },
+    "https://maps.google.com/?cid=16091314627575663464&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=1197449648306367412&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=452758822870082455&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=14234843646138846962&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=6153030978422708490&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=7421115517444514274&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=8077418495168278111&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=11381646835097088873&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=14992900627730997230&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=15805079332181261463&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=3734101638842905958&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=13831177009395011329&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=11827884790651015555&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=761313486937813188&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=15157203460830836364&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 2,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=7844847760068028787&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=8527518250523040801&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=16348425097027403452&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=11093706522204544832&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 2,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=9271753164178072052&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 2,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=13788285758668141143&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 2,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=4504459554134134176&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=6686343545482542623&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 2,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=13520252095047443229&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 2,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=2655412434136628051&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=6915590991379050691&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 2,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=13975826707728269817&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 2,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=15980491815405978633&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=13525937124712323457&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=9761624781171290415&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=11493132352800030174&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=7229466663394358068&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=8615002680770173565&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=9884660955231121132&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=2522745496608089910&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=12914384088970313086&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=15093924315469583492&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 2,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=638477279700346203&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=10201429690147044848&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=3026115621546857717&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=16218321334830542337&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=3396065686796173626&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=9560879199851870127&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=14209604985590793448&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=1781582317705995451&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=15840341947933304302&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=7149529427123378393&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 2,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=15834378338044112897&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=11726074291191581477&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=5896876315716911763&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=6031125695079984393&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 2,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=7370949579053391516&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 2,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=17251677020694849501&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=12269663117041636731&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=14619452037887872270&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=14278485655486614391&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=11643816359147812085&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=10792519586086691094&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=6416476987380023773&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=869991387638760891&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=17756470350118632235&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=7620041275002261748&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=8761794214429831188&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=12592667557242959506&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=15958792532745696996&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=13404461706098000697&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=1787408201919828232&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=13235396352950477101&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=4661949373143524685&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=15659549811085345704&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=9397321132524013102&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=15432013111896594848&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=10351748064086212606&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=16823827625408897217&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=4512498946557669128&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=11556934921580281117&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=111502603188725317&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=12919131965037248158&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=15638571056941818509&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=11355731611868063509&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=7248002379935801492&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=8348041077596390549&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=5704293983082113291&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 2,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=7433348499703296218&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=6692613277946578947&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=13862298127005760458&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=16915271983714295255&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=14280397716659194815&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=18418710531993412347&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=819804715365748361&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=13590931709746392027&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=6187161726655688407&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=11176901688746692185&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=16063490083159464338&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=12597805658258504671&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=3244019314593161933&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=15568560018366835877&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=857128164602464968&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=2989737089778207168&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=6829539582089506803&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=5518880781097784150&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=7480978170839371893&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=10610363708295027724&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=6831867386310424703&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=1653552739307582403&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=3627190877834872158&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=5313562103107450649&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=4844371689926250986&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=16355779610661742904&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=6229636671953271252&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=16352780112380743876&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=5719598011947764326&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=6769522935709343754&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=4426303101153398468&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=17394123873987702992&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=7204649886954735992&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=16958861454578075829&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=10670522540715629164&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=2457734065140120261&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=12109009847818839214&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=11946277190098907763&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=8299883710242096270&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=17677436056417769961&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=12854071211736289330&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=16221666833255664294&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=9940760753648813565&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=13720499362707185617&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=9253467715652266232&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=3834830941088852101&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=6006886482198796553&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=10253739461683429271&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=5911540175124428535&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=10336609180169546985&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=8309072441579615455&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=13439412310641282725&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=7728650986132704532&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=18257209498648693138&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    },
+    "https://maps.google.com/?cid=4824218851554806802&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
+      "leads": 1,
+      "avg_score": 0.0
+    }
   }
 }
