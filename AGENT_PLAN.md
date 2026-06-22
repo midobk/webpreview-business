@@ -567,12 +567,18 @@ Checklist:
 - [ ] Phase 11
 - [ ] Phase 12
 
+### Infrastructure Issues (track for later)
+- [ ] **Google Gemini API key suspended** — image_generate returns HTTP 403 PERMISSION_DENIED. Key AIzaSy…YCUU is suspended. Needs investigation/unsuspension in Google Cloud Console.
+- [ ] **OpenAI image generation at usage limit** — gpt-image-2 returns HTTP 429 usage_limit_reached. Needs plan check or billing update.
+- [ ] **OpenRouter out of credits** — returns HTTP 402, only 46 tokens available. Needs top-up at openrouter.ai/settings/credits.
+- [ ] **Google Places API key** — not yet set up. $200/mo permanent free credit. User needs to create Google Cloud account with billing enabled.
+- [ ] **Yelp Fusion API** — NOT free, 30-day trial only then paid. Skip.
+
 ### Next Steps (from user feedback)
 - [ ] Register domain (name TBC — "SiteSprint" suggested)
 - [ ] Set up AgentMail inbox for outreach
-- [ ] Get Yelp Fusion API key (free)
-- [ ] Evaluate Google Places API key need (user decision: ~$32/mo budget?)
 - [ ] Create Vercel project
+- [ ] Fix image generation providers (see Infrastructure Issues above)
 
 ### Agent Run Log
 
