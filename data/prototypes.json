@@ -36,5 +36,24 @@
     "anonymized_showcase_url": null,
     "created_at": "2026-06-22T03:27:54.539487+00:00Z",
     "updated_at": "2026-06-22T03:27:54.539540+00:00Z"
+  },
+  {
+    "id": "proto-003",
+    "lead_id": "lead-003",
+    "prototype_url": "data/prototypes/bellas-hair-studio/index.html",
+    "screenshot_url": "data/prototypes/bellas-hair-studio/screenshot.png",
+    "title": "Bella's Hair Studio - Preview",
+    "design_summary": "Generated prototype for Bella's Hair Studio in the salon industry",
+    "prototype_score": 95,
+    "generation_model": "ollama/minimax-m3:cloud",
+    "generation_prompt": "Industry-specific prompt for cleaning service",
+    "generation_status": "completed",
+    "watermark_enabled": true,
+    "demo_locked": true,
+    "showcase_eligible": true,
+    "showcase_approved": false,
+    "anonymized_showcase_url": null,
+    "created_at": "2026-06-22T03:33:09.010954+00:00Z",
+    "updated_at": "2026-06-22T03:33:09.010979+00:00Z"
   }
 ]

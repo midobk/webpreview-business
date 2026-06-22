@@ -598,7 +598,7 @@ def capture_screenshot(prototype_dir, slug):
     # Use Playwright CLI to capture screenshot
     try:
         result = subprocess.run(
-            ['/home/clawuser/.local/bin/playwright', 'screenshot', '--device-scale-factor', '2', f'file://{html_path}', screenshot_path],
+            ['/home/clawuser/.local/bin/playwright', 'screenshot', '--viewport-size', '1280,800', f'file://{html_path}', screenshot_path],
             cwd=prototype_dir,
             capture_output=True,
             text=True,
