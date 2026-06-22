@@ -566,7 +566,7 @@ Checklist:
 - [x] Phase 9 complete (admin dashboard with working features — status updates, notes, showcase approval, prototype cards)
 - [x] Vercel project created and deployed (https://webpreview-business.vercel.app)
 - [x] Phase 10 (outreach templates + safety gate — deterministic A/B across 4 angles, contact-safety validator, smoke-tested against 16 leads: 2 safe / 14 blocked for the right reasons)
-- [ ] Phase 11 (showcase page — cron job working on it)
+- [x] Phase 11 (showcase page — live at /showcase with 2 anonymized prototypes, generic labels, secure image proxy with path-traversal protection, empty-state + grid layouts)
 - [ ] Phase 12 (security review — cron job working on it)
 - [ ] Polish homepage with MiniMax M3 (cron job)
 - [x] Scripts: discover, score, generate (already done from earlier phases)
@@ -609,6 +609,7 @@ Checklist:
 | 2026-06-22 | GLM 5.2 | Vercel project created and deployed to production | — | Agent registration | None |
 | 2026-06-22 | GLM 5.2 | Rebuilt dashboard with working features (status updates, notes, showcase approval, prototype cards) | app/admin/dashboard/page.tsx, app/api/admin/leads/route.ts, app/api/admin/prototypes/route.ts | Cron jobs continue Phase 10-12 overnight | None |
 | 2026-06-22 | GLM 5.2 | Phase 10: Outreach email template system — 4 A/B angle templates (`preview_made` / `deserves_better` / `helped_neighbors` / `noticed_gap`), deterministic `pickAngle` + round-robin `rotateAngle`, contact-safety gate (email, source URL, status, avoided industry, Canada, score ≥ 60, watermarked + demo-locked prototype), `buildOutreach` returns subject+body+metadata. Smoke-tested against 16 real leads: 2 safe, 14 blocked with correct per-lead reasons. No actual sending. | scripts/send-outreach/templates.ts, scripts/send-outreach/README.md | Phase 11 (showcase page) | None |
+| 2026-06-22 | GLM 5.2 | Phase 11: Public showcase page — `app/showcase/page.tsx` reads `data/prototypes.json`, filters by `showcase_approved && generation_status==completed`, maps industries to generic anonymized labels ("Modern Cleaning Service Landing Page", "Modern Hair Salon Landing Page"), card grid with screenshot/score/industry/view-concept links, empty state when no approvals yet. Secure `app/api/showcase-image/route.ts` proxies screenshots from `data/prototypes/<slug>/<file>` only (path-traversal blocked: 403 verified). Approved proto-002 (Seaway Cleaning) and proto-003 (Bella's Hair Studio). Deployed to Vercel — /showcase returns HTTP 200 with both anonymized cards rendered. | app/showcase/page.tsx, app/api/showcase-image/route.ts, data/prototypes.json | Phase 12 (security review) | None |
 ---
 
 ## 14. Approval Checkpoints
