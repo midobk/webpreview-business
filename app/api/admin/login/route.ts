@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { verifyPassword, getPasswordHash } from '@/lib/auth';
+import { verifyPassword } from '@/lib/auth';
 
 // POST /api/admin/login - Authenticate admin user
 export async function POST(request: Request) {
@@ -7,7 +7,6 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { password } = body;
 
-    // Check if password is provided
     if (!password) {
       return NextResponse.json(
         { error: 'Password is required' },
@@ -15,11 +14,11 @@ export async function POST(request: Request) {
       );
     }
 
-    // Get password hash
-    const passwordHash = getPasswordHash();
+    // Get password hash from env var (Vercel-safe)
+    const passwordHash = process.env.PASSWORD_HASH;
     if (!passwordHash) {
       return NextResponse.json(
-        { error: 'Admin password not configured' },
+        { error: 'Admin password not configured. Set PASSWORD_HASH env var.' },
         { status: 500 }
       );
     }
@@ -33,12 +32,16 @@ export async function POST(request: Request) {
       );
     }
 
-    // In a real application, you would set a session cookie here
-    // For this simple implementation, we'll just return success
-    return NextResponse.json(
-      { message: 'Authentication successful' },
-      { status: 200 }
-    );
+    // Set a simple session cookie (24h expiry)
+    const res = NextResponse.json({ message: 'Authentication successful' }, { status: 200 });
+    res.cookies.set('admin_session', 'authenticated', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 86400,
+      path: '/',
+    });
+    return res;
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(

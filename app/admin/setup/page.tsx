@@ -1,26 +1,23 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 export default function AdminSetup() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
+  const [hash, setHash] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const [copied, setCopied] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate passwords match
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
     
-    // Validate password strength
     if (password.length < 8) {
       setError('Password must be at least 8 characters long');
       return;
@@ -28,23 +25,18 @@ export default function AdminSetup() {
     
     setIsLoading(true);
     setError('');
-    setSuccess(false);
+    setHash('');
     
     try {
       const response = await fetch('/api/admin/setup', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password }),
       });
       
       if (response.ok) {
-        setSuccess(true);
-        // Redirect to login page after a short delay
-        setTimeout(() => {
-          router.push('/admin');
-        }, 2000);
+        const data = await response.json();
+        setHash(data.hash);
       } else {
         const data = await response.json();
         setError(data.error || 'Failed to set up admin password');
@@ -54,6 +46,12 @@ export default function AdminSetup() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const copyHash = () => {
+    navigator.clipboard.writeText(hash);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -71,31 +69,49 @@ export default function AdminSetup() {
           </p>
         </div>
         
-        {success ? (
-          <div className="rounded-md bg-green-50 p-4">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
+        {hash ? (
+          <div className="space-y-4">
+            <div className="rounded-md bg-green-50 p-4">
+              <h3 className="text-sm font-medium text-green-800 mb-2">
+                ✅ Password hashed successfully!
+              </h3>
+              <p className="text-sm text-green-700 mb-3">
+                Copy this hash and set it as a Vercel environment variable:
+              </p>
+              <div className="relative">
+                <textarea
+                  readOnly
+                  value={hash}
+                  onClick={(e) => e.currentTarget.select()}
+                  className="w-full text-xs font-mono bg-white border border-green-300 rounded p-2 text-gray-800 break-all"
+                  rows={4}
+                />
+                <button
+                  onClick={copyHash}
+                  className="mt-2 w-full bg-green-600 text-white py-2 px-4 rounded text-sm font-medium hover:bg-green-700"
+                >
+                  {copied ? '✓ Copied!' : 'Copy Hash'}
+                </button>
               </div>
-              <div className="ml-3">
-                <h3 className="text-sm font-medium text-green-800">
-                  Admin password set successfully!
-                </h3>
-                <div className="mt-2 text-sm text-green-700">
-                  <p>Redirecting to login page...</p>
-                </div>
-              </div>
+            </div>
+            <div className="rounded-md bg-blue-50 p-4">
+              <h3 className="text-sm font-medium text-blue-800 mb-2">
+                Next steps:
+              </h3>
+              <ol className="text-sm text-blue-700 list-decimal list-inside space-y-1">
+                <li>Go to your Vercel project settings</li>
+                <li>Navigate to Environment Variables</li>
+                <li>Add a variable named <code className="bg-blue-100 px-1 rounded">PASSWORD_HASH</code></li>
+                <li>Paste the hash as the value</li>
+                <li>Redeploy the project</li>
+                <li>Then visit <code className="bg-blue-100 px-1 rounded">/admin</code> to login</li>
+              </ol>
             </div>
           </div>
         ) : (
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
-                <label htmlFor="password" className="sr-only">
-                  Password
-                </label>
                 <input
                   id="password"
                   name="password"
@@ -108,9 +124,6 @@ export default function AdminSetup() {
                 />
               </div>
               <div>
-                <label htmlFor="confirmPassword" className="sr-only">
-                  Confirm Password
-                </label>
                 <input
                   id="confirmPassword"
                   name="confirmPassword"
@@ -126,9 +139,7 @@ export default function AdminSetup() {
             
             {error && (
               <div className="rounded-md bg-red-50 p-4">
-                <div className="text-sm text-red-700">
-                  {error}
-                </div>
+                <div className="text-sm text-red-700">{error}</div>
               </div>
             )}
             
@@ -138,11 +149,7 @@ export default function AdminSetup() {
                 disabled={isLoading}
                 className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
               >
-                {isLoading ? (
-                  <span>Setting up...</span>
-                ) : (
-                  <span>Set Admin Password</span>
-                )}
+                {isLoading ? 'Hashing...' : 'Generate Password Hash'}
               </button>
             </div>
           </form>

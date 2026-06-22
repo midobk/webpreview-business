@@ -2,9 +2,8 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { isPasswordSet } from '@/lib/auth-edge';
 
-// This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-  // Skip middleware for API routes and static files
+  // Skip API routes, static files
   if (request.nextUrl.pathname.startsWith('/api/') || 
       request.nextUrl.pathname.startsWith('/_next/') ||
       request.nextUrl.pathname.startsWith('/favicon.ico') ||
@@ -12,35 +11,38 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check if accessing admin routes
+  // Admin route protection
   if (request.nextUrl.pathname.startsWith('/admin')) {
-    // Allow access to setup page if password is not set
+    // Allow setup page
     if (request.nextUrl.pathname === '/admin/setup') {
+      // If password is already set, redirect to login
+      if (isPasswordSet()) {
+        return NextResponse.redirect(new URL('/admin', request.url));
+      }
       return NextResponse.next();
     }
-    
-    // Check if password is set
-    const passwordSet = isPasswordSet();
-    
-    // If password is not set and not accessing setup page, redirect to setup
-    if (!passwordSet && request.nextUrl.pathname !== '/admin/setup') {
+
+    // If password not set, redirect to setup
+    if (!isPasswordSet()) {
       return NextResponse.redirect(new URL('/admin/setup', request.url));
+    }
+
+    // Check session cookie for protected admin pages
+    const session = request.cookies.get('admin_session');
+    if (!session || session.value !== 'authenticated') {
+      // Allow the login page itself
+      if (request.nextUrl.pathname === '/admin') {
+        return NextResponse.next();
+      }
+      return NextResponse.redirect(new URL('/admin', request.url));
     }
   }
 
   return NextResponse.next();
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 };
