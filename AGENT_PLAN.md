@@ -557,7 +557,7 @@ Checklist:
 ## 13. Progress Tracker
 
 ### Current Status
-- [x] Phase 0+1+2 in progress
+- [x] Phase 0+1+2 complete (scaffold + docs + sample data + repo created)
 - [ ] Phase 3
 - [ ] Phase 4
 - [ ] Phase 5
@@ -578,7 +578,7 @@ Checklist:
 
 | Date | Model | Work | Files | Next | Blockers |
 |------|-------|------|-------|------|----------|
-| 2026-06-22 | GLM 5.2 | Phase 0 research + project creation + AGENT_PLAN | AGENT_PLAN.md, docs/TOOL_RESEARCH.md | Complete scaffold, create repo, push | Domain name decision, Yelp API key |
+| 2026-06-22 | GLM 5.2 | Phase 0+1+2: tool research, scaffold, docs, sample data, GitHub repo created & pushed | AGENT_PLAN.md, docs/*, data/*, logs/* | Start Phase 3 (lead discovery), get Yelp API key | Domain name, Yelp API key |
 
 ---
 
