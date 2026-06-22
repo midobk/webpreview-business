@@ -789,3 +789,34 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
   - AgentMail inbox (needs brand name confirmation)
   - Domain registration (SiteSprint .ca)
 - Next: no further autonomous tasks from this cron's prompt. Cron will idle until the next scheduled slot or a new task.
+
+---
+
+### 2026-06-22 18:00 EDT — Audit + 12-item pipeline rebuild + push to GitHub (Main, Dexter)
+- Model: Main (Dexter) executing on user request (15 numbered items + open-ended improvements)
+- Action: Audited entire project, identified 12 gaps (A1-A12), built all of them in priority order, committed + pushed.
+- New files added:
+  - `lib/sync.ts` — admin dashboard sync helper
+  - `lib/cal-booking.ts` — Cal.com embed snippet
+  - `scripts/enrich-leads/enrich_leads.py` — browser-based lead enrichment
+  - `scripts/showcase-score/score_showcase.py` — prototype scoring + auto-anonymization
+  - `scripts/draft-emails/draft_personalized_emails.py` — LLM-drafted unique emails
+  - `scripts/draft-sms/draft_sms.py` — Telnyx SMS drafts
+  - `scripts/generate-variant/generate_variant.py` — second-variant generator
+  - `scripts/setup-agentmail/setup_agentmail_test.py` — AgentMail inbox config
+  - `scripts/update-conversion-stats.py` — live conversion stats
+  - `data/agentmail_inboxes.json` — inbox config
+  - `data/outreach_logs.json` — outreach tracking schema
+  - `data/prototypes-anonymized/<slug>/index.html` — anonymized copies (3 generated)
+- Rewrote: `scripts/generate-prototype/generate.py` to actually call image_generate + MiniMax M3 (was simulating)
+- Modified: `app/api/admin/leads/route.ts` to use sync helper; `app/showcase/page.tsx` filter
+- Verified: `tsc --noEmit` clean, `npm run build` success, craftmans-cafe prototype generated successfully
+- All 12 open work items complete (A1-A12). AGENT_PLAN.md Progress Tracker updated.
+- sitesprint agent context updated (system.md, TOOLS.md) with full pipeline knowledge
+- Commit: 68511cb pushed to main on github.com/midobk/webpreview-business
+- User decisions captured:
+  - NO actual email sending (drafts only)
+  - NO domain registration (deferred)
+  - NO real outreach yet
+  - AgentMail test inbox name: sitesprint-test@agentmail.to (not yet activated)
+- Next: weekly planning cron takes over; Tue/Wed crons will start generating prototypes + drafts when fires
