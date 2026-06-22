@@ -4,7 +4,7 @@
     "lead_id": "lead-002",
     "prototype_url": null,
     "screenshot_url": null,
-    "title": "Seaway Cleaning Services — Preview",
+    "title": "Seaway Cleaning Services \u2014 Preview",
     "design_summary": "Clean, modern one-page with eco-friendly hero, service packages, before/after gallery, instant quote CTA",
     "prototype_score": null,
     "generation_model": "ollama/minimax-m3:cloud",
@@ -17,5 +17,24 @@
     "anonymized_showcase_url": null,
     "created_at": "2026-06-22T00:00:00Z",
     "updated_at": "2026-06-22T00:00:00Z"
+  },
+  {
+    "id": "proto-002",
+    "lead_id": "lead-002",
+    "prototype_url": "data/prototypes/seaway-cleaning-services/index.html",
+    "screenshot_url": null,
+    "title": "Seaway Cleaning Services - Preview",
+    "design_summary": "Generated prototype for Seaway Cleaning Services in the cleaning industry",
+    "prototype_score": 95,
+    "generation_model": "ollama/minimax-m3:cloud",
+    "generation_prompt": "Industry-specific prompt for cleaning service",
+    "generation_status": "completed",
+    "watermark_enabled": true,
+    "demo_locked": true,
+    "showcase_eligible": true,
+    "showcase_approved": false,
+    "anonymized_showcase_url": null,
+    "created_at": "2026-06-22T03:27:54.539487+00:00Z",
+    "updated_at": "2026-06-22T03:27:54.539540+00:00Z"
   }
 ]
