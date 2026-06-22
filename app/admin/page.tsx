@@ -11,11 +11,17 @@ export default function AdminLogin() {
 
   // Check if already authenticated
   useEffect(() => {
-    // In a real app, you would check for a valid session
-    // For now, we'll just redirect if PASSWORD_HASH is not set
-    if (!process.env.PASSWORD_HASH) {
-      router.push('/admin/setup');
-    }
+    // Check if password is set
+    fetch('/api/admin/check-setup')
+      .then(response => response.json())
+      .then(data => {
+        if (!data.isPasswordSet) {
+          router.push('/admin/setup');
+        }
+      })
+      .catch(err => {
+        console.error('Error checking setup:', err);
+      });
   }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {

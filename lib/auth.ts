@@ -1,4 +1,6 @@
 import bcrypt from 'bcrypt';
+import fs from 'fs';
+import path from 'path';
 
 // Hash a password
 export async function hashPassword(password: string): Promise<string> {
@@ -11,9 +13,27 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
   return await bcrypt.compare(password, hash);
 }
 
-// Check if the user is authenticated
-export function isAuthenticated(request: Request): boolean {
-  // In a real application, you would check for a valid session or token
-  // For this simple implementation, we'll just check if a password hash is set in env
-  return process.env.PASSWORD_HASH !== undefined && process.env.PASSWORD_HASH.length > 0;
+// Get the password hash
+export function getPasswordHash(): string | null {
+  // First check environment variable
+  if (process.env.PASSWORD_HASH) {
+    return process.env.PASSWORD_HASH;
+  }
+  
+  // Then check password file
+  try {
+    const passwordPath = path.join(process.cwd(), '.password');
+    if (fs.existsSync(passwordPath)) {
+      return fs.readFileSync(passwordPath, 'utf8').trim();
+    }
+  } catch (error) {
+    console.error('Error reading password file:', error);
+  }
+  
+  return null;
+}
+
+// Check if admin password is set
+export function isPasswordSet(): boolean {
+  return getPasswordHash() !== null;
 }

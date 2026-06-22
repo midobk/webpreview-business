@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { verifyPassword } from '@/lib/auth';
+import { verifyPassword, getPasswordHash } from '@/lib/auth';
 
 // POST /api/admin/login - Authenticate admin user
 export async function POST(request: Request) {
@@ -15,8 +15,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // Check if PASSWORD_HASH is set in environment variables
-    const passwordHash = process.env.PASSWORD_HASH;
+    // Get password hash
+    const passwordHash = getPasswordHash();
     if (!passwordHash) {
       return NextResponse.json(
         { error: 'Admin password not configured' },
