@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth-server';
-import { getPrototypes } from '@/lib/data-source';
+import { getPrototypes, DATA_SOURCE } from '@/lib/data-source';
+import { getSupabase } from '@/lib/supabase';
 
 // GET /api/admin/prototypes - Fetch all prototypes (admin-only)
 export async function GET(request: Request) {
@@ -9,50 +10,64 @@ export async function GET(request: Request) {
   try {
     const prototypes = await getPrototypes();
 
-    // Populate screenshot_url + prototype_url from filesystem where missing
-    // (works in dev; in production the bundle already has these or they're null)
-    const fs = await import('fs');
-    const path = await import('path');
-    const prototypesDir = path.join(process.cwd(), 'data', 'prototypes');
-
-    for (const proto of prototypes) {
-      const slug = proto.lead_id || proto.id;
-      try {
-        const screenshotPath = path.join(prototypesDir, slug, 'screenshot.png');
-        if (fs.existsSync(screenshotPath) && !proto.screenshot_url) {
-          proto.screenshot_url = `/data/prototypes/${slug}/screenshot.png`;
+    // Populate screenshot_url + prototype_url where missing
+    if (process.env.NODE_ENV !== 'production') {
+      const fs = await import('fs');
+      const path = await import('path');
+      const prototypesDir = path.join(process.cwd(), 'data', 'prototypes');
+      for (const proto of prototypes) {
+        const slug = proto.lead_id || proto.id;
+        try {
+          const screenshotPath = path.join(prototypesDir, slug, 'screenshot.png');
+          if (fs.existsSync(screenshotPath) && !proto.screenshot_url) {
+            proto.screenshot_url = `/data/prototypes/${slug}/screenshot.png`;
+          }
+        } catch {
+          // ignore
         }
-      } catch {
-        // filesystem not available (Vercel) — that's fine
-      }
-      if (!proto.prototype_url) {
-        proto.prototype_url = `/preview/${slug}`;
+        if (!proto.prototype_url) {
+          proto.prototype_url = `/preview/${slug}`;
+        }
       }
     }
 
     return NextResponse.json(prototypes);
   } catch (error) {
     console.error('Error fetching prototypes:', error);
-    return NextResponse.json({ error: 'Failed to fetch prototypes' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch prototypes', data_source: DATA_SOURCE }, { status: 500 });
   }
 }
 
 // PATCH /api/admin/prototypes - Update a prototype (admin-only)
-// Phase 1: writes only persist on local filesystem. Phase 2 (Supabase) replaces this.
 export async function PATCH(request: Request) {
   const denied = requireAdmin(request);
   if (denied) return denied;
   try {
-    const fs = await import('fs/promises');
-    const path = await import('path');
-
     const body = await request.json();
     const { id, showcase_approved, showcase_eligible } = body;
 
+    const supabase = getSupabase();
+    if (supabase) {
+      const updates: Record<string, unknown> = { updated_at: new Date().toISOString() };
+      if (showcase_approved !== undefined) updates.showcase_approved = showcase_approved;
+      if (showcase_eligible !== undefined) updates.showcase_eligible = showcase_eligible;
+      const { error } = await supabase
+        .from("prototypes")
+        .update(updates)
+        .eq("id", id);
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
+      }
+      return NextResponse.json({ success: true, data_source: "supabase" });
+    }
+
+    // Phase 1 fallback
+    const fs = await import('fs/promises');
+    const path = await import('path');
     const protoPath = path.join(process.cwd(), 'data', 'prototypes.json');
 
     if (!(await fsAccess(protoPath))) {
-      return NextResponse.json({ error: 'No prototypes found (Phase 1: build-bundle only — use Supabase for writes)' }, { status: 404 });
+      return NextResponse.json({ error: 'No prototypes found (Phase 1: build-bundle only — set SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY for writes)' }, { status: 404 });
     }
 
     const data = await fs.readFile(protoPath, 'utf8');
@@ -70,14 +85,13 @@ export async function PATCH(request: Request) {
     try {
       await fs.writeFile(protoPath, JSON.stringify(prototypes, null, 2));
     } catch (e) {
-      // Vercel read-only filesystem
       return NextResponse.json({
         success: false,
-        message: 'Phase 1 hacky build: writes not persisted on Vercel. Use local dev or wait for Supabase.',
+        message: 'Phase 1 hacky build: writes not persisted on Vercel. Set SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY for live writes.',
       });
     }
 
-    return NextResponse.json({ success: true, prototype: prototypes[index] });
+    return NextResponse.json({ success: true, prototype: prototypes[index], data_source: "filesystem" });
   } catch (error) {
     console.error('Error updating prototype:', error);
     return NextResponse.json({ error: 'Failed to update prototype' }, { status: 500 });

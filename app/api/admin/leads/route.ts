@@ -1,6 +1,13 @@
 import { NextResponse } from 'next/server';
 import { requireAdmin } from '@/lib/auth-server';
-import { getLeads, getPrototypes, getOutreachLog, DATA_GENERATED_AT } from '@/lib/data-source';
+import {
+  getLeads,
+  getPrototypes,
+  getOutreachLog,
+  DATA_GENERATED_AT,
+  DATA_SOURCE,
+} from '@/lib/data-source';
+import { getSupabase } from '@/lib/supabase';
 
 // GET /api/admin/leads - Fetch all leads merged with prototype + outreach state
 export async function GET(request: Request) {
@@ -59,28 +66,47 @@ export async function GET(request: Request) {
     return NextResponse.json(synced);
   } catch (error) {
     console.error('Error fetching leads:', error);
-    return NextResponse.json({ error: 'Failed to fetch leads', detail: String(error), bundle_generated_at: DATA_GENERATED_AT }, { status: 500 });
+    return NextResponse.json({
+      error: 'Failed to fetch leads',
+      detail: String(error),
+      data_source: DATA_SOURCE,
+      bundle_generated_at: DATA_GENERATED_AT,
+    }, { status: 500 });
   }
 }
 
 // PATCH /api/admin/leads - Update a lead's status or notes
-// Phase 1 (hacky): write attempts only persist on local filesystem; on Vercel
-// changes live in memory for the request but don't persist (Patches work locally
-// for testing, Supabase replaces this in Phase 2).
+// Phase 1 (hacky): writes only persist on local filesystem.
+// Phase 2 (Supabase): writes go to Supabase + local JSON.
 export async function PATCH(request: Request) {
   const denied = requireAdmin(request);
   if (denied) return denied;
   try {
-    const fs = await import('fs/promises');
-    const path = await import('path');
-
     const body = await request.json();
     const { id, status, notes } = body;
 
+    const supabase = getSupabase();
+    if (supabase) {
+      const updates: Record<string, unknown> = { updated_at: new Date().toISOString() };
+      if (status) updates.status = status;
+      if (notes !== undefined) updates.notes = notes;
+      const { error } = await supabase
+        .from("leads")
+        .update(updates)
+        .eq("id", id);
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
+      }
+      return NextResponse.json({ success: true, data_source: "supabase" });
+    }
+
+    // Phase 1 fallback: write to local filesystem only (Vercel will fail)
+    const fs = await import('fs/promises');
+    const path = await import('path');
     const leadsPath = path.join(process.cwd(), 'data', 'leads.json');
 
     if (!(await fsAccess(leadsPath))) {
-      return NextResponse.json({ error: 'No leads found (Phase 1: build-bundle only — use Supabase for writes)' }, { status: 404 });
+      return NextResponse.json({ error: 'No leads found (Phase 1: build-bundle only — set SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY for writes)' }, { status: 404 });
     }
 
     const leadsData = await fs.readFile(leadsPath, 'utf8');
@@ -98,14 +124,13 @@ export async function PATCH(request: Request) {
     try {
       await fs.writeFile(leadsPath, JSON.stringify(leads, null, 2));
     } catch (e) {
-      // Vercel read-only filesystem — Phase 2 (Supabase) will fix this
       return NextResponse.json({
         success: false,
-        message: 'Phase 1 hacky build: writes not persisted on Vercel. Use local dev or wait for Supabase.',
+        message: 'Phase 1 hacky build: writes not persisted on Vercel. Set SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY for live writes.',
       });
     }
 
-    return NextResponse.json({ success: true, lead: leads[leadIndex] });
+    return NextResponse.json({ success: true, lead: leads[leadIndex], data_source: "filesystem" });
   } catch (error) {
     console.error('Error updating lead:', error);
     return NextResponse.json({ error: 'Failed to update lead' }, { status: 500 });

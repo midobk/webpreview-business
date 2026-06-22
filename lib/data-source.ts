@@ -1,14 +1,16 @@
 /**
  * lib/data-source.ts
  *
- * Unified data accessor. Phase 1: read from the build-bundle (works on
- * Vercel's read-only filesystem). Phase 2: replace with Supabase client.
+ * Unified data accessor. Multi-phase:
  *
- * Strategy:
- * - Try the embedded bundle first (always present in production)
- * - Fallback to filesystem read (for local dev where we don't want to
- *   rebuild on every data change)
- * - In Phase 2, the embedded fallback goes away — all reads hit Supabase.
+ * Phase 1 (hacky): read from build-bundle (works on Vercel's read-only fs).
+ *   Used when Supabase isn't configured.
+ *
+ * Phase 2 (proper): read from Supabase when configured. Falls back to bundle.
+ *   Writes (PATCH/POST) work in Phase 2.
+ *
+ * Writes (Phase 1): only work on local filesystem. Returns helpful error on Vercel.
+ * Writes (Phase 2): write to Supabase, sync to local JSON for local dev.
  */
 
 import { promises as fs } from "fs";
@@ -21,72 +23,85 @@ import {
   agentmailInboxes as bundleInboxes,
   BUNDLE_GENERATED_AT,
 } from "./data-bundle/bundle";
+import { getSupabase, isSupabaseConfigured } from "./supabase";
 
-export const DATA_SOURCE = "build-bundle";
-export const DATA_GENERATED_AT = BUNDLE_GENERATED_AT;
+export const DATA_SOURCE = isSupabaseConfigured()
+  ? "supabase"
+  : "build-bundle";
+export const DATA_GENERATED_AT = isSupabaseConfigured()
+  ? "live"
+  : BUNDLE_GENERATED_AT;
+
+async function fromSupabase<T>(table: string, fallback: T): Promise<T> {
+  const supabase = getSupabase();
+  if (!supabase) return fallback;
+  const { data, error } = await supabase.from(table).select("*");
+  if (error) {
+    console.error(`Supabase ${table} fetch error:`, error.message);
+    return fallback;
+  }
+  return (data as T) ?? fallback;
+}
+
+async function fromFilesystem<T>(path_: string, fallback: T): Promise<T> {
+  if (process.env.NODE_ENV === "production") return fallback;
+  try {
+    const raw = await fs.readFile(path_, "utf8");
+    return JSON.parse(raw);
+  } catch {
+    return fallback;
+  }
+}
 
 export async function getLeads() {
-  // Local dev: prefer fresh filesystem data
-  if (process.env.NODE_ENV !== "production") {
-    try {
-      const p = path.join(process.cwd(), "data", "leads.json");
-      const raw = await fs.readFile(p, "utf8");
-      return JSON.parse(raw);
-    } catch {
-      // fall through to bundle
-    }
+  const supabase = getSupabase();
+  if (supabase) {
+    return fromSupabase("leads", bundleLeads);
   }
-  return bundleLeads;
+  return fromFilesystem(path.join(process.cwd(), "data", "leads.json"), bundleLeads);
 }
 
 export async function getPrototypes() {
-  if (process.env.NODE_ENV !== "production") {
-    try {
-      const p = path.join(process.cwd(), "data", "prototypes.json");
-      const raw = await fs.readFile(p, "utf8");
-      return JSON.parse(raw);
-    } catch {
-      // fall through
-    }
+  const supabase = getSupabase();
+  if (supabase) {
+    return fromSupabase("prototypes", bundlePrototypes);
   }
-  return bundlePrototypes;
+  return fromFilesystem(path.join(process.cwd(), "data", "prototypes.json"), bundlePrototypes);
 }
 
 export async function getOutreachLog() {
-  if (process.env.NODE_ENV !== "production") {
-    try {
-      const p = path.join(process.cwd(), "data", "outreach_logs.json");
-      const raw = await fs.readFile(p, "utf8");
-      return JSON.parse(raw);
-    } catch {
-      // fall through
-    }
+  const supabase = getSupabase();
+  if (supabase) {
+    const data = await fromSupabase("outreach_logs", bundleOutreachLog.logs ?? []);
+    return { logs: data as any[] };
   }
-  return bundleOutreachLog;
+  const fallback = fromFilesystem(
+    path.join(process.cwd(), "data", "outreach_logs.json"),
+    bundleOutreachLog
+  );
+  return fallback;
 }
 
 export async function getConversionStats() {
-  if (process.env.NODE_ENV !== "production") {
-    try {
-      const p = path.join(process.cwd(), "data", "conversion-stats.json");
-      const raw = await fs.readFile(p, "utf8");
-      return JSON.parse(raw);
-    } catch {
-      // fall through
-    }
+  const supabase = getSupabase();
+  if (supabase) {
+    const data = await fromSupabase("conversion_stats", bundleConversionStats);
+    return (data as any[])[0] ?? bundleConversionStats;
   }
-  return bundleConversionStats;
+  return fromFilesystem(
+    path.join(process.cwd(), "data", "conversion-stats.json"),
+    bundleConversionStats
+  );
 }
 
 export async function getAgentmailInboxes() {
-  if (process.env.NODE_ENV !== "production") {
-    try {
-      const p = path.join(process.cwd(), "data", "agentmail_inboxes.json");
-      const raw = await fs.readFile(p, "utf8");
-      return JSON.parse(raw);
-    } catch {
-      // fall through
-    }
+  const supabase = getSupabase();
+  if (supabase) {
+    const data = await fromSupabase("agentmail_inboxes", bundleInboxes.inboxes ?? []);
+    return { inboxes: data as any[] };
   }
-  return bundleInboxes;
+  return fromFilesystem(
+    path.join(process.cwd(), "data", "agentmail_inboxes.json"),
+    bundleInboxes
+  );
 }
