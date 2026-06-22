@@ -50,3 +50,16 @@ export async function POST(request: Request) {
     );
   }
 }
+
+// DELETE /api/admin/login - Clear admin session cookie (logout)
+export async function DELETE() {
+  const res = NextResponse.json({ message: 'Logged out' }, { status: 200 });
+  res.cookies.set('admin_session', '', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'strict',
+    maxAge: 0,
+    path: '/',
+  });
+  return res;
+}

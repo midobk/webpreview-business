@@ -17,8 +17,10 @@ export default function Home() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, we would send this data to an API
-    console.log('Form submitted:', formData);
+    // NOTE: Form data is collected client-side only in this MVP. The /api/leads
+    // POST endpoint exists but is not wired from this UI to avoid uncontrolled
+    // public submissions before we add rate-limiting + reCAPTCHA.
+    // See docs/SECURITY_REVIEW.md (LOW-2) for details.
     alert('Thank you for your request! We will get back to you soon.');
     setFormData({ businessName: '', email: '', website: '', message: '' });
   };

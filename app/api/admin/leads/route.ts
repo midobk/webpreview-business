@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { requireAdmin } from '@/lib/auth-server';
 
-// GET /api/admin/leads - Fetch all leads
-export async function GET() {
+// GET /api/admin/leads - Fetch all leads (admin-only)
+export async function GET(request: Request) {
+  const denied = requireAdmin(request);
+  if (denied) return denied;
   try {
     const leadsPath = path.join(process.cwd(), 'data', 'leads.json');
     
@@ -21,8 +24,10 @@ export async function GET() {
   }
 }
 
-// PATCH /api/admin/leads/[id] - Update a lead's status or notes
+// PATCH /api/admin/leads - Update a lead's status or notes (admin-only)
 export async function PATCH(request: Request) {
+  const denied = requireAdmin(request);
+  if (denied) return denied;
   try {
     const body = await request.json();
     const { id, status, notes } = body;

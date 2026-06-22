@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { requireAdmin } from '@/lib/auth-server';
 
-// GET /api/admin/prototypes - Fetch all prototypes
-export async function GET() {
+// GET /api/admin/prototypes - Fetch all prototypes (admin-only)
+export async function GET(request: Request) {
+  const denied = requireAdmin(request);
+  if (denied) return denied;
   try {
     const protoPath = path.join(process.cwd(), 'data', 'prototypes.json');
     
@@ -34,8 +37,10 @@ export async function GET() {
   }
 }
 
-// PATCH /api/admin/prototypes - Update a prototype (showcase approval, etc)
+// PATCH /api/admin/prototypes - Update a prototype (admin-only)
 export async function PATCH(request: Request) {
+  const denied = requireAdmin(request);
+  if (denied) return denied;
   try {
     const body = await request.json();
     const { id, showcase_approved, showcase_eligible } = body;
