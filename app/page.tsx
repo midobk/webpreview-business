@@ -1,6 +1,14 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
+
+import Reveal from '@/components/motion/Reveal';
+import MagneticButton from '@/components/motion/MagneticButton';
+import HeaderScroll from '@/components/motion/HeaderScroll';
+import MouseBlobs from '@/components/motion/MouseBlobs';
+import TiltMockBrowser from '@/components/motion/TiltMockBrowser';
+import { fadeUp, fadeUpSmall, heroStagger, outQuint, staggerContainer } from '@/lib/motion/variants';
 
 type FormState = {
   businessName: string;
@@ -15,36 +23,6 @@ const initialForm: FormState = {
   website: '',
   message: '',
 };
-
-/* ------------------------------------------------------------------ */
-/*  Reveal-on-scroll hook                                             */
-/* ------------------------------------------------------------------ */
-function useReveal() {
-  useEffect(() => {
-    const els = document.querySelectorAll<HTMLElement>('.reveal');
-    if (!els.length) return;
-
-    if (typeof IntersectionObserver === 'undefined') {
-      els.forEach((el) => el.classList.add('is-visible'));
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { rootMargin: '0px 0px -10% 0px', threshold: 0.05 }
-    );
-
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-}
 
 /* ------------------------------------------------------------------ */
 /*  Section data                                                      */
@@ -252,10 +230,30 @@ const trustBadges = [
 ];
 
 /* ------------------------------------------------------------------ */
+/*  Hero blob config (was inline in markup)                            */
+/* ------------------------------------------------------------------ */
+const heroBlobs = [
+  {
+    className:
+      'absolute -top-32 -left-20 w-[420px] h-[420px] rounded-full bg-violet-600/40 blur-3xl',
+    range: 22,
+  },
+  {
+    className:
+      'absolute top-20 right-0 w-[380px] h-[380px] rounded-full bg-pink-500/30 blur-3xl',
+    range: 28,
+  },
+  {
+    className:
+      'absolute bottom-0 left-1/3 w-[460px] h-[460px] rounded-full bg-indigo-500/40 blur-3xl',
+    range: 18,
+  },
+];
+
+/* ------------------------------------------------------------------ */
 /*  Page                                                              */
 /* ------------------------------------------------------------------ */
 export default function Home() {
-  useReveal();
   const [form, setForm] = useState<FormState>(initialForm);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState('');
@@ -263,9 +261,10 @@ export default function Home() {
   const [emailTouched, setEmailTouched] = useState(false);
   const [urlTouched, setUrlTouched] = useState(false);
   const formRef = useRef<HTMLDivElement | null>(null);
+  const reduce = useReducedMotion();
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -275,7 +274,7 @@ export default function Home() {
   const urlValid =
     form.website === '' || /^https?:\/\/.+\..+/.test(form.website);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!emailValid || !urlValid || !form.businessName.trim()) {
       setSubmitError('Please fix the highlighted fields and try again.');
@@ -314,7 +313,7 @@ export default function Home() {
   return (
     <div className="min-h-screen overflow-x-hidden">
       {/* ============================== HEADER ============================== */}
-      <header className="absolute top-0 left-0 right-0 z-50">
+      <HeaderScroll className="absolute top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex items-center justify-between">
             <a href="#top" className="flex items-center gap-2.5">
@@ -330,19 +329,18 @@ export default function Home() {
               <a href="#how-it-works" className="hover:text-white transition-colors">How it works</a>
               <a href="/showcase" className="hover:text-white transition-colors">Examples</a>
               <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
-              <a href="/showcase" className="hover:text-white transition-colors">Examples</a>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
             </nav>
-            <a
+            <MagneticButton
               href="#request-preview"
-              className="inline-flex items-center gap-1.5 bg-white text-[#1E1B4B] px-4 py-2 rounded-full text-sm font-semibold hover:bg-white/90 transition-colors shadow-lg shadow-black/20"
+              className="inline-flex items-center gap-1.5 bg-white text-[#1E1B4B] px-4 py-2 rounded-full text-sm font-semibold shadow-lg shadow-black/20"
             >
               Get my preview
               <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
-            </a>
+            </MagneticButton>
           </div>
         </div>
-      </header>
+      </HeaderScroll>
 
       {/* ============================== HERO ============================== */}
       <section
@@ -351,21 +349,8 @@ export default function Home() {
       >
         {/* Animated mesh gradient background */}
         <div className="absolute inset-0 bg-mesh-gradient" aria-hidden="true" />
-        {/* Drifting blobs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-          <div
-            className="absolute -top-32 -left-20 w-[420px] h-[420px] rounded-full bg-violet-600/40 blur-3xl"
-            style={{ animation: 'blobDrift 22s ease-in-out infinite' }}
-          />
-          <div
-            className="absolute top-20 right-0 w-[380px] h-[380px] rounded-full bg-pink-500/30 blur-3xl"
-            style={{ animation: 'blobDrift 26s ease-in-out infinite reverse' }}
-          />
-          <div
-            className="absolute bottom-0 left-1/3 w-[460px] h-[460px] rounded-full bg-indigo-500/40 blur-3xl"
-            style={{ animation: 'blobDrift 30s ease-in-out infinite' }}
-          />
-        </div>
+        {/* Mouse-tracked drifting blobs (replaces CSS keyframes) */}
+        <MouseBlobs blobs={heroBlobs} />
         {/* Noise grain overlay */}
         <div className="absolute inset-0 noise-overlay pointer-events-none" aria-hidden="true" />
         {/* Vignette */}
@@ -379,15 +364,24 @@ export default function Home() {
         />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 md:pt-40 md:pb-32">
-          <div className="text-center stagger-children">
+          <motion.div
+            className="text-center"
+            variants={heroStagger}
+            initial="hidden"
+            animate="visible"
+          >
             {/* Eyebrow pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm text-xs font-semibold tracking-wider uppercase text-white/90 mb-8">
+            <motion.div
+              variants={fadeUpSmall}
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur-sm text-xs font-semibold tracking-wider uppercase text-white/90 mb-8"
+            >
               <span aria-hidden="true">🍁</span>
               <span>Built for Canadian small business</span>
-            </div>
+            </motion.div>
 
             {/* Headline */}
-            <h1
+            <motion.h1
+              variants={fadeUp}
               className="font-extrabold tracking-tight text-balance"
               style={{
                 fontFamily: 'var(--font-jakarta), system-ui, sans-serif',
@@ -399,23 +393,29 @@ export default function Home() {
               See your new website
               <br className="hidden sm:block" />
               <span className="text-brand-gradient"> before you pay a dollar.</span>
-            </h1>
+            </motion.h1>
 
             {/* Subhead */}
-            <p className="mt-6 text-lg md:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed">
+            <motion.p
+              variants={fadeUp}
+              className="mt-6 text-lg md:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed"
+            >
               SiteSprint generates a complete, on-brand website preview for your business in 90 seconds.
               No credit card. No sales call. Just your future site, right now.
-            </p>
+            </motion.p>
 
             {/* CTAs */}
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
+            <motion.div
+              variants={fadeUp}
+              className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3"
+            >
+              <MagneticButton
                 href="#request-preview"
-                className="inline-flex items-center gap-2 bg-white text-[#1E1B4B] font-semibold text-base px-7 py-3.5 rounded-full hover:bg-white/90 transition-all shadow-xl shadow-black/30 hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 bg-white text-[#1E1B4B] font-semibold text-base px-7 py-3.5 rounded-full shadow-xl shadow-black/30"
               >
                 Generate my free preview
                 <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
-              </a>
+              </MagneticButton>
               <a
                 href="#how-it-works"
                 className="inline-flex items-center gap-2 border border-white/20 bg-white/5 backdrop-blur-sm text-white font-medium text-base px-6 py-3.5 rounded-full hover:bg-white/10 transition-colors"
@@ -430,10 +430,13 @@ export default function Home() {
                 <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" /></svg>
                 See real examples
               </a>
-            </div>
+            </motion.div>
 
             {/* Trust strip */}
-            <dl className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-y-8 gap-x-4 max-w-3xl mx-auto">
+            <motion.dl
+              variants={fadeUp}
+              className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-y-8 gap-x-4 max-w-3xl mx-auto"
+            >
               {trustStats.map((stat) => (
                 <div key={stat.label} className="text-center">
                   <dt className="text-3xl md:text-4xl font-extrabold text-white" style={{ fontFamily: 'var(--font-jakarta)' }}>
@@ -444,15 +447,12 @@ export default function Home() {
                   </dd>
                 </div>
               ))}
-            </dl>
-          </div>
+            </motion.dl>
+          </motion.div>
 
-          {/* Mock browser preview */}
-          <div className="relative mt-20 max-w-5xl mx-auto reveal">
-            <div
-              className="browser-mock rounded-2xl overflow-hidden animate-float"
-              style={{ animationDelay: '0.5s' }}
-            >
+          {/* Mock browser preview (tilt + spring) */}
+          <TiltMockBrowser className="relative mt-20 max-w-5xl mx-auto">
+            <div className="browser-mock rounded-2xl overflow-hidden">
               {/* Window chrome */}
               <div className="flex items-center gap-2 px-4 py-3 bg-black/20 border-b border-white/10">
                 <span className="w-3 h-3 rounded-full bg-red-400/80" />
@@ -513,28 +513,28 @@ export default function Home() {
             </div>
             {/* Glow under mock */}
             <div className="absolute -inset-x-12 -bottom-12 h-32 bg-violet-500/40 blur-3xl -z-10" aria-hidden="true" />
-          </div>
+          </TiltMockBrowser>
         </div>
       </section>
 
       {/* ============================== TRUST BADGES ============================== */}
       <section className="relative -mt-12 z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="reveal bg-white rounded-2xl shadow-xl shadow-slate-900/5 border border-slate-200/60 px-6 py-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+          <Reveal className="bg-white rounded-2xl shadow-xl shadow-slate-900/5 border border-slate-200/60 px-6 py-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
             {trustBadges.map((b) => (
               <div key={b.label} className="flex items-center gap-2 text-sm font-medium text-slate-700">
                 <span className="text-base" aria-hidden="true">{b.icon}</span>
                 <span>{b.label}</span>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ============================== FEATURES ============================== */}
       <section id="features" className="py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center reveal">
+          <Reveal className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest text-violet-700 bg-violet-100">
               <span className="w-1.5 h-1.5 rounded-full bg-violet-600" /> Why SiteSprint
             </div>
@@ -545,13 +545,22 @@ export default function Home() {
               Cleaning crews, salons, mechanics, contractors — every preview is tailored to the kind
               of business you actually run, not a generic SaaS template.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div
+            className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.05 }}
+          >
             {features.map((f) => (
-              <div
+              <motion.div
                 key={f.title}
-                className="reveal lift bg-white rounded-2xl p-7 border border-slate-200/70 shadow-sm"
+                variants={fadeUp}
+                whileHover={reduce ? undefined : { y: -4 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                className="rounded-2xl p-7 border border-slate-200/70 shadow-sm bg-white"
               >
                 <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 text-white flex items-center justify-center mb-5 shadow-md shadow-violet-500/30">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -562,16 +571,16 @@ export default function Home() {
                   {f.title}
                 </h3>
                 <p className="mt-2 text-sm text-slate-600 leading-relaxed">{f.body}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ============================== HOW IT WORKS ============================== */}
       <section id="how-it-works" className="py-24 md:py-32 bg-bg-subtle bg-dot-grid relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center reveal">
+          <Reveal className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest text-pink-700 bg-pink-100">
               <span className="w-1.5 h-1.5 rounded-full bg-pink-500" /> How it works
             </div>
@@ -581,15 +590,25 @@ export default function Home() {
             <p className="mt-5 text-lg text-slate-600">
               Three steps. No contract. No "discovery call". No "let me check with my manager".
             </p>
-          </div>
+          </Reveal>
 
           <div className="mt-20 relative">
             {/* Connector line (desktop only) */}
             <div className="hidden md:block absolute top-9 left-[16%] right-[16%] connector" aria-hidden="true" />
 
-            <ol className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 relative">
+            <motion.ol
+              className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 relative"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+            >
               {steps.map((s) => (
-                <li key={s.n} className="reveal text-center relative">
+                <motion.li
+                  key={s.n}
+                  variants={fadeUp}
+                  className="text-center relative"
+                >
                   <div className="mx-auto w-[72px] h-[72px] rounded-full bg-white border-2 border-violet-200 flex items-center justify-center text-2xl font-extrabold text-violet-700 shadow-lg shadow-violet-500/10 relative z-10" style={{ fontFamily: 'var(--font-jakarta)' }}>
                     {s.n}
                   </div>
@@ -597,9 +616,9 @@ export default function Home() {
                     {s.title}
                   </h3>
                   <p className="mt-3 text-slate-600 max-w-xs mx-auto">{s.body}</p>
-                </li>
+                </motion.li>
               ))}
-            </ol>
+            </motion.ol>
           </div>
         </div>
       </section>
@@ -607,7 +626,7 @@ export default function Home() {
       {/* ============================== TESTIMONIALS ============================== */}
       <section className="py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center reveal">
+          <Reveal className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest text-indigo-700 bg-indigo-100">
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" /> Real customers
             </div>
@@ -617,13 +636,22 @@ export default function Home() {
             <p className="mt-5 text-lg text-slate-600">
               Three owners. Three provinces. One shared "I should've done this years ago."
             </p>
-          </div>
+          </Reveal>
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <motion.div
+            className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.05 }}
+          >
             {testimonials.map((t) => (
-              <figure
+              <motion.figure
                 key={t.name}
-                className="reveal lift bg-white rounded-2xl p-7 border border-slate-200/70 shadow-sm flex flex-col"
+                variants={fadeUp}
+                whileHover={reduce ? undefined : { y: -4 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                className="rounded-2xl p-7 border border-slate-200/70 shadow-sm bg-white flex flex-col"
               >
                 {/* Quote mark */}
                 <svg className="w-8 h-8 text-violet-300 mb-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -643,16 +671,16 @@ export default function Home() {
                     </div>
                   </div>
                 </figcaption>
-              </figure>
+              </motion.figure>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* ============================== PRICING ============================== */}
       <section id="pricing" className="py-24 md:py-32 bg-bg-subtle bg-dot-grid">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center reveal">
+          <Reveal className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest text-emerald-700 bg-emerald-100">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> Pricing
             </div>
@@ -662,18 +690,24 @@ export default function Home() {
             <p className="mt-5 text-lg text-slate-600">
               Free to look. Pay only when you decide to keep it. Cancel anytime on managed.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch">
-            {pricingTiers.map((tier, i) => (
-              <div
+          <motion.div
+            className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.05 }}
+          >
+            {pricingTiers.map((tier) => (
+              <motion.div
                 key={tier.name}
-                className={`reveal relative rounded-2xl p-8 flex flex-col ${
+                variants={fadeUp}
+                className={`relative rounded-2xl p-8 flex flex-col ${
                   tier.featured
                     ? 'pricing-featured md:-translate-y-3 shadow-2xl shadow-violet-500/20'
                     : 'bg-white border border-slate-200/70 shadow-sm'
                 }`}
-                style={{ animationDelay: `${i * 80}ms` }}
               >
                 {tier.featured && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand-gradient text-white text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-lg shadow-violet-500/30">
@@ -700,20 +734,26 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <a
-                  href={tier.ctaHref}
-                  className={`mt-8 inline-flex items-center justify-center gap-1.5 px-5 py-3 rounded-full font-semibold text-sm transition-all ${
-                    tier.featured
-                      ? 'bg-brand-gradient text-white shadow-lg shadow-violet-500/40 hover:shadow-xl hover:-translate-y-0.5'
-                      : 'bg-slate-900 text-white hover:bg-slate-800'
-                  }`}
-                >
-                  {tier.cta}
-                  <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
-                </a>
-              </div>
+                {tier.featured ? (
+                  <MagneticButton
+                    href={tier.ctaHref}
+                    className="mt-8 inline-flex items-center justify-center gap-1.5 px-5 py-3 rounded-full font-semibold text-sm bg-brand-gradient text-white shadow-lg shadow-violet-500/40"
+                  >
+                    {tier.cta}
+                    <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
+                  </MagneticButton>
+                ) : (
+                  <a
+                    href={tier.ctaHref}
+                    className="mt-8 inline-flex items-center justify-center gap-1.5 px-5 py-3 rounded-full font-semibold text-sm bg-slate-900 text-white hover:bg-slate-800 transition-colors"
+                  >
+                    {tier.cta}
+                    <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
+                  </a>
+                )}
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           <p className="mt-8 text-center text-sm text-slate-500">
             All prices in CAD. Taxes added at checkout. No setup fees, ever.
@@ -724,35 +764,20 @@ export default function Home() {
       {/* ============================== FAQ ============================== */}
       <section id="faq" className="py-24 md:py-32">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center reveal">
+          <Reveal className="text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest text-violet-700 bg-violet-100">
               <span className="w-1.5 h-1.5 rounded-full bg-violet-500" /> FAQ
             </div>
             <h2 className="mt-5 text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900" style={{ fontFamily: 'var(--font-jakarta)', letterSpacing: '-0.02em' }}>
               Questions, answered straight.
             </h2>
-          </div>
+          </Reveal>
 
-          <div className="mt-12 divide-y divide-slate-200 border-y border-slate-200 reveal">
+          <Reveal className="mt-12 divide-y divide-slate-200 border-y border-slate-200">
             {faqs.map((item) => (
-              <details key={item.q} className="group py-2">
-                <summary className="flex items-center justify-between gap-6 py-5 cursor-pointer text-left">
-                  <span className="text-base md:text-lg font-semibold text-slate-900">{item.q}</span>
-                  <svg
-                    className="faq-chevron w-5 h-5 flex-none text-slate-400 group-hover:text-violet-600"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                  </svg>
-                </summary>
-                <div className="pb-5 pr-12 text-slate-600 leading-relaxed">
-                  {item.a}
-                </div>
-              </details>
+              <FaqItem key={item.q} q={item.q} a={item.a} />
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -784,16 +809,34 @@ export default function Home() {
             noValidate
             className="mt-10 bg-white text-slate-900 rounded-2xl shadow-2xl shadow-black/30 p-7 md:p-9 text-left"
           >
-            {submitted && (
-              <div className="mb-6 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 text-sm font-medium" role="status">
-                ✓ Request received — check your inbox at <span className="font-semibold">{form.email || 'your email'}</span> for your preview link within a few minutes.
-              </div>
-            )}
-            {submitError && (
-              <div className="mb-6 rounded-xl bg-red-50 border border-red-200 text-red-800 px-4 py-3 text-sm font-medium" role="alert">
-                {submitError}
-              </div>
-            )}
+            <AnimatePresence>
+              {submitted && (
+                <motion.div
+                  key="submitted-banner"
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: outQuint }}
+                  className="mb-6 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 text-sm font-medium"
+                  role="status"
+                >
+                  ✓ Request received — check your inbox at <span className="font-semibold">{form.email || 'your email'}</span> for your preview link within a few minutes.
+                </motion.div>
+              )}
+              {submitError && (
+                <motion.div
+                  key="error-banner"
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: outQuint }}
+                  className="mb-6 rounded-xl bg-red-50 border border-red-200 text-red-800 px-4 py-3 text-sm font-medium"
+                  role="alert"
+                >
+                  {submitError}
+                </motion.div>
+              )}
+            </AnimatePresence>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label htmlFor="businessName" className="block text-sm font-semibold text-slate-700 mb-1.5">
@@ -880,13 +923,22 @@ export default function Home() {
                 placeholder="What services do you offer? What city? What makes you different?"
               />
             </div>
-            <button
+            <motion.button
               type="submit"
               disabled={isSubmitting}
-              className="mt-6 w-full bg-brand-gradient text-white font-semibold py-3.5 px-6 rounded-xl hover:opacity-95 transition-all shadow-lg shadow-violet-500/30 hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+              whileTap={isSubmitting || reduce ? undefined : { scale: 0.97 }}
+              animate={
+                isSubmitting
+                  ? { opacity: 0.7 }
+                  : submitted
+                  ? { scale: [1, 1.03, 1] }
+                  : { opacity: 1, scale: 1 }
+              }
+              transition={{ duration: 0.4, ease: outQuint }}
+              className="mt-6 w-full bg-brand-gradient text-white font-semibold py-3.5 px-6 rounded-xl shadow-lg shadow-violet-500/30 disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {isSubmitting ? 'Generating…' : 'Generate my free preview →'}
-            </button>
+            </motion.button>
             <p className="mt-3 text-center text-xs text-slate-500">
               No credit card. We never share your details. PIPEDA-compliant.
             </p>
@@ -931,5 +983,39 @@ export default function Home() {
         </div>
       </footer>
     </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  FAQ item — extracted so it can own its own open state and animate  */
+/* ------------------------------------------------------------------ */
+function FaqItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  const reduce = useReducedMotion();
+  return (
+    <details
+      className="group py-2"
+      open={open}
+      onToggle={(e) => setOpen((e.target as HTMLDetailsElement).open)}
+    >
+      <summary className="flex items-center justify-between gap-6 py-5 cursor-pointer text-left">
+        <span className="text-base md:text-lg font-semibold text-slate-900">{q}</span>
+        <motion.svg
+          className="faq-chevron w-5 h-5 flex-none text-slate-400 group-hover:text-violet-600"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          aria-hidden="true"
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.25, ease: reduce ? 'linear' : outQuint }}
+        >
+          <path
+            fillRule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clipRule="evenodd"
+          />
+        </motion.svg>
+      </summary>
+      <div className="pb-5 pr-12 text-slate-600 leading-relaxed">{a}</div>
+    </details>
   );
 }

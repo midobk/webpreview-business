@@ -1,6 +1,9 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+
+import { gridCard } from '@/lib/motion/variants';
 
 type Item = {
   id: string;
@@ -95,18 +98,36 @@ export default function ShowcaseGrid({ items }: { items: Item[] }) {
         </div>
       )}
 
-      {/* Grid */}
-      {filtered.length === 0 ? (
-        <div className="text-center py-16 text-slate-500">
-          No prototypes match this filter yet.
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filtered.map((item) => (
-            <ShowcaseCard key={item.id} item={item} />
-          ))}
-        </div>
-      )}
+      {/* Grid (re-mounts on filter change so AnimatePresence can run enter/exit) */}
+      <AnimatePresence mode="wait" initial={false}>
+        {filtered.length === 0 ? (
+          <motion.div
+            key="empty"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="text-center py-16 text-slate-500"
+          >
+            No prototypes match this filter yet.
+          </motion.div>
+        ) : (
+          <motion.div
+            key={selected}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={gridCard}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            <AnimatePresence mode="popLayout">
+              {filtered.map((item) => (
+                <ShowcaseCard key={item.id} item={item} />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -126,16 +147,24 @@ function ShowcaseCard({ item }: { item: Item }) {
 
   const industryColor =
     INDUSTRY_COLORS[item.industry] || INDUSTRY_COLORS.default;
+  const reduce = useReducedMotion();
 
   return (
-    <article className="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+    <motion.article
+      layout
+      variants={gridCard}
+      whileHover={reduce ? undefined : { y: -4 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+      className="group bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm"
+    >
       <div className="aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-200 relative overflow-hidden">
         {screenshotSrc ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <motion.img
             src={screenshotSrc}
             alt={`${item.anonymizedTitle} — screenshot preview`}
-            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-cover object-top"
+            whileHover={reduce ? undefined : { scale: 1.05 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-slate-400">
@@ -173,6 +202,6 @@ function ShowcaseCard({ item }: { item: Item }) {
           )}
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }
