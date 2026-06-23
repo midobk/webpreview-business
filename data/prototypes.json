@@ -80,7 +80,7 @@
     "lead_id": "lead-017",
     "variant": 1,
     "prototype_url": "data/prototypes/craftmans-cafe/index.html",
-    "screenshot_url": null,
+    "screenshot_url": "data/prototypes/craftmans-cafe/screenshot.png",
     "title": "Craftmans Cafe \u2014 Preview",
     "design_summary": "Generated v1 for Craftmans Cafe (coffee shop)",
     "prototype_score": null,
@@ -92,6 +92,6 @@
     "showcase_approved": false,
     "anonymized": false,
     "created_at": "2026-06-22T21:39:17.552767+00:00Z",
-    "updated_at": "2026-06-22T21:39:17.552789+00:00Z"
+    "updated_at": "2026-06-22T22:37:00Z"
   }
 ]
