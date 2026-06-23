@@ -823,3 +823,62 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
   - NO real outreach yet
   - AgentMail test inbox name: sitesprint-test@agentmail.to (not yet activated)
 - Next: weekly planning cron takes over; Tue/Wed crons will start generating prototypes + drafts when fires
+
+---
+
+## 17. User-Reported Issues — 2026-06-23 (Live Verification)
+
+> User reported 4 issues via Telegram. Verified against actual repo state.
+> **None of these were previously in MEMORY.md or AGENT_PLAN.md** — that's why they weren't being addressed. Now persisted so they don't get forgotten again.
+
+### C1. Showcase approve → visibility (PARTIAL BUG)
+- **What user asked:** Does clicking approve on the admin dashboard put prototypes on the public showcase?
+- **Verification:**
+  - `app/admin/dashboard/page.tsx` `toggleShowcase()` PATCHes `showcase_approved` ✅
+  - `app/showcase/page.tsx` filter: `showcase_approved && generation_status === 'completed' && showcase_eligible && anonymized` ✅
+  - The 2 currently approved prototypes (proto-002 Seaway, proto-003 Bella's) DO satisfy all 4 conditions in the data
+  - **Real bug:** On Vercel, data is read from the **build-time bundle** (`lib/data-bundle/bundle.ts`), frozen at last build. Dashboard approval writes to `data/prototypes.json` on host filesystem only. Production `/showcase` won't update until a rebuild + redeploy.
+- **Fix paths:**
+  - Switch to Supabase (schema ready, credentials needed) — `lib/supabase.ts`, `lib/data-source.ts`
+  - OR: trigger `npm run build:data` + Vercel redeploy after each approval (manual or via webhook)
+
+### C2. Showcase link from landing page (EXISTS, WEAK)
+- **What user asked:** Can visitors get to the showcase from the landing page?
+- **Verification:** YES — `app/page.tsx:829` has `<a href="/showcase">Examples</a>` in the footer. Also linked from the showcase page header. But it's buried in the footer.
+- **Fix:** Add a prominent "See real examples →" CTA in the hero or after-features section of `app/page.tsx`.
+
+### C3. Screenshots not working (REAL BUG)
+- **What user asked:** Why are there no screenshots?
+- **Verification:** 7 prototype dirs, only 2 have full screenshots:
+  - ✅ seaway-cleaning-services (3 files)
+  - ✅ bellas-hair-studio (3 files)
+  - ⚠️ craftmans-cafe (only `screenshot.png`)
+  - ⚠️ ramo-sports (only `screenshot.png`)
+  - ❌ clean-&-shine-services, ❌ cornwall-auto-care, ❌ the-cutting-edge-salon (NONE)
+- **Root cause:** `scripts/screenshot/capture.js` requires a local Next dev server on :3000 — won't run in cron, won't run on Vercel, won't run after the prototype-generation cron completes. It was never invoked for the 06-23 batch.
+- **Fix needed:** Build `scripts/screenshot/screenshot-prototype.js` that uses Playwright with `file://` URL directly on `data/prototypes/<slug>/index.html` (no server needed). Wire it into the prototype-generation cron as a post-step.
+
+### C4. Pricing — only $49 shown, no setup fee (BUG)
+- **What user asked:** Why am I seeing only the $49 with no 1st payment of ($200-$300)?
+- **Verification:** `app/page.tsx` `pricingTiers`:
+  - Preview — Free
+  - Managed — `$49` / mo (featured)
+  - One-time — `$599`
+- **AGENT_PLAN.md §3 says:**
+  - Managed Starter: **$299–399 CAD + $49/mo** (setup fee + recurring)
+  - Standard: $500 one-time
+  - Full Handoff: $700–$900 one-time
+- **The two docs diverged silently.** The pricing page rewrite (2026-06-22 07:35 cron run) lost the setup-fee tier.
+- **Fix needed:** Update `pricingTiers` in `app/page.tsx` to match §3. Recommended shape:
+  - Preview = Free (lead gen)
+  - **Managed Starter = $299 setup + $49/mo** (featured, most popular)
+  - Standard = $500 one-time
+  - Full Handoff = $799 one-time
+
+### Action Items
+
+- [ ] **C1.** Decide: Supabase live-write (proper) vs rebuild + redeploy hack. Lean Supabase if user can set up project in 5 min.
+- [ ] **C2.** Add "See real examples" CTA to homepage hero/features.
+- [ ] **C3.** Build file://-based screenshot script; wire into prototype-generation cron.
+- [ ] **C4.** Rewrite `pricingTiers` in `app/page.tsx` to match AGENT_PLAN.md §3.
+
