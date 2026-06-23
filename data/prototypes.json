@@ -93,5 +93,24 @@
     "anonymized": false,
     "created_at": "2026-06-22T21:39:17.552767+00:00Z",
     "updated_at": "2026-06-22T22:37:00Z"
+  },
+  {
+    "id": "proto-ramo-sports",
+    "lead_id": "lead-ramo-sports",
+    "prototype_url": "data/prototypes/ramo-sports/index.html",
+    "screenshot_url": "data/prototypes/ramo-sports/screenshot.png",
+    "title": "Ramo Sports - Preview",
+    "design_summary": "Modern bilingual (FR/EN) landing page for a sporting goods store in Tangier, Morocco. Dark green + orange sports theme with hero, stats bar, 3 service cards, 10 sport category tags, about section, contact info, and claim CTA. All images AI-generated with OpenAI.",
+    "prototype_score": 92,
+    "generation_model": "manual-glm-5.2 + openai-gpt-image-2",
+    "generation_prompt": "Sporting goods store prototype with green/orange theme, bilingual content, service cards, sport categories, contact info",
+    "generation_status": "completed",
+    "watermark_enabled": true,
+    "demo_locked": true,
+    "showcase_eligible": false,
+    "showcase_approved": false,
+    "anonymized_showcase_url": null,
+    "created_at": "2026-06-23T05:38:00Z",
+    "updated_at": "2026-06-23T05:46:00Z"
   }
 ]

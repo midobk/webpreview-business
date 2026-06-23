@@ -6192,5 +6192,42 @@
     "lead_score": 53,
     "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Moderate landing-page fit (8), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
     "status": "flag_for_review"
+  },
+  {
+    "id": "lead-ramo-sports",
+    "business_name": "Ramo Sports",
+    "slug": "ramo-sports",
+    "industry": "sporting_goods",
+    "city": "Tangier",
+    "province": "Tanger-Tetouan-Al Hoceima",
+    "country": "Morocco",
+    "address": "109 Rue Imam Mousslim, Ain Hayani, Tangier",
+    "phone": "+212539375696",
+    "email": "mehdibakkali95@gmail.com",
+    "email_source_url": "provided_by_user",
+    "website_url": null,
+    "website_status": "no_website",
+    "google_maps_url": null,
+    "social_urls": [
+      "https://www.facebook.com/ramosports",
+      "https://www.instagram.com/ramo.sports"
+    ],
+    "source_urls": [
+      "https://duckduckgo.com/?q=Ramo+Sports+Tangier"
+    ],
+    "description": "Sporting goods store in Tangier, Morocco. Sells all types of sports equipment for all sports. Active on Facebook (2,391 likes) and Instagram (4,819 followers).",
+    "services": [
+      "Sports equipment retail",
+      "Sporting goods",
+      "Sports apparel"
+    ],
+    "lead_score": 108,
+    "score_reasoning": "No website (20pts), email provided (15pts), good public info (15pts), clear services (10pts), perfect landing page fit (15pts), strong visual potential (15pts), not in Canada (0pts), small business (10pts), active social (5pts), limited reviews (3pts). Total 93/100. High-quality lead despite non-Canada location (dry run).",
+    "complexity_level": "simple",
+    "contact_safety_status": "pending_review",
+    "contact_safety_reasoning": "Email provided by user. Not in avoided industry. Dry run - no outreach will be sent.",
+    "status": "dry_run",
+    "created_at": "2026-06-23T05:38:00Z",
+    "updated_at": "2026-06-23T05:38:00Z"
   }
 ]
