@@ -54,7 +54,11 @@ export default function AdminDashboard() {
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [selectedPrototype, setSelectedPrototype] = useState<Prototype | null>(null);
   const [noteText, setNoteText] = useState('');
+  const [savedNoteId, setSavedNoteId] = useState<string | null>(null);
   const [updating, setUpdating] = useState(false);
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [toast, setToast] = useState<{ id: number; message: string; undo?: () => void } | null>(null);
   const [activeTab, setActiveTab] = useState<'leads' | 'prototypes'>('leads');
   const router = useRouter();
 
@@ -64,11 +68,11 @@ export default function AdminDashboard() {
         fetch('/api/admin/leads'),
         fetch('/api/admin/prototypes'),
       ]);
-      
+
       if (!leadsRes.ok) throw new Error('Failed to fetch leads');
       const leadsData = await leadsRes.json();
       setLeads(Array.isArray(leadsData) ? leadsData : []);
-      
+
       if (!protoRes.ok) throw new Error('Failed to fetch prototypes');
       const protoData = await protoRes.json();
       setPrototypes(Array.isArray(protoData) ? protoData : []);
@@ -82,51 +86,112 @@ export default function AdminDashboard() {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
+  const showToast = (
+    message: string,
+    undo?: () => void,
+    duration = 5000
+  ) => {
+    const id = Date.now();
+    setToast({ id, message, undo });
+    window.setTimeout(() => {
+      setToast((t) => (t?.id === id ? null : t));
+    }, duration);
+  };
+
   const updateLeadStatus = async (id: string, status: string) => {
+    const previous = leads.find((l) => l.id === id)?.status;
     setUpdating(true);
     try {
-      await fetch('/api/admin/leads', {
+      const res = await fetch('/api/admin/leads', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, status }),
       });
-      setLeads(prev => prev.map(l => l.id === id ? { ...l, status } : l));
-      if (selectedLead?.id === id) setSelectedLead(prev => prev ? { ...prev, status } : null);
+      if (!res.ok) throw new Error('Update failed');
+      setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, status } : l)));
+      if (selectedLead?.id === id) setSelectedLead((prev) => (prev ? { ...prev, status } : null));
+      showToast(
+        `Status updated to "${status.replace(/_/g, ' ')}"`,
+        previous
+          ? async () => {
+              try {
+                await fetch('/api/admin/leads', {
+                  method: 'PATCH',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ id, status: previous }),
+                });
+                setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, status: previous } : l)));
+              } catch (e) {
+                console.error('Undo failed:', e);
+              }
+            }
+          : undefined
+      );
     } catch (err) {
       console.error('Update failed:', err);
+      showToast('Update failed — please try again');
     } finally {
       setUpdating(false);
     }
   };
 
   const saveNote = async (id: string) => {
+    if (!noteText.trim()) return;
     setUpdating(true);
     try {
-      await fetch('/api/admin/leads', {
+      const res = await fetch('/api/admin/leads', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, notes: noteText }),
       });
-      setLeads(prev => prev.map(l => l.id === id ? { ...l, notes: noteText } : l));
-      if (selectedLead?.id === id) setSelectedLead(prev => prev ? { ...prev, notes: noteText } : null);
+      if (!res.ok) throw new Error('Save failed');
+      setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, notes: noteText } : l)));
+      if (selectedLead?.id === id) setSelectedLead((prev) => (prev ? { ...prev, notes: noteText } : null));
+      setSavedNoteId(id);
+      window.setTimeout(() => setSavedNoteId((s) => (s === id ? null : s)), 2000);
     } catch (err) {
       console.error('Save note failed:', err);
+      showToast('Failed to save note');
     } finally {
       setUpdating(false);
     }
   };
 
   const toggleShowcase = async (id: string, approved: boolean) => {
+    const previous = prototypes.find((p) => p.id === id)?.showcase_approved;
     setUpdating(true);
     try {
-      await fetch('/api/admin/prototypes', {
+      const res = await fetch('/api/admin/prototypes', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, showcase_approved: approved }),
       });
-      setPrototypes(prev => prev.map(p => p.id === id ? { ...p, showcase_approved: approved } : p));
+      if (!res.ok) throw new Error('Toggle failed');
+      setPrototypes((prev) =>
+        prev.map((p) => (p.id === id ? { ...p, showcase_approved: approved } : p))
+      );
+      showToast(
+        approved ? 'Approved for showcase' : 'Removed from showcase',
+        previous !== undefined
+          ? async () => {
+              try {
+                await fetch('/api/admin/prototypes', {
+                  method: 'PATCH',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ id, showcase_approved: previous }),
+                });
+                setPrototypes((prev) =>
+                  prev.map((p) => (p.id === id ? { ...p, showcase_approved: previous } : p))
+                );
+              } catch (e) {
+                console.error('Undo failed:', e);
+              }
+            }
+          : undefined
+      );
     } catch (err) {
       console.error('Toggle failed:', err);
+      showToast('Toggle failed — please try again');
     } finally {
       setUpdating(false);
     }
@@ -143,7 +208,7 @@ export default function AdminDashboard() {
   const getLeadScore = (l: Lead) => l.lead_score ?? 0;
   const getLeadStatus = (l: Lead) => l.status || 'unknown';
   const getPrototypeSlug = (p: Prototype) => {
-    const lead = leads.find(l => l.id === p.lead_id);
+    const lead = leads.find((l) => l.id === p.lead_id);
     return lead?.slug || '';
   };
 
@@ -158,6 +223,21 @@ export default function AdminDashboard() {
     do_not_contact: 'bg-gray-300 text-gray-800',
     new: 'bg-blue-100 text-blue-800',
   };
+
+  const filteredLeads = leads.filter((lead) => {
+    if (statusFilter !== 'all' && getLeadStatus(lead) !== statusFilter) return false;
+    if (!search.trim()) return true;
+    const q = search.toLowerCase();
+    return (
+      getLeadName(lead).toLowerCase().includes(q) ||
+      (lead.city || '').toLowerCase().includes(q) ||
+      (lead.province || '').toLowerCase().includes(q) ||
+      (lead.email || '').toLowerCase().includes(q) ||
+      (lead.industry || '').toLowerCase().includes(q)
+    );
+  });
+
+  const allStatuses = Array.from(new Set(leads.map(getLeadStatus))).sort();
 
   if (loading) {
     return (
@@ -177,13 +257,36 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
           <div className="flex items-center gap-3">
             <div className="bg-indigo-600 text-white font-bold w-9 h-9 rounded-lg flex items-center justify-center text-lg">S</div>
-            <h1 className="text-xl font-bold text-gray-900">SiteSprint Admin</h1>
+            <div>
+              <h1 className="text-xl font-bold text-gray-900 leading-none">Admin</h1>
+              <nav aria-label="Breadcrumb" className="text-xs text-gray-500 mt-0.5">
+                <span className="text-gray-700">{activeTab === 'leads' ? 'Leads' : 'Prototypes'}</span>
+              </nav>
+            </div>
           </div>
           <button onClick={handleLogout} className="text-sm text-gray-600 hover:text-gray-900 px-3 py-1.5 rounded border border-gray-300 hover:bg-gray-50">
             Logout
           </button>
         </div>
       </header>
+
+      {/* Toast */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 z-50 max-w-sm bg-gray-900 text-white rounded-lg shadow-2xl px-4 py-3 flex items-center gap-3">
+          <span className="text-sm">{toast.message}</span>
+          {toast.undo && (
+            <button
+              onClick={() => {
+                toast.undo?.();
+                setToast(null);
+              }}
+              className="text-sm font-semibold text-indigo-300 hover:text-indigo-200"
+            >
+              Undo
+            </button>
+          )}
+        </div>
+      )}
 
       <main className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
         {/* Stats */}
@@ -231,6 +334,30 @@ export default function AdminDashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Lead List */}
             <div className="lg:col-span-2 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              {/* Search + filter row */}
+              <div className="px-4 py-3 border-b border-gray-200 flex flex-col sm:flex-row gap-2 bg-gray-50">
+                <input
+                  type="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Search by name, city, email, or industry…"
+                  className="flex-1 text-sm border border-gray-300 rounded px-3 py-1.5 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  aria-label="Search leads"
+                />
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  className="text-sm border border-gray-300 rounded px-3 py-1.5 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  aria-label="Filter leads by status"
+                >
+                  <option value="all">All statuses</option>
+                  {allStatuses.map((s) => (
+                    <option key={s} value={s}>
+                      {s.replace(/_/g, ' ')}
+                    </option>
+                  ))}
+                </select>
+              </div>
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
@@ -244,10 +371,11 @@ export default function AdminDashboard() {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200">
-                    {leads.map((lead) => (
+                    {filteredLeads.map((lead) => (
                       <tr
                         key={lead.id}
                         onClick={() => { setSelectedLead(lead); setNoteText(lead.notes || ''); }}
+                        aria-label={`View details for ${getLeadName(lead)}`}
                         className={`cursor-pointer hover:bg-gray-50 ${selectedLead?.id === lead.id ? 'bg-indigo-50' : ''}`}
                       >
                         <td className="px-4 py-3 whitespace-nowrap">
@@ -270,12 +398,26 @@ export default function AdminDashboard() {
                             {getLeadStatus(lead).replace(/_/g, ' ')}
                           </span>
                         </td>
-                        <td className="px-4 py-3 text-sm text-gray-600">{lead.email || '—'}</td>
+                        <td className="px-4 py-3 text-sm text-gray-600 max-w-[200px]">
+                          <span className="block truncate" title={lead.email || ''}>
+                            {lead.email || '—'}
+                          </span>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+                {filteredLeads.length === 0 && (
+                  <div className="py-12 text-center text-gray-400 text-sm">
+                    {search || statusFilter !== 'all'
+                      ? 'No leads match your search.'
+                      : 'No leads yet — run discovery to populate.'}
+                  </div>
+                )}
               </div>
+              <p className="px-4 py-2 text-xs text-gray-400 border-t border-gray-100 bg-gray-50">
+                Showing {filteredLeads.length} of {leads.length} — click any row to view details.
+              </p>
             </div>
 
             {/* Lead Detail Panel */}
@@ -292,8 +434,8 @@ export default function AdminDashboard() {
                     <div><span className="text-gray-500">Score:</span> <span className="font-bold text-gray-900">{getLeadScore(selectedLead)}/100</span></div>
                     <div><span className="text-gray-500">Website:</span> <span className="text-gray-900">{selectedLead.website_status || 'none'}</span></div>
                     <div><span className="text-gray-500">Phone:</span> <span className="text-gray-900">{selectedLead.phone || '—'}</span></div>
-                    <div><span className="text-gray-500">Email:</span> <span className="text-gray-900">{selectedLead.email || '—'}</span></div>
-                    {selectedLead.email_source_url && <div><span className="text-gray-500">Email source:</span> <a href={selectedLead.email_source_url} target="_blank" className="text-indigo-600 hover:underline truncate block">{selectedLead.email_source_url}</a></div>}
+                    <div><span className="text-gray-500">Email:</span> <span className="text-gray-900 block truncate" title={selectedLead.email || ''}>{selectedLead.email || '—'}</span></div>
+                    {selectedLead.email_source_url && <div><span className="text-gray-500">Email source:</span> <a href={selectedLead.email_source_url} target="_blank" rel="noopener noreferrer" title={selectedLead.email_source_url} className="text-indigo-600 hover:underline truncate block">{selectedLead.email_source_url}</a></div>}
                     <div><span className="text-gray-500">Contact safety:</span> <span className="text-gray-900">{selectedLead.contact_safety_status || '—'}</span></div>
                   </div>
 
@@ -343,9 +485,18 @@ export default function AdminDashboard() {
                       className="w-full text-sm border border-gray-300 rounded p-2 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                       rows={3}
                     />
-                    <button onClick={() => saveNote(selectedLead.id)} disabled={updating} className="mt-1 text-xs bg-indigo-600 text-white px-3 py-1.5 rounded hover:bg-indigo-700 disabled:opacity-50">
-                      Save Note
-                    </button>
+                    <div className="mt-1 flex items-center gap-2">
+                      <button
+                        onClick={() => saveNote(selectedLead.id)}
+                        disabled={updating || !noteText.trim()}
+                        className="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {savedNoteId === selectedLead.id ? '✓ Saved' : 'Save Note'}
+                      </button>
+                      {noteText.trim() && noteText !== (selectedLead.notes || '') && (
+                        <span className="text-xs text-amber-600">Unsaved changes</span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Source URLs */}
@@ -420,8 +571,9 @@ export default function AdminDashboard() {
               );
             })}
             {prototypes.length === 0 && (
-              <div className="col-span-full text-center py-12">
-                <p className="text-gray-400">No prototypes yet</p>
+              <div className="col-span-full text-center py-12 bg-white rounded-lg border border-dashed border-gray-300">
+                <p className="text-gray-500 text-sm font-medium">No prototypes yet</p>
+                <p className="text-gray-400 text-xs mt-1">Generate a prototype from any lead marked "ready_for_prototype".</p>
               </div>
             )}
           </div>

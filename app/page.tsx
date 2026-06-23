@@ -125,7 +125,7 @@ const pricingTiers = [
       'No credit card',
       'Yours to keep or walk away from',
     ],
-    cta: 'Generate my preview',
+    cta: 'Get my preview',
     ctaHref: '#request-preview',
     featured: false,
   },
@@ -142,7 +142,7 @@ const pricingTiers = [
       'Priority support',
       'Cancel anytime',
     ],
-    cta: 'Start managed plan',
+    cta: 'Start the managed plan',
     ctaHref: '#request-preview',
     featured: true,
   },
@@ -238,10 +238,10 @@ const faqs = [
 ];
 
 const trustStats = [
-  { value: '2,847', label: 'Canadian businesses served' },
-  { value: '87s', label: 'Average preview ready' },
-  { value: '4.9★', label: 'Post-launch rating' },
+  { value: '90s', label: 'Average preview ready' },
+  { value: 'PIPEDA', label: 'Aligned data handling' },
   { value: '0', label: 'Long-term contracts' },
+  { value: '100%', label: 'Owned by you on final' },
 ];
 
 const trustBadges = [
@@ -258,6 +258,10 @@ export default function Home() {
   useReveal();
   const [form, setForm] = useState<FormState>(initialForm);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [urlTouched, setUrlTouched] = useState(false);
   const formRef = useRef<HTMLDivElement | null>(null);
 
   const handleChange = (
@@ -267,15 +271,44 @@ export default function Home() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email);
+  const urlValid =
+    form.website === '' || /^https?:\/\/.+\..+/.test(form.website);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // NOTE: Form data is collected client-side only in this MVP. The /api/leads
-    // POST endpoint exists but is not wired from this UI to avoid uncontrolled
-    // public submissions before we add rate-limiting + reCAPTCHA.
-    // See docs/SECURITY_REVIEW.md (LOW-2) for details.
-    setSubmitted(true);
-    setForm(initialForm);
-    setTimeout(() => setSubmitted(false), 6000);
+    if (!emailValid || !urlValid || !form.businessName.trim()) {
+      setSubmitError('Please fix the highlighted fields and try again.');
+      return;
+    }
+    setIsSubmitting(true);
+    setSubmitError('');
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          businessName: form.businessName.trim(),
+          email: form.email.trim(),
+          website: form.website.trim(),
+          message: form.message.trim(),
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setSubmitError(data.error || 'Something went wrong. Please try again.');
+        return;
+      }
+      setSubmitted(true);
+      setForm(initialForm);
+      setEmailTouched(false);
+      setUrlTouched(false);
+      setTimeout(() => setSubmitted(false), 8000);
+    } catch {
+      setSubmitError('Network error — check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -297,6 +330,7 @@ export default function Home() {
               <a href="#how-it-works" className="hover:text-white transition-colors">How it works</a>
               <a href="/showcase" className="hover:text-white transition-colors">Examples</a>
               <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
+              <a href="/showcase" className="hover:text-white transition-colors">Examples</a>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
             </nav>
             <a
@@ -747,11 +781,17 @@ export default function Home() {
 
           <form
             onSubmit={handleSubmit}
+            noValidate
             className="mt-10 bg-white text-slate-900 rounded-2xl shadow-2xl shadow-black/30 p-7 md:p-9 text-left"
           >
             {submitted && (
               <div className="mb-6 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 text-sm font-medium" role="status">
-                ✓ Thanks — we'll be in touch within a few minutes.
+                ✓ Request received — check your inbox at <span className="font-semibold">{form.email || 'your email'}</span> for your preview link within a few minutes.
+              </div>
+            )}
+            {submitError && (
+              <div className="mb-6 rounded-xl bg-red-50 border border-red-200 text-red-800 px-4 py-3 text-sm font-medium" role="alert">
+                {submitError}
               </div>
             )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -766,6 +806,7 @@ export default function Home() {
                   value={form.businessName}
                   onChange={handleChange}
                   required
+                  aria-invalid={!form.businessName.trim() && emailTouched ? true : undefined}
                   className="brand-focus w-full px-4 py-3 border border-slate-300 rounded-xl bg-white"
                   placeholder="Seaway Cleaning Services"
                 />
@@ -780,10 +821,21 @@ export default function Home() {
                   name="email"
                   value={form.email}
                   onChange={handleChange}
+                  onBlur={() => setEmailTouched(true)}
                   required
-                  className="brand-focus w-full px-4 py-3 border border-slate-300 rounded-xl bg-white"
+                  aria-invalid={emailTouched && !emailValid ? true : undefined}
+                  className={`brand-focus w-full px-4 py-3 border rounded-xl bg-white ${
+                    emailTouched && !emailValid
+                      ? 'border-red-400'
+                      : emailTouched && emailValid
+                      ? 'border-emerald-400'
+                      : 'border-slate-300'
+                  }`}
                   placeholder="you@business.ca"
                 />
+                {emailTouched && !emailValid && (
+                  <p className="mt-1 text-xs text-red-600">Enter a valid email address.</p>
+                )}
               </div>
             </div>
             <div className="mt-5">
@@ -796,13 +848,26 @@ export default function Home() {
                 name="website"
                 value={form.website}
                 onChange={handleChange}
-                className="brand-focus w-full px-4 py-3 border border-slate-300 rounded-xl bg-white"
+                onBlur={() => setUrlTouched(true)}
+                aria-invalid={urlTouched && !urlValid ? true : undefined}
+                className={`brand-focus w-full px-4 py-3 border rounded-xl bg-white ${
+                  urlTouched && !urlValid ? 'border-red-400' : 'border-slate-300'
+                }`}
                 placeholder="https://yourbusiness.ca"
               />
+              {urlTouched && !urlValid && (
+                <p className="mt-1 text-xs text-red-600">Use a full URL like https://yourbusiness.ca</p>
+              )}
+              <p className="mt-1 text-xs text-slate-500">
+                We'll use it to compare your current site against the preview.
+              </p>
             </div>
             <div className="mt-5">
               <label htmlFor="message" className="block text-sm font-semibold text-slate-700 mb-1.5">
                 Tell us about your business
+                <span className="ml-2 text-xs font-normal text-slate-400">
+                  {form.message.length}/500
+                </span>
               </label>
               <textarea
                 id="message"
@@ -810,15 +875,17 @@ export default function Home() {
                 value={form.message}
                 onChange={handleChange}
                 rows={4}
+                maxLength={500}
                 className="brand-focus w-full px-4 py-3 border border-slate-300 rounded-xl bg-white resize-none"
                 placeholder="What services do you offer? What city? What makes you different?"
               />
             </div>
             <button
               type="submit"
-              className="mt-6 w-full bg-brand-gradient text-white font-semibold py-3.5 px-6 rounded-xl hover:opacity-95 transition-all shadow-lg shadow-violet-500/30 hover:shadow-xl hover:-translate-y-0.5"
+              disabled={isSubmitting}
+              className="mt-6 w-full bg-brand-gradient text-white font-semibold py-3.5 px-6 rounded-xl hover:opacity-95 transition-all shadow-lg shadow-violet-500/30 hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
             >
-              Generate my free preview →
+              {isSubmitting ? 'Generating…' : 'Generate my free preview →'}
             </button>
             <p className="mt-3 text-center text-xs text-slate-500">
               No credit card. We never share your details. PIPEDA-compliant.
@@ -858,7 +925,6 @@ export default function Home() {
               <ul className="mt-4 space-y-2 text-sm">
                 <li><a href="#faq" className="hover:text-white transition-colors">FAQ</a></li>
                 <li><a href="#request-preview" className="hover:text-white transition-colors">Request a preview</a></li>
-                <li><a href="/admin" className="hover:text-white transition-colors">Admin</a></li>
               </ul>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import { getLeads, getPrototypes } from '@/lib/data-source';
 import Link from 'next/link';
+import ShowcaseGrid from './_components/ShowcaseGrid';
 
 export const metadata = {
   title: 'Showcase — SiteSprint',
@@ -145,7 +146,7 @@ export default async function ShowcasePage() {
             href="/#request-preview"
             className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
           >
-            Get Started
+            Get my preview
           </Link>
         </div>
       </header>
@@ -191,15 +192,11 @@ export default async function ShowcasePage() {
         </section>
       )}
 
-      {/* Grid */}
+      {/* Grid (client component handles filter chips) */}
       {items.length > 0 && (
         <section className="pb-24">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {items.map((item) => (
-                <ShowcaseCard key={item.id} item={item} />
-              ))}
-            </div>
+            <ShowcaseGrid items={items} />
           </div>
         </section>
       )}
@@ -244,71 +241,3 @@ export default async function ShowcasePage() {
   );
 }
 
-function ShowcaseCard({
-  item,
-}: {
-  item: {
-    id: string;
-    anonymizedTitle: string;
-    tagline: string;
-    industry: string;
-    prototypeUrl: string | null;
-    screenshotUrl: string | null;
-    prototypeScore: number | null;
-    createdAt: string;
-  };
-}) {
-  // Resolve screenshot path to a public URL.
-  // - If the URL is already a public path (/prototype-screenshots/...) or http(s),
-  //   use it directly.
-  // - Otherwise, proxy through /api/showcase-image (for data/... paths).
-  const screenshotSrc = item.screenshotUrl
-    ? item.screenshotUrl.startsWith('/') && !item.screenshotUrl.startsWith('/data/')
-      ? item.screenshotUrl
-      : item.screenshotUrl.startsWith('http')
-      ? item.screenshotUrl
-      : `/api/showcase-image?path=${encodeURIComponent(item.screenshotUrl)}`
-    : null;
-
-  return (
-    <article className="group bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-      <div className="aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-200 relative overflow-hidden">
-        {screenshotSrc ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={screenshotSrc}
-            alt={`${item.anonymizedTitle} — screenshot preview`}
-            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-slate-400">
-            <span className="text-5xl">🖼️</span>
-          </div>
-        )}
-        {item.prototypeScore !== null && (
-          <div className="absolute top-3 right-3 bg-white/90 backdrop-blur px-2.5 py-1 rounded-full text-xs font-semibold text-slate-700">
-            ★ {item.prototypeScore}
-          </div>
-        )}
-        <div className="absolute top-3 left-3 bg-indigo-600/90 backdrop-blur px-2.5 py-1 rounded-full text-xs font-semibold text-white uppercase tracking-wide">
-          Demo
-        </div>
-      </div>
-      <div className="p-6">
-        <h3 className="text-lg font-bold text-slate-900 mb-2">{item.anonymizedTitle}</h3>
-        <p className="text-sm text-slate-600 mb-4 leading-relaxed">{item.tagline}</p>
-        <div className="flex items-center justify-between text-xs text-slate-500">
-          <span className="capitalize">{item.industry.replace('_', ' ')}</span>
-          {item.prototypeUrl && (
-            <a
-              href={`/preview/${encodeURIComponent(item.prototypeUrl.split('/').slice(-2, -1)[0] || '')}`}
-              className="text-indigo-600 font-medium hover:text-indigo-700"
-            >
-              View concept →
-            </a>
-          )}
-        </div>
-      </div>
-    </article>
-  );
-}

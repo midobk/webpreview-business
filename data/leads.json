@@ -29,7 +29,7 @@
     ],
     "complexity_level": "simple",
     "contact_safety_status": "pending",
-    "contact_safety_reasoning": "No public email found \u2014 would need phone contact or social DM",
+    "contact_safety_reasoning": "No public email found — would need phone contact or social DM",
     "created_at": "2026-06-22T00:00:00Z",
     "updated_at": "2026-06-22T21:58:29.999855+00:00Z",
     "lead_score": 84,
@@ -660,8 +660,8 @@
   },
   {
     "id": "lead-021",
-    "business_name": "Sip and Smile Caf\u00e9",
-    "slug": "sip-and-smile-caf\u00e9",
+    "business_name": "Sip and Smile Café",
+    "slug": "sip-and-smile-café",
     "industry": "coffee shop",
     "city": "Cornwall",
     "province": "Ontario",
@@ -741,8 +741,8 @@
   },
   {
     "id": "lead-023",
-    "business_name": "Edith Mae Caf\u00e9",
-    "slug": "edith-mae-caf\u00e9",
+    "business_name": "Edith Mae Café",
+    "slug": "edith-mae-café",
     "industry": "coffee shop",
     "city": "Cornwall",
     "province": "Ontario",
@@ -1257,8 +1257,8 @@
   },
   {
     "id": "lead-037",
-    "business_name": "BRO\u2019S FADE",
-    "slug": "bro\u2019s-fade",
+    "business_name": "BRO’S FADE",
+    "slug": "bro’s-fade",
     "industry": "hair salon",
     "city": "Cornwall",
     "province": "Ontario",
@@ -3007,8 +3007,8 @@
   },
   {
     "id": "lead-083",
-    "business_name": "NAPA AUTOPRO \u2013 138 Motor & Tire Sales",
-    "slug": "napa-autopro-\u2013-138-motor-and-tire-sales",
+    "business_name": "NAPA AUTOPRO – 138 Motor & Tire Sales",
+    "slug": "napa-autopro-–-138-motor-and-tire-sales",
     "industry": "auto repair",
     "city": "Cornwall",
     "province": "Ontario",
@@ -3457,8 +3457,8 @@
   },
   {
     "id": "lead-095",
-    "business_name": "Champion\u2019s race supply and auto repair",
-    "slug": "champion\u2019s-race-supply-and-auto-repair",
+    "business_name": "Champion’s race supply and auto repair",
+    "slug": "champion’s-race-supply-and-auto-repair",
     "industry": "auto repair",
     "city": "Cornwall",
     "province": "Ontario",
@@ -4091,8 +4091,8 @@
   },
   {
     "id": "lead-112",
-    "business_name": "BRO\u2019S FADE",
-    "slug": "bro\u2019s-fade-2",
+    "business_name": "BRO’S FADE",
+    "slug": "bro’s-fade-2",
     "industry": "barber",
     "city": "Cornwall",
     "province": "Ontario",
@@ -6229,5 +6229,15 @@
     "status": "dry_run",
     "created_at": "2026-06-23T05:38:00Z",
     "updated_at": "2026-06-23T05:38:00Z"
+  },
+  {
+    "id": "1782250363685",
+    "businessName": "Ramo sport test",
+    "email": "ramo@gmail.com",
+    "website": "",
+    "message": "",
+    "status": "new",
+    "createdAt": "2026-06-23T21:32:43.685Z",
+    "updatedAt": "2026-06-23T21:32:43.685Z"
   }
 ]

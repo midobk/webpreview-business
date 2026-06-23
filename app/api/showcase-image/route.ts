@@ -14,13 +14,15 @@ export async function GET(request: NextRequest) {
   }
 
   // Normalize and resolve the path; ensure it stays within data/prototypes/
-  const repoRoot = process.cwd();
+  // turbopackIgnore: true — these reads only happen at request time on the server,
+  // not during build, so it's safe to scope to process.cwd() here.
+  const repoRoot = /*turbopackIgnore: true*/ process.cwd();
   const candidates = [
-    path.resolve(repoRoot, requested),
-    path.resolve(repoRoot, 'data', 'prototypes', requested),
+    /*turbopackIgnore: true*/ path.resolve(repoRoot, requested),
+    /*turbopackIgnore: true*/ path.resolve(repoRoot, 'data', 'prototypes', requested),
   ];
 
-  const allowedRoot = path.resolve(repoRoot, 'data', 'prototypes');
+  const allowedRoot = /*turbopackIgnore: true*/ path.resolve(repoRoot, 'data', 'prototypes');
   const resolved = candidates.find((c) => c.startsWith(allowedRoot + path.sep));
   if (!resolved) {
     return NextResponse.json({ error: 'Invalid path' }, { status: 403 });
