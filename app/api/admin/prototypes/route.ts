@@ -15,15 +15,20 @@ export async function GET(request: Request) {
       const fs = await import('fs');
       const path = await import('path');
       const prototypesDir = path.join(process.cwd(), 'data', 'prototypes');
+      const publicScreensDir = path.join(process.cwd(), 'public', 'prototype-screenshots');
       for (const proto of prototypes) {
         const slug = proto.lead_id || proto.id;
-        try {
-          const screenshotPath = path.join(prototypesDir, slug, 'screenshot.png');
-          if (fs.existsSync(screenshotPath) && !proto.screenshot_url) {
-            proto.screenshot_url = `/data/prototypes/${slug}/screenshot.png`;
+        if (!proto.screenshot_url) {
+          // Prefer the public screenshot (served on Vercel + dev)
+          const publicDesktop = path.join(publicScreensDir, `${slug}-desktop.png`);
+          if (fs.existsSync(publicDesktop)) {
+            proto.screenshot_url = `/prototype-screenshots/${slug}-desktop.png`;
+          } else {
+            const screenshotPath = path.join(prototypesDir, slug, 'screenshot.png');
+            if (fs.existsSync(screenshotPath)) {
+              proto.screenshot_url = `/data/prototypes/${slug}/screenshot.png`;
+            }
           }
-        } catch {
-          // ignore
         }
         if (!proto.prototype_url) {
           proto.prototype_url = `/preview/${slug}`;

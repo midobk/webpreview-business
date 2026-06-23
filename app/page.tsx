@@ -66,7 +66,7 @@ const features = [
   },
   {
     title: 'Yours to keep',
-    body: 'Love the preview? We finalize it on your domain, hand you the keys, and keep it maintained for $49/mo. Hate it? Walk away.',
+    body: 'Love the preview? We finalize it on your domain, hand you the keys, and keep it maintained for $49/mo after a $299 setup. Hate it? Walk away.',
     icon: (
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
     ),
@@ -131,9 +131,9 @@ const pricingTiers = [
   },
   {
     name: 'Managed',
-    price: '$49',
-    cadence: 'per month, no contract',
-    description: 'Most popular. Live site, fully maintained.',
+    price: '$299',
+    cadence: 'one-time setup + $49/mo',
+    description: 'Most popular. Live site, fully managed for you.',
     features: [
       'Everything in Preview, finalized',
       'Custom domain + SSL',
@@ -147,18 +147,34 @@ const pricingTiers = [
     featured: true,
   },
   {
-    name: 'One-time',
-    price: '$599',
-    cadence: 'paid once, yours forever',
-    description: 'Buy the site outright. No monthly fees.',
+    name: 'Standard',
+    price: '$500',
+    cadence: 'paid once, yours to host',
+    description: 'Finalize the site, hand it off, host it yourself.',
     features: [
-      'Finalized website, hand-off',
-      'Source files included',
+      'Finalized one-page website',
+      'Mobile responsive, contact form',
+      'Domain guidance + deployment help',
       '30 days of edits included',
-      'Self-host or we host for $19/mo',
-      'Domain guidance',
+      'No monthly fees',
     ],
-    cta: 'Buy it outright',
+    cta: 'Buy standard',
+    ctaHref: '#request-preview',
+    featured: false,
+  },
+  {
+    name: 'Full Handoff',
+    price: '$799',
+    cadence: 'paid once, source files included',
+    description: 'Source code + handoff + zero recurring.',
+    features: [
+      'Source files + deployment handoff',
+      'Domain + hosting guidance',
+      'No recurring support',
+      '30 days of bug-fix edits',
+      'For developers / agencies',
+    ],
+    cta: 'Buy full handoff',
     ctaHref: '#request-preview',
     featured: false,
   },
@@ -279,6 +295,7 @@ export default function Home() {
             <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-white/80">
               <a href="#features" className="hover:text-white transition-colors">Features</a>
               <a href="#how-it-works" className="hover:text-white transition-colors">How it works</a>
+              <a href="/showcase" className="hover:text-white transition-colors">Examples</a>
               <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
             </nav>
@@ -371,6 +388,13 @@ export default function Home() {
               >
                 <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" /></svg>
                 Watch 30s demo
+              </a>
+              <a
+                href="/showcase"
+                className="inline-flex items-center gap-2 border border-white/20 bg-white/5 backdrop-blur-sm text-white font-medium text-base px-6 py-3.5 rounded-full hover:bg-white/10 transition-colors"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" /></svg>
+                See real examples
               </a>
             </div>
 

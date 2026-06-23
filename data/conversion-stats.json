@@ -1,14 +1,14 @@
 {
   "_meta": {
-    "generated_at": "2026-06-22T21:58:55.049921+00:00Z",
+    "generated_at": "2026-06-23T18:04:51.109704+00:00Z",
     "data_sources": [
       "data/leads.json",
       "data/prototypes.json",
       "data/outreach_logs.json"
     ]
   },
-  "total_leads": 167,
-  "total_prototypes": 4,
+  "total_leads": 168,
+  "total_prototypes": 10,
   "total_emails_drafted": 0,
   "total_emails_sent": 0,
   "total_replies": 0,
@@ -16,21 +16,21 @@
   "by_industry": {
     "auto_repair": {
       "leads": 2,
-      "prototypes": 0,
+      "prototypes": 1,
       "emails_sent": 0,
       "replies": 0,
       "won": 0
     },
     "cleaning": {
       "leads": 3,
-      "prototypes": 1,
+      "prototypes": 2,
       "emails_sent": 0,
       "replies": 0,
       "won": 0
     },
     "salon": {
       "leads": 2,
-      "prototypes": 1,
+      "prototypes": 2,
       "emails_sent": 0,
       "replies": 0,
       "won": 0
@@ -108,6 +108,13 @@
     "tutor": {
       "leads": 4,
       "prototypes": 0,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "sporting_goods": {
+      "leads": 1,
+      "prototypes": 1,
       "emails_sent": 0,
       "replies": 0,
       "won": 0
@@ -711,6 +718,10 @@
     "https://maps.google.com/?cid=4824218851554806802&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA": {
       "leads": 1,
       "avg_score": 53.0
+    },
+    "https://duckduckgo.com/?q=Ramo+Sports+Tangier": {
+      "leads": 1,
+      "avg_score": 108.0
     }
   }
 }

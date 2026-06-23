@@ -1,348 +1,350 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bella's Hair Studio - Premium Hair & Beauty Services</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-        
-        /* Demo banner */
-        .demo-banner {
-            background: #ff6b35;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            font-weight: bold;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-        }
-        
-        /* Watermark */
-        .watermark {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            opacity: 0.3;
-            font-size: 24px;
-            font-weight: bold;
-            pointer-events: none;
-            z-index: 999;
-        }
-        
-        /* Main content needs to be pushed down */
-        .main-content {
-            margin-top: 50px;
-        }
-        
-        /* Hero section */
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/hero.jpg') center/cover;
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: white;
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            padding: 20px;
-        }
-        
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: #ff6b35;
-            color: white;
-            padding: 15px 30px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        
-        .btn:hover {
-            background: #e55a2b;
-        }
-        
-        /* Sections */
-        section {
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            font-size: 2.5rem;
-        }
-        
-        /* Services grid */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .service-card {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .service-card h3 {
-            margin-bottom: 15px;
-            color: #ff6b35;
-        }
-        
-        /* Features */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
-        }
-        
-        .feature {
-            text-align: center;
-        }
-        
-        .feature i {
-            font-size: 3rem;
-            color: #ff6b35;
-            margin-bottom: 20px;
-        }
-        
-        /* Images */
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
-        }
-        
-        .image-card {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .image-card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-        
-        /* Contact form */
-        .contact-form {
-            background: #f8f9fa;
-            padding: 40px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        
-        .form-group textarea {
-            height: 150px;
-        }
-        
-        /* Footer */
-        footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-        }
-        
-        /* Demo lock message */
-        .demo-lock-message {
-            background: rgba(255, 107, 53, 0.1);
-            border: 1px solid #ff6b35;
-            border-radius: 5px;
-            padding: 15px;
-            text-align: center;
-            margin: 20px 0;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bella's Hair Studio — Demo Preview</title>
+  <meta name="description" content="Unofficial preview concept for Bella's Hair Studio — salon in Cornwall.">
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    *,*::before,*::after { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; color: #1a1a1a; }
+    a { color: inherit; }
+    img { max-width: 100%; height: auto; }
+    .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+  </style>
 </head>
 <body>
-    <!-- Demo Banner -->
-    <div class="demo-banner">
-        Demo Preview &mdash; Claim this website to make it live
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { 
+    font-family: 'Helvetica Neue', Arial, sans-serif; 
+    line-height: 1.6; 
+    color: #2c2c2c;
+    -webkit-font-smoothing: antialiased;
+    background: #fff;
+  }
+
+  /* Demo Banner */
+  .demo-banner {
+    background: linear-gradient(90deg, #ff6b6b 0%, #ee5a52 50%, #ff6b6b 100%);
+    background-size: 200% 100%;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    animation: gradient-shift 6s ease infinite;
+    position: relative;
+    z-index: 10;
+  }
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    height: 92vh;
+    min-height: 540px;
+    background: url('./images/hero.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    padding: 20px;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(44,44,44,0.65), rgba(0,0,0,0.45));
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 850px;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 7vw, 5rem);
+    font-weight: 200;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .hero .tagline {
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    margin-bottom: 45px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    font-style: italic;
+    opacity: 0.95;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: transparent;
+    color: white;
+    padding: 18px 48px;
+    text-decoration: none;
+    border: 2px solid white;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+  }
+  .cta-btn:hover {
+    background: white;
+    color: #2c2c2c;
+    transform: translateY(-2px);
+  }
+  .cta-btn.primary {
+    background: #d4a574;
+    border-color: #d4a574;
+    color: white;
+  }
+  .cta-btn.primary:hover {
+    background: #b8895a;
+    border-color: #b8895a;
+    color: white;
+  }
+
+  /* Sections common */
+  .section-title {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 200;
+    letter-spacing: 5px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+  }
+  .section-subtitle {
+    text-align: center;
+    color: #888;
+    font-weight: 300;
+    margin-bottom: 60px;
+    letter-spacing: 1.5px;
+    font-style: italic;
+  }
+  .accent-line {
+    width: 50px;
+    height: 2px;
+    background: #d4a574;
+    margin: 0 auto 20px;
+  }
+
+  /* Services */
+  .services {
+    padding: 110px 20px;
+    background: #faf7f4;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .service-card {
+    background: white;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.14);
+  }
+  .service-image {
+    width: 100%;
+    height: 280px;
+    background-size: cover;
+    background-position: center;
+  }
+  .service-image.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 3.5rem;
+  }
+  .service-image.placeholder-1 { background: linear-gradient(135deg, #d4a574 0%, #8b6f47 100%); }
+  .service-image.placeholder-2 { background: linear-gradient(135deg, #c9a87c 0%, #5a4a3a 100%); }
+  .service-content {
+    padding: 32px 28px;
+    text-align: center;
+  }
+  .service-content h3 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 2.5px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .service-content p {
+    color: #666;
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* About */
+  .about {
+    padding: 120px 20px;
+    max-width: 880px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .about h2 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 200;
+    letter-spacing: 5px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .about p {
+    font-size: 1.1rem;
+    line-height: 2;
+    color: #555;
+    font-weight: 300;
+  }
+
+  /* Book Call */
+  .book-call {
+    padding: 100px 20px;
+    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+    color: white;
+    text-align: center;
+  }
+  .book-call h2 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 200;
+    letter-spacing: 4px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+  }
+  .book-call .subtitle {
+    margin-bottom: 50px;
+    font-weight: 300;
+    opacity: 0.75;
+    letter-spacing: 1.5px;
+    font-style: italic;
+  }
+  .cal-embed {
+    max-width: 1000px;
+    margin: 0 auto 40px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  }
+  .cal-embed iframe {
+    width: 100%;
+    height: 650px;
+    border: none;
+    display: block;
+  }
+
+  /* Footer */
+  footer {
+    background: #0a0a0a;
+    color: #777;
+    text-align: center;
+    padding: 28px 20px;
+    font-size: 0.8rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero { height: 78vh; }
+    .services, .about, .book-call { padding: 70px 20px; }
+    .service-image { height: 220px; }
+    .cal-embed iframe { height: 580px; }
+    .demo-banner { font-size: 11px; letter-spacing: 1px; padding: 12px 10px; }
+  }
+  @media (max-width: 480px) {
+    .cta-btn { padding: 16px 36px; font-size: 12px; }
+  }
+</style>
+
+<header>
+  <div class="demo-banner">Demo Preview — Claim this website to make it live</div>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Bella's Hair Studio</h1>
+    <p class="tagline">Cuts · Color · Confidence — in the heart of Cornwall</p>
+    <a href="#" class="cta-btn primary" onclick="alert('Claim this website to unlock the live version'); return false;">Claim this website to unlock</a>
+  </div>
+</section>
+
+<section class="services">
+  <h2 class="section-title">Our Services</h2>
+  <div class="accent-line"></div>
+  <p class="section-subtitle">Everything you need for beautiful, healthy hair</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-image" style="background-image: url('./images/section_1.jpg');"></div>
+      <div class="service-content">
+        <h3>Precision Cuts</h3>
+        <p>Custom cuts and modern styling tailored to your face shape, hair type, and personal style.</p>
+      </div>
     </div>
-    
-    <!-- Watermark -->
-    <div class="watermark">
-        SiteSprint Preview
+    <div class="service-card">
+      <div class="service-image" style="background-image: url('./images/section_2.jpg');"></div>
+      <div class="service-content">
+        <h3>Color & Highlights</h3>
+        <p>Balayage, ombre, full color, and corrective color services by our expert colorists.</p>
+      </div>
     </div>
-    
-    <div class="main-content">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Bella's Hair Studio</h1>
-                <p>Hair salon offering cuts, coloring, styling, and treatments. Walk-ins welcome. Active Instagram with photos of work.</p>
-                <a href="#" class="btn" onclick="alert('Unlock the live version to make this CTA functional'); return false;">Get Started Today</a>
-            </div>
-        </section>
-        
-        <!-- Features Section -->
-        <section>
-            <h2 class="section-title">Why Choose Us</h2>
-            <div class="features">
-                <div class="feature"><i>✓</i><h3>Experienced stylists</h3></div><div class="feature"><i>✓</i><h3>Premium products</h3></div><div class="feature"><i>✓</i><h3>Relaxing atmosphere</h3></div><div class="feature"><i>✓</i><h3>Personalized service</h3></div>
-            </div>
-        </section>
-        
-        <!-- Services Section -->
-        <section>
-            <h2 class="section-title">Our Services</h2>
-            <div class="services-grid">
-                <div class="service-card"><h3>Haircuts</h3><p>Professional haircuts service tailored to your needs.</p></div><div class="service-card"><h3>Coloring</h3><p>Professional coloring service tailored to your needs.</p></div><div class="service-card"><h3>Styling</h3><p>Professional styling service tailored to your needs.</p></div><div class="service-card"><h3>Treatments</h3><p>Professional treatments service tailored to your needs.</p></div><div class="service-card"><h3>Highlights</h3><p>Professional highlights service tailored to your needs.</p></div>
-            </div>
-        </section>
-        
-        <!-- Images Section -->
-        <section>
-            <h2 class="section-title">Our Work</h2>
-            <div class="demo-lock-message">
-                <p><strong>Demo Preview:</strong> This is an unofficial preview. Images are for demonstration purposes only.</p>
-            </div>
-            <div class="image-grid">
-                <div class="image-card"><img src="images/section_1.jpg" alt="section image"></div><div class="image-card"><img src="images/section_2.jpg" alt="section image"></div>
-            </div>
-        </section>
-        
-        <!-- About Section -->
-        <section>
-            <h2 class="section-title">About Our Salon</h2>
-            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-                <p>Hair salon offering cuts, coloring, styling, and treatments. Walk-ins welcome. Active Instagram with photos of work.</p>
-                <div class="demo-lock-message">
-                    <p><strong>Unofficial Preview:</strong> This website concept was created for Bella's Hair Studio by SiteSprint. This is not the live website.</p>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Contact Section -->
-        <section>
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-form">
-                <div class="demo-lock-message">
-                    <p><strong>Demo Preview:</strong> Contact form is locked. Claim this website to unlock.</p>
-                </div>
-                <form onsubmit="alert('Claim this website to unlock the contact form'); return false;">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone" disabled>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" required disabled></textarea>
-                    </div>
-                    <button type="submit" class="btn">Send Message</button>
-                </form>
-            </div>
-        </section>
-        
-        <!-- Footer -->
-        <footer>
-            <p>&copy; 2026 Bella's Hair Studio. All rights reserved.</p>
-            <p>78 Ninth St, Cornwall, ON K6H 4T1 | Phone: +1-613-555-0300</p>
-            <div class="demo-lock-message">
-                <p><strong>Demo Preview Concept</strong> - This is not the live website. <a href="#" onclick="alert('Unlock the live version to claim this website'); return false;">Claim this website</a> to make it live.</p>
-            </div>
-        </footer>
+    <div class="service-card">
+      <div class="service-image placeholder placeholder-1">✂️</div>
+      <div class="service-content">
+        <h3>Hair Treatments</h3>
+        <p>Keratin smoothing, deep conditioning, and scalp therapies to restore shine and strength.</p>
+      </div>
     </div>
-    
-    <script>
-        // Demo lock functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add click handlers to all links and buttons
-            const links = document.querySelectorAll('a[href]:not(.demo-banner a)');
-            const buttons = document.querySelectorAll('button, input[type="submit"]');
-            
-            links.forEach(link => {
-                if (!link.href.includes('#')) {
-                    link.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        alert('Unlock the live version to make this link functional');
-                    });
-                }
-            });
-            
-            buttons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    alert('Claim this website to unlock this feature');
-                });
-            });
-        });
-    </script>
+    <div class="service-card">
+      <div class="service-image placeholder placeholder-2">💇‍♀️</div>
+      <div class="service-content">
+        <h3>Styling & Blowouts</h3>
+        <p>Special-occasion updos, event styling, and signature blowouts for a polished finish.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <h2>About Bella's</h2>
+  <div class="accent-line"></div>
+  <p>Bella's Hair Studio is Cornwall's go-to destination for modern hair care. We offer a full range of services — from precision cuts and expert coloring to styling and revitalizing treatments. Walk-ins are always welcome, and our talented, friendly team is passionate about making every client leave feeling confident and beautiful. Follow us on Instagram to see our latest work and stay inspired for your next look.</p>
+</section>
+
+<section class="book-call">
+  <h2>Want to chat?</h2>
+  <p class="subtitle">Let's talk about your hair goals in a quick 5-minute call</p>
+  <div class="cal-embed">
+    <iframe src="https://cal.com/bellas-hairstudio" frameborder="0"></iframe>
+  </div>
+  <a href="#" class="cta-btn" onclick="alert('Claim this website to unlock the live version'); return false;">Book a 5-min call</a>
+</section>
+
+<footer>
+  <p>Concept by SiteSprint · Demo Preview</p>
+</footer>
+<div style="position:fixed;bottom:20px;right:20px;background:rgba(255,255,255,0.95);padding:8px 16px;border-radius:4px;font-size:12px;color:#666;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+  SiteSprint Preview · Bella's Hair Studio
+</div>
 </body>
 </html>

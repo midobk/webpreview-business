@@ -126,6 +126,7 @@ User flagged 4 issues. All verified against actual repo state. None were previou
 - Whenever pricing, showcase behavior, or screenshot pipeline changes are discussed, BOTH `MEMORY.md` and `AGENT_PLAN.md` must be updated together. Drift is the bug.
 - When user reports an issue, FIRST persist it, THEN fix it. Memory comes first.
 - Always check the actual file/code state, not the docs, before claiming something works.
+- **AGENT_PLAN.md is the single source of truth for open work, decisions, blockers, and the user's stated requirements/instructions.** While in implementation phase, the file must always reflect: (1) what's done, (2) what's in progress, (3) what's open, (4) the user's latest instructions, and (5) any drift between docs and code. A daily cron (`sitesprint-agent-plan-maintenance`, 08:00 America/Toronto) audits and updates the file. If the user gives a new instruction in chat, it MUST be added to AGENT_PLAN.md as a tracked item before the next operational cron runs — do not rely on chat history to survive across sessions.
 
 ---
 

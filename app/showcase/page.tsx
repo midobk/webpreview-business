@@ -1,5 +1,4 @@
-import { promises as fs } from 'fs';
-import path from 'path';
+import { getLeads, getPrototypes } from '@/lib/data-source';
 import Link from 'next/link';
 
 export const metadata = {
@@ -82,27 +81,13 @@ async function loadShowcase(): Promise<
     createdAt: string;
   }>
 > {
-  const repoRoot = process.cwd();
-  const prototypesPath = path.join(repoRoot, 'data', 'prototypes.json');
-  const leadsPath = path.join(repoRoot, 'data', 'leads.json');
-
-  // Try filesystem first (dev), fall back to build bundle (production / Vercel)
-  let allPrototypes: Prototype[];
-  let allLeads: Lead[];
-
-  try {
-    const [protoRaw, leadsRaw] = await Promise.all([
-      fs.readFile(prototypesPath, 'utf8'),
-      fs.readFile(leadsPath, 'utf8'),
-    ]);
-    allPrototypes = JSON.parse(protoRaw);
-    allLeads = JSON.parse(leadsRaw);
-  } catch {
-    // Filesystem read failed (likely Vercel serverless runtime) — use embedded bundle
-    const { leads: bundleLeads, prototypes: bundlePrototypes } = await import('@/lib/data-bundle/bundle');
-    allPrototypes = bundlePrototypes as Prototype[];
-    allLeads = bundleLeads as Lead[];
-  }
+  // Use the Supabase-aware data accessor so the showcase shows the latest
+  // approved prototypes (not the frozen build bundle).
+  // Falls back to the embedded bundle when Supabase is not configured.
+  const [allPrototypes, allLeads] = await Promise.all([
+    getPrototypes(),
+    getLeads(),
+  ]);
 
   const leadsById = new Map(allLeads.map((l) => [l.id, l]));
 
@@ -273,9 +258,16 @@ function ShowcaseCard({
     createdAt: string;
   };
 }) {
-  // Resolve screenshot path to a public URL if it lives in the repo
+  // Resolve screenshot path to a public URL.
+  // - If the URL is already a public path (/prototype-screenshots/...) or http(s),
+  //   use it directly.
+  // - Otherwise, proxy through /api/showcase-image (for data/... paths).
   const screenshotSrc = item.screenshotUrl
-    ? `/api/showcase-image?path=${encodeURIComponent(item.screenshotUrl)}`
+    ? item.screenshotUrl.startsWith('/') && !item.screenshotUrl.startsWith('/data/')
+      ? item.screenshotUrl
+      : item.screenshotUrl.startsWith('http')
+      ? item.screenshotUrl
+      : `/api/showcase-image?path=${encodeURIComponent(item.screenshotUrl)}`
     : null;
 
   return (

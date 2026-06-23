@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Cutting Edge Salon — Demo Preview</title>
+  <meta name="description" content="Unofficial preview concept for The Cutting Edge Salon — salon in Cornwall.">
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    *,*::before,*::after { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; color: #1a1a1a; }
+    a { color: inherit; }
+    img { max-width: 100%; height: auto; }
+    .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+  </style>
+</head>
+<body>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  body {
+    color: #222;
+    line-height: 1.6;
+  }
+
+  /* Watermark Banner */
+  .watermark-banner {
+    background: linear-gradient(90deg, #1a1a1a, #333);
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* Header */
+  header {
+    background: #fff;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #2c2c2c;
+    letter-spacing: 1px;
+  }
+
+  .logo span {
+    color: #c9a96e;
+  }
+
+  nav a {
+    margin-left: 25px;
+    text-decoration: none;
+    color: #555;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+  }
+
+  nav a:hover {
+    color: #c9a96e;
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    height: 85vh;
+    min-height: 500px;
+    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('./images/hero.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    padding: 20px;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    margin-bottom: 15px;
+    font-weight: 300;
+    letter-spacing: 2px;
+  }
+
+  .hero-content h1 strong {
+    font-weight: 700;
+    color: #c9a96e;
+  }
+
+  .hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.9;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: #c9a96e;
+    color: #fff;
+    padding: 15px 40px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: #b8935a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(201,169,110,0.4);
+  }
+
+  /* Services */
+  .services {
+    padding: 80px 5%;
+    background: #fafafa;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    font-weight: 300;
+    letter-spacing: 2px;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: #888;
+    margin-bottom: 50px;
+    font-size: 1rem;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .service-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  }
+
+  .service-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .service-card-content {
+    padding: 25px;
+  }
+
+  .service-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #2c2c2c;
+  }
+
+  .service-card p {
+    color: #666;
+    font-size: 0.95rem;
+  }
+
+  /* About */
+  .about {
+    padding: 80px 5%;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .about h2 {
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+    font-weight: 300;
+    letter-spacing: 2px;
+  }
+
+  .about p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+  }
+
+  /* Book Call */
+  .book-call {
+    padding: 80px 5%;
+    background: #2c2c2c;
+    color: #fff;
+    text-align: center;
+  }
+
+  .book-call h2 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    font-weight: 300;
+  }
+
+  .book-call p {
+    color: #aaa;
+    margin-bottom: 35px;
+    font-size: 1.05rem;
+  }
+
+  /* Cal.com embed */
+  .cal-embed {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 1.1rem;
+  }
+
+  .cal-embed-placeholder {
+    padding: 40px;
+  }
+
+  /* Footer */
+  footer {
+    background: #1a1a1a;
+    color: #888;
+    text-align: center;
+    padding: 25px 20px;
+    font-size: 0.9rem;
+  }
+
+  footer a {
+    color: #c9a96e;
+    text-decoration: none;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    nav { display: none; }
+    .hero { height: 70vh; }
+    .services-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<div class="watermark-banner">Demo Preview — Claim this website to make it live</div>
+
+<header>
+  <div class="logo">The Cutting Edge <span>Salon</span></div>
+  <nav>
+    <a href="#services" onclick="alert('Claim this website to unlock the live version'); return false;">Services</a>
+    <a href="#about" onclick="alert('Claim this website to unlock the live version'); return false;">About</a>
+    <a href="#book" onclick="alert('Claim this website to unlock the live version'); return false;">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>The Cutting Edge <strong>Salon</strong></h1>
+    <p>Where Cornwall comes for style, color, and confidence. Experience the art of beautiful hair.</p>
+    <a href="#" class="btn-primary" onclick="alert('Claim this website to unlock the live version'); return false;">Claim this website to unlock</a>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <h2 class="section-title">Our Services</h2>
+  <p class="section-subtitle">Crafted for every style, every occasion</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <img src="./images/section_1.jpg" alt="Haircuts & Styling">
+      <div class="service-card-content">
+        <h3>Haircuts & Styling</h3>
+        <p>Precision cuts tailored to your face shape, lifestyle, and personal flair.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="./images/section_2.jpg" alt="Color & Highlights">
+      <div class="service-card-content">
+        <h3>Color & Highlights</h3>
+        <p>From balayage to bold transformations, our color experts bring your vision to life.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="./images/section_1.jpg" alt="Hair Treatments">
+      <div class="service-card-content">
+        <h3>Hair Treatments</h3>
+        <p>Restore, strengthen, and shine with our professional conditioning therapies.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <img src="./images/section_2.jpg" alt="Special Occasion">
+      <div class="service-card-content">
+        <h3>Special Occasion</h3>
+        <p>Bridal, prom, or a night out — let us create the perfect look for your moment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <h2>About Us</h2>
+  <p>The Cutting Edge Salon is a proud local salon business in Cornwall, Ontario, dedicated to helping our community look and feel their best. With a passion for creativity and a commitment to personalized service, we blend modern techniques with a warm, welcoming atmosphere. Whether you're after a fresh cut, a bold new color, or a complete transformation, our talented team is here to make it happen.</p>
+</section>
+
+<section class="book-call" id="book">
+  <h2>Want to chat?</h2>
+  <p>Book a quick 5-minute call and let's discuss how we can serve you.</p>
+  <div class="cal-embed">
+    <div class="cal-embed-placeholder">
+      [ Cal.com booking embed will appear here ]<br>
+      <a href="#" class="btn-primary" style="margin-top:20px;" onclick="alert('Claim this website to unlock the live version'); return false;">Book a 5-min call</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Concept by <a href="#" onclick="alert('Claim this website to unlock the live version'); return false;">SiteSprint</a> · Demo Preview
+</footer>
+<div style="position:fixed;bottom:20px;right:20px;background:rgba(255,255,255,0.95);padding:8px 16px;border-radius:4px;font-size:12px;color:#666;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+  SiteSprint Preview · The Cutting Edge Salon
+</div>
+</body>
+</html>
