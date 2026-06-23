@@ -37,6 +37,23 @@ except ImportError:
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 
+# Schema column whitelist — fields in JSON that aren't here get dropped
+PROTOTYPE_COLUMNS = {
+    "id", "lead_id", "variant", "variant_name", "prototype_url", "screenshot_url",
+    "title", "design_summary", "prototype_score", "generation_model", "generation_prompt",
+    "generation_status", "watermark_enabled", "demo_locked", "showcase_eligible",
+    "showcase_approved", "showcase_score", "showcase_issues", "anonymized",
+    "showcase_anonymized_html_path", "showcase_scored_at", "created_at", "updated_at",
+}
+LEAD_COLUMNS = {
+    "id", "business_name", "slug", "industry", "city", "province", "country",
+    "address", "phone", "email", "email_source_url", "website_url", "website_status",
+    "google_maps_url", "social_urls", "source_urls", "place_id", "types", "description",
+    "services", "lead_score", "score_reasoning", "complexity_level",
+    "contact_safety_status", "contact_safety_reasoning", "status", "notes",
+    "review_count", "rating", "enriched_at", "created_at", "updated_at",
+}
+
 
 def get_client() -> Client:
     if not SUPABASE_URL or not SUPABASE_KEY:
@@ -55,27 +72,28 @@ def load_json(path, default):
 
 
 def normalize_dt(value):
-    """Convert date strings to ISO 8601 format that Supabase accepts."""
+    """Convert date strings to ISO 8601 format that Supabase accepts.
+
+    Fixes issues like:
+    - '2026-06-22T21:58:29.999855+00:00Z' (double offset+Z, invalid)
+    - '2026-06-22T21:58:29+00:00Z' (same)
+    - '2026-06-22T21:58:29.999855' (no offset)
+    """
     if not value:
         return None
     if isinstance(value, str):
-        # Try parsing and reformatting
-        try:
-            # Already ISO-ish
-            if "T" in value and ("Z" in value or "+" in value[10:]):
-                return value
-            # Try various formats
-            for fmt in ("%Y-%m-%dT%H:%M:%S.%fZ", "%Y-%m-%dT%H:%M:%SZ", "%Y-%m-%dT%H:%M:%S",
-                        "%Y-%m-%d %H:%M:%S", "%Y-%m-%d"):
-                try:
-                    dt = datetime.strptime(value, fmt)
-                    return dt.replace(tzinfo=timezone.utc).isoformat()
-                except ValueError:
-                    continue
-            return value  # give up, return as-is
-        except Exception:
-            return value
+        # Strip trailing Z after a numeric offset, e.g. '+00:00Z' -> '+00:00'
+        cleaned = re.sub(r"(\+[\d:]+)Z$", r"\1", value)
+        # Also handle bare +0000Z
+        cleaned = re.sub(r"(\+0000)Z$", r"Z", cleaned)
+        # If no offset and no Z, treat as UTC
+        has_offset = bool(re.search(r"[Zz]$|[+\-]\d{2}:?\d{2}$", cleaned))
+        if not has_offset:
+            cleaned = cleaned + "Z" if "T" in cleaned else cleaned
+        return cleaned
     return value
+
+import re  # used by normalize_dt
 
 
 def prepare_lead(lead):
@@ -89,6 +107,10 @@ def prepare_lead(lead):
     for key in ("created_at", "updated_at", "enriched_at"):
         if key in row:
             row[key] = normalize_dt(row[key])
+    # Strip fields not in schema
+    for k in list(row.keys()):
+        if k not in LEAD_COLUMNS:
+            del row[k]
     return row
 
 
@@ -97,6 +119,10 @@ def prepare_prototype(proto):
     for key in ("created_at", "updated_at", "showcase_scored_at"):
         if key in row:
             row[key] = normalize_dt(row[key])
+    # Strip fields not in schema
+    for k in list(row.keys()):
+        if k not in PROTOTYPE_COLUMNS:
+            del row[k]
     return row
 
 
