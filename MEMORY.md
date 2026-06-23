@@ -47,6 +47,20 @@ This applies to ALL future prototype generation, no exceptions.
 - Mehdi will investigate with the main agent why the Craftmans Cafe prototype was broken
 - Communication via Telegram
 - Timezone: America/New_York (EDT)
+- **ALWAYS use MiniMax M3 for prototype HTML generation** (not just write it myself)
+- **ALWAYS use relevant installed skills** (frontend, nextjs-expert, react, typescript-mastery, ia-tailwind-css) as reference for prototype code
+- **ALWAYS add target business branding** to prototypes (name, address, phone, logo treatment, color theming) so it feels like theirs, not a generic template
+
+## Skills to Use for Prototypes
+
+When generating a prototype, always consult:
+- `frontend` skill for landing page patterns, typography, color systems, mobile-first, accessibility
+- `nextjs-expert` if building Next.js components
+- `react` for React component patterns
+- `typescripts-mastery` for TypeScript
+- `ia-tailwind-css` if using Tailwind
+
+Read the relevant skill's SKILL.md before writing prototype code. Apply its rules (mobile-first, dramatic typography, 70-20-10 colors, one memorable element, etc.).
 
 ---
 

@@ -63,17 +63,19 @@
 
 ## Prototype Generation Workflow (step by step)
 
-1. **Generate HTML** with MiniMax M3 (or assigned model)
-2. **Clean the HTML** — strip any model reasoning, thinking blocks, or leaked prompts
-3. **Identify all image references** in the HTML
-4. **Generate real images** for each reference using `image_generate` (OpenAI/Gemini)
-5. **Save images** to `data/prototypes/<slug>/images/` with correct filenames
-6. **Validate images** (file size, format, dimensions — see Step 2 above)
-7. **Open in browser** — visual QA check (see Step 3 above)
-8. **Capture screenshot** with Playwright
-9. **Update prototypes.json** with screenshot path + status
-10. **Commit + push** only after all checks pass
-11. **Verify live deployment**
+1. **Read relevant skills first** — consult `frontend` SKILL.md (and `nextjs-expert`/`react`/`typescripts-mastery`/`ia-tailwind-css` if applicable) for patterns, typography, color systems, and best practices before writing any HTML/CSS
+2. **Generate HTML with MiniMax M3** (not by writing it manually) — pass the lead info + industry context + business branding details so the output feels personalized
+3. **Clean the HTML** — strip any model reasoning, thinking blocks, or leaked prompts
+4. **Apply target business branding** — add the actual business name, address, phone, and a color theme/aesthetic that fits the industry. The prototype should look like THEIRS, not a generic template
+5. **Identify all image references** in the HTML
+6. **Generate real images** for each reference using `image_generate` (OpenAI/Gemini)
+7. **Save images** to `data/prototypes/<slug>/images/` with correct filenames
+8. **Validate images** (file size, format, dimensions — see Step 2 above)
+9. **Open in browser** — visual QA check (see Step 3 above)
+10. **Capture screenshot** with Playwright
+11. **Update prototypes.json** with screenshot path + status
+12. **Commit + push** only after all checks pass
+13. **Verify live deployment**
 
 ---
 
