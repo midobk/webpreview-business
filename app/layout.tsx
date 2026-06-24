@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { Geist, Geist_Mono, Plus_Jakarta_Sans, Fraunces } from "next/font/google";
 import { MotionConfig } from "motion/react";
 import "./globals.css";
 
@@ -18,6 +18,17 @@ const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["500", "600", "700", "800"],
   display: "swap",
+});
+
+// Fraunces — variable serif with optical sizing. Used for the display
+// headlines and italic emphasis ("PROOF · DRAFT 01", "before you pay a
+// dollar") that anchor the warm-print visual identity. Body copy stays
+// Geist; the serif is a deliberate signature, not a default.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  display: "swap",
+  axes: ["opsz"],
 });
 
 export const metadata: Metadata = {
@@ -41,7 +52,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${jakarta.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${jakarta.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body
         className="min-h-full flex flex-col bg-[var(--bg-page)] text-[var(--text-primary)]"

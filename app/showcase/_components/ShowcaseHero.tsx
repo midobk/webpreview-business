@@ -20,19 +20,20 @@ export default function ShowcaseHero() {
         >
           <motion.div
             variants={fadeUpSmall}
-            className="inline-block mb-4 px-4 py-1.5 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium"
+            className="inline-block mb-4 px-4 py-1.5 bg-[#E6F1ED] text-paint rounded-full text-sm font-medium"
           >
             Anonymized demo concepts
           </motion.div>
           <motion.h1
             variants={fadeUp}
-            className="text-4xl md:text-5xl font-bold text-slate-900 mb-6"
+            className="text-4xl md:text-6xl mb-6 text-ink"
+            style={{ fontFamily: "var(--font-fraunces)", fontWeight: 500, fontVariationSettings: '"opsz" 96' }}
           >
             Showcase of website concepts
           </motion.h1>
           <motion.p
             variants={fadeUp}
-            className="text-lg text-slate-600 max-w-2xl mx-auto"
+            className="text-lg text-steel max-w-2xl mx-auto"
           >
             Every preview below is a concept designed for a real local business. Names,
             locations, and contact details have been removed. These are design demos only —

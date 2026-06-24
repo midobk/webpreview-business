@@ -91,3 +91,18 @@ export const mockBrowserEntrance: Variants = {
     transition: { duration: 0.9, ease: outQuint, delay: 0.2 },
   },
 };
+
+/**
+ * Print-shop "stamp" drift — used by CornerStamp. Starts slightly
+ * offset to the right and more steeply rotated, settles to the final
+ * -8° rotation. Pairs with the warm-paper visual identity.
+ */
+export const stampDrift: Variants = {
+  hidden: { opacity: 0, x: 10, rotate: -14 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    rotate: -8,
+    transition: { duration: 1.2, ease: outQuint },
+  },
+};
