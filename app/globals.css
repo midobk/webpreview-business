@@ -132,33 +132,8 @@ body {
   animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
 .animate-pulse-glow {
   animation: pulseGlow 2.4s ease-out infinite;
-}
-
-.stagger-children > * {
-  opacity: 0;
-  animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
-.stagger-children > *:nth-child(2) { animation-delay: 0.15s; }
-.stagger-children > *:nth-child(3) { animation-delay: 0.25s; }
-.stagger-children > *:nth-child(4) { animation-delay: 0.35s; }
-.stagger-children > *:nth-child(5) { animation-delay: 0.45s; }
-
-/* Scroll-reveal helper: items start hidden; add .is-visible when in view */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* Section background patterns */
@@ -227,3 +202,237 @@ details > summary::-webkit-details-marker { display: none; }
   box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.18);
   border-color: var(--violet-600);
 }
+
+/* ============================================================
+   ADMIN THEME — premium CRM feel with light + dark variants
+   ============================================================
+   These tokens are scoped to the admin section via .admin-shell.
+   Dark mode is opt-in via the `dark` class on <html>, toggled by
+   the AdminThemeToggle. System preference is respected via
+   @media (prefers-color-scheme: dark) when no choice is stored.
+   ============================================================ */
+
+.admin-shell {
+  /* Surface scale (light defaults) */
+  --adm-bg-app: #F4F5F9;
+  --adm-bg-surface: #FFFFFF;
+  --adm-bg-elevated: #FFFFFF;
+  --adm-bg-subtle: #EEF0F6;
+  --adm-bg-hover: #F1F2F8;
+  --adm-bg-active: #E5E7EE;
+  --adm-bg-sidebar: #FAFBFD;
+
+  /* Borders */
+  --adm-border: #E6E7EE;
+  --adm-border-strong: #D4D6E0;
+  --adm-border-subtle: #EEF0F6;
+
+  /* Text */
+  --adm-text-primary: #0F172A;
+  --adm-text-secondary: #475569;
+  --adm-text-muted: #94A3B8;
+  --adm-text-inverse: #FFFFFF;
+
+  /* Brand accents (theme-agnostic but tuned per mode) */
+  --adm-accent: #6366F1;
+  --adm-accent-soft: rgba(99, 102, 241, 0.10);
+  --adm-accent-2: #8B5CF6;
+  --adm-accent-3: #EC4899;
+
+  /* Status palette */
+  --adm-success: #10B981;
+  --adm-success-soft: rgba(16, 185, 129, 0.12);
+  --adm-warning: #F59E0B;
+  --adm-warning-soft: rgba(245, 158, 11, 0.14);
+  --adm-danger: #EF4444;
+  --adm-danger-soft: rgba(239, 68, 68, 0.12);
+  --adm-info: #3B82F6;
+  --adm-info-soft: rgba(59, 130, 246, 0.12);
+
+  /* Shadows */
+  --adm-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --adm-shadow-md: 0 2px 8px -2px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --adm-shadow-lg: 0 12px 32px -8px rgba(15, 23, 42, 0.18), 0 4px 12px -4px rgba(15, 23, 42, 0.08);
+  --adm-shadow-glow: 0 0 0 1px rgba(99, 102, 241, 0.20), 0 8px 24px -8px rgba(99, 102, 241, 0.35);
+
+  /* Background pattern */
+  --adm-pattern-dot: radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.05) 1px, transparent 0);
+
+  color-scheme: light;
+}
+
+/* Dark theme overrides */
+.admin-shell.dark,
+.dark .admin-shell {
+  --adm-bg-app: #0A0E1B;
+  --adm-bg-surface: #131829;
+  --adm-bg-elevated: #1A2138;
+  --adm-bg-subtle: #1E2540;
+  --adm-bg-hover: #1A2138;
+  --adm-bg-active: #232C4A;
+  --adm-bg-sidebar: #0E1326;
+
+  --adm-border: #232B45;
+  --adm-border-strong: #2E375A;
+  --adm-border-subtle: #1C2240;
+
+  --adm-text-primary: #F1F5F9;
+  --adm-text-secondary: #94A3B8;
+  --adm-text-muted: #64748B;
+  --adm-text-inverse: #0F172A;
+
+  --adm-accent: #818CF8;
+  --adm-accent-soft: rgba(129, 140, 248, 0.16);
+  --adm-accent-2: #A78BFA;
+  --adm-accent-3: #F472B6;
+
+  --adm-success: #34D399;
+  --adm-success-soft: rgba(52, 211, 153, 0.15);
+  --adm-warning: #FBBF24;
+  --adm-warning-soft: rgba(251, 191, 36, 0.16);
+  --adm-danger: #F87171;
+  --adm-danger-soft: rgba(248, 113, 113, 0.16);
+  --adm-info: #60A5FA;
+  --adm-info-soft: rgba(96, 165, 250, 0.16);
+
+  --adm-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --adm-shadow-md: 0 2px 8px -2px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --adm-shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.6), 0 4px 12px -4px rgba(0, 0, 0, 0.4);
+  --adm-shadow-glow: 0 0 0 1px rgba(129, 140, 248, 0.30), 0 8px 24px -8px rgba(129, 140, 248, 0.45);
+
+  --adm-pattern-dot: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1px, transparent 0);
+
+  color-scheme: dark;
+}
+
+/* Background pattern helper (scoped to admin) */
+.adm-bg-dots {
+  background-image: var(--adm-pattern-dot);
+  background-size: 24px 24px;
+}
+
+/* Premium gradient used in the sidebar mark + login hero */
+.adm-brand-gradient {
+  background-image: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
+}
+
+.adm-brand-text-gradient {
+  background-image: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Glassy elevated panel (login / hero) */
+.adm-glass {
+  background: var(--adm-bg-surface);
+  border: 1px solid var(--adm-border);
+  box-shadow: var(--adm-shadow-lg);
+  backdrop-filter: blur(20px);
+}
+
+/* Subtle hover lift used on cards */
+.adm-lift {
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.adm-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--adm-shadow-lg);
+  border-color: var(--adm-border-strong);
+}
+
+/* Drawer enter animation */
+@keyframes admDrawerIn {
+  from { transform: translateX(100%); opacity: 0.6; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+.adm-drawer-in {
+  animation: admDrawerIn 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes admBackdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.adm-backdrop-in {
+  animation: admBackdropIn 200ms ease-out;
+}
+
+/* Stagger entrance — apply to a container; children get staggered fade-up */
+@keyframes admFadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.adm-stagger > * {
+  opacity: 0;
+  animation: admFadeUp 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.adm-stagger > *:nth-child(1) { animation-delay: 30ms; }
+.adm-stagger > *:nth-child(2) { animation-delay: 60ms; }
+.adm-stagger > *:nth-child(3) { animation-delay: 90ms; }
+.adm-stagger > *:nth-child(4) { animation-delay: 120ms; }
+.adm-stagger > *:nth-child(5) { animation-delay: 150ms; }
+.adm-stagger > *:nth-child(6) { animation-delay: 180ms; }
+.adm-stagger > *:nth-child(7) { animation-delay: 210ms; }
+.adm-stagger > *:nth-child(8) { animation-delay: 240ms; }
+.adm-stagger > *:nth-child(n+9) { animation-delay: 270ms; }
+
+/* Pulse for "live" indicators */
+@keyframes admPulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.55; transform: scale(0.85); }
+}
+.adm-pulse-dot {
+  animation: admPulseDot 1.8s ease-in-out infinite;
+}
+
+/* Reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .adm-stagger > *,
+  .adm-drawer-in,
+  .adm-backdrop-in,
+  .adm-pulse-dot {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Custom scrollbar for the admin shell */
+.admin-shell *::-webkit-scrollbar { width: 10px; height: 10px; }
+.admin-shell *::-webkit-scrollbar-track { background: transparent; }
+.admin-shell *::-webkit-scrollbar-thumb {
+  background: var(--adm-border-strong);
+  border-radius: 999px;
+  border: 2px solid var(--adm-bg-app);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Reveal-on-scroll                                                   */
+/*  Toggled by IntersectionObserver in `app/page.tsx` (useReveal).    */
+/*  Pairs with `lib/motion/variants.ts → fadeUp` for motion.dev       */
+/*  consumers; this rule covers the CSS-only `.reveal` class.          */
+/* ------------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+.admin-shell *::-webkit-scrollbar-thumb:hover { background: var(--adm-text-muted); }

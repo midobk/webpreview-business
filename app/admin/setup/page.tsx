@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { AuthShell } from '../_components/AuthShell';
+import { IconCheck, IconShield } from '../_components/icons';
 
 export default function AdminSetup() {
   const [password, setPassword] = useState('');
@@ -21,7 +23,7 @@ export default function AdminSetup() {
     return Math.min(s, 4);
   })();
   const strengthLabels = ['Too short', 'Weak', 'Fair', 'Good', 'Strong'];
-  const strengthColors = ['bg-slate-200', 'bg-red-400', 'bg-amber-400', 'bg-emerald-400', 'bg-emerald-600'];
+  const strengthColors = ['#CBD5E1', '#F87171', '#FBBF24', '#34D399', '#10B981'];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,7 +32,6 @@ export default function AdminSetup() {
       setError('Passwords do not match');
       return;
     }
-
     if (password.length < 8) {
       setError('Use at least 8 characters.');
       return;
@@ -61,138 +62,242 @@ export default function AdminSetup() {
     }
   };
 
-  const copyHash = () => {
-    navigator.clipboard.writeText(hash);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const copyHash = async () => {
+    try {
+      await navigator.clipboard.writeText(hash);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* ignore */
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <div className="mx-auto h-12 w-12 rounded-full bg-indigo-600 flex items-center justify-center">
-            <span className="text-white font-bold text-xl">S</span>
-          </div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Admin setup
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Restricted — admin access only.
-          </p>
-        </div>
-        
-        {hash ? (
-          <div className="space-y-4">
-            <div className="rounded-md bg-green-50 p-4">
-              <h3 className="text-sm font-medium text-green-800 mb-2">
-                ✅ Password hashed successfully!
-              </h3>
-              <p className="text-sm text-green-700 mb-3">
-                Copy this hash and set it as a Vercel environment variable:
+    <AuthShell
+      eyebrow="First-time setup"
+      title={hash ? 'Password generated' : 'Create admin password'}
+      subtitle={
+        hash
+          ? 'Copy this hash and add it to your Vercel environment variables.'
+          : 'Pick a strong password. We’ll hash it locally — it never leaves the browser in plain text.'
+      }
+      footer={
+        <>
+          <IconShield size={11} /> Hashed with bcrypt (cost 12). Stored only as a hash in your env.
+        </>
+      }
+    >
+      {hash ? (
+        <div className="space-y-5">
+          <div
+            className="rounded-xl p-4"
+            style={{
+              background: 'var(--adm-success-soft)',
+              border: '1px solid rgba(16,185,129,0.30)',
+            }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <span
+                className="grid place-items-center rounded-full"
+                style={{
+                  width: 22,
+                  height: 22,
+                  background: 'var(--adm-success)',
+                  color: 'white',
+                }}
+              >
+                <IconCheck size={12} />
+              </span>
+              <p className="text-sm font-semibold" style={{ color: 'var(--adm-success)' }}>
+                Password hashed successfully
               </p>
-              <div className="relative">
-                <textarea
-                  readOnly
-                  value={hash}
-                  onClick={(e) => e.currentTarget.select()}
-                  className="w-full text-xs font-mono bg-white border border-green-300 rounded p-2 text-gray-800 break-all"
-                  rows={4}
-                />
-                <button
-                  onClick={copyHash}
-                  className="mt-2 w-full bg-green-600 text-white py-2 px-4 rounded text-sm font-medium hover:bg-green-700"
-                >
-                  {copied ? '✓ Copied!' : 'Copy Hash'}
-                </button>
-              </div>
             </div>
-            <div className="rounded-md bg-blue-50 p-4">
-              <h3 className="text-sm font-medium text-blue-800 mb-2">
-                Next steps:
-              </h3>
-              <ol className="text-sm text-blue-700 list-decimal list-inside space-y-1">
-                <li>Go to your Vercel project settings</li>
-                <li>Navigate to Environment Variables</li>
-                <li>Add a variable named <code className="bg-blue-100 px-1 rounded">PASSWORD_HASH</code></li>
-                <li>Paste the hash as the value</li>
-                <li>Redeploy the project</li>
-                <li>Then visit <code className="bg-blue-100 px-1 rounded">/admin</code> to login</li>
-              </ol>
+            <p className="text-xs mb-2.5" style={{ color: 'var(--adm-text-secondary)' }}>
+              Copy this hash and set it as <code style={{ fontFamily: 'var(--font-mono)' }}>PASSWORD_HASH</code> in Vercel:
+            </p>
+            <div className="relative">
+              <textarea
+                readOnly
+                value={hash}
+                onClick={(e) => e.currentTarget.select()}
+                rows={4}
+                className="w-full text-[11px] rounded-lg p-3 outline-none resize-none"
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  background: 'var(--adm-bg-app)',
+                  border: '1px solid var(--adm-border)',
+                  color: 'var(--adm-text-primary)',
+                  wordBreak: 'break-all',
+                }}
+              />
             </div>
+            <button
+              onClick={copyHash}
+              className="mt-2.5 w-full rounded-lg py-2.5 text-sm font-semibold text-white adm-brand-gradient"
+              style={{ boxShadow: 'var(--adm-shadow-glow)' }}
+            >
+              {copied ? '✓ Copied to clipboard' : 'Copy hash'}
+            </button>
           </div>
-        ) : (
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                  New admin password
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none rounded-t-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="At least 8 characters"
-                />
-                {password && (
-                  <div className="mt-1 flex items-center gap-2">
-                    <div className="flex gap-1 flex-1">
-                      {[0, 1, 2, 3].map((i) => (
-                        <div
-                          key={i}
-                          className={`h-1.5 flex-1 rounded ${i < strength ? strengthColors[strength] : 'bg-slate-200'}`}
-                        />
-                      ))}
-                    </div>
-                    <span className="text-xs text-gray-500 w-12 text-right">{strengthLabels[strength]}</span>
-                  </div>
-                )}
-              </div>
-              <div>
-                <label htmlFor="confirmPassword" className="sr-only">
-                  Confirm password
-                </label>
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  required
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="appearance-none rounded-b-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Confirm password"
-                />
-                {confirmPassword && confirmPassword === password && (
-                  <p className="mt-1 text-xs text-emerald-600">✓ Passwords match</p>
-                )}
-                {confirmPassword && confirmPassword !== password && (
-                  <p className="mt-1 text-xs text-red-600">Passwords don’t match yet</p>
-                )}
-              </div>
-            </div>
-            
-            {error && (
-              <div className="rounded-md bg-red-50 p-4">
-                <div className="text-sm text-red-700">{error}</div>
+
+          <div
+            className="rounded-xl p-4"
+            style={{
+              background: 'var(--adm-bg-subtle)',
+              border: '1px solid var(--adm-border)',
+            }}
+          >
+            <p
+              className="text-xs font-semibold uppercase tracking-wider mb-2"
+              style={{ color: 'var(--adm-text-secondary)' }}
+            >
+              Next steps
+            </p>
+            <ol
+              className="text-sm space-y-1.5 list-decimal pl-4"
+              style={{ color: 'var(--adm-text-primary)' }}
+            >
+              <li>Open your Vercel project settings</li>
+              <li>
+                Go to <strong>Environment Variables</strong>
+              </li>
+              <li>
+                Add <code style={{ fontFamily: 'var(--font-mono)' }}>PASSWORD_HASH</code>
+              </li>
+              <li>Paste the hash as the value</li>
+              <li>Redeploy the project</li>
+              <li>
+                Visit <code style={{ fontFamily: 'var(--font-mono)' }}>/admin</code> to log in
+              </li>
+            </ol>
+          </div>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-xs font-semibold uppercase tracking-wider mb-2"
+              style={{ color: 'var(--adm-text-secondary)' }}
+            >
+              New admin password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="At least 8 characters"
+              className="w-full text-sm rounded-lg px-3.5 py-3 outline-none transition-all"
+              style={{
+                background: 'var(--adm-bg-app)',
+                border: '1px solid var(--adm-border-strong)',
+                color: 'var(--adm-text-primary)',
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = 'var(--adm-accent)';
+                e.currentTarget.style.boxShadow = '0 0 0 4px var(--adm-accent-soft)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = 'var(--adm-border-strong)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+            />
+            {password && (
+              <div className="mt-2 flex items-center gap-2">
+                <div className="flex gap-1 flex-1">
+                  {[0, 1, 2, 3].map((i) => (
+                    <div
+                      key={i}
+                      className="h-1 flex-1 rounded-full transition-colors"
+                      style={{
+                        background: i < strength ? strengthColors[strength] : 'var(--adm-bg-active)',
+                      }}
+                    />
+                  ))}
+                </div>
+                <span
+                  className="text-[11px] font-medium w-12 text-right"
+                  style={{ color: 'var(--adm-text-secondary)' }}
+                >
+                  {strengthLabels[strength]}
+                </span>
               </div>
             )}
-            
-            <div>
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-              >
-                {isLoading ? 'Setting up…' : 'Set admin password'}
-              </button>
+          </div>
+
+          <div>
+            <label
+              htmlFor="confirmPassword"
+              className="block text-xs font-semibold uppercase tracking-wider mb-2"
+              style={{ color: 'var(--adm-text-secondary)' }}
+            >
+              Confirm password
+            </label>
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              required
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Re-enter to confirm"
+              className="w-full text-sm rounded-lg px-3.5 py-3 outline-none transition-all"
+              style={{
+                background: 'var(--adm-bg-app)',
+                border: `1px solid ${
+                  confirmPassword && confirmPassword === password
+                    ? 'rgba(16,185,129,0.5)'
+                    : 'var(--adm-border-strong)'
+                }`,
+                color: 'var(--adm-text-primary)',
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = 'var(--adm-accent)';
+                e.currentTarget.style.boxShadow = '0 0 0 4px var(--adm-accent-soft)';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = 'var(--adm-border-strong)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+            />
+            {confirmPassword && confirmPassword === password && (
+              <p className="mt-2 text-xs flex items-center gap-1.5" style={{ color: 'var(--adm-success)' }}>
+                <IconCheck size={12} /> Passwords match
+              </p>
+            )}
+            {confirmPassword && confirmPassword !== password && (
+              <p className="mt-2 text-xs" style={{ color: 'var(--adm-danger)' }}>
+                Passwords don’t match yet
+              </p>
+            )}
+          </div>
+
+          {error && (
+            <div
+              className="rounded-lg p-3.5 text-sm"
+              style={{
+                background: 'var(--adm-danger-soft)',
+                border: '1px solid rgba(239,68,68,0.30)',
+                color: 'var(--adm-danger)',
+              }}
+            >
+              {error}
             </div>
-          </form>
-        )}
-      </div>
-    </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="w-full rounded-lg py-3 text-sm font-semibold text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed adm-brand-gradient"
+            style={{ boxShadow: 'var(--adm-shadow-glow)' }}
+          >
+            {isLoading ? 'Setting up…' : 'Set admin password'}
+          </button>
+        </form>
+      )}
+    </AuthShell>
   );
 }
