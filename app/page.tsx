@@ -910,17 +910,21 @@ export default function Home() {
       <section
         id="request-preview"
         ref={formRef}
-        className="relative py-24 md:py-32 bg-brand-gradient overflow-hidden text-white"
+        className="relative py-24 md:py-32 overflow-hidden text-white"
       >
-        <div className="absolute inset-0 noise-overlay pointer-events-none opacity-50" aria-hidden="true" />
+        {/* Warm-print canvas — deep ink base + spruce/clay radial haze.
+           Replaces the indigo→violet→pink SaaS gradient with the
+           SiteSprint signature palette. */}
+        <div className="absolute inset-0 bg-ink" aria-hidden="true" />
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none opacity-90"
           aria-hidden="true"
           style={{
             background:
-              'radial-gradient(circle at 80% 20%, rgba(232, 116, 59, 0.35), transparent 55%), radial-gradient(circle at 20% 80%, rgba(31, 77, 58, 0.55), transparent 55%)',
+              'radial-gradient(circle at 82% 18%, rgba(232, 116, 59, 0.45), transparent 55%), radial-gradient(circle at 18% 82%, rgba(31, 77, 58, 0.65), transparent 55%)',
           }}
         />
+        <div className="absolute inset-0 noise-overlay pointer-events-none opacity-50" aria-hidden="true" />
         {/* Print-shop stamp in upper-right */}
         <div className="absolute top-10 right-6 md:right-16 pointer-events-none" style={{ ['--stamp-size' as never]: '90px' }}>
           <CornerStamp text="PROOF · DRAFT 01" />

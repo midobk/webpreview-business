@@ -33,6 +33,17 @@
 
   /* Brand gradient */
   --brand-gradient: linear-gradient(135deg, #1E1B4B 0%, #5B21B6 50%, #BE185D 100%);
+
+  /* Warm-print palette — "Canadian trades / print shop" identity.
+     Distinct from the cool indigo SaaS tokens above; this is the
+     SiteSprint signature that page.tsx references via bg-paper,
+     text-paint, bg-signal, etc. */
+  --paper:  #FAF8F4;
+  --ink:    #0B0F1E;
+  --paint:  #1F4D3A;  /* spruce green */
+  --signal: #E8743B;  /* clay accent */
+  --steel:  #4A5468;
+  --mist:   #ECECE6;
 }
 
 @theme inline {
@@ -46,9 +57,19 @@
   --color-text-muted: var(--text-muted);
   --color-bg-subtle: var(--bg-subtle);
   --color-border: var(--border);
+  /* Warm-print aliases — picked up by Tailwind utilities:
+     bg-paper, text-paper, bg-paint, text-paint, bg-signal, text-signal,
+     text-steel, bg-mist, text-ink, bg-ink. */
+  --color-paper:  var(--paper);
+  --color-ink:    var(--ink);
+  --color-paint:  var(--paint);
+  --color-signal: var(--signal);
+  --color-steel:  var(--steel);
+  --color-mist:   var(--mist);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-jakarta);
+  --font-display-serif: var(--font-fraunces);
 }
 
 body {
@@ -142,10 +163,11 @@ body {
   background-size: 24px 24px;
 }
 
-/* Pricing featured card */
+/* Pricing featured card — warm gradient border (spruce → clay),
+   matching the SiteSprint palette instead of the indigo SaaS default. */
 .pricing-featured {
   position: relative;
-  background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFB 100%);
+  background: linear-gradient(180deg, var(--ink) 0%, #0A0E1B 100%);
   border: 1.5px solid transparent;
   background-clip: padding-box;
 }
@@ -154,7 +176,7 @@ body {
   position: absolute;
   inset: -1.5px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #EC4899 100%);
+  background: linear-gradient(135deg, var(--paint) 0%, var(--signal) 100%);
   z-index: -1;
 }
 
@@ -180,8 +202,20 @@ body {
 
 /* Connector line for "how it works" */
 .connector {
-  background: linear-gradient(90deg, rgba(79, 70, 229, 0.0) 0%, rgba(79, 70, 229, 0.6) 50%, rgba(236, 72, 153, 0.6) 100%);
+  background: linear-gradient(90deg, rgba(31, 77, 58, 0.0) 0%, rgba(31, 77, 58, 0.6) 50%, rgba(232, 116, 59, 0.6) 100%);
   height: 2px;
+}
+
+/* Warm-palette utilities (paired with --color-paper / --color-paint etc.) */
+.bg-print-grid {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(31, 77, 58, 0.08) 1px, transparent 0);
+  background-size: 18px 18px;
+}
+
+.rule-v {
+  /* hairline vertical divider — spruce at low alpha for column separators */
+  border-left: 1px solid rgba(31, 77, 58, 0.10);
 }
 
 /* FAQ smooth open/close */
