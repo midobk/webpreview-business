@@ -6,7 +6,6 @@ import { AdminShell } from '../_components/AdminShell';
 import { StatCard } from '../_components/StatCard';
 import { StatusBadge } from '../_components/StatusBadge';
 import { LeadDetailDrawer } from '../_components/LeadDetailDrawer';
-import { PrototypeCard } from '../_components/PrototypeCard';
 import { ToastStack, type Toast } from '../_components/Toast';
 import {
   IconLeads,
@@ -30,7 +29,6 @@ export default function AdminDashboard() {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [toast, setToast] = useState<Toast | null>(null);
-  const [protoFilter, setProtoFilter] = useState<'all' | 'showcase'>('all');
   const router = useRouter();
 
   const fetchData = useCallback(async () => {
@@ -129,47 +127,6 @@ export default function AdminDashboard() {
     }
   };
 
-  const toggleShowcase = async (id: string, approved: boolean) => {
-    const previous = prototypes.find((p) => p.id === id)?.showcase_approved;
-    setUpdating(true);
-    try {
-      const res = await fetch('/api/admin/prototypes', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, showcase_approved: approved }),
-      });
-      if (!res.ok) throw new Error('Toggle failed');
-      setPrototypes((prev) =>
-        prev.map((p): Prototype => (p.id === id ? { ...p, showcase_approved: approved } : p))
-      );
-      showToast(
-        approved ? 'Approved for showcase' : 'Removed from showcase',
-        'success',
-        previous !== undefined
-          ? async () => {
-              try {
-                await fetch('/api/admin/prototypes', {
-                  method: 'PATCH',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ id, showcase_approved: previous }),
-                });
-                setPrototypes((prev) =>
-                  prev.map((p): Prototype => (p.id === id ? { ...p, showcase_approved: previous } : p))
-                );
-              } catch (e) {
-                console.error('Undo failed:', e);
-              }
-            }
-          : undefined
-      );
-    } catch (err) {
-      console.error('Toggle failed:', err);
-      showToast('Toggle failed — please try again', 'error');
-    } finally {
-      setUpdating(false);
-    }
-  };
-
   const handleLogout = async () => {
     try {
       await fetch('/api/admin/login', { method: 'DELETE' });
@@ -205,14 +162,6 @@ export default function AdminDashboard() {
     ? Math.round(leads.reduce((s, l) => s + getLeadScore(l), 0) / leads.length)
     : 0;
   const showcaseCount = prototypes.filter((p) => p.showcase_approved).length;
-
-  const filteredPrototypes = useMemo(
-    () =>
-      protoFilter === 'showcase'
-        ? prototypes.filter((p) => p.showcase_approved)
-        : prototypes,
-    [prototypes, protoFilter]
-  );
 
   if (loading) {
     return (
@@ -477,74 +426,6 @@ export default function AdminDashboard() {
           >
             Showing {filteredLeads.length} of {leads.length} — click any row to view details
           </div>
-        </section>
-
-        {/* Prototypes gallery */}
-        <section id="prototypes">
-          <div className="flex items-end justify-between mb-3">
-            <div>
-              <h2
-                className="text-base font-semibold"
-                style={{ color: 'var(--adm-text-primary)' }}
-              >
-                Prototypes
-              </h2>
-              <p className="text-xs" style={{ color: 'var(--adm-text-muted)' }}>
-                {prototypes.length} total · {showcaseCount} approved for showcase
-              </p>
-            </div>
-            <div
-              className="inline-flex p-0.5 rounded-lg"
-              style={{
-                background: 'var(--adm-bg-subtle)',
-                border: '1px solid var(--adm-border)',
-              }}
-            >
-              {(['all', 'showcase'] as const).map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setProtoFilter(f)}
-                  className="text-xs font-medium px-3 py-1.5 rounded-md transition-colors capitalize"
-                  style={{
-                    background: protoFilter === f ? 'var(--adm-bg-surface)' : 'transparent',
-                    color:
-                      protoFilter === f ? 'var(--adm-text-primary)' : 'var(--adm-text-secondary)',
-                    boxShadow: protoFilter === f ? 'var(--adm-shadow-sm)' : 'none',
-                  }}
-                >
-                  {f}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {filteredPrototypes.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-              {filteredPrototypes.map((proto) => (
-                <PrototypeCard
-                  key={proto.id}
-                  proto={proto}
-                  lead={leads.find((l) => l.id === proto.lead_id)}
-                  onToggleShowcase={toggleShowcase}
-                  updating={updating}
-                />
-              ))}
-            </div>
-          ) : (
-            <div
-              className="text-center py-12 rounded-xl"
-              style={{
-                background: 'var(--adm-bg-surface)',
-                border: '1px dashed var(--adm-border-strong)',
-              }}
-            >
-              <p className="text-sm" style={{ color: 'var(--adm-text-secondary)' }}>
-                {protoFilter === 'showcase'
-                  ? 'No prototypes approved for showcase yet.'
-                  : 'No prototypes generated yet.'}
-              </p>
-            </div>
-          )}
         </section>
       </AdminShell>
 

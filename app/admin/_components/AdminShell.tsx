@@ -22,7 +22,7 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   { href: '/admin/dashboard', label: 'Leads', icon: <IconLeads size={16} /> },
-  { href: '/admin/dashboard#prototypes', label: 'Prototypes', icon: <IconPrototypes size={16} /> },
+  { href: '/admin/prototypes', label: 'Prototypes', icon: <IconPrototypes size={16} /> },
   { href: '/showcase', label: 'Showcase', icon: <IconShowcase size={16} /> },
   { href: '/admin/dashboard#settings', label: 'Settings', icon: <IconSettings size={16} />, soon: true },
 ];
