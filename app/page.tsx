@@ -8,6 +8,10 @@ import MagneticButton from '@/components/motion/MagneticButton';
 import HeaderScroll from '@/components/motion/HeaderScroll';
 import MouseBlobs from '@/components/motion/MouseBlobs';
 import TiltMockBrowser from '@/components/motion/TiltMockBrowser';
+import CountUp from '@/components/motion/CountUp';
+import Checkmark from '@/components/motion/Checkmark';
+import SuccessCheck from '@/components/motion/SuccessCheck';
+import ScrollParallax from '@/components/motion/ScrollParallax';
 import { fadeUp, fadeUpSmall, heroStagger, outQuint, staggerContainer } from '@/lib/motion/variants';
 
 type FormState = {
@@ -440,7 +444,7 @@ export default function Home() {
               {trustStats.map((stat) => (
                 <div key={stat.label} className="text-center">
                   <dt className="text-3xl md:text-4xl font-extrabold text-white" style={{ fontFamily: 'var(--font-jakarta)' }}>
-                    {stat.value}
+                    <CountUp to={stat.value} duration={1.4} />
                   </dt>
                   <dd className="mt-1 text-xs md:text-sm uppercase tracking-wider text-white/60">
                     {stat.label}
@@ -638,8 +642,9 @@ export default function Home() {
             </p>
           </Reveal>
 
+          <ScrollParallax amount={20} className="mt-16">
           <motion.div
-            className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -674,6 +679,7 @@ export default function Home() {
               </motion.figure>
             ))}
           </motion.div>
+          </ScrollParallax>
         </div>
       </section>
 
@@ -725,13 +731,22 @@ export default function Home() {
                 </div>
                 <p className="mt-2 text-sm text-slate-600">{tier.description}</p>
                 <ul className="mt-6 space-y-3 flex-1">
-                  {tier.features.map((feat) => (
-                    <li key={feat} className="flex items-start gap-2 text-sm text-slate-700">
-                      <svg className="w-5 h-5 flex-none text-emerald-500 mt-0.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
+                  {tier.features.map((feat, idx) => (
+                    <motion.li
+                      key={feat}
+                      initial={{ opacity: 0, x: -8 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, amount: 0.5 }}
+                      transition={{ duration: 0.4, ease: outQuint, delay: idx * 0.08 }}
+                      className="flex items-start gap-2 text-sm text-slate-700"
+                    >
+                      <Checkmark
+                        drawOnView
+                        delay={idx * 0.08 + 0.1}
+                        className="w-5 h-5 flex-none text-emerald-500 mt-0.5"
+                      />
                       <span>{feat}</span>
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
                 {tier.featured ? (
@@ -773,11 +788,19 @@ export default function Home() {
             </h2>
           </Reveal>
 
-          <Reveal className="mt-12 divide-y divide-slate-200 border-y border-slate-200">
+          <motion.div
+            className="mt-12 divide-y divide-slate-200 border-y border-slate-200"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.05 }}
+          >
             {faqs.map((item) => (
-              <FaqItem key={item.q} q={item.q} a={item.a} />
+              <motion.div key={item.q} variants={fadeUp}>
+                <FaqItem q={item.q} a={item.a} />
+              </motion.div>
             ))}
-          </Reveal>
+          </motion.div>
         </div>
       </section>
 
@@ -817,10 +840,15 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.35, ease: outQuint }}
-                  className="mb-6 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 text-sm font-medium"
+                  className="mb-6 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 text-sm font-medium flex items-center gap-3"
                   role="status"
                 >
-                  ✓ Request received — check your inbox at <span className="font-semibold">{form.email || 'your email'}</span> for your preview link within a few minutes.
+                  <SuccessCheck trigger={submitted} className="w-6 h-6 flex-none text-emerald-600" />
+                  <span>
+                    Request received — check your inbox at{' '}
+                    <span className="font-semibold">{form.email || 'your email'}</span>{' '}
+                    for your preview link within a few minutes.
+                  </span>
                 </motion.div>
               )}
               {submitError && (

@@ -1,7 +1,12 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import {
+  AnimatePresence,
+  LayoutGroup,
+  motion,
+  useReducedMotion,
+} from 'motion/react';
 
 import { gridCard } from '@/lib/motion/variants';
 
@@ -65,36 +70,26 @@ export default function ShowcaseGrid({ items }: { items: Item[] }) {
       {industries.length > 1 && (
         <div className="mb-8 flex flex-wrap items-center gap-2">
           <span className="text-sm font-medium text-slate-500 mr-1">Filter:</span>
-          <button
-            type="button"
-            onClick={() => setSelected('all')}
-            className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
-              selected === 'all'
-                ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
-            }`}
-            aria-pressed={selected === 'all'}
-          >
-            All ({items.length})
-          </button>
-          {industries.map((ind) => {
-            const count = items.filter((i) => i.industry === ind).length;
-            return (
-              <button
-                key={ind}
-                type="button"
-                onClick={() => setSelected(ind)}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
-                  selected === ind
-                    ? 'bg-indigo-600 text-white border-indigo-600'
-                    : 'bg-white text-slate-700 border-slate-300 hover:border-slate-400'
-                }`}
-                aria-pressed={selected === ind}
-              >
-                {INDUSTRY_LABELS[ind] || ind} ({count})
-              </button>
-            );
-          })}
+          <LayoutGroup id="showcase-filter">
+            <FilterChip
+              active={selected === 'all'}
+              onClick={() => setSelected('all')}
+            >
+              All ({items.length})
+            </FilterChip>
+            {industries.map((ind) => {
+              const count = items.filter((i) => i.industry === ind).length;
+              return (
+                <FilterChip
+                  key={ind}
+                  active={selected === ind}
+                  onClick={() => setSelected(ind)}
+                >
+                  {INDUSTRY_LABELS[ind] || ind} ({count})
+                </FilterChip>
+              );
+            })}
+          </LayoutGroup>
         </div>
       )}
 
@@ -203,5 +198,42 @@ function ShowcaseCard({ item }: { item: Item }) {
         </div>
       </div>
     </motion.article>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  FilterChip — shared-layout pill that morphs between active chips.  */
+/* ------------------------------------------------------------------ */
+function FilterChip({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={active}
+      className="relative px-3 py-1.5 rounded-full text-sm font-medium border border-transparent"
+    >
+      {active && (
+        <motion.span
+          layoutId="showcase-pill"
+          className="absolute inset-0 rounded-full bg-indigo-600 border border-indigo-600"
+          transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+        />
+      )}
+      <span
+        className={`relative z-10 transition-colors ${
+          active ? 'text-white' : 'text-slate-700'
+        }`}
+      >
+        {children}
+      </span>
+    </button>
   );
 }
