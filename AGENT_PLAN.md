@@ -1049,14 +1049,21 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 
 ### I. Operational cron jobs (discovered 2026-06-24)
 
-**Why:** The plan claims 6 cron jobs exist (3 discovery + weekly-planning + prototype-generation + email-drafting + the new plan-maintenance). Scheduler (`cron action=list`) confirms only 1 cron (`sitesprint-agent-plan-maintenance`) is registered. The other 5 were referenced in 0e7be37's commit message but never actually created. Discovery and the Tue/Wed operational work have been running manually.
+**Status:** DONE (2026-06-24).
 
-**What needs to happen:**
-1. Re-register the 5 missing crons, OR
-2. Explicitly mark them as "not yet scheduled, will be run manually until X" in the plan
-3. Verify each cron's job actually fires at the expected time (not just exists)
+**Why:** The plan claimed 6 cron jobs exist (3 discovery + weekly-planning + prototype-generation + email-drafting + the new plan-maintenance). The 2026-06-24 15:24 EDT audit found only 1 cron (`sitesprint-agent-plan-maintenance`) actually registered, and that audit *itself* added the other 6 to the scheduler within minutes of running. By 15:30 EDT all 7 were live:
 
-**Blocked on:** decision. Recommended: keep the plan-maintenance cron (it's working); re-register discovery-run1/run2/run3 as monthly crons since the script is in place; for weekly-planning / prototype-generation / email-drafting, either create them or update the plan to make it clear those are aspirational.
+| # | Cron | Schedule | First verified fire |
+|---|---|---|---|
+| 1 | `sitesprint-agent-plan-maintenance` | daily 08:00 America/Toronto | 2026-06-24 15:24 EDT (audit pass that found this drift) |
+| 2 | `sitesprint-email-drafting` | daily | 2026-06-24 15:30 EDT — 3 emails + 3 SMS drafts, Supabase synced (168 leads, 10 prototypes, 6 outreach_logs) |
+| 3 | `sitesprint-weekly-planning` | weekly Mon | registered, awaiting first natural fire |
+| 4 | `sitesprint-prototype-generation` | weekly Wed | previously ran manually; last manual run ok (2026-06-22) |
+| 5 | `sitesprint-discovery-run1` | monthly | registered, awaiting first natural fire |
+| 6 | `sitesprint-discovery-run2` | monthly | registered, awaiting first natural fire |
+| 7 | `sitesprint-discovery-run3` | monthly | registered, awaiting first natural fire |
+
+**Done.** All 7 crons now exist in the scheduler. Two (plan-maintenance, email-drafting) have fired and reported back. The other 5 are registered and waiting for their first natural fire. No code changes needed beyond what the audit cron already did.
 
 ---
 
@@ -1092,3 +1099,13 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
   - Pricing in `app/page.tsx` matches §3.
 - **File size impact:** 3 targeted edits in Progress Tracker + 1 conflict-resolved append to §19 + 1 new Run Log entry. AGENT_PLAN.md: 906 → ~1100 lines. Rebase required; resolved cleanly.
 - **Next:** commit + push (rebase), Telegram summary, await tomorrow's cron.
+
+
+---
+
+### 2026-06-24 15:31 EDT — §19-I cron-job gap: closed (Main, Dexter)
+- **Trigger:** User asked "What are the five missing operational crons?" after seeing §19-I in the plan.
+- **Reality check:** Ran `cron action=list`. Found all 7 crons are now registered in the scheduler — the audit cron that *created* the §19-I item at 15:24 EDT had itself added the missing 6 to the scheduler within minutes of running. By 15:30 EDT the daily email-drafting cron had fired (Telegram broadcast: 3 personalized emails + 3 SMS drafts, Supabase synced 168 leads / 10 prototypes / 6 outreach_logs). So the "5 missing" framing was stale by the time it reached the user.
+- **Action:** Updated §19-I from "operational cron gap, blocked on decision" to DONE with a table showing all 7 crons, their schedules, and which have already fired vs. awaiting first natural fire. No new crons needed to be created — they exist; the audit's job here is to keep the plan honest.
+- **Files changed:** `AGENT_PLAN.md` only (1 targeted edit in §19-I).
+- **Next:** commit + push; the daily plan-maintenance cron will re-verify on 2026-06-25 08:00 EDT.
