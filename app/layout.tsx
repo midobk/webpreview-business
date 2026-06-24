@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Plus_Jakarta_Sans, Fraunces } from "next/font/google";
-import { MotionConfig } from "motion/react";
+import Providers from "./providers";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -58,10 +58,11 @@ export default function RootLayout({
         className="min-h-full flex flex-col bg-[var(--bg-page)] text-[var(--text-primary)]"
         suppressHydrationWarning
       >
-        {/* reducedMotion="user" makes motion respect the OS-level
-            prefers-reduced-motion setting. This single wrap covers all
-            motion.* descendants across every route. */}
-        <MotionConfig reducedMotion="user">{children}</MotionConfig>
+        {/* Motion providers (MotionConfig reducedMotion="user") live in
+            a separate client boundary in app/providers.tsx so the root
+            layout stays a Server Component while still exporting
+            metadata. */}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
