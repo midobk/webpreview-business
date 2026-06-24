@@ -1109,3 +1109,68 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 - **Action:** Updated §19-I from "operational cron gap, blocked on decision" to DONE with a table showing all 7 crons, their schedules, and which have already fired vs. awaiting first natural fire. No new crons needed to be created — they exist; the audit's job here is to keep the plan honest.
 - **Files changed:** `AGENT_PLAN.md` only (1 targeted edit in §19-I).
 - **Next:** commit + push; the daily plan-maintenance cron will re-verify on 2026-06-25 08:00 EDT.
+
+
+---
+
+### 2026-06-24 17:10 EDT — PR review of 4a94ef4-sibling work (Main, Dexter)
+- **User request:** Review PRs #1 (`feat/motion-dev-premium-pass`, 5 commits) and #2 (`feat/admin-premium-redesign`, 2 commits). Don't merge — give opinion.
+- **Method:** Checked out each branch in a separate git worktree, ran `npm install` + `prebuild` + `tsc --noEmit` + `next build`, booted `next start` on :3011 (motion) and :3012 (admin), and ran Playwright screenshots + DOM inspection.
+- **Build status:**
+  - PR1 motion: `tsc` clean, `next build` clean (22 routes incl. new `/_components/ShowcaseGrid`, `ShowcaseHero`, `ShowcaseCTA`, `components/motion/*`)
+  - PR2 admin: `tsc` clean, `next build` clean (adds `/admin/prototypes`, `AdminShell`, `AuthShell`, drawer, toast stack, dark mode)
+
+#### PR #1 — `feat/motion-dev-premium-pass` — partial pass
+**What's good:**
+- Motion library primitives (`lib/motion/variants.ts`, `easings.ts`) + `components/motion/` are clean, well-named, and reusable. Good foundation.
+- Visual identity pass landed: warm-paper + spruce + clay palette, Fraunces serif display. Looks premium, not generic.
+- Hero has both CTAs ("Generate my free preview" + "See real examples"). Trust-stats with numbers present and styled. Testimonials + 30-day money-back strip look polished.
+- Showcase hero + filter chips + magnetic bottom CTA wired correctly.
+- `<MotionConfig reducedMotion="user">` wraps the app — accessibility-respectful.
+
+**Real bugs:**
+1. **Showcase cards render at `opacity: 0` and stay invisible.** DOM inspection confirms `<motion.article>` elements exist with correct content, correct size (372×436), correct positions, but `getComputedStyle.opacity === "0"` and `transform: matrix(0.97, 0, 0, 0.97, 0, 16)` (the "hidden" variant state). The `gridCard` variant's `initial="hidden" → animate="visible"` never fires — likely because `<AnimatePresence mode="popLayout">` inside a parent `<motion.div initial="hidden" animate="visible">` doesn't propagate variants correctly when the inner AnimatePresence re-mounts children on filter change. With 0 visible cards on the showcase page, this is a **ship-blocker for the showcase feature** (which §19-C2 considers "the highest-converting addition possible to the homepage").
+2. **`useReveal` hand-rolled hook is still in `app/page.tsx`** (lines 23, 262) — PR description claims it was removed in favor of `<Reveal>`, but it's still present. The homepage hero animation works via the old hook, not via the new motion library. PR claim is inaccurate.
+3. **`app/page.tsx` itself imports nothing from `motion/react`** — the motion work landed only in the showcase sub-components. Title "landing surfaces" is misleading; it's actually only showcase + footer-CTA.
+
+**Non-blocking concerns:**
+- PR adds 1959 insertions across 24 files. Heavy lift. Worth confirming the homepage was actually QA'd by the author — the new motion primitives should be exercised somewhere visible, not just added to the library.
+- New dependency `motion` v12.41.0 (the framer-motion rebrand). Fine, but worth a note in MEMORY.md so future agents don't re-add framer-motion separately.
+
+#### PR #2 — `feat/admin-premium-redesign` — partial pass
+**What's good:**
+- `AdminShell` (240px sidebar + topbar + theme toggle), 12 component primitives, KPI strip, lead detail drawer, toast+undo, dark mode with anti-flash `ThemeScript` — all wired and looking premium.
+- Build clean. All routes work (including the new `/admin/prototypes` page split off in `d669afa`).
+- Light + dark token sets scoped under `.admin-shell` — won't leak to public pages.
+- No hydration warnings, no console errors during screenshot session.
+
+**Real bugs:**
+1. **PR description claims features that only render conditionally**:
+   - "4-segment password strength meter" — exists in code (`strength = ...` math on lines 19-32) but only renders once `password` has at least 1 character. Empty-field screenshot looks broken.
+   - "confirm-match indicator" — exists but only appears once BOTH fields have content (line 268 `<IconCheck /> Passwords match`).
+   - "show/hide password toggle" — **does not exist in the rendered output**. PR claims it; code only has `type="password"` inputs with no toggle. This is a real gap between PR body and code.
+2. **2 password inputs on `/admin` (login page)** when only 1 was expected. Login page seems to render a second input somewhere — possibly the change-pw section is showing in collapsed state. Need to inspect.
+3. **Login attempt after setup did not reach `/admin/dashboard`** — final URL was `/admin/setup` after `submitPassword('testpassword1234')`. Either the login API is broken, the session cookie isn't propagating, or the test password wasn't saved (the setup form submission had no observed network response — `waitForResponse` timed out after 5s).
+
+**Non-blocking concerns:**
+- `IconShield` (size=11) inline with the footer "Hashed with bcrypt..." renders as a tiny dot that visually reads as "stray floating icon" in the central panel below the form. Either bump size to 14-16 or use a leading bullet.
+- Dark mode `ThemeScript` runs pre-hydration with `suppressHydrationWarning` on `<html>`. Standard pattern but worth a comment explaining why so a future agent doesn't try to "fix" the warning.
+- `app/admin/_components/shot-loop.mjs` is in `.learnings/` (which is untracked) but the PR's `.learnings/shot-loop.mjs` file is committed. Probably fine but worth a `.gitignore` check.
+
+#### Verdict
+
+**Do not merge either PR as-is.**
+
+PR1 has one ship-blocker (showcase cards invisible at opacity 0). PR2 has a real PR-body-vs-code gap (show/hide toggle claimed, not implemented) plus a login-flow bug worth investigating. Both have great visual work underneath.
+
+**Recommended next steps (in order):**
+1. PR1: fix the showcase `opacity: 0` bug. Likely fix: change `<motion.div initial="hidden" animate="visible">` to omit the variants and just use `initial={{ opacity: 0 }} animate={{ opacity: 1 }}`, OR move the AnimatePresence outside the variant-controlled parent. ~10-min fix.
+2. PR1: either remove the dead `useReveal` from `app/page.tsx` or wire it into the new `<Reveal>` component. Don't ship code that contradicts the PR description.
+3. PR2: either implement the show/hide password toggle (PR claim) or amend the PR description to remove the claim. ~20-min fix.
+4. PR2: investigate why login → dashboard redirect fails after a successful setup. Could be a session cookie, redirect, or middleware issue.
+5. PR2: log in successfully and screenshot the dashboard + drawer to confirm the "premium CRM" claims hold up on the actual dashboard, not just the setup page.
+6. After both PRs are clean: re-review, then user can decide merge order (PR2 first since it doesn't block PR1, and PR1's C2 showcase work overlaps with PR2's admin navigation).
+
+- **Files changed:** `AGENT_PLAN.md` only (this run log entry). No code changed.
+- **Screenshots:** saved in `.learnings/pr-review/` (gitignored) for reference.
+- **Next:** wait for user decision on which fixes to apply.
