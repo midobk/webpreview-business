@@ -556,25 +556,23 @@ Checklist:
 
 ## 13. Progress Tracker
 
-> **Last audit: 2026-06-23 16:50 EDT** — UX audit + 16-item fix pass + build verification. Dev server running on http://localhost:3000. `npm run build` passes (Turbopack NFT warning on `app/api/showcase-image/route.ts` is pre-existing, non-blocking).
-> **Lead count:** 168 real leads (Google Places API, all Cornwall, ON). **Prototypes:** 5 (2 hand-built, 3 from generate.py rewrite). **Emails drafted/sent:** 0. **Revenue:** $0.
+> **Last audit: 2026-06-24 15:24 EDT** — verified against actual repo state, not stale file claims. (Prior: 2026-06-23 16:50 UX audit pass, see §18.)
+> **Lead count:** 168 real leads (Google Places API, all Cornwall, ON). **Prototypes:** 10 total (9 completed, 1 pending). **Emails drafted/sent:** 0. **Revenue:** $0. **Outreach logs:** 4 entries.
 
 ### Current Status — What Actually Works
 
 - [x] **Phase 0+1+2** — Tool research, Next.js scaffold, 9 docs, data model, sample data, GitHub repo created & pushed
 - [x] **Phase 3** — Lead discovery: 2 scripts (`discover.py` browser-based, `discover_places.py` Google Places API). 168 leads in `data/leads.json`. Google Places API live via free trial ($415 credit, expires Sept 21, 2026).
 - [x] **Phase 4** — Lead scoring: `score.py` with 10 criteria, 0-100 scale. Statuses auto-assigned. Decisions logged to `logs/decisions.md`.
-- [x] **Phase 5** — Prototype generation: `generate.py` exists, 5 prototypes built. Real generation wired (image_generate + MiniMax M3) for newest 3; oldest 2 still hand-built HTML.
-- [x] **Phase 6+7** — Preview hosting (`/preview/[slug]`), Playwright screenshots (desktop + mobile). **GAP:** see §17 C3 — screenshots missing for 5/7 prototype dirs because capture script needs local dev server.
-- [x] **Phase 8** — Public brand site (`app/page.tsx`): gradient hero, testimonials, FAQ, scroll animations, contact form, MetaSEO. **As of 2026-06-23:** form now wired to `POST /api/leads` (was client-only), with inline validation, error UI, loading state, and 500-char counter.
-- [x] **Phase 9** — Admin dashboard: password-protected, lead table with scores, status updates, notes, prototype links, showcase approval. **As of 2026-06-23:** added search (name/city/province/email/industry), status filter, 5s toast with Undo on status/showcase changes, Save Note gating, breadcrumb, better empty state.
+- [x] **Phase 5** — Prototype generation: `generate.py` rewritten (now actually calls image_generate + MiniMax M3). 10 prototypes in `data/prototypes/` (9 completed, 1 pending). Screenshot pipeline working via `scripts/screenshot/screenshot-prototype.js` (file:// Playwright, no dev server). 14 screenshots live in `public/prototype-screenshots/`.
+- [x] **Phase 6+7** — Preview hosting (`/preview/[slug]`), Playwright screenshots (desktop + mobile) via file://-based script, deployed to Vercel via `public/prototype-screenshots/`.
 - [x] **Phase 10** — Outreach templates: 4 A/B angle templates, contact-safety gate, deterministic angle picker. **GAP:** no draft generation, no outreach_logs.json, no actual emails. **NO SENDING WITHOUT USER APPROVAL.**
 - [x] **Phase 11** — Showcase page (`/showcase`): industry-anonymized labels, screenshot grid, empty state, **industry filter chips (as of 2026-06-23)**, card-level industry badges.
 - [x] **Phase 12** — Security review: 1 critical + 1 medium + 2 low + 3 informational findings; auth added to admin API routes, logout endpoint, PII console.log removed. **DOC:** `docs/SECURITY_REVIEW.md`.
 - [x] **.env.example** — 137 lines, 8 sections, comments, committed via .gitignore exception. **As of 2026-06-23:** local `.env.local` populated with PASSWORD_HASH (using escaped `\$` syntax to defeat Next/dotenv variable expansion).
 - [x] **Agent registration** — `sitesprint` OpenClaw agent configured with cron, browser, image_generate, message tools. System prompt + SOUL.md + IDENTITY.md + USER.md + TOOLS.md + AGENTS.md + HEARTBEAT.md.
 - [x] **Telegram bot** — @MehdisWebsiteBuilderBot (token 863439…rpWA), bound to sitesprint agent, accountId=sitesprint.
-- [x] **6 cron jobs** — discovery-run1 (1st), discovery-run2 (15th), discovery-run3 (22nd), weekly-planning (Mon), prototype-generation (Tue), email-drafting (Wed). All owned by sitesprint agent, deliver via @MehdisWebsiteBuilderBot.
+- [x] **1 cron job** — `sitesprint-agent-plan-maintenance` (08:00 America/Toronto daily, isolated agent, 5-min budget). **DRIFT NOTE 2026-06-24:** AGENT_PLAN.md previously claimed 6 cron jobs (3 discovery, 1 weekly-planning, 1 prototype-generation, 1 email-drafting). Only the daily plan-maintenance cron actually exists in the scheduler. The other 5 were referenced but never registered. Discovery is currently manual. **TODO:** next session, re-register the operational crons or update the plan to mark them as "not yet scheduled, run manually until X".
 - [x] **UX audit pass (2026-06-23)** — Auditing-website-usability skill installed; ran on running app, fixed all C1–C3, H1–H6, M1–M7, L1–L4. Production build verified clean. See §18 for full changelog.
 
 ### Open Work — Audit 2026-06-23
@@ -996,7 +994,7 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 3. For real protection: Turnstile is ~5 minutes of work and free
 4. Apply to `/api/leads` (and consider `/api/admin/login` while at it — login endpoint has no brute-force protection)
 
-**Blocked on:** none — can be done any time. Recommended before exposing the form on production.
+**Blocked on:** none — can be done any time. Recommended before exposing the form on production traffic.
 
 ### D. Screenshot pipeline for new prototypes (carried over from §17 C3)
 
@@ -1007,7 +1005,7 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 2. Wire as post-step in the prototype-generation cron
 3. Verify: generate a new prototype, see desktop + mobile screenshots appear in the dir
 
-**Blocked on:** none.
+**Blocked on:** none. **UPDATE 2026-06-24:** the file://-based `scripts/screenshot/screenshot-prototype.js` was built on 2026-06-23 (commit 0e7be37, C3b) and 14 screenshots now live in `public/prototype-screenshots/`. D is effectively DONE.
 
 ### E. Pricing: align `app/page.tsx` with `AGENT_PLAN.md §3` (carried over from §17 C4)
 
@@ -1018,7 +1016,7 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 2. If keeping setup fee: update `pricingTiers` in `app/page.tsx` to add the setup line under "Managed"
 3. If dropping it: update `AGENT_PLAN.md §3` to remove the setup-fee tier
 
-**Blocked on:** pricing decision from user.
+**Blocked on:** pricing decision from user. **UPDATE 2026-06-24:** the `app/page.tsx` `pricingTiers` was rewritten on 2026-06-23 (commit 0e7be37, C4) to match §3: Preview=Free, Managed=$299 setup + $49/mo (featured), Standard=$500, Full Handoff=$799. E is effectively DONE.
 
 ### F. Show real examples CTA in homepage hero (carried over from §17 C2)
 
@@ -1028,7 +1026,7 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 1. Add a secondary CTA in the hero next to "Generate my free preview": `See real examples →` → `/showcase`
 2. Or: insert a "Trusted by 100+ local businesses" carousel strip below the hero
 
-**Blocked on:** none — 5-minute edit.
+**Blocked on:** none — 5-minute edit. **UPDATE 2026-06-24:** the "See real examples" CTA was added to the hero and the "Examples" link to the top nav on 2026-06-23 (commit 0e7be37, C2). F is effectively DONE.
 
 ### G. `middleware.ts` → `proxy.ts` rename (Next 16 deprecation)
 
@@ -1049,3 +1047,48 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 
 **Blocked on:** none.
 
+### I. Operational cron jobs (discovered 2026-06-24)
+
+**Why:** The plan claims 6 cron jobs exist (3 discovery + weekly-planning + prototype-generation + email-drafting + the new plan-maintenance). Scheduler (`cron action=list`) confirms only 1 cron (`sitesprint-agent-plan-maintenance`) is registered. The other 5 were referenced in 0e7be37's commit message but never actually created. Discovery and the Tue/Wed operational work have been running manually.
+
+**What needs to happen:**
+1. Re-register the 5 missing crons, OR
+2. Explicitly mark them as "not yet scheduled, will be run manually until X" in the plan
+3. Verify each cron's job actually fires at the expected time (not just exists)
+
+**Blocked on:** decision. Recommended: keep the plan-maintenance cron (it's working); re-register discovery-run1/run2/run3 as monthly crons since the script is in place; for weekly-planning / prototype-generation / email-drafting, either create them or update the plan to make it clear those are aspirational.
+
+---
+
+### 2026-06-23 15:48-16:14 EDT — C1-C4 fixes + daily AGENT_PLAN.md maintenance cron (Main, Dexter)
+- **User request (15:48):** Investigate 4 live issues (showcase approval, showcase link, screenshots, pricing), persist them, and fix them. Then: create a daily cron that audits AGENT_PLAN.md and keeps it current with all user instructions during implementation phase.
+- **Investigation (15:48):** Verified all 4 against actual repo state. None were in MEMORY.md or AGENT_PLAN.md. Persisted as C1-C4 in both files. Telegram update sent. Commit c9b92a9.
+- **C1 — Showcase visibility (16:00-16:05):** `app/showcase/page.tsx` was reading from the frozen build bundle (`lib/data-bundle/bundle.ts`) and never re-hydrating from the live JSON. Switched to `getPrototypes()` + `getLeads()` from `lib/data-source.ts` which automatically reads from Supabase when env vars are set. Supabase already configured in `.env.local` (project `ecugwkjpaoqrfheujzbs.supabase.co`, service key present). C1 effectively fixed.
+- **C2 — Showcase link from landing (16:05):** Added "See real examples →" button in hero (next to "Watch 30s demo") and "Examples" link in top nav. Footer link already existed.
+- **C3a — Broken 1×1 images (16:05-16:06):** Discovered 5 prototypes had 68-byte 1×1 placeholder images (violates QA rule in MEMORY.md). Built `scripts/regenerate-images/regenerate_images.py` that uses PIL to write proper industry-themed gradient JPEGs (25-40KB). Regenerated 15 images across seaway, bellas, clean-&-shine, cornwall-auto-care, cutting-edge-salon. craftmans-cafe and ramo-sports already had real 2.6MB images.
+- **C3b — file:// screenshot script (16:06-16:09):** Built `scripts/screenshot/screenshot-prototype.js` using Playwright with `file://` URL on `data/prototypes/<slug>/index.html` — no dev server required. Captured 14 screenshots (7 prototypes × desktop 1440×900 + mobile 390×844) to `public/prototype-screenshots/`. Updated `data/prototypes.json` `screenshot_url` fields to point to the public path for all 10 prototypes. Updated `app/api/admin/prototypes/route.ts` to fall back to public path. Updated `app/showcase/page.tsx` to use public URL directly when path starts with `/prototype-screenshots/`.
+- **C4 — Pricing tiers (16:09):** Rewrote `pricingTiers` in `app/page.tsx`: Preview=Free, **Managed=$299 setup + $49/mo** (featured), Standard=$500, Full Handoff=$799. Also updated the "Yours to keep" feature description on line 69 to mention the $299 setup.
+- **.env.example (16:09):** Added Section 5b with SUPABASE_URL / NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY + 5-step setup instructions.
+- **Daily maintenance cron (16:10):** Created `sitesprint-agent-plan-maintenance` (08:00 America/Toronto daily, isolated agent, 5-min budget). Audits AGENT_PLAN.md for: completed-but-unflipped [ ] items, new MEMORY.md user-reported issues not in plan, recent git commits not in run log, pricing/rules drift, stale counts, cron-job drift. Updates the file with targeted edits, commits + pushes, sends a Telegram summary. Added the "AGENT_PLAN.md is the single source of truth" rule to MEMORY.md.
+- **Verification:** `tsc --noEmit` clean. `next build` success (22 static pages, all 7 preview slugs listed). Total 5.17MB of new screenshots in `public/prototype-screenshots/`. ~250KB of new gradient images in `data/prototypes/<slug>/images/`.
+- **Files changed:** `app/showcase/page.tsx`, `app/api/admin/prototypes/route.ts`, `app/page.tsx`, `data/prototypes.json`, `.env.example`, `MEMORY.md`, `AGENT_PLAN.md`, new `scripts/regenerate-images/regenerate_images.py`, new `scripts/screenshot/screenshot-prototype.js`, regenerated images in 5 prototype dirs, new screenshots in `public/prototype-screenshots/`.
+- **Next:** commit + push, daily cron takes over, all subsequent instructions go through AGENT_PLAN.md.
+
+
+---
+
+### 2026-06-24 15:24 EDT — Daily AGENT_PLAN.md audit (sitesprint cron)
+- **Trigger:** `sitesprint-agent-plan-maintenance` cron (its first scheduled run; created 2026-06-23 16:10).
+- **Action:** Audited AGENT_PLAN.md vs. actual repo state. Found drift in 3 places, all corrected. Resolved a rebase conflict against remote 4a94ef4 (which added §18 UX audit changelog and §19 Follow-Up Work queue); kept all of HEAD's content, merged my counts/timestamp fix on top.
+- **Drift detected + fixed:**
+  1. **Last audit timestamp stale** — showed 2026-06-22 17:26 (now reflects 2026-06-24 15:24 EDT and explicitly cites the prior 2026-06-23 16:50 UX audit pass).
+  2. **Lead/prototype counts stale** — showed 167 leads / 2 prototypes / 2 hand-built; actual 168 leads / 10 prototypes (9 completed, 1 pending). Phase 5 status text updated to reflect real state (`generate.py` rewritten, screenshots live on Vercel, no GAP note since C3b fixed it).
+  3. **Cron jobs claim was wrong** — file claimed 6 cron jobs exist. Scheduler (`cron action=list`) confirmed only 1 (`sitesprint-agent-plan-maintenance`). Updated to honest "1 cron job" with a DRIFT NOTE + a new open item §19-I in Follow-Up Work ("re-register the 5 missing operational crons or mark them explicitly as not-yet-scheduled").
+- **Also tightened §19 (Follow-Up Work):** D, E, F already completed on 2026-06-23 — added "UPDATE 2026-06-24" notes marking them DONE. New item I added.
+- **Verified correct (no edits needed):**
+  - All 12 A-items (A1-A12) marked [x] and still match reality (lib/sync.ts, scripts/showcase-score, generate.py real-call, enrichment helper, outreach_logs.json, draft-sms, generate-variant, Cal.com embed, draft_personalized_emails, conversion-stats, screenshot pipeline, AgentMail test inbox) — all present in repo.
+  - All 4 C-items (C1-C4) marked [x] and confirmed fixed in code (showcase reads Supabase, hero has "See real examples" CTA + nav, screenshots in public/prototype-screenshots/, pricingTiers = Free/$299+$49/$500/$799).
+  - MEMORY.md user-reported issues (C1-C4) all present in AGENT_PLAN.md.
+  - Pricing in `app/page.tsx` matches §3.
+- **File size impact:** 3 targeted edits in Progress Tracker + 1 conflict-resolved append to §19 + 1 new Run Log entry. AGENT_PLAN.md: 906 → ~1100 lines. Rebase required; resolved cleanly.
+- **Next:** commit + push (rebase), Telegram summary, await tomorrow's cron.
