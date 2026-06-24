@@ -1,15 +1,15 @@
 {
   "_meta": {
-    "generated_at": "2026-06-23T18:04:51.109704+00:00Z",
+    "generated_at": "2026-06-24T19:29:21.486188+00:00Z",
     "data_sources": [
       "data/leads.json",
       "data/prototypes.json",
       "data/outreach_logs.json"
     ]
   },
-  "total_leads": 168,
+  "total_leads": 169,
   "total_prototypes": 10,
-  "total_emails_drafted": 0,
+  "total_emails_drafted": 6,
   "total_emails_sent": 0,
   "total_replies": 0,
   "total_conversions": 0,
@@ -115,6 +115,13 @@
     "sporting_goods": {
       "leads": 1,
       "prototypes": 1,
+      "emails_sent": 0,
+      "replies": 0,
+      "won": 0
+    },
+    "unknown": {
+      "leads": 1,
+      "prototypes": 0,
       "emails_sent": 0,
       "replies": 0,
       "won": 0
@@ -722,6 +729,10 @@
     "https://duckduckgo.com/?q=Ramo+Sports+Tangier": {
       "leads": 1,
       "avg_score": 108.0
+    },
+    "unknown": {
+      "leads": 1,
+      "avg_score": 0.0
     }
   }
 }

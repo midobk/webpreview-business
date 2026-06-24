@@ -29,7 +29,7 @@
     ],
     "complexity_level": "simple",
     "contact_safety_status": "pending",
-    "contact_safety_reasoning": "No public email found — would need phone contact or social DM",
+    "contact_safety_reasoning": "No public email found \u2014 would need phone contact or social DM",
     "created_at": "2026-06-22T00:00:00Z",
     "updated_at": "2026-06-22T21:58:29.999855+00:00Z",
     "lead_score": 84,
@@ -66,10 +66,10 @@
     "contact_safety_status": "pass",
     "contact_safety_reasoning": "Public business email found on Yelp. Not in avoided industry. Safe to contact.",
     "created_at": "2026-06-22T00:00:00Z",
-    "updated_at": "2026-06-22T21:58:30.001522+00:00Z",
+    "updated_at": "2026-06-24T19:28:56.404079+00:00Z",
     "lead_score": 100,
     "score_reasoning": "No website (20), Public email (20), Rich info (15), Clear services (10), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), Some reviews (3)",
-    "status": "ready_for_prototype"
+    "status": "email_drafted"
   },
   {
     "id": "lead-003",
@@ -106,10 +106,10 @@
     "contact_safety_status": "pass",
     "contact_safety_reasoning": "Public email on Facebook. Not avoided industry. Safe to contact.",
     "created_at": "2026-06-22T00:00:00Z",
-    "updated_at": "2026-06-22T21:58:30.002972+00:00Z",
+    "updated_at": "2026-06-24T19:29:07.284683+00:00Z",
     "lead_score": 100,
     "score_reasoning": "Ugly/outdated website (10), Public email (20), Rich info (15), Clear services (10), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), Some social presence (3), Some reviews (3)",
-    "status": "ready_for_prototype"
+    "status": "email_drafted"
   },
   {
     "id": "lead-004",
@@ -660,8 +660,8 @@
   },
   {
     "id": "lead-021",
-    "business_name": "Sip and Smile Café",
-    "slug": "sip-and-smile-café",
+    "business_name": "Sip and Smile Caf\u00e9",
+    "slug": "sip-and-smile-caf\u00e9",
     "industry": "coffee shop",
     "city": "Cornwall",
     "province": "Ontario",
@@ -741,8 +741,8 @@
   },
   {
     "id": "lead-023",
-    "business_name": "Edith Mae Café",
-    "slug": "edith-mae-café",
+    "business_name": "Edith Mae Caf\u00e9",
+    "slug": "edith-mae-caf\u00e9",
     "industry": "coffee shop",
     "city": "Cornwall",
     "province": "Ontario",
@@ -1257,8 +1257,8 @@
   },
   {
     "id": "lead-037",
-    "business_name": "BRO’S FADE",
-    "slug": "bro’s-fade",
+    "business_name": "BRO\u2019S FADE",
+    "slug": "bro\u2019s-fade",
     "industry": "hair salon",
     "city": "Cornwall",
     "province": "Ontario",
@@ -3007,8 +3007,8 @@
   },
   {
     "id": "lead-083",
-    "business_name": "NAPA AUTOPRO – 138 Motor & Tire Sales",
-    "slug": "napa-autopro-–-138-motor-and-tire-sales",
+    "business_name": "NAPA AUTOPRO \u2013 138 Motor & Tire Sales",
+    "slug": "napa-autopro-\u2013-138-motor-and-tire-sales",
     "industry": "auto repair",
     "city": "Cornwall",
     "province": "Ontario",
@@ -3457,8 +3457,8 @@
   },
   {
     "id": "lead-095",
-    "business_name": "Champion’s race supply and auto repair",
-    "slug": "champion’s-race-supply-and-auto-repair",
+    "business_name": "Champion\u2019s race supply and auto repair",
+    "slug": "champion\u2019s-race-supply-and-auto-repair",
     "industry": "auto repair",
     "city": "Cornwall",
     "province": "Ontario",
@@ -4091,8 +4091,8 @@
   },
   {
     "id": "lead-112",
-    "business_name": "BRO’S FADE",
-    "slug": "bro’s-fade-2",
+    "business_name": "BRO\u2019S FADE",
+    "slug": "bro\u2019s-fade-2",
     "industry": "barber",
     "city": "Cornwall",
     "province": "Ontario",
@@ -6226,18 +6226,8 @@
     "complexity_level": "simple",
     "contact_safety_status": "pending_review",
     "contact_safety_reasoning": "Email provided by user. Not in avoided industry. Dry run - no outreach will be sent.",
-    "status": "dry_run",
+    "status": "email_drafted",
     "created_at": "2026-06-23T05:38:00Z",
-    "updated_at": "2026-06-23T05:38:00Z"
-  },
-  {
-    "id": "1782250363685",
-    "businessName": "Ramo sport test",
-    "email": "ramo@gmail.com",
-    "website": "",
-    "message": "",
-    "status": "new",
-    "createdAt": "2026-06-23T21:32:43.685Z",
-    "updatedAt": "2026-06-23T21:32:43.685Z"
+    "updated_at": "2026-06-24T19:29:16.509618+00:00Z"
   }
 ]
