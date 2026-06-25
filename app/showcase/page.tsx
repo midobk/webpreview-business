@@ -1,6 +1,8 @@
 import { getLeads, getPrototypes } from '@/lib/data-source';
 import Link from 'next/link';
 import ShowcaseGrid from './_components/ShowcaseGrid';
+import ShowcaseHero from './_components/ShowcaseHero';
+import ShowcaseCTA from './_components/ShowcaseCTA';
 
 export const metadata = {
   title: 'Showcase — SiteSprint',
@@ -152,21 +154,7 @@ export default async function ShowcasePage() {
       </header>
 
       {/* Hero */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-block mb-4 px-4 py-1.5 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">
-            Anonymized demo concepts
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-            Showcase of website concepts
-          </h1>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Every preview below is a concept designed for a real local business. Names,
-            locations, and contact details have been removed. These are design demos only —
-            not live sites.
-          </p>
-        </div>
-      </section>
+      <ShowcaseHero />
 
       {/* Empty state */}
       {items.length === 0 && (
@@ -202,23 +190,7 @@ export default async function ShowcasePage() {
       )}
 
       {/* CTA */}
-      <section className="py-20 bg-slate-900 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Want a website like this for your business?
-          </h2>
-          <p className="text-lg text-slate-300 mb-8">
-            Tell us about your business and we'll generate an unofficial preview concept for
-            you to review.
-          </p>
-          <Link
-            href="/#request-preview"
-            className="inline-block bg-indigo-500 hover:bg-indigo-400 text-white px-8 py-4 rounded-lg font-medium text-lg transition-colors"
-          >
-            Request My Preview
-          </Link>
-        </div>
-      </section>
+      <ShowcaseCTA />
 
       {/* Footer */}
       <footer className="py-10 border-t border-slate-200 bg-white">
