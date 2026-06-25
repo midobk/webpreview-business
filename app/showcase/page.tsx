@@ -123,32 +123,42 @@ export default async function ShowcasePage() {
   const items = await loadShowcase();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50">
-      {/* Header */}
-      <header className="border-b border-slate-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+    <div className="min-h-screen bg-paper">
+      {/* Header — light warm-print, sticky */}
+      <header className="border-b border-paint/10 bg-paper/85 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="bg-indigo-600 text-white font-bold text-xl w-9 h-9 rounded-lg flex items-center justify-center">
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="relative w-9 h-9 rounded-lg bg-warm-gradient flex items-center justify-center text-white font-extrabold text-lg shadow-lg shadow-paint/30">
               S
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="absolute -top-1.5 -right-1.5 w-4 h-4 text-signal">
+                <path d="M12 2l1.2 3.4 2.6-1.6-1 3 2.8.8-2.4 1.6 2.4 2.6-3.4.4 1.2 3.2-2.8-1.4L12 22l-.6-7.6-2.8 1.4 1.2-3.2-3.4-.4 2.4-2.6-2.4-1.6 2.8-.8-1-3 2.6 1.6z" />
+              </svg>
             </div>
-            <span className="text-xl font-bold text-slate-900">SiteSprint</span>
+            <span className="text-xl font-extrabold tracking-tight text-ink">SiteSprint</span>
           </Link>
-          <nav className="hidden md:flex gap-8 text-sm font-medium text-slate-600">
-            <Link href="/#features" className="hover:text-slate-900">
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-steel">
+            <Link href="/#features" className="hover:text-ink transition-colors">
               Features
             </Link>
-            <Link href="/#how-it-works" className="hover:text-slate-900">
-              How It Works
+            <Link href="/#how-it-works" className="hover:text-ink transition-colors">
+              How it works
             </Link>
-            <Link href="/showcase" className="text-indigo-600">
-              Showcase
+            <Link href="/showcase" className="text-paint">
+              Examples
+            </Link>
+            <Link href="/#pricing" className="hover:text-ink transition-colors">
+              Pricing
+            </Link>
+            <Link href="/#faq" className="hover:text-ink transition-colors">
+              FAQ
             </Link>
           </nav>
           <Link
             href="/#request-preview"
-            className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+            className="inline-flex items-center gap-1.5 bg-action text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-action-deep transition-colors shadow-lg shadow-action/20"
           >
             Get my preview
+            <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
           </Link>
         </div>
       </header>
@@ -160,20 +170,22 @@ export default async function ShowcasePage() {
       {items.length === 0 && (
         <section className="pb-24">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="border border-dashed border-slate-300 rounded-2xl bg-white p-12 text-center">
-              <div className="text-5xl mb-4">🎨</div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-2">
+            <div className="border border-dashed border-paint/30 rounded-2xl bg-paper p-12 text-center shadow-sm">
+              <h2
+                className="text-2xl md:text-3xl font-medium text-ink mb-2"
+                style={{ fontFamily: 'var(--font-fraunces)', fontVariationSettings: '"opsz" 96' }}
+              >
                 Examples coming soon
               </h2>
-              <p className="text-slate-600 mb-6">
-                We're polishing our first round of prototypes. Approved concepts will appear
+              <p className="text-steel mb-6 max-w-md mx-auto leading-relaxed">
+                We&rsquo;re polishing our first round of concepts. Approved previews will appear
                 here with anonymized screenshots.
               </p>
               <Link
                 href="/#request-preview"
-                className="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition-colors"
+                className="inline-flex items-center gap-1.5 bg-action text-white px-6 py-3 rounded-full font-semibold hover:bg-action-deep transition-colors shadow-lg shadow-action/20"
               >
-                Request a Preview
+                Request a preview →
               </Link>
             </div>
           </div>
@@ -192,19 +204,22 @@ export default async function ShowcasePage() {
       {/* CTA */}
       <ShowcaseCTA />
 
-      {/* Footer */}
-      <footer className="py-10 border-t border-slate-200 bg-white">
+      {/* Footer — warm ink, matches the landing footer */}
+      <footer className="py-12 bg-ink text-white/65">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-white/55">
             © {new Date().getFullYear()} SiteSprint. All showcase examples are anonymized demo
             concepts.
           </p>
-          <div className="flex gap-6 text-sm text-slate-500">
-            <Link href="/" className="hover:text-slate-900">
+          <div className="flex gap-6 text-sm">
+            <Link href="/" className="hover:text-signal transition-colors">
               Home
             </Link>
-            <Link href="/showcase" className="hover:text-slate-900">
-              Showcase
+            <Link href="/showcase" className="hover:text-signal transition-colors">
+              Examples
+            </Link>
+            <Link href="/#pricing" className="hover:text-signal transition-colors">
+              Pricing
             </Link>
           </div>
         </div>

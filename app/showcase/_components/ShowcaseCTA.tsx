@@ -9,7 +9,7 @@ import Reveal from "@/components/motion/Reveal";
  * homepage's motion language.
  *
  * Warm-print visual identity: bg-ink (spruce-near-black), Fraunces
- * display h2, single clay-orange accent on the CTA.
+ * display h2, single oxblood action accent on the CTA.
  */
 export default function ShowcaseCTA() {
   return (
@@ -36,7 +36,7 @@ export default function ShowcaseCTA() {
           </p>
           <MagneticButton
             href="/#request-preview"
-            className="inline-block bg-signal text-white px-8 py-4 rounded-full font-medium text-lg shadow-signal/30 hover:bg-signal/90 transition-colors"
+            className="bg-action text-white px-8 py-4 rounded-full font-medium text-lg shadow-lg shadow-action/30 hover:bg-action-deep transition-colors"
           >
             Request My Preview →
           </MagneticButton>
