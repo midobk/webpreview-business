@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   IconLeads,
   IconPrototypes,
@@ -61,6 +61,18 @@ export function AdminShell({
 }
 
 function Sidebar({ pathname, userLabel }: { pathname: string; userLabel: string }) {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/admin/login', { method: 'DELETE' });
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
+    router.push('/admin');
+    router.refresh();
+  };
+
   return (
     <aside
       className="hidden md:flex w-[240px] shrink-0 flex-col"
@@ -187,15 +199,16 @@ function Sidebar({ pathname, userLabel }: { pathname: string; userLabel: string 
             Founder access
           </p>
         </div>
-        <Link
-          href="/admin"
+        <button
+          type="button"
           title="Logout"
           aria-label="Logout"
+          onClick={handleLogout}
           className="grid place-items-center rounded-md p-1.5 transition-colors"
           style={{ color: 'var(--adm-text-muted)' }}
         >
           <IconLogout size={14} />
-        </Link>
+        </button>
       </div>
     </aside>
   );

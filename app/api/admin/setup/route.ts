@@ -16,10 +16,31 @@ export async function POST(request: Request) {
       );
     }
 
-    // Check if PASSWORD_HASH is already set in environment variables
+    // Check if PASSWORD_HASH is already set in environment variables OR if
+    // a ./.password file exists locally. Either condition means an admin
+    // password is already configured — reject the setup request so an
+    // unauthenticated POST can't overwrite the existing hash.
     if (process.env.PASSWORD_HASH) {
       return NextResponse.json(
         { error: 'Admin password is already configured' },
+        { status: 400 }
+      );
+    }
+    const localPasswordPath = path.join(process.cwd(), '.password');
+    let localPasswordExists = false;
+    try {
+      await fs.access(localPasswordPath);
+      localPasswordExists = true;
+    } catch {
+      // file doesn't exist; setup is allowed
+    }
+    if (localPasswordExists) {
+      return NextResponse.json(
+        {
+          error:
+            'Admin password is already configured locally (./.password exists). ' +
+            'To rotate it, delete ./.password and restart the server, or update PASSWORD_HASH env var.',
+        },
         { status: 400 }
       );
     }
@@ -36,8 +57,7 @@ export async function POST(request: Request) {
     const isVercel = !!process.env.VERCEL;
     if (!isVercel) {
       try {
-        const passwordPath = path.join(process.cwd(), '.password');
-        await fs.writeFile(passwordPath, hashedPassword + '\n', { mode: 0o600 });
+        await fs.writeFile(localPasswordPath, hashedPassword + '\n', { mode: 0o600 });
         localFileWritten = true;
       } catch (e) {
         // best-effort; non-fatal
