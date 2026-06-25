@@ -556,8 +556,8 @@ Checklist:
 
 ## 13. Progress Tracker
 
-> **Last audit: 2026-06-24 15:24 EDT** — verified against actual repo state, not stale file claims. (Prior: 2026-06-23 16:50 UX audit pass, see §18.)
-> **Lead count:** 168 real leads (Google Places API, all Cornwall, ON). **Prototypes:** 10 total (9 completed, 1 pending). **Emails drafted/sent:** 0. **Revenue:** $0. **Outreach logs:** 4 entries.
+> **Last audit: 2026-06-25 08:01 EDT** — verified against actual repo state. (Prior: 2026-06-24 15:24 EDT.)
+> **Lead count:** 168 real leads. **Prototypes:** 10 records (9 completed, 1 pending — note: 3 dup-IDs for seaway, 2 for bellas from 06-24 weekly cycle, data quality). **Emails drafted:** 3. **Outreach logs:** 6 entries. **Revenue:** $0. **Open PRs:** 2 (`feat/motion-dev-premium-pass`, `feat/admin-premium-redesign`).
 
 ### Current Status — What Actually Works
 
@@ -574,6 +574,16 @@ Checklist:
 - [x] **Telegram bot** — @MehdisWebsiteBuilderBot (token 863439…rpWA), bound to sitesprint agent, accountId=sitesprint.
 - [x] **1 cron job** — `sitesprint-agent-plan-maintenance` (08:00 America/Toronto daily, isolated agent, 5-min budget). **DRIFT NOTE 2026-06-24:** AGENT_PLAN.md previously claimed 6 cron jobs (3 discovery, 1 weekly-planning, 1 prototype-generation, 1 email-drafting). Only the daily plan-maintenance cron actually exists in the scheduler. The other 5 were referenced but never registered. Discovery is currently manual. **TODO:** next session, re-register the operational crons or update the plan to mark them as "not yet scheduled, run manually until X".
 - [x] **UX audit pass (2026-06-23)** — Auditing-website-usability skill installed; ran on running app, fixed all C1–C3, H1–H6, M1–M7, L1–L4. Production build verified clean. See §18 for full changelog.
+
+### Open Work — Audit 2026-06-25 (in addition to completed A–G)
+
+#### H. Two open PRs awaiting user review/merge
+- [ ] **PR #1 — `feat/motion-dev-premium-pass` (commit `5cba08e` on top of `11a8cee`/`ba41c2a`)** — restored `.reveal`/`.stagger-children`/`.animate-float` CSS; defined `.panel-quiet`, `.connector-spruce`, `.stamp-corner`; MotionConfig behind client provider; warm-print `@theme inline` tokens. Vercel preview build triggered.
+- [ ] **PR #2 — `feat/admin-premium-redesign` (commit `773b84b` on top of `9d391e8`/`a66a2df`)** — added show/hide password toggle, login→dashboard flow, sidebar logout button, `/api/admin/setup` overwrite protection, mobile sidebar drawer with backdrop + hamburger. Vercel preview build triggered.
+- [ ] **Mobile topbar breadcrumb truncation** — known cosmetic issue: breadcrumbs truncate to "Pr..." on mobile in PR #2 admin shell. Cosmetic, doesn't block functionality.
+
+#### I. Data quality (discovered 2026-06-25)
+- [ ] **Duplicate prototype records** — `data/prototypes.json` has 10 records but only 8 unique businesses: 3 IDs point to seaway-cleaning-services (proto-001 pending, proto-002 completed, proto-seaway-cleaning-services completed), 2 to bellas-hair-studio (proto-003 + proto-bellas-hair-studio). Caused by the 06-24 weekly-email cycle re-generating. Need dedup or canonicalization rule.
 
 ### Open Work — Audit 2026-06-23
 
