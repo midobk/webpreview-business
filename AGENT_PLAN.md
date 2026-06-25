@@ -1186,3 +1186,36 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 - **Action:** Updated §Agent Run Log 2026-06-24 17:10 EDT — strike-through'd the "ship-blocker" claim for Bug #1, changed verdict from "don't merge either" to "PR1 is much closer to mergeable". PR2 blockers unchanged.
 - **Files changed:** `AGENT_PLAN.md` only (correction + new run log entry).
 - **Next:** wait for user decision (a/b/c). PR1 now only needs the dead `useReveal` cleanup.
+
+
+---
+
+### 2026-06-24 23:25 EDT — Bug fixes pushed to PR #1 + PR #2 branches (Main, Dexter)
+- **Trigger:** User said "Fix the other bugs and push the changes to the already open PR".
+
+- **PR #1 — `feat/motion-dev-premium-pass` — `5b92001`** (1 file, +50/-1)
+  - **Fixed:** Restored `.reveal`, `.stagger-children`, `.animate-float` CSS that the PR claimed to have dropped but didn't. Without these rules, 13 `.reveal` elements in `app/page.tsx` were stuck at `opacity:0, transform:translateY(20px)` permanently even after the hand-rolled `useReveal` hook added `.is-visible`. Now they animate up on scroll.
+  - **Verified:** Computed style of `.reveal` in viewport is `opacity:1, transform:matrix(1,0,0,1,0,0)` with `.is-visible` class. `prefers-reduced-motion` overrides included.
+  - **Not fixed (deferred):** The mismatch between PR description ("removed `useReveal`") and actual code (`useReveal` still present and still needed by homepage markup). Best fix would be a future refactor swapping `.reveal` + `useReveal` for the new `<Reveal>` component. Added a comment in globals.css explaining the deferred refactor.
+
+- **PR #2 — `feat/admin-premium-redesign` — `a66a2df`** (6 files, +164/-63)
+  - **Fixed Bug 1 (show/hide toggle):** Added `IconEye` + `IconEyeOff` to `app/admin/_components/icons.tsx`. Wrapped both password inputs in `app/admin/setup/page.tsx` in relative containers with 32px toggle buttons (proper `aria-label` + `aria-pressed` for a11y). Toggle changes `type="password" ↔ "text"`.
+  - **Fixed Bug 2 (login → dashboard flow):** The login route only checked `process.env.PASSWORD_HASH` (always empty locally). Fixed by:
+    - `POST /api/admin/setup` now writes the hash to `./.password` in non-Vercel environments (local-dev path).
+    - `GET /api/admin/check-setup` reads `./.password` as a fallback.
+    - `POST /api/admin/login` uses `getPasswordHash()` (env OR `.password`).
+    - `middleware.ts` bridges the edge-runtime gap by fetching `/api/admin/check-setup` (which runs in Node runtime with fs access).
+  - **Verified Bug 3 was a non-issue:** My earlier review of "2 password inputs on /admin" was wrong. The login page actually has only 1 input. The useEffect redirects to `/admin/setup` if password isn't set, so I was screenshotting the setup page (which legitimately has 2 inputs).
+  - **Verified end-to-end:**
+    - `/admin/setup`: 2 toggle buttons present, password field type toggles `password → text` correctly.
+    - `POST /api/admin/setup`: HTTP 200, `localFileWritten:true`, `./.password` file created (mode 0600).
+    - `/admin` after setup: stays on `/admin` (no redirect to `/admin/setup`).
+    - `POST /api/admin/login`: HTTP 200, session cookie set.
+    - `/admin/dashboard`: renders full AdminShell + 4 KPI cards (168 Total Leads, 10 Prototypes, 23 Ready for Prototype, 53 Avg Score) + filterable/searchable leads table with real data.
+
+- **Files changed:**
+  - PR2: `app/admin/_components/icons.tsx`, `app/admin/setup/page.tsx`, `app/api/admin/check-setup/route.ts`, `app/api/admin/login/route.ts`, `app/api/admin/setup/route.ts`, `middleware.ts`
+  - PR1: `app/globals.css`
+  - `AGENT_PLAN.md` (this entry)
+
+- **Next:** Both PRs ready for user review + merge decision. After merge, run Vercel deploy to verify on production.
