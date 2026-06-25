@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { AuthShell } from '../_components/AuthShell';
-import { IconCheck, IconShield } from '../_components/icons';
+import { IconCheck, IconEye, IconEyeOff, IconShield } from '../_components/icons';
 
 export default function AdminSetup() {
   const [password, setPassword] = useState('');
@@ -11,6 +11,8 @@ export default function AdminSetup() {
   const [hash, setHash] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const strength = (() => {
     if (!password) return 0;
@@ -182,29 +184,47 @@ export default function AdminSetup() {
             >
               New admin password
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="At least 8 characters"
-              className="w-full text-sm rounded-lg px-3.5 py-3 outline-none transition-all"
-              style={{
-                background: 'var(--adm-bg-app)',
-                border: '1px solid var(--adm-border-strong)',
-                color: 'var(--adm-text-primary)',
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.borderColor = 'var(--adm-accent)';
-                e.currentTarget.style.boxShadow = '0 0 0 4px var(--adm-accent-soft)';
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.borderColor = 'var(--adm-border-strong)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
-            />
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="At least 8 characters"
+                className="w-full text-sm rounded-lg px-3.5 py-3 pr-11 outline-none transition-all"
+                style={{
+                  background: 'var(--adm-bg-app)',
+                  border: '1px solid var(--adm-border-strong)',
+                  color: 'var(--adm-text-primary)',
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--adm-accent)';
+                  e.currentTarget.style.boxShadow = '0 0 0 4px var(--adm-accent-soft)';
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--adm-border-strong)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              />
+              <button
+                type="button"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                aria-pressed={showPassword}
+                onClick={() => setShowPassword((s) => !s)}
+                className="absolute top-1/2 right-2 -translate-y-1/2 grid place-items-center rounded-md transition-colors"
+                style={{
+                  width: 32,
+                  height: 32,
+                  color: 'var(--adm-text-secondary)',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--adm-text-primary)'; e.currentTarget.style.background = 'var(--adm-bg-active)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--adm-text-secondary)'; e.currentTarget.style.background = 'transparent'; }}
+              >
+                {showPassword ? <IconEyeOff size={16} /> : <IconEye size={16} />}
+              </button>
+            </div>
             {password && (
               <div className="mt-2 flex items-center gap-2">
                 <div className="flex gap-1 flex-1">
@@ -236,33 +256,51 @@ export default function AdminSetup() {
             >
               Confirm password
             </label>
-            <input
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              required
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Re-enter to confirm"
-              className="w-full text-sm rounded-lg px-3.5 py-3 outline-none transition-all"
-              style={{
-                background: 'var(--adm-bg-app)',
-                border: `1px solid ${
-                  confirmPassword && confirmPassword === password
-                    ? 'rgba(16,185,129,0.5)'
-                    : 'var(--adm-border-strong)'
-                }`,
-                color: 'var(--adm-text-primary)',
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.borderColor = 'var(--adm-accent)';
-                e.currentTarget.style.boxShadow = '0 0 0 4px var(--adm-accent-soft)';
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.borderColor = 'var(--adm-border-strong)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
-            />
+            <div className="relative">
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                type={showConfirmPassword ? 'text' : 'password'}
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Re-enter to confirm"
+                className="w-full text-sm rounded-lg px-3.5 py-3 pr-11 outline-none transition-all"
+                style={{
+                  background: 'var(--adm-bg-app)',
+                  border: `1px solid ${
+                    confirmPassword && confirmPassword === password
+                      ? 'rgba(16,185,129,0.5)'
+                      : 'var(--adm-border-strong)'
+                  }`,
+                  color: 'var(--adm-text-primary)',
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--adm-accent)';
+                  e.currentTarget.style.boxShadow = '0 0 0 4px var(--adm-accent-soft)';
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--adm-border-strong)';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              />
+              <button
+                type="button"
+                aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
+                aria-pressed={showConfirmPassword}
+                onClick={() => setShowConfirmPassword((s) => !s)}
+                className="absolute top-1/2 right-2 -translate-y-1/2 grid place-items-center rounded-md transition-colors"
+                style={{
+                  width: 32,
+                  height: 32,
+                  color: 'var(--adm-text-secondary)',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--adm-text-primary)'; e.currentTarget.style.background = 'var(--adm-bg-active)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--adm-text-secondary)'; e.currentTarget.style.background = 'transparent'; }}
+              >
+                {showConfirmPassword ? <IconEyeOff size={16} /> : <IconEye size={16} />}
+              </button>
+            </div>
             {confirmPassword && confirmPassword === password && (
               <p className="mt-2 text-xs flex items-center gap-1.5" style={{ color: 'var(--adm-success)' }}>
                 <IconCheck size={12} /> Passwords match

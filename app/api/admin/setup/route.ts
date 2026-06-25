@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { promises as fs } from 'fs';
+import path from 'path';
 import { hashPassword } from '@/lib/auth';
 
 // POST /api/admin/setup - Set up admin password
@@ -27,11 +29,30 @@ export async function POST(request: Request) {
 
     // On Vercel (serverless), we can't write files.
     // Return the hash so the user can set it as an env var.
+    // Locally (dev or `next start`), write the hash to ./.password so the
+    // login flow works without a redeploy. Detect "local" by checking for
+    // the Vercel env var, which is only set in their serverless runtime.
+    let localFileWritten = false;
+    const isVercel = !!process.env.VERCEL;
+    if (!isVercel) {
+      try {
+        const passwordPath = path.join(process.cwd(), '.password');
+        await fs.writeFile(passwordPath, hashedPassword + '\n', { mode: 0o600 });
+        localFileWritten = true;
+      } catch (e) {
+        // best-effort; non-fatal
+        console.error('Failed to write .password file:', e);
+      }
+    }
+
     return NextResponse.json(
-      { 
-        message: 'Password hashed successfully',
+      {
+        message: localFileWritten
+          ? 'Password hashed and saved to ./.password (local dev). For Vercel, set PASSWORD_HASH env var and redeploy.'
+          : 'Password hashed successfully',
         hash: hashedPassword,
-        instructions: 'Set this as a Vercel environment variable named PASSWORD_HASH, then redeploy.'
+        instructions: 'Set this as a Vercel environment variable named PASSWORD_HASH, then redeploy.',
+        localFileWritten,
       },
       { status: 200 }
     );
