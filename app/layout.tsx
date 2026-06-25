@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { Geist, Geist_Mono, Plus_Jakarta_Sans, Fraunces } from "next/font/google";
+import Providers from "./providers";
 import "./globals.css";
 import { ThemeScript } from "./admin/_components/ThemeScript";
 
@@ -20,6 +21,17 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+// Fraunces — variable serif with optical sizing. Used for the display
+// headlines and italic emphasis ("PROOF · DRAFT 01", "before you pay a
+// dollar") that anchor the warm-print visual identity. Body copy stays
+// Geist; the serif is a deliberate signature, not a default.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  display: "swap",
+  axes: ["opsz"],
+});
+
 export const metadata: Metadata = {
   title: "SiteSprint — Beautiful websites for Canadian small business",
   description:
@@ -28,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SiteSprint — See your new website before you pay a dollar.",
     description:
-      "AI-generated website previews for Canadian small businesses. Free preview in 90 seconds.",
+      "Fast website previews for Canadian small businesses. Free preview, no credit card, no commitment.",
     type: "website",
   },
 };
@@ -42,14 +54,17 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${jakarta.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${jakarta.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body
         className="min-h-full flex flex-col bg-[var(--bg-page)] text-[var(--text-primary)]"
         suppressHydrationWarning
       >
+        {/* ThemeScript sets the admin light/dark class before paint (no FOUC);
+            Providers (MotionConfig reducedMotion="user") then wraps the tree in
+            a client boundary so this layout stays a Server Component. */}
         <ThemeScript />
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

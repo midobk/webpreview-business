@@ -556,8 +556,8 @@ Checklist:
 
 ## 13. Progress Tracker
 
-> **Last audit: 2026-06-24 15:24 EDT** — verified against actual repo state, not stale file claims. (Prior: 2026-06-23 16:50 UX audit pass, see §18.)
-> **Lead count:** 168 real leads (Google Places API, all Cornwall, ON). **Prototypes:** 10 total (9 completed, 1 pending). **Emails drafted/sent:** 0. **Revenue:** $0. **Outreach logs:** 4 entries.
+> **Last audit: 2026-06-25 08:01 EDT** — verified against actual repo state. (Prior: 2026-06-24 15:24 EDT.)
+> **Lead count:** 168 real leads. **Prototypes:** 10 records (9 completed, 1 pending — note: 3 dup-IDs for seaway, 2 for bellas from 06-24 weekly cycle, data quality). **Emails drafted:** 3. **Outreach logs:** 6 entries. **Revenue:** $0. **Open PRs:** 2 (`feat/motion-dev-premium-pass`, `feat/admin-premium-redesign`).
 
 ### Current Status — What Actually Works
 
@@ -574,6 +574,16 @@ Checklist:
 - [x] **Telegram bot** — @MehdisWebsiteBuilderBot (token 863439…rpWA), bound to sitesprint agent, accountId=sitesprint.
 - [x] **1 cron job** — `sitesprint-agent-plan-maintenance` (08:00 America/Toronto daily, isolated agent, 5-min budget). **DRIFT NOTE 2026-06-24:** AGENT_PLAN.md previously claimed 6 cron jobs (3 discovery, 1 weekly-planning, 1 prototype-generation, 1 email-drafting). Only the daily plan-maintenance cron actually exists in the scheduler. The other 5 were referenced but never registered. Discovery is currently manual. **TODO:** next session, re-register the operational crons or update the plan to mark them as "not yet scheduled, run manually until X".
 - [x] **UX audit pass (2026-06-23)** — Auditing-website-usability skill installed; ran on running app, fixed all C1–C3, H1–H6, M1–M7, L1–L4. Production build verified clean. See §18 for full changelog.
+
+### Open Work — Audit 2026-06-25 (in addition to completed A–G)
+
+#### H. Two open PRs awaiting user review/merge
+- [ ] **PR #1 — `feat/motion-dev-premium-pass` (commit `5cba08e` on top of `11a8cee`/`ba41c2a`)** — restored `.reveal`/`.stagger-children`/`.animate-float` CSS; defined `.panel-quiet`, `.connector-spruce`, `.stamp-corner`; MotionConfig behind client provider; warm-print `@theme inline` tokens. Vercel preview build triggered.
+- [ ] **PR #2 — `feat/admin-premium-redesign` (commit `773b84b` on top of `9d391e8`/`a66a2df`)** — added show/hide password toggle, login→dashboard flow, sidebar logout button, `/api/admin/setup` overwrite protection, mobile sidebar drawer with backdrop + hamburger. Vercel preview build triggered.
+- [ ] **Mobile topbar breadcrumb truncation** — known cosmetic issue: breadcrumbs truncate to "Pr..." on mobile in PR #2 admin shell. Cosmetic, doesn't block functionality.
+
+#### I. Data quality (discovered 2026-06-25)
+- [ ] **Duplicate prototype records** — `data/prototypes.json` has 10 records but only 8 unique businesses: 3 IDs point to seaway-cleaning-services (proto-001 pending, proto-002 completed, proto-seaway-cleaning-services completed), 2 to bellas-hair-studio (proto-003 + proto-bellas-hair-studio). Caused by the 06-24 weekly-email cycle re-generating. Need dedup or canonicalization rule.
 
 ### Open Work — Audit 2026-06-23
 
@@ -1109,3 +1119,184 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 - **Action:** Updated §19-I from "operational cron gap, blocked on decision" to DONE with a table showing all 7 crons, their schedules, and which have already fired vs. awaiting first natural fire. No new crons needed to be created — they exist; the audit's job here is to keep the plan honest.
 - **Files changed:** `AGENT_PLAN.md` only (1 targeted edit in §19-I).
 - **Next:** commit + push; the daily plan-maintenance cron will re-verify on 2026-06-25 08:00 EDT.
+
+
+---
+
+### 2026-06-24 17:10 EDT — PR review of 4a94ef4-sibling work (Main, Dexter)
+- **User request:** Review PRs #1 (`feat/motion-dev-premium-pass`, 5 commits) and #2 (`feat/admin-premium-redesign`, 2 commits). Don't merge — give opinion.
+- **Method:** Checked out each branch in a separate git worktree, ran `npm install` + `prebuild` + `tsc --noEmit` + `next build`, booted `next start` on :3011 (motion) and :3012 (admin), and ran Playwright screenshots + DOM inspection.
+- **Build status:**
+  - PR1 motion: `tsc` clean, `next build` clean (22 routes incl. new `/_components/ShowcaseGrid`, `ShowcaseHero`, `ShowcaseCTA`, `components/motion/*`)
+  - PR2 admin: `tsc` clean, `next build` clean (adds `/admin/prototypes`, `AdminShell`, `AuthShell`, drawer, toast stack, dark mode)
+
+#### PR #1 — `feat/motion-dev-premium-pass` — partial pass
+**What's good:**
+- Motion library primitives (`lib/motion/variants.ts`, `easings.ts`) + `components/motion/` are clean, well-named, and reusable. Good foundation.
+- Visual identity pass landed: warm-paper + spruce + clay palette, Fraunces serif display. Looks premium, not generic.
+- Hero has both CTAs ("Generate my free preview" + "See real examples"). Trust-stats with numbers present and styled. Testimonials + 30-day money-back strip look polished.
+- Showcase hero + filter chips + magnetic bottom CTA wired correctly.
+- `<MotionConfig reducedMotion="user">` wraps the app — accessibility-respectful.
+
+**Real bugs:**
+1. **~~Showcase cards render at `opacity: 0` and stay invisible.~~** ~~DOM inspection confirms `<motion.article>` elements exist with correct content, correct size (372×436), correct positions, but `getComputedStyle.opacity === "0"` and `transform: matrix(0.97, 0, 0, 0.97, 0, 16)` (the "hidden" variant state). The `gridCard` variant's `initial="hidden" → animate="visible"` never fires — likely because `<AnimatePresence mode="popLayout">` inside a parent `<motion.div initial="hidden" animate="visible">` doesn't propagate variants correctly when the inner AnimatePresence re-mounts children on filter change. With 0 visible cards on the showcase page, this is a **ship-blocker for the showcase feature** (which §19-C2 considers "the highest-converting addition possible to the homepage").~~
+   **UPDATED 2026-06-24 23:06 EDT:** Not a bug. User tested the live page and confirmed the cards animate in after a couple of seconds (motion.dev variant animation: `initial: { opacity: 0, y: 16, scale: 0.97 }` → `animate: { opacity: 1, y: 0, scale: 1 }` with `duration: 0.45, ease: outQuint`). My Playwright `waitForTimeout(3000)` was too short AND I force-scrolled the cards into view without giving the variant container time to re-fire the animation — caught the cards mid-transition at `opacity: 0`. Real visitors who wait or scroll naturally see the cards. Not a ship-blocker. (The variants could still be tuned to fire on scroll-into-view for better UX, but that's a polish item, not a bug.)
+2. **`useReveal` hand-rolled hook is still in `app/page.tsx`** (lines 23, 262) — PR description claims it was removed in favor of `<Reveal>`, but it's still present. The homepage hero animation works via the old hook, not via the new motion library. PR claim is inaccurate.
+3. **`app/page.tsx` itself imports nothing from `motion/react`** — the motion work landed only in the showcase sub-components. Title "landing surfaces" is misleading; it's actually only showcase + footer-CTA.
+
+**Non-blocking concerns:**
+- PR adds 1959 insertions across 24 files. Heavy lift. Worth confirming the homepage was actually QA'd by the author — the new motion primitives should be exercised somewhere visible, not just added to the library.
+- New dependency `motion` v12.41.0 (the framer-motion rebrand). Fine, but worth a note in MEMORY.md so future agents don't re-add framer-motion separately.
+
+#### PR #2 — `feat/admin-premium-redesign` — partial pass
+**What's good:**
+- `AdminShell` (240px sidebar + topbar + theme toggle), 12 component primitives, KPI strip, lead detail drawer, toast+undo, dark mode with anti-flash `ThemeScript` — all wired and looking premium.
+- Build clean. All routes work (including the new `/admin/prototypes` page split off in `d669afa`).
+- Light + dark token sets scoped under `.admin-shell` — won't leak to public pages.
+- No hydration warnings, no console errors during screenshot session.
+
+**Real bugs:**
+1. **PR description claims features that only render conditionally**:
+   - "4-segment password strength meter" — exists in code (`strength = ...` math on lines 19-32) but only renders once `password` has at least 1 character. Empty-field screenshot looks broken.
+   - "confirm-match indicator" — exists but only appears once BOTH fields have content (line 268 `<IconCheck /> Passwords match`).
+   - "show/hide password toggle" — **does not exist in the rendered output**. PR claims it; code only has `type="password"` inputs with no toggle. This is a real gap between PR body and code.
+2. **2 password inputs on `/admin` (login page)** when only 1 was expected. Login page seems to render a second input somewhere — possibly the change-pw section is showing in collapsed state. Need to inspect.
+3. **Login attempt after setup did not reach `/admin/dashboard`** — final URL was `/admin/setup` after `submitPassword('testpassword1234')`. Either the login API is broken, the session cookie isn't propagating, or the test password wasn't saved (the setup form submission had no observed network response — `waitForResponse` timed out after 5s).
+
+**Non-blocking concerns:**
+- `IconShield` (size=11) inline with the footer "Hashed with bcrypt..." renders as a tiny dot that visually reads as "stray floating icon" in the central panel below the form. Either bump size to 14-16 or use a leading bullet.
+- Dark mode `ThemeScript` runs pre-hydration with `suppressHydrationWarning` on `<html>`. Standard pattern but worth a comment explaining why so a future agent doesn't try to "fix" the warning.
+- `app/admin/_components/shot-loop.mjs` is in `.learnings/` (which is untracked) but the PR's `.learnings/shot-loop.mjs` file is committed. Probably fine but worth a `.gitignore` check.
+
+#### Verdict — UPDATED 2026-06-24 23:06 EDT
+
+**Original verdict:** Don't merge either PR.
+
+**Revised verdict:** PR1 is much closer to mergeable than I thought. Only the dead `useReveal` + misleading PR body remain. PR2 still has the missing show/hide toggle + the 2-input login + the login flow bug to investigate.
+
+**Recommended next steps (in order):**
+1. PR1: either remove the dead `useReveal` from `app/page.tsx` and wire homepage animations through the new `<Reveal>` component (preferred — matches PR description) OR keep the old hook and amend the PR description. Don't ship code that contradicts the PR description.
+2. PR1 polish (optional, not blocking): the showcase variants could be tuned to fire `whileInView` instead of `initial → animate` so cards animate in as the user scrolls to them, not on page load. Currently the cards animate ~0.45s after page load which can feel like a delay if the user scrolls fast.
+2. PR2: either implement the show/hide password toggle (PR claim) or amend the PR description to remove the claim. ~20-min fix.
+3. PR2: investigate why `/admin` login page renders 2 password inputs and why login → dashboard redirect fails after a successful setup. Could be a session cookie, redirect, or middleware issue.
+4. PR2: log in successfully and screenshot the dashboard + drawer to confirm the "premium CRM" claims hold up on the actual dashboard, not just the setup page.
+5. After both PRs are clean: re-review, then user can decide merge order (PR2 first since it doesn't block PR1, and PR1's C2 showcase work overlaps with PR2's admin navigation).
+
+- **Files changed:** `AGENT_PLAN.md` only (this run log entry). No code changed.
+- **Screenshots:** saved in `.learnings/pr-review/` (gitignored) for reference.
+- **Next:** wait for user decision on which fixes to apply.
+
+
+---
+
+### 2026-06-24 23:06 EDT — Correction: PR1 showcase cards ARE fine (Main, Dexter)
+- **Trigger:** User tested the live showcase page (or my local :3011 build, same code) and confirmed the cards animate in after a couple of seconds — likely the motion.dev `initial → animate` variant with `duration: 0.45, ease: outQuint`. User replied with their own screenshot showing the same "empty space" view I'd captured, but they noted it was just a delay.
+- **What I got wrong:** My Playwright QA used `waitForTimeout(3000)` which was too short. Then I force-scrolled the cards into view with `scrollIntoView` which doesn't re-trigger the variant animation — it just teleports the cards into the viewport while they're still mid-transition at `opacity: 0`. So my screenshot caught them at the exact wrong frame. DOM evidence was real (`getComputedStyle.opacity === "0"`) but the conclusion ("cards never animate in") was wrong — they animate in within ~500ms under natural viewing conditions.
+- **Lesson:** When verifying motion animations, don't force-scroll. Let Playwright wait for the animation to complete naturally (e.g., `waitForFunction(() => document.querySelector('article').getBoundingClientRect().opacity === '1')`) or use `page.waitForTimeout(1500)` AND scroll into view AT THE SAME TIME so the in-view trigger fires. Force-scrolling mid-animation captures the `opacity: 0` initial state.
+- **Action:** Updated §Agent Run Log 2026-06-24 17:10 EDT — strike-through'd the "ship-blocker" claim for Bug #1, changed verdict from "don't merge either" to "PR1 is much closer to mergeable". PR2 blockers unchanged.
+- **Files changed:** `AGENT_PLAN.md` only (correction + new run log entry).
+- **Next:** wait for user decision (a/b/c). PR1 now only needs the dead `useReveal` cleanup.
+
+
+---
+
+### 2026-06-24 23:25 EDT — Bug fixes pushed to PR #1 + PR #2 branches (Main, Dexter)
+- **Trigger:** User said "Fix the other bugs and push the changes to the already open PR".
+
+- **PR #1 — `feat/motion-dev-premium-pass` — `5b92001`** (1 file, +50/-1)
+  - **Fixed:** Restored `.reveal`, `.stagger-children`, `.animate-float` CSS that the PR claimed to have dropped but didn't. Without these rules, 13 `.reveal` elements in `app/page.tsx` were stuck at `opacity:0, transform:translateY(20px)` permanently even after the hand-rolled `useReveal` hook added `.is-visible`. Now they animate up on scroll.
+  - **Verified:** Computed style of `.reveal` in viewport is `opacity:1, transform:matrix(1,0,0,1,0,0)` with `.is-visible` class. `prefers-reduced-motion` overrides included.
+  - **Not fixed (deferred):** The mismatch between PR description ("removed `useReveal`") and actual code (`useReveal` still present and still needed by homepage markup). Best fix would be a future refactor swapping `.reveal` + `useReveal` for the new `<Reveal>` component. Added a comment in globals.css explaining the deferred refactor.
+
+- **PR #2 — `feat/admin-premium-redesign` — `a66a2df`** (6 files, +164/-63)
+  - **Fixed Bug 1 (show/hide toggle):** Added `IconEye` + `IconEyeOff` to `app/admin/_components/icons.tsx`. Wrapped both password inputs in `app/admin/setup/page.tsx` in relative containers with 32px toggle buttons (proper `aria-label` + `aria-pressed` for a11y). Toggle changes `type="password" ↔ "text"`.
+  - **Fixed Bug 2 (login → dashboard flow):** The login route only checked `process.env.PASSWORD_HASH` (always empty locally). Fixed by:
+    - `POST /api/admin/setup` now writes the hash to `./.password` in non-Vercel environments (local-dev path).
+    - `GET /api/admin/check-setup` reads `./.password` as a fallback.
+    - `POST /api/admin/login` uses `getPasswordHash()` (env OR `.password`).
+    - `middleware.ts` bridges the edge-runtime gap by fetching `/api/admin/check-setup` (which runs in Node runtime with fs access).
+  - **Verified Bug 3 was a non-issue:** My earlier review of "2 password inputs on /admin" was wrong. The login page actually has only 1 input. The useEffect redirects to `/admin/setup` if password isn't set, so I was screenshotting the setup page (which legitimately has 2 inputs).
+  - **Verified end-to-end:**
+    - `/admin/setup`: 2 toggle buttons present, password field type toggles `password → text` correctly.
+    - `POST /api/admin/setup`: HTTP 200, `localFileWritten:true`, `./.password` file created (mode 0600).
+    - `/admin` after setup: stays on `/admin` (no redirect to `/admin/setup`).
+    - `POST /api/admin/login`: HTTP 200, session cookie set.
+    - `/admin/dashboard`: renders full AdminShell + 4 KPI cards (168 Total Leads, 10 Prototypes, 23 Ready for Prototype, 53 Avg Score) + filterable/searchable leads table with real data.
+
+- **Files changed:**
+  - PR2: `app/admin/_components/icons.tsx`, `app/admin/setup/page.tsx`, `app/api/admin/check-setup/route.ts`, `app/api/admin/login/route.ts`, `app/api/admin/setup/route.ts`, `middleware.ts`
+  - PR1: `app/globals.css`
+  - `AGENT_PLAN.md` (this entry)
+
+- **Next:** Both PRs ready for user review + merge decision. After merge, run Vercel deploy to verify on production.
+
+
+---
+
+### 2026-06-24 23:35 EDT — Honest correction: PR #1 "fix" overstated (Main, Dexter)
+- **Trigger:** User asked for side-by-side screenshots after the PR fixes were pushed. While taking the BEFORE screenshots I detached to commit `11a8cee` (pre-fix) and discovered that `.reveal` elements were NOT actually invisible — they were always at `opacity:1` because the missing CSS rules meant there was no `opacity:0` initial state. My fix added the smooth fade-up animation that didn't exist before, but it didn't "repair broken visuals."
+- **Lesson:** When you can't see a bug in a screenshot, that's a strong signal you don't have a bug. I claimed "elements stuck at opacity:0" without capturing a screenshot of that state — I should have. Always: see the bug first, name the bug second.
+- **Files changed:** `AGENT_PLAN.md` only.
+- **Action:** Screenshot composites sent to user via Telegram (messages 486-490, 492). PR1 framing in screenshot caption was already honest about the correction.
+
+
+---
+
+### 2026-06-25 00:50 EDT — Codex review fixes applied (Main, Dexter)
+- **Trigger:** User asked me to address Codex's review feedback on both PRs.
+- **Codex's review** (5 comments on PR #1, 2 on PR #2):
+
+  PR #1 (`feat/motion-dev-premium-pass`):
+  - P1: Move MotionConfig behind a client provider — **already fixed in 11a8cee** ✓
+  - P2: Warm-print utilities (`bg-ink`, `bg-paper`, etc.) not defined — **already defined in 11a8cee/ba41c2a** as `@theme inline` tokens ✓
+  - P2: pricing-featured class overrides bg-ink text-white — **already has correct gradient** ✓
+  - P2: /privacy link to missing route — **/privacy page already exists, HTTP 200** ✓
+  - P3: panel-quiet, connector-spruce, stamp-corner classes referenced but undefined — **NEW FIX applied**
+
+  PR #2 (`feat/admin-premium-redesign`):
+  - P1 (security): /api/admin/setup can overwrite existing .password hash without auth — **NEW FIX applied**
+  - P2: Sidebar logout doesn't clear session cookie — **NEW FIX applied**
+
+- **Fixes applied:**
+
+  PR #1 commit `5cba08e` (1 file, +35/-0):
+  - Defined `.panel-quiet` (subtle paper-on-paper secondary panel with paint border + soft shadow)
+  - Defined `.connector-spruce` (2px spruce-to-clay gradient line for the "how it works" timeline)
+  - Defined `.stamp-corner` (rotated, low-opacity paper-colored text mark — pairs with `components/motion/CornerStamp.tsx`)
+
+  PR #2 commit `9d391e8` (2 files, +40/-7):
+  - `/api/admin/setup` now blocks POST if `./.password` exists locally (HTTP 400 with helpful rotation message), not just when `PASSWORD_HASH` env var is set
+  - Sidebar logout converted from `<Link href="/admin">` to `<button onClick={handleLogout}>` calling `DELETE /api/admin/login` + router.push('/admin')
+
+- **Verified via Playwright:**
+  - PR1: `--paper: #faf8f4`, `--paint: #1f4d3a`, `--ink: #0b0f1e` all resolve at :root. `.panel-quiet` has oklab border + paint-tinted background. `.connector-spruce` has 2px height + linear-gradient background. `.stamp-corner` has 90px font-size + transform applied.
+  - PR2: Setup returns HTTP 200 first time, HTTP 400 second time. Original password still works for login. Sidebar logout button is `<button>` (was `<Link>`). After sidebar logout click → redirected to `/admin`.
+
+- **Lesson:** When Playwright probe shows `getComputedStyle.backgroundColor === rgba(0,0,0,0)` for a class that should have styles, the CSS IS in the bundle but a stale `.next` build cache may be serving older output. Always run `rm -rf .next && npm run build` before declaring a CSS fix broken.
+
+- **Files changed:** `app/globals.css` (PR1), `app/api/admin/setup/route.ts` + `app/admin/_components/AdminShell.tsx` (PR2), `AGENT_PLAN.md` (this entry).
+
+- **Next:** Both PR branches updated. Vercel preview builds triggered. Ready for user to merge when ready.
+
+
+---
+
+### 2026-06-25 01:18 EDT — Mobile sidebar drawer added (Main, Dexter)
+- **Trigger:** User asked "For pr 2 where is the side panel?" — confirmed they couldn't see the sidebar because it's hidden on mobile (`hidden md:flex`) with no way to bring it back. User said "Add mobile toggle".
+- **Fix:** commit `773b84b` on `feat/admin-premium-redesign` branch (2 files, +81/-6).
+  - Added `IconMenu` (hamburger) + used existing `IconClose` (X)
+  - Mobile drawer state in `AdminShell` (sidebarOpen toggle)
+  - Hamburger button in TopBar (`md:hidden`)
+  - Sidebar becomes slide-in drawer on mobile (`fixed inset-y-0 left-0 z-50`, `adm-drawer-in` animation)
+  - Mobile-only close (X) button in sidebar header
+  - Backdrop overlay (`md:hidden`) — clicking closes drawer
+  - Nav Links call `onNavigate` on click → drawer auto-closes
+  - Desktop unchanged: sidebar still in flow, no hamburger button visible
+- **Verified via Playwright** at iPhone 13 viewport (390x844):
+  - Mobile closed: sidebar `display:none`, hamburger visible
+  - After hamburger tap: sidebar `display:flex position:fixed`, backdrop visible
+  - Tap nav link: drawer auto-closes + page navigates
+  - Desktop (1440px): sidebar in flow, hamburger `display:none`, no regressions
+- **Known cosmetic issue:** Mobile topbar breadcrumbs get truncated ("Pr..." instead of "Prototypes"). Cosmetic only, doesn't block functionality.
+- **Files changed:** `app/admin/_components/AdminShell.tsx`, `app/admin/_components/icons.tsx`, `AGENT_PLAN.md` (this entry).
+- **Next:** PR #2 ready for user review + merge.
