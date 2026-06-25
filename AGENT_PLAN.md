@@ -1219,3 +1219,12 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
   - `AGENT_PLAN.md` (this entry)
 
 - **Next:** Both PRs ready for user review + merge decision. After merge, run Vercel deploy to verify on production.
+
+
+---
+
+### 2026-06-24 23:35 EDT — Honest correction: PR #1 "fix" overstated (Main, Dexter)
+- **Trigger:** User asked for side-by-side screenshots after the PR fixes were pushed. While taking the BEFORE screenshots I detached to commit `11a8cee` (pre-fix) and discovered that `.reveal` elements were NOT actually invisible — they were always at `opacity:1` because the missing CSS rules meant there was no `opacity:0` initial state. My fix added the smooth fade-up animation that didn't exist before, but it didn't "repair broken visuals."
+- **Lesson:** When you can't see a bug in a screenshot, that's a strong signal you don't have a bug. I claimed "elements stuck at opacity:0" without capturing a screenshot of that state — I should have. Always: see the bug first, name the bug second.
+- **Files changed:** `AGENT_PLAN.md` only.
+- **Action:** Screenshot composites sent to user via Telegram (messages 486-490, 492). PR1 framing in screenshot caption was already honest about the correction.
