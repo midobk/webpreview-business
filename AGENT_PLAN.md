@@ -1267,3 +1267,26 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 - **Files changed:** `app/globals.css` (PR1), `app/api/admin/setup/route.ts` + `app/admin/_components/AdminShell.tsx` (PR2), `AGENT_PLAN.md` (this entry).
 
 - **Next:** Both PR branches updated. Vercel preview builds triggered. Ready for user to merge when ready.
+
+
+---
+
+### 2026-06-25 01:18 EDT — Mobile sidebar drawer added (Main, Dexter)
+- **Trigger:** User asked "For pr 2 where is the side panel?" — confirmed they couldn't see the sidebar because it's hidden on mobile (`hidden md:flex`) with no way to bring it back. User said "Add mobile toggle".
+- **Fix:** commit `773b84b` on `feat/admin-premium-redesign` branch (2 files, +81/-6).
+  - Added `IconMenu` (hamburger) + used existing `IconClose` (X)
+  - Mobile drawer state in `AdminShell` (sidebarOpen toggle)
+  - Hamburger button in TopBar (`md:hidden`)
+  - Sidebar becomes slide-in drawer on mobile (`fixed inset-y-0 left-0 z-50`, `adm-drawer-in` animation)
+  - Mobile-only close (X) button in sidebar header
+  - Backdrop overlay (`md:hidden`) — clicking closes drawer
+  - Nav Links call `onNavigate` on click → drawer auto-closes
+  - Desktop unchanged: sidebar still in flow, no hamburger button visible
+- **Verified via Playwright** at iPhone 13 viewport (390x844):
+  - Mobile closed: sidebar `display:none`, hamburger visible
+  - After hamburger tap: sidebar `display:flex position:fixed`, backdrop visible
+  - Tap nav link: drawer auto-closes + page navigates
+  - Desktop (1440px): sidebar in flow, hamburger `display:none`, no regressions
+- **Known cosmetic issue:** Mobile topbar breadcrumbs get truncated ("Pr..." instead of "Prototypes"). Cosmetic only, doesn't block functionality.
+- **Files changed:** `app/admin/_components/AdminShell.tsx`, `app/admin/_components/icons.tsx`, `AGENT_PLAN.md` (this entry).
+- **Next:** PR #2 ready for user review + merge.
