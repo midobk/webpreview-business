@@ -2,6 +2,22 @@
 
 import { useEffect, useRef, useState } from 'react';
 import CornerStamp from '@/components/motion/CornerStamp';
+import HeaderScroll from '@/components/motion/HeaderScroll';
+import MagneticButton from '@/components/motion/MagneticButton';
+import MouseBlobs from '@/components/motion/MouseBlobs';
+import TiltMockBrowser from '@/components/motion/TiltMockBrowser';
+import CountUp from '@/components/motion/CountUp';
+import Checkmark from '@/components/motion/Checkmark';
+import SuccessCheck from '@/components/motion/SuccessCheck';
+import ScrollParallax from '@/components/motion/ScrollParallax';
+
+/* Hero blobs drift toward the cursor (MouseBlobs). Warm-print palette —
+   spruce + clay — replacing the old cool violet/pink blobs. */
+const heroBlobs = [
+  { className: 'absolute -top-32 -left-20 w-[420px] h-[420px] rounded-full bg-paint/25 blur-3xl', range: 22 },
+  { className: 'absolute top-20 right-0 w-[380px] h-[380px] rounded-full bg-signal/25 blur-3xl', range: 28 },
+  { className: 'absolute bottom-0 left-1/3 w-[460px] h-[460px] rounded-full bg-paint/30 blur-3xl', range: 18 },
+];
 
 type FormState = {
   businessName: string;
@@ -81,7 +97,7 @@ const features = [
   },
   {
     title: 'Real copy, not lorem ipsum',
-    body: 'Our AI drafts copy from your business description and public info — so the preview reads like you, not a template.',
+    body: 'We draft your copy from your business details and public info — so the preview reads like you, not a template.',
     icon: (
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
     ),
@@ -105,8 +121,8 @@ const steps = [
   {
     n: '2',
     mark: '✦',
-    title: 'We generate a live preview',
-    body: 'Our AI reads public listings, reviews, and your description to draft copy and design a personalized one-pager.',
+    title: 'We build your live preview',
+    body: 'We read your public listings, reviews, and description to draft the copy and design a personalized one-pager.',
   },
   {
     n: '3',
@@ -123,7 +139,7 @@ const pricingTiers = [
     cadence: 'No card required',
     description: 'See your future site before you commit.',
     features: [
-      'AI-generated website preview',
+      'Complete website preview',
       'Mobile + desktop design',
       'Personalized to your business',
       'No credit card',
@@ -192,7 +208,7 @@ const testimonials = [
     role: 'Sparkle & Shine Cleaning',
     location: 'Toronto, ON',
     initials: 'MD',
-    accent: 'from-indigo-500 to-violet-600',
+    accent: 'from-[#1F4D3A] to-[#2E6A53]',
   },
   {
     quote:
@@ -201,7 +217,7 @@ const testimonials = [
     role: 'Jenna T. Hair Studio',
     location: 'Vancouver, BC',
     initials: 'JT',
-    accent: 'from-violet-500 to-pink-500',
+    accent: 'from-[#E8743B] to-[#B5532A]',
   },
   {
     quote:
@@ -210,7 +226,7 @@ const testimonials = [
     role: 'North Hill Auto',
     location: 'Calgary, AB',
     initials: 'DR',
-    accent: 'from-pink-500 to-indigo-500',
+    accent: 'from-[#4A5468] to-[#2E3A4A]',
   },
 ];
 
@@ -249,10 +265,40 @@ const trustStats = [
 ];
 
 const trustBadges = [
-  { icon: '🇨🇦', label: 'Data hosted in Montréal' },
-  { icon: '🛡️', label: 'PIPEDA compliant' },
-  { icon: '⚡', label: 'Average 87s preview' },
-  { icon: '↩️', label: '30-day money back' },
+  {
+    label: 'Data hosted in Montréal',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-[18px] h-[18px]" aria-hidden="true">
+        <path d="M12 2l1.2 3.4 2.6-1.6-1 3 2.8.8-2.4 1.6 2.4 2.6-3.4.4 1.2 3.2-2.8-1.4L12 22l-.6-7.6-2.8 1.4 1.2-3.2-3.4-.4 2.4-2.6-2.4-1.6 2.8-.8-1-3 2.6 1.6z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'PIPEDA compliant',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]" aria-hidden="true">
+        <path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" />
+        <path d="M9 11.5l2 2 4-4" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Average 87s preview',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]" aria-hidden="true">
+        <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" />
+      </svg>
+    ),
+  },
+  {
+    label: '30-day money back',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]" aria-hidden="true">
+        <path d="M3 9a9 9 0 1 1-2.2 6" />
+        <path d="M3 4v5h5" />
+      </svg>
+    ),
+  },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -316,13 +362,13 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden bg-paper">
       {/* ============================== HEADER ============================== */}
-      <header className="absolute top-0 left-0 right-0 z-50">
+      <HeaderScroll className="absolute top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex items-center justify-between">
             <a href="#top" className="flex items-center gap-2.5">
-              <div className="relative w-9 h-9 rounded-lg bg-brand-gradient flex items-center justify-center text-white font-extrabold text-lg shadow-lg shadow-violet-500/30">
+              <div className="relative w-9 h-9 rounded-lg bg-warm-gradient flex items-center justify-center text-white font-extrabold text-lg shadow-lg shadow-paint/30">
                 S
               </div>
               <span className="text-xl font-extrabold tracking-tight text-white">
@@ -334,19 +380,18 @@ export default function Home() {
               <a href="#how-it-works" className="hover:text-white transition-colors">How it works</a>
               <a href="/showcase" className="hover:text-white transition-colors">Examples</a>
               <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
-              <a href="/showcase" className="hover:text-white transition-colors">Examples</a>
               <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
             </nav>
-            <a
+            <MagneticButton
               href="#request-preview"
-              className="inline-flex items-center gap-1.5 bg-white text-[#1E1B4B] px-4 py-2 rounded-full text-sm font-semibold hover:bg-white/90 transition-colors shadow-lg shadow-black/20"
+              className="items-center gap-1.5 bg-white text-ink px-4 py-2 rounded-full text-sm font-semibold hover:bg-white/90 transition-colors shadow-lg shadow-black/20"
             >
               Get my preview
               <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
-            </a>
+            </MagneticButton>
           </div>
         </div>
-      </header>
+      </HeaderScroll>
 
       {/* ============================== HERO ============================== */}
       <section
@@ -357,21 +402,8 @@ export default function Home() {
         <div className="absolute inset-0 bg-ink" aria-hidden="true" />
         {/* Print-shop grid texture — denser than the cool bg-dot-grid */}
         <div className="absolute inset-0 bg-print-grid opacity-40" aria-hidden="true" />
-        {/* Drifting blobs in the warm-print palette */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-          <div
-            className="absolute -top-32 -left-20 w-[420px] h-[420px] rounded-full bg-paint/25 blur-3xl"
-            style={{ animation: 'blobDrift 22s ease-in-out infinite' }}
-          />
-          <div
-            className="absolute top-20 right-0 w-[380px] h-[380px] rounded-full bg-signal/25 blur-3xl"
-            style={{ animation: 'blobDrift 26s ease-in-out infinite reverse' }}
-          />
-          <div
-            className="absolute bottom-0 left-1/3 w-[460px] h-[460px] rounded-full bg-paint/30 blur-3xl"
-            style={{ animation: 'blobDrift 30s ease-in-out infinite' }}
-          />
-        </div>
+        {/* Drifting blobs — follow the cursor with a gentle spring (MouseBlobs) */}
+        <MouseBlobs blobs={heroBlobs} />
         {/* Noise grain overlay */}
         <div className="absolute inset-0 noise-overlay pointer-events-none" aria-hidden="true" />
         {/* Vignette */}
@@ -388,7 +420,9 @@ export default function Home() {
           <div className="text-center stagger-children">
             {/* Eyebrow pill */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-paper/20 bg-paper/5 backdrop-blur-sm text-xs font-semibold tracking-wider uppercase text-paper/90 mb-8">
-              <span aria-hidden="true">🍁</span>
+              <svg viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5 text-signal" aria-hidden="true">
+                <path d="M12 2l1.2 3.4 2.6-1.6-1 3 2.8.8-2.4 1.6 2.4 2.6-3.4.4 1.2 3.2-2.8-1.4L12 22l-.6-7.6-2.8 1.4 1.2-3.2-3.4-.4 2.4-2.6-2.4-1.6 2.8-.8-1-3 2.6 1.6z" />
+              </svg>
               <span>Built for Canadian small business</span>
             </div>
 
@@ -405,14 +439,14 @@ export default function Home() {
               }}
             >
               See your new website
-              <br className="hidden sm:block" />
+              <br />
               <em
                 className="not-italic"
                 style={{
                   fontStyle: 'italic',
                   fontWeight: 500,
                   backgroundImage:
-                    'linear-gradient(135deg, #E8743B 0%, #C84B7A 60%, #7C3AED 100%)',
+                    'linear-gradient(135deg, #E8743B 0%, #C84B7A 58%, #7A2E52 100%)',
                   WebkitBackgroundClip: 'text',
                   backgroundClip: 'text',
                   color: 'transparent',
@@ -431,13 +465,13 @@ export default function Home() {
 
             {/* CTAs */}
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
+              <MagneticButton
                 href="#request-preview"
-                className="inline-flex items-center gap-2 bg-signal text-white font-semibold text-base px-7 py-3.5 rounded-full hover:bg-signal/90 transition-all shadow-xl shadow-black/40 hover:-translate-y-0.5"
+                className="items-center gap-2 bg-action text-white font-semibold text-base px-7 py-3.5 rounded-full hover:bg-action-deep transition-colors shadow-xl shadow-black/40"
               >
                 Generate my free preview
                 <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
-              </a>
+              </MagneticButton>
               <a
                 href="/showcase"
                 className="inline-flex items-center gap-2 border border-paper/25 bg-paper/5 backdrop-blur-sm text-paper font-medium text-base px-6 py-3.5 rounded-full hover:bg-paper/10 transition-colors"
@@ -448,12 +482,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Mock browser preview */}
-          <div className="relative mt-20 max-w-5xl mx-auto reveal">
-            <div
-              className="browser-mock rounded-2xl overflow-hidden animate-float"
-              style={{ animationDelay: '0.5s' }}
-            >
+          {/* Mock browser preview — cursor-tracked 3D tilt + float (TiltMockBrowser) */}
+          <TiltMockBrowser className="relative mt-20 max-w-5xl mx-auto">
+            <div className="browser-mock rounded-2xl overflow-hidden">
               {/* Window chrome */}
               <div className="flex items-center gap-2 px-4 py-3 bg-black/30 border-b border-white/10">
                 <span className="w-3 h-3 rounded-full bg-red-400/80" />
@@ -471,7 +502,7 @@ export default function Home() {
                   className="md:col-span-2 p-8 text-white flex flex-col justify-between min-h-[280px]"
                   style={{
                     background:
-                      'linear-gradient(155deg, #1F4D3A 0%, #2E6A53 60%, #E8743B 130%)',
+                      'linear-gradient(160deg, #1C5440 0%, #163E2D 100%)',
                   }}
                 >
                   <div>
@@ -529,7 +560,7 @@ export default function Home() {
             </div>
             {/* Glow under mock — spruce, not violet */}
             <div className="absolute -inset-x-12 -bottom-12 h-32 bg-paint/40 blur-3xl -z-10" aria-hidden="true" />
-          </div>
+          </TiltMockBrowser>
 
           {/* Trust strip — moved BELOW the mock. The mock is the proof; stats validate. */}
           <dl className="mt-20 grid grid-cols-2 sm:grid-cols-4 gap-y-8 gap-x-4 max-w-3xl mx-auto reveal">
@@ -542,7 +573,7 @@ export default function Home() {
                   className="text-3xl md:text-4xl text-white"
                   style={{ fontFamily: 'var(--font-fraunces), Georgia, serif', fontWeight: 500, letterSpacing: '-0.02em', fontVariationSettings: '"opsz" 96' }}
                 >
-                  {stat.value}
+                  <CountUp to={stat.value} duration={1.4} />
                 </dt>
                 <dd className="mt-1 text-xs md:text-sm uppercase tracking-wider text-paper/55">
                   {stat.label}
@@ -559,7 +590,7 @@ export default function Home() {
           <div className="reveal bg-paper rounded-2xl shadow-xl shadow-ink/10 border border-[color-mix(in_oklab,var(--paint)_10%,transparent)] px-6 py-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
             {trustBadges.map((b) => (
               <div key={b.label} className="flex items-center gap-2 text-sm font-medium text-steel">
-                <span className="text-base" aria-hidden="true">{b.icon}</span>
+                <span className="text-paint" aria-hidden="true">{b.icon}</span>
                 <span>{b.label}</span>
               </div>
             ))}
@@ -632,7 +663,7 @@ export default function Home() {
       </section>
 
       {/* ============================== HOW IT WORKS ============================== */}
-      <section id="how-it-works" className="py-24 md:py-32 bg-mist bg-print-grid relative">
+      <section id="how-it-works" className="py-24 md:py-32 bg-mist bg-print-grid relative border-y border-[color-mix(in_oklab,var(--paint)_9%,transparent)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center reveal">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest text-paint bg-[#E6F1ED]">
@@ -657,11 +688,11 @@ export default function Home() {
               {steps.map((s) => (
                 <li key={s.n} className="reveal text-center relative">
                   <div
-                    className="mx-auto w-[72px] h-[72px] rounded-full bg-paper border-2 border-paint/30 flex items-center justify-center text-3xl text-paint shadow-lg shadow-paint/10 relative z-10"
-                    style={{ fontFamily: 'var(--font-fraunces)', fontVariationSettings: '"opsz" 144', fontStyle: 'italic' }}
+                    className="mx-auto w-[72px] h-[72px] rounded-full bg-paint text-paper flex items-center justify-center text-3xl shadow-lg shadow-paint/25 ring-4 ring-paper relative z-10"
+                    style={{ fontFamily: 'var(--font-fraunces)', fontVariationSettings: '"opsz" 144', letterSpacing: '-0.02em' }}
                     aria-hidden="true"
                   >
-                    {s.mark}
+                    0{s.n}
                   </div>
                   <h3
                     className="mt-6 text-xl font-medium text-ink"
@@ -695,7 +726,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <ScrollParallax amount={20} className="mt-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((t) => (
               <figure
                 key={t.name}
@@ -730,11 +762,12 @@ export default function Home() {
               </figure>
             ))}
           </div>
+          </ScrollParallax>
         </div>
       </section>
 
       {/* ============================== PRICING ============================== */}
-      <section id="pricing" className="py-24 md:py-32 bg-mist bg-print-grid">
+      <section id="pricing" className="py-24 md:py-32 bg-mist bg-print-grid border-y border-[color-mix(in_oklab,var(--paint)_9%,transparent)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center reveal">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest text-paint bg-[#E6F1ED]">
@@ -751,13 +784,13 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch">
+          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto items-stretch">
             {pricingTiers.map((tier, i) => (
               <div
                 key={tier.name}
-                className={`reveal relative rounded-2xl p-8 flex flex-col ${
+                className={`reveal relative rounded-2xl p-6 lg:p-7 flex flex-col ${
                   tier.featured
-                    ? 'pricing-featured md:-translate-y-3 bg-ink text-white shadow-2xl shadow-ink/30'
+                    ? 'pricing-featured lg:-translate-y-3 bg-ink text-white shadow-2xl shadow-ink/30'
                     : 'bg-paper border border-paint/10 shadow-sm'
                 }`}
                 style={{ animationDelay: `${i * 80}ms` }}
@@ -788,32 +821,37 @@ export default function Home() {
                   {tier.description}
                 </p>
                 <ul className="mt-6 space-y-3 flex-1">
-                  {tier.features.map((feat) => (
+                  {tier.features.map((feat, idx) => (
                     <li
                       key={feat}
                       className={`flex items-start gap-2 text-sm ${tier.featured ? 'text-white/85' : 'text-ink'}`}
                     >
-                      <svg
+                      <Checkmark
+                        drawOnView
+                        delay={idx * 0.08 + 0.1}
                         className={`w-5 h-5 flex-none mt-0.5 ${tier.featured ? 'text-signal' : 'text-paint'}`}
-                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
-                      >
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
+                      />
                       <span>{feat}</span>
                     </li>
                   ))}
                 </ul>
-                <a
-                  href={tier.ctaHref}
-                  className={`mt-8 inline-flex items-center justify-center gap-1.5 px-5 py-3 rounded-full font-semibold text-sm transition-all ${
-                    tier.featured
-                      ? 'bg-signal text-white shadow-lg shadow-signal/40 hover:bg-signal/90 hover:shadow-xl hover:-translate-y-0.5'
-                      : 'bg-ink text-paper hover:bg-ink/90'
-                  }`}
-                >
-                  {tier.cta}
-                  <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
-                </a>
+                {tier.featured ? (
+                  <MagneticButton
+                    href={tier.ctaHref}
+                    className="mt-8 items-center justify-center gap-1.5 px-5 py-3 rounded-full font-semibold text-sm bg-action text-white shadow-lg shadow-action/40 hover:bg-action-deep transition-colors"
+                  >
+                    {tier.cta}
+                    <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
+                  </MagneticButton>
+                ) : (
+                  <a
+                    href={tier.ctaHref}
+                    className="mt-8 inline-flex items-center justify-center gap-1.5 px-5 py-3 rounded-full font-semibold text-sm transition-all bg-ink text-paper hover:bg-ink/90"
+                  >
+                    {tier.cta}
+                    <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
+                  </a>
+                )}
               </div>
             ))}
           </div>
@@ -946,8 +984,9 @@ export default function Home() {
             className="mt-10 bg-white text-slate-900 rounded-2xl shadow-2xl shadow-black/30 p-7 md:p-9 text-left"
           >
             {submitted && (
-              <div className="mb-6 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 text-sm font-medium" role="status">
-                ✓ Request received — check your inbox at <span className="font-semibold">{form.email || 'your email'}</span> for your preview link within a few minutes.
+              <div className="mb-6 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 text-sm font-medium flex items-start gap-2" role="status">
+                <SuccessCheck trigger={submitted} className="w-5 h-5 flex-none mt-0.5 text-emerald-600" />
+                <span>Request received — check your inbox at <span className="font-semibold">{form.email || 'your email'}</span> for your preview link within a few minutes.</span>
               </div>
             )}
             {submitError && (
@@ -1020,7 +1059,7 @@ export default function Home() {
                 <p className="mt-1 text-xs text-red-600">Use a full URL like https://yourbusiness.ca</p>
               )}
               <p className="mt-1 text-xs text-slate-500">
-                We'll use it to compare your current site against the preview.
+                We&rsquo;ll use it to compare your current site against the preview.
               </p>
             </div>
             <div className="mt-5">
@@ -1044,7 +1083,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="mt-6 w-full bg-signal text-white font-semibold py-3.5 px-6 rounded-xl hover:bg-signal/90 transition-all shadow-lg shadow-signal/40 hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+              className="mt-6 w-full bg-action text-white font-semibold py-3.5 px-6 rounded-xl hover:bg-action-deep transition-all shadow-lg shadow-action/40 hover:shadow-xl hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
             >
               {isSubmitting ? 'Generating…' : 'Generate my free preview →'}
             </button>
@@ -1082,7 +1121,7 @@ export default function Home() {
                 </span>
               </div>
               <p className="mt-4 text-sm text-white/55 max-w-md leading-relaxed">
-                AI-generated website previews for Canadian small businesses. Hosted in Montréal,
+                Fast website previews for Canadian small businesses. Hosted in Montréal,
                 built for the trades, friendly to your wallet.
               </p>
               <p className="mt-4 text-xs text-white/40">© {new Date().getFullYear()} SiteSprint. All rights reserved.</p>

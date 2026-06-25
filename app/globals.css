@@ -38,12 +38,24 @@
      Distinct from the cool indigo SaaS tokens above; this is the
      SiteSprint signature that page.tsx references via bg-paper,
      text-paint, bg-signal, etc. */
-  --paper:  #FAF8F4;
-  --ink:    #0B0F1E;
-  --paint:  #1F4D3A;  /* spruce green */
-  --signal: #E8743B;  /* clay accent */
-  --steel:  #4A5468;
-  --mist:   #ECECE6;
+  /* Hybrid identity — warm "Workshop" foundation + "Heritage" oxblood action.
+     Reference tokens (raw colour). Temperature unified to warm: the old cool
+     ink (H271) and steel (H264) are re-anchored warm so the whole palette
+     reads human/trustworthy. All text pairs verified against WCAG. */
+  --paper:       #F8F4EC;  /* surface — warm cream            L97 H85  */
+  --mist:        #EDE7DA;  /* alt surface                     L93 H86  */
+  --ink:         #11150F;  /* dark sections / primary text    16.8:1   */
+  --paint:       #1C5440;  /* spruce — primary brand          8.0:1    */
+  --paint-deep:  #123A2C;  /* deep spruce — panels / text     11.5:1   */
+  --steel:       #5A5247;  /* warm stone — muted body text    7.0:1    */
+  --signal:      #E9692E;  /* bright clay — decorative accent / glow    */
+  --action:      #9E3B26;  /* oxblood — primary action / CTAs (white 6.8:1) */
+  --action-deep: #843019;  /* oxblood pressed / hover                   */
+
+  /* Semantic status tokens (warm-leaning, on-brand) */
+  --success: #1F8A5B;
+  --warning: #D99A28;
+  --danger:  #C8452F;
 }
 
 @theme inline {
@@ -60,12 +72,18 @@
   /* Warm-print aliases — picked up by Tailwind utilities:
      bg-paper, text-paper, bg-paint, text-paint, bg-signal, text-signal,
      text-steel, bg-mist, text-ink, bg-ink. */
-  --color-paper:  var(--paper);
-  --color-ink:    var(--ink);
-  --color-paint:  var(--paint);
-  --color-signal: var(--signal);
-  --color-steel:  var(--steel);
-  --color-mist:   var(--mist);
+  --color-paper:       var(--paper);
+  --color-ink:         var(--ink);
+  --color-paint:       var(--paint);
+  --color-paint-deep:  var(--paint-deep);
+  --color-signal:      var(--signal);
+  --color-action:      var(--action);
+  --color-action-deep: var(--action-deep);
+  --color-steel:       var(--steel);
+  --color-mist:        var(--mist);
+  --color-success:     var(--success);
+  --color-warning:     var(--warning);
+  --color-danger:      var(--danger);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-jakarta);
@@ -134,6 +152,12 @@ body {
   background-image: var(--brand-gradient);
 }
 
+/* Warm-print brand gradient — spruce → clay. Replaces the legacy
+   indigo→violet→pink brand-gradient anywhere the SiteSprint mark appears. */
+.bg-warm-gradient {
+  background-image: linear-gradient(135deg, var(--paint) 0%, var(--signal) 100%);
+}
+
 .text-brand-gradient {
   background-image: linear-gradient(135deg, #A78BFA 0%, #EC4899 100%);
   -webkit-background-clip: text;
@@ -157,6 +181,43 @@ body {
   animation: pulseGlow 2.4s ease-out infinite;
 }
 
+/* ---------- Scroll-reveal + entrance (paired with useReveal + motion) ----------
+   .reveal elements start hidden and animate in when the IntersectionObserver
+   hook adds .is-visible. .stagger-children cascades a section's direct children
+   on load. .animate-float is the gentle hero-loop fallback. */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(n+5) { animation-delay: 0.45s; }
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .stagger-children > * { opacity: 1; animation: none; }
+  .animate-float { animation: none; }
+}
+
 /* Section background patterns */
 .bg-dot-grid {
   background-image: radial-gradient(circle at 1px 1px, rgba(15, 23, 42, 0.07) 1px, transparent 0);
@@ -176,7 +237,9 @@ body {
   position: absolute;
   inset: -1.5px;
   border-radius: inherit;
-  background: linear-gradient(135deg, var(--paint) 0%, var(--signal) 100%);
+  /* Cohesive deep-spruce field — the oxblood CTA + clay badge are the
+     deliberate warm accents, instead of a muddy green→orange blend. */
+  background: linear-gradient(160deg, var(--paint) 0%, var(--paint-deep) 100%);
   z-index: -1;
 }
 
@@ -187,7 +250,7 @@ body {
 }
 .lift:hover {
   transform: translateY(-4px);
-  box-shadow: 0 18px 40px -16px rgba(15, 23, 42, 0.18), 0 8px 18px -10px rgba(79, 70, 229, 0.18);
+  box-shadow: 0 18px 40px -16px rgba(15, 23, 42, 0.18), 0 8px 18px -10px rgba(31, 77, 58, 0.18);
 }
 
 /* Browser mockup */
@@ -195,15 +258,42 @@ body {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow:
-    0 30px 80px -20px rgba(124, 58, 237, 0.45),
+    0 30px 80px -20px rgba(31, 77, 58, 0.45),
     0 10px 30px -10px rgba(15, 23, 42, 0.5);
   backdrop-filter: blur(8px);
 }
 
 /* Connector line for "how it works" */
-.connector {
-  background: linear-gradient(90deg, rgba(31, 77, 58, 0.0) 0%, rgba(31, 77, 58, 0.6) 50%, rgba(232, 116, 59, 0.6) 100%);
+.connector,
+.connector-spruce {
+  background: linear-gradient(90deg, rgba(31, 77, 58, 0.0) 0%, rgba(31, 77, 58, 0.55) 50%, rgba(232, 116, 59, 0.6) 100%);
   height: 2px;
+}
+
+/* Quiet grouping band for the secondary feature row.
+   Sits one warm step off the paper background with a hairline spruce edge. */
+.panel-quiet {
+  background: color-mix(in oklab, var(--paint) 4%, var(--paper));
+  border: 1px solid color-mix(in oklab, var(--paint) 11%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--paper) 80%, transparent);
+}
+
+/* Print-shop "PROOF / DRAFT" rubber stamp — the page signature.
+   Motion (stampDrift) controls rotation + entrance; this owns the ink look:
+   faded clay double-border, condensed uppercase, slight texture. */
+.stamp-corner {
+  display: inline-block;
+  padding: 0.5rem 0.95rem;
+  border: 2.5px solid color-mix(in oklab, var(--paper) 78%, transparent);
+  border-radius: 4px;
+  color: color-mix(in oklab, var(--paper) 82%, transparent);
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--paper) 30%, transparent);
 }
 
 /* Warm-palette utilities (paired with --color-paper / --color-paint etc.) */
@@ -265,11 +355,11 @@ details > summary::-webkit-details-marker { display: none; }
   transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Form focus ring (matches brand) */
+/* Form focus ring (warm-print brand — clay) */
 .brand-focus:focus {
   outline: none;
-  box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.18);
-  border-color: var(--violet-600);
+  box-shadow: 0 0 0 4px rgba(232, 116, 59, 0.22);
+  border-color: var(--signal);
 }
 
 /* ============================================================

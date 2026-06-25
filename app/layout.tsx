@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SiteSprint — See your new website before you pay a dollar.",
     description:
-      "AI-generated website previews for Canadian small businesses. Free preview in 90 seconds.",
+      "Fast website previews for Canadian small businesses. Free preview, no credit card, no commitment.",
     type: "website",
   },
 };
