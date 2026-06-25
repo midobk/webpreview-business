@@ -213,6 +213,41 @@ body {
   background-size: 18px 18px;
 }
 
+/* Quieter secondary panel — subtle paper-on-paper with a hint of paint */
+.panel-quiet {
+  background: color-mix(in oklab, var(--paper) 92%, var(--paint) 8%);
+  border: 1px solid color-mix(in oklab, var(--paint) 12%, transparent);
+  box-shadow: 0 6px 20px -12px rgba(15, 23, 42, 0.08);
+}
+
+/* Horizontal connector line for the 3-step "how it works" timeline
+   (desktop only). Spruce → clay, matching the brand gradient. */
+.connector-spruce {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    rgba(31, 77, 58, 0) 0%,
+    rgba(31, 77, 58, 0.6) 50%,
+    rgba(232, 116, 59, 0.6) 100%
+  );
+}
+
+/* Print-shop stamp: rotated, low-opacity text mark for the request-preview
+   form section. Pairs with components/motion/CornerStamp.tsx. */
+.stamp-corner {
+  display: inline-block;
+  font-family: var(--font-jakarta);
+  font-weight: 700;
+  font-size: var(--stamp-size, 72px);
+  letter-spacing: 0.04em;
+  color: var(--paper);
+  opacity: 0.18;
+  transform: rotate(-12deg);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
 .rule-v {
   /* hairline vertical divider — spruce at low alpha for column separators */
   border-left: 1px solid rgba(31, 77, 58, 0.10);
