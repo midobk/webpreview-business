@@ -364,7 +364,7 @@ export default function Home() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-paper">
       {/* ============================== HEADER ============================== */}
-      <HeaderScroll className="absolute top-0 left-0 right-0 z-50">
+      <HeaderScroll className="site-header fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex items-center justify-between">
             <a href="#top" className="flex items-center gap-2.5">

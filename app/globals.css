@@ -212,6 +212,28 @@ body {
   animation: float 6s ease-in-out infinite;
 }
 
+/* Sticky header — transparent over the dark hero, ink backdrop once scrolled
+   (toggled by HeaderScroll's .is-scrolled) so the white nav stays readable
+   over the light sections below. */
+.site-header {
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 240ms ease,
+    box-shadow 240ms ease,
+    backdrop-filter 240ms ease,
+    border-color 240ms ease;
+}
+.site-header.is-scrolled {
+  background: color-mix(in oklab, var(--ink) 86%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.7);
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header { transition: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   .stagger-children > * { opacity: 1; animation: none; }
@@ -301,41 +323,6 @@ body {
   background-image:
     radial-gradient(circle at 1px 1px, rgba(31, 77, 58, 0.08) 1px, transparent 0);
   background-size: 18px 18px;
-}
-
-/* Quieter secondary panel — subtle paper-on-paper with a hint of paint */
-.panel-quiet {
-  background: color-mix(in oklab, var(--paper) 92%, var(--paint) 8%);
-  border: 1px solid color-mix(in oklab, var(--paint) 12%, transparent);
-  box-shadow: 0 6px 20px -12px rgba(15, 23, 42, 0.08);
-}
-
-/* Horizontal connector line for the 3-step "how it works" timeline
-   (desktop only). Spruce → clay, matching the brand gradient. */
-.connector-spruce {
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    rgba(31, 77, 58, 0) 0%,
-    rgba(31, 77, 58, 0.6) 50%,
-    rgba(232, 116, 59, 0.6) 100%
-  );
-}
-
-/* Print-shop stamp: rotated, low-opacity text mark for the request-preview
-   form section. Pairs with components/motion/CornerStamp.tsx. */
-.stamp-corner {
-  display: inline-block;
-  font-family: var(--font-jakarta);
-  font-weight: 700;
-  font-size: var(--stamp-size, 72px);
-  letter-spacing: 0.04em;
-  color: var(--paper);
-  opacity: 0.18;
-  transform: rotate(-12deg);
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
 }
 
 .rule-v {
@@ -567,52 +554,3 @@ details > summary::-webkit-details-marker { display: none; }
   border: 2px solid var(--adm-bg-app);
 }
 .admin-shell *::-webkit-scrollbar-thumb:hover { background: var(--adm-text-muted); }
-/* ============================================================================
-   Scroll-reveal + stagger — restored 2026-06-24 by SiteSprint agent
-   These rules were dropped in PR #1's "premium motion pass" commit but the
-   homepage markup still uses the `.reveal` / `.stagger-children` /
-   `.animate-float` classes (app/page.tsx) AND the hand-rolled `useReveal`
-   hook still adds `.is-visible` on intersection. Without these CSS rules
-   the homepage animations silently fail. Restoring them keeps the
-   homepage working until the markup is refactored to use <Reveal> + motion.
-   ============================================================================ */
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.stagger-children > * {
-  opacity: 0;
-  animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
-.stagger-children > *:nth-child(2) { animation-delay: 0.15s; }
-.stagger-children > *:nth-child(3) { animation-delay: 0.25s; }
-.stagger-children > *:nth-child(4) { animation-delay: 0.35s; }
-.stagger-children > *:nth-child(5) { animation-delay: 0.45s; }
-
-/* Scroll-reveal helper: items start hidden; useReveal adds .is-visible when in view */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal,
-  .stagger-children > * {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
-    transition: none !important;
-  }
-}
