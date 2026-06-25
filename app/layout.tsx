@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Plus_Jakarta_Sans, Fraunces } from "next/font/google";
 import Providers from "./providers";
 import "./globals.css";
+import { ThemeScript } from "./admin/_components/ThemeScript";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,16 +53,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${jakarta.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body
         className="min-h-full flex flex-col bg-[var(--bg-page)] text-[var(--text-primary)]"
         suppressHydrationWarning
       >
-        {/* Motion providers (MotionConfig reducedMotion="user") live in
-            a separate client boundary in app/providers.tsx so the root
-            layout stays a Server Component while still exporting
-            metadata. */}
+        {/* ThemeScript sets the admin light/dark class before paint (no FOUC);
+            Providers (MotionConfig reducedMotion="user") then wraps the tree in
+            a client boundary so this layout stays a Server Component. */}
+        <ThemeScript />
         <Providers>{children}</Providers>
       </body>
     </html>

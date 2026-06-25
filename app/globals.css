@@ -360,12 +360,13 @@ details > summary::-webkit-details-marker { display: none; }
 
 .admin-shell {
   /* Surface scale (light defaults) */
-  --adm-bg-app: #F5F6FA;
+  --adm-bg-app: #F4F5F9;
   --adm-bg-surface: #FFFFFF;
   --adm-bg-elevated: #FFFFFF;
-  --adm-bg-subtle: #F1F2F8;
-  --adm-bg-hover: #F4F4F9;
-  --adm-bg-active: #ECEDF4;
+  --adm-bg-subtle: #EEF0F6;
+  --adm-bg-hover: #F1F2F8;
+  --adm-bg-active: #E5E7EE;
+  --adm-bg-sidebar: #FAFBFD;
 
   /* Borders */
   --adm-border: #E6E7EE;
@@ -415,6 +416,7 @@ details > summary::-webkit-details-marker { display: none; }
   --adm-bg-subtle: #1E2540;
   --adm-bg-hover: #1A2138;
   --adm-bg-active: #232C4A;
+  --adm-bg-sidebar: #0E1326;
 
   --adm-border: #232B45;
   --adm-border-strong: #2E375A;

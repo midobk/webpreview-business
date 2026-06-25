@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { verifyPassword } from '@/lib/auth';
+import { verifyPassword, getPasswordHash } from '@/lib/auth';
 
 // POST /api/admin/login - Authenticate admin user
 export async function POST(request: Request) {
@@ -14,8 +14,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // Get password hash from env var (Vercel-safe)
-    const passwordHash = process.env.PASSWORD_HASH;
+    // Get password hash from env var or .password file (local-dev fallback)
+    const passwordHash = getPasswordHash();
     if (!passwordHash) {
       return NextResponse.json(
         { error: 'Admin password not configured. Set PASSWORD_HASH env var.' },
