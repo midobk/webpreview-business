@@ -442,3 +442,52 @@ details > summary::-webkit-details-marker { display: none; }
   border: 2px solid var(--adm-bg-app);
 }
 .admin-shell *::-webkit-scrollbar-thumb:hover { background: var(--adm-text-muted); }
+/* ============================================================================
+   Scroll-reveal + stagger — restored 2026-06-24 by SiteSprint agent
+   These rules were dropped in PR #1's "premium motion pass" commit but the
+   homepage markup still uses the `.reveal` / `.stagger-children` /
+   `.animate-float` classes (app/page.tsx) AND the hand-rolled `useReveal`
+   hook still adds `.is-visible` on intersection. Without these CSS rules
+   the homepage animations silently fail. Restoring them keeps the
+   homepage working until the markup is refactored to use <Reveal> + motion.
+   ============================================================================ */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.45s; }
+
+/* Scroll-reveal helper: items start hidden; useReveal adds .is-visible when in view */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .stagger-children > * {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}
