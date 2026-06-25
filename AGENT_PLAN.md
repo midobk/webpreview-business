@@ -1228,3 +1228,42 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 - **Lesson:** When you can't see a bug in a screenshot, that's a strong signal you don't have a bug. I claimed "elements stuck at opacity:0" without capturing a screenshot of that state — I should have. Always: see the bug first, name the bug second.
 - **Files changed:** `AGENT_PLAN.md` only.
 - **Action:** Screenshot composites sent to user via Telegram (messages 486-490, 492). PR1 framing in screenshot caption was already honest about the correction.
+
+
+---
+
+### 2026-06-25 00:50 EDT — Codex review fixes applied (Main, Dexter)
+- **Trigger:** User asked me to address Codex's review feedback on both PRs.
+- **Codex's review** (5 comments on PR #1, 2 on PR #2):
+
+  PR #1 (`feat/motion-dev-premium-pass`):
+  - P1: Move MotionConfig behind a client provider — **already fixed in 11a8cee** ✓
+  - P2: Warm-print utilities (`bg-ink`, `bg-paper`, etc.) not defined — **already defined in 11a8cee/ba41c2a** as `@theme inline` tokens ✓
+  - P2: pricing-featured class overrides bg-ink text-white — **already has correct gradient** ✓
+  - P2: /privacy link to missing route — **/privacy page already exists, HTTP 200** ✓
+  - P3: panel-quiet, connector-spruce, stamp-corner classes referenced but undefined — **NEW FIX applied**
+
+  PR #2 (`feat/admin-premium-redesign`):
+  - P1 (security): /api/admin/setup can overwrite existing .password hash without auth — **NEW FIX applied**
+  - P2: Sidebar logout doesn't clear session cookie — **NEW FIX applied**
+
+- **Fixes applied:**
+
+  PR #1 commit `5cba08e` (1 file, +35/-0):
+  - Defined `.panel-quiet` (subtle paper-on-paper secondary panel with paint border + soft shadow)
+  - Defined `.connector-spruce` (2px spruce-to-clay gradient line for the "how it works" timeline)
+  - Defined `.stamp-corner` (rotated, low-opacity paper-colored text mark — pairs with `components/motion/CornerStamp.tsx`)
+
+  PR #2 commit `9d391e8` (2 files, +40/-7):
+  - `/api/admin/setup` now blocks POST if `./.password` exists locally (HTTP 400 with helpful rotation message), not just when `PASSWORD_HASH` env var is set
+  - Sidebar logout converted from `<Link href="/admin">` to `<button onClick={handleLogout}>` calling `DELETE /api/admin/login` + router.push('/admin')
+
+- **Verified via Playwright:**
+  - PR1: `--paper: #faf8f4`, `--paint: #1f4d3a`, `--ink: #0b0f1e` all resolve at :root. `.panel-quiet` has oklab border + paint-tinted background. `.connector-spruce` has 2px height + linear-gradient background. `.stamp-corner` has 90px font-size + transform applied.
+  - PR2: Setup returns HTTP 200 first time, HTTP 400 second time. Original password still works for login. Sidebar logout button is `<button>` (was `<Link>`). After sidebar logout click → redirected to `/admin`.
+
+- **Lesson:** When Playwright probe shows `getComputedStyle.backgroundColor === rgba(0,0,0,0)` for a class that should have styles, the CSS IS in the bundle but a stale `.next` build cache may be serving older output. Always run `rm -rf .next && npm run build` before declaring a CSS fix broken.
+
+- **Files changed:** `app/globals.css` (PR1), `app/api/admin/setup/route.ts` + `app/admin/_components/AdminShell.tsx` (PR2), `AGENT_PLAN.md` (this entry).
+
+- **Next:** Both PR branches updated. Vercel preview builds triggered. Ready for user to merge when ready.
