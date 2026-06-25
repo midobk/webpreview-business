@@ -1,6 +1,6 @@
 'use client';
 
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
@@ -9,6 +9,8 @@ import {
   IconShowcase,
   IconSettings,
   IconLogout,
+  IconMenu,
+  IconClose,
 } from './icons';
 import { ThemeToggle } from './ThemeToggle';
 
@@ -41,16 +43,37 @@ export function AdminShell({
   userLabel?: string;
 }) {
   const pathname = usePathname();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div
       className="admin-shell min-h-screen adm-bg-dots"
       style={{ background: 'var(--adm-bg-app)', color: 'var(--adm-text-primary)' }}
     >
+      {/* Mobile backdrop — closes drawer on click */}
+      {sidebarOpen && (
+        <button
+          type="button"
+          aria-label="Close navigation"
+          onClick={() => setSidebarOpen(false)}
+          className="md:hidden fixed inset-0 z-40 adm-backdrop-in"
+          style={{ background: 'rgba(0,0,0,0.5)' }}
+        />
+      )}
       <div className="flex min-h-screen">
-        <Sidebar pathname={pathname} userLabel={userLabel} />
+        <Sidebar
+          pathname={pathname}
+          userLabel={userLabel}
+          mobileOpen={sidebarOpen}
+          onNavigate={() => setSidebarOpen(false)}
+        />
         <div className="flex-1 min-w-0 flex flex-col">
-          <TopBar title={title} breadcrumb={breadcrumb} actions={actions} />
+          <TopBar
+            title={title}
+            breadcrumb={breadcrumb}
+            actions={actions}
+            onMenuClick={() => setSidebarOpen(true)}
+          />
           <main className="flex-1 px-6 py-6 lg:px-8">
             <div className="mx-auto max-w-[1400px] adm-stagger">{children}</div>
           </main>
@@ -60,7 +83,17 @@ export function AdminShell({
   );
 }
 
-function Sidebar({ pathname, userLabel }: { pathname: string; userLabel: string }) {
+function Sidebar({
+  pathname,
+  userLabel,
+  mobileOpen,
+  onNavigate,
+}: {
+  pathname: string;
+  userLabel: string;
+  mobileOpen: boolean;
+  onNavigate: () => void;
+}) {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -75,13 +108,21 @@ function Sidebar({ pathname, userLabel }: { pathname: string; userLabel: string 
 
   return (
     <aside
-      className="hidden md:flex w-[240px] shrink-0 flex-col"
+      className={[
+        'w-[260px] shrink-0 flex-col',
+        // Desktop (≥md): static sidebar in flow
+        'md:flex md:static',
+        // Mobile (<md): slide-in drawer
+        'fixed inset-y-0 left-0 z-50 adm-drawer-in',
+        mobileOpen ? 'flex' : 'hidden',
+      ].join(' ')}
       style={{
         background: 'var(--adm-bg-sidebar)',
         borderRight: '1px solid var(--adm-border)',
       }}
     >
-      <div className="px-5 py-5 flex items-center gap-2.5">
+      <div className="px-5 py-5 flex items-center justify-between gap-2.5">
+        <div className="flex items-center gap-2.5">
         <div
           className="rounded-lg adm-brand-gradient grid place-items-center"
           style={{ width: 32, height: 32 }}
@@ -96,6 +137,17 @@ function Sidebar({ pathname, userLabel }: { pathname: string; userLabel: string 
             Admin Console
           </p>
         </div>
+        </div>
+        {/* Mobile-only close button */}
+        <button
+          type="button"
+          aria-label="Close navigation"
+          onClick={onNavigate}
+          className="md:hidden grid place-items-center rounded-md p-1.5 transition-colors"
+          style={{ color: 'var(--adm-text-muted)' }}
+        >
+          <IconClose size={18} />
+        </button>
       </div>
 
       <div className="px-5 pb-3">
@@ -129,6 +181,7 @@ function Sidebar({ pathname, userLabel }: { pathname: string; userLabel: string 
             <Link
               key={item.href}
               href={item.href}
+              onClick={onNavigate}
               className="group flex items-center gap-2.5 px-2.5 py-2 rounded-md text-sm font-medium transition-colors"
               style={{
                 background: active ? 'var(--adm-accent-soft)' : 'transparent',
@@ -218,10 +271,12 @@ function TopBar({
   title,
   breadcrumb,
   actions,
+  onMenuClick,
 }: {
   title?: ReactNode;
   breadcrumb?: ReactNode;
   actions?: ReactNode;
+  onMenuClick?: () => void;
 }) {
   return (
     <header
@@ -233,6 +288,18 @@ function TopBar({
       }}
     >
       <div className="min-w-0 flex items-center gap-2">
+        {/* Mobile menu trigger — hidden on desktop where sidebar is always visible */}
+        {onMenuClick && (
+          <button
+            type="button"
+            aria-label="Open navigation"
+            onClick={onMenuClick}
+            className="md:hidden grid place-items-center rounded-md p-2 -ml-2 transition-colors"
+            style={{ color: 'var(--adm-text-secondary)' }}
+          >
+            <IconMenu size={20} />
+          </button>
+        )}
         {breadcrumb && (
           <div className="flex items-center gap-1.5 text-xs" style={{ color: 'var(--adm-text-muted)' }}>
             {breadcrumb}
