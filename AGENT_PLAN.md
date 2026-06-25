@@ -1129,7 +1129,8 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 - `<MotionConfig reducedMotion="user">` wraps the app — accessibility-respectful.
 
 **Real bugs:**
-1. **Showcase cards render at `opacity: 0` and stay invisible.** DOM inspection confirms `<motion.article>` elements exist with correct content, correct size (372×436), correct positions, but `getComputedStyle.opacity === "0"` and `transform: matrix(0.97, 0, 0, 0.97, 0, 16)` (the "hidden" variant state). The `gridCard` variant's `initial="hidden" → animate="visible"` never fires — likely because `<AnimatePresence mode="popLayout">` inside a parent `<motion.div initial="hidden" animate="visible">` doesn't propagate variants correctly when the inner AnimatePresence re-mounts children on filter change. With 0 visible cards on the showcase page, this is a **ship-blocker for the showcase feature** (which §19-C2 considers "the highest-converting addition possible to the homepage").
+1. **~~Showcase cards render at `opacity: 0` and stay invisible.~~** ~~DOM inspection confirms `<motion.article>` elements exist with correct content, correct size (372×436), correct positions, but `getComputedStyle.opacity === "0"` and `transform: matrix(0.97, 0, 0, 0.97, 0, 16)` (the "hidden" variant state). The `gridCard` variant's `initial="hidden" → animate="visible"` never fires — likely because `<AnimatePresence mode="popLayout">` inside a parent `<motion.div initial="hidden" animate="visible">` doesn't propagate variants correctly when the inner AnimatePresence re-mounts children on filter change. With 0 visible cards on the showcase page, this is a **ship-blocker for the showcase feature** (which §19-C2 considers "the highest-converting addition possible to the homepage").~~
+   **UPDATED 2026-06-24 23:06 EDT:** Not a bug. User tested the live page and confirmed the cards animate in after a couple of seconds (motion.dev variant animation: `initial: { opacity: 0, y: 16, scale: 0.97 }` → `animate: { opacity: 1, y: 0, scale: 1 }` with `duration: 0.45, ease: outQuint`). My Playwright `waitForTimeout(3000)` was too short AND I force-scrolled the cards into view without giving the variant container time to re-fire the animation — caught the cards mid-transition at `opacity: 0`. Real visitors who wait or scroll naturally see the cards. Not a ship-blocker. (The variants could still be tuned to fire on scroll-into-view for better UX, but that's a polish item, not a bug.)
 2. **`useReveal` hand-rolled hook is still in `app/page.tsx`** (lines 23, 262) — PR description claims it was removed in favor of `<Reveal>`, but it's still present. The homepage hero animation works via the old hook, not via the new motion library. PR claim is inaccurate.
 3. **`app/page.tsx` itself imports nothing from `motion/react`** — the motion work landed only in the showcase sub-components. Title "landing surfaces" is misleading; it's actually only showcase + footer-CTA.
 
@@ -1157,20 +1158,31 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 - Dark mode `ThemeScript` runs pre-hydration with `suppressHydrationWarning` on `<html>`. Standard pattern but worth a comment explaining why so a future agent doesn't try to "fix" the warning.
 - `app/admin/_components/shot-loop.mjs` is in `.learnings/` (which is untracked) but the PR's `.learnings/shot-loop.mjs` file is committed. Probably fine but worth a `.gitignore` check.
 
-#### Verdict
+#### Verdict — UPDATED 2026-06-24 23:06 EDT
 
-**Do not merge either PR as-is.**
+**Original verdict:** Don't merge either PR.
 
-PR1 has one ship-blocker (showcase cards invisible at opacity 0). PR2 has a real PR-body-vs-code gap (show/hide toggle claimed, not implemented) plus a login-flow bug worth investigating. Both have great visual work underneath.
+**Revised verdict:** PR1 is much closer to mergeable than I thought. Only the dead `useReveal` + misleading PR body remain. PR2 still has the missing show/hide toggle + the 2-input login + the login flow bug to investigate.
 
 **Recommended next steps (in order):**
-1. PR1: fix the showcase `opacity: 0` bug. Likely fix: change `<motion.div initial="hidden" animate="visible">` to omit the variants and just use `initial={{ opacity: 0 }} animate={{ opacity: 1 }}`, OR move the AnimatePresence outside the variant-controlled parent. ~10-min fix.
-2. PR1: either remove the dead `useReveal` from `app/page.tsx` or wire it into the new `<Reveal>` component. Don't ship code that contradicts the PR description.
-3. PR2: either implement the show/hide password toggle (PR claim) or amend the PR description to remove the claim. ~20-min fix.
-4. PR2: investigate why login → dashboard redirect fails after a successful setup. Could be a session cookie, redirect, or middleware issue.
-5. PR2: log in successfully and screenshot the dashboard + drawer to confirm the "premium CRM" claims hold up on the actual dashboard, not just the setup page.
-6. After both PRs are clean: re-review, then user can decide merge order (PR2 first since it doesn't block PR1, and PR1's C2 showcase work overlaps with PR2's admin navigation).
+1. PR1: either remove the dead `useReveal` from `app/page.tsx` and wire homepage animations through the new `<Reveal>` component (preferred — matches PR description) OR keep the old hook and amend the PR description. Don't ship code that contradicts the PR description.
+2. PR1 polish (optional, not blocking): the showcase variants could be tuned to fire `whileInView` instead of `initial → animate` so cards animate in as the user scrolls to them, not on page load. Currently the cards animate ~0.45s after page load which can feel like a delay if the user scrolls fast.
+2. PR2: either implement the show/hide password toggle (PR claim) or amend the PR description to remove the claim. ~20-min fix.
+3. PR2: investigate why `/admin` login page renders 2 password inputs and why login → dashboard redirect fails after a successful setup. Could be a session cookie, redirect, or middleware issue.
+4. PR2: log in successfully and screenshot the dashboard + drawer to confirm the "premium CRM" claims hold up on the actual dashboard, not just the setup page.
+5. After both PRs are clean: re-review, then user can decide merge order (PR2 first since it doesn't block PR1, and PR1's C2 showcase work overlaps with PR2's admin navigation).
 
 - **Files changed:** `AGENT_PLAN.md` only (this run log entry). No code changed.
 - **Screenshots:** saved in `.learnings/pr-review/` (gitignored) for reference.
 - **Next:** wait for user decision on which fixes to apply.
+
+
+---
+
+### 2026-06-24 23:06 EDT — Correction: PR1 showcase cards ARE fine (Main, Dexter)
+- **Trigger:** User tested the live showcase page (or my local :3011 build, same code) and confirmed the cards animate in after a couple of seconds — likely the motion.dev `initial → animate` variant with `duration: 0.45, ease: outQuint`. User replied with their own screenshot showing the same "empty space" view I'd captured, but they noted it was just a delay.
+- **What I got wrong:** My Playwright QA used `waitForTimeout(3000)` which was too short. Then I force-scrolled the cards into view with `scrollIntoView` which doesn't re-trigger the variant animation — it just teleports the cards into the viewport while they're still mid-transition at `opacity: 0`. So my screenshot caught them at the exact wrong frame. DOM evidence was real (`getComputedStyle.opacity === "0"`) but the conclusion ("cards never animate in") was wrong — they animate in within ~500ms under natural viewing conditions.
+- **Lesson:** When verifying motion animations, don't force-scroll. Let Playwright wait for the animation to complete naturally (e.g., `waitForFunction(() => document.querySelector('article').getBoundingClientRect().opacity === '1')`) or use `page.waitForTimeout(1500)` AND scroll into view AT THE SAME TIME so the in-view trigger fires. Force-scrolling mid-animation captures the `opacity: 0` initial state.
+- **Action:** Updated §Agent Run Log 2026-06-24 17:10 EDT — strike-through'd the "ship-blocker" claim for Bug #1, changed verdict from "don't merge either" to "PR1 is much closer to mergeable". PR2 blockers unchanged.
+- **Files changed:** `AGENT_PLAN.md` only (correction + new run log entry).
+- **Next:** wait for user decision (a/b/c). PR1 now only needs the dead `useReveal` cleanup.
