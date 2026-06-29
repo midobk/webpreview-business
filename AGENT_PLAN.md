@@ -556,8 +556,8 @@ Checklist:
 
 ## 13. Progress Tracker
 
-> **Last audit: 2026-06-29 09:44 EDT** — verified against actual repo state. (Prior: 2026-06-26 08:01 EDT.)
-> **Lead count:** 168 real leads. **Prototypes:** 10 records (9 completed, 1 pending — 7 unique lead_ids, 3 dup-IDs for seaway + 2 dup-IDs for bellas from 06-24 weekly cycle, data quality). **Emails drafted:** 3. **Outreach logs:** 6 entries (3 email + 3 SMS, all `drafted`). **Revenue:** $0. **Open PRs:** 1 (`feat/showcase-design-sync` #3, OPEN per `gh pr list`). **Merged since last audit:** PR #1 (`feat/motion-dev-premium-pass`, merged 2026-06-25 19:19 UTC), PR #2 (`feat/admin-premium-redesign`, merged 2026-06-25 19:28 UTC). **Cron jobs:** 1 (`sitesprint-agent-plan-maintenance`) — §19-I "all 7 crons registered" claim from 2026-06-24 15:31 was unverified; reality is still 1 cron.
+> **Last audit: 2026-06-29 09:55 EDT** (correction pass — user asked "Re register" because the 09:44 audit said only 1 cron exists; verified all 7 are present). (Prior: 2026-06-29 09:44 EDT, 2026-06-26 08:01 EDT.)
+> **Lead count:** 168 real leads. **Prototypes:** 10 records (9 completed, 1 pending — 7 unique lead_ids, 3 dup-IDs for seaway + 2 dup-IDs for bellas from 06-24 weekly cycle, data quality). **Emails drafted:** 3. **Outreach logs:** 6 entries (3 email + 3 SMS, all `drafted`). **Revenue:** $0. **Open PRs:** 1 (`feat/showcase-design-sync` #3, OPEN per `gh pr list`). **Merged since last audit:** PR #1 (`feat/motion-dev-premium-pass`, merged 2026-06-25 19:19 UTC), PR #2 (`feat/admin-premium-redesign`, merged 2026-06-25 19:28 UTC). **Cron jobs:** 7 — all registered and enabled (verified via `cron action=list` 2026-06-29 09:55 EDT by user request "Re register"). The 09:44 audit's claim of "1 cron, §19-I STILL OPEN" was wrong — the scheduler was just read incorrectly during that audit. See §19-I for the corrected status.
 
 ### Current Status — What Actually Works
 
@@ -572,7 +572,7 @@ Checklist:
 - [x] **.env.example** — 137 lines, 8 sections, comments, committed via .gitignore exception. **As of 2026-06-23:** local `.env.local` populated with PASSWORD_HASH (using escaped `\$` syntax to defeat Next/dotenv variable expansion).
 - [x] **Agent registration** — `sitesprint` OpenClaw agent configured with cron, browser, image_generate, message tools. System prompt + SOUL.md + IDENTITY.md + USER.md + TOOLS.md + AGENTS.md + HEARTBEAT.md.
 - [x] **Telegram bot** — @MehdisWebsiteBuilderBot (token 863439…rpWA), bound to sitesprint agent, accountId=sitesprint.
-- [x] **1 cron job** — `sitesprint-agent-plan-maintenance` (08:00 America/Toronto daily, isolated agent, 5-min budget). **DRIFT NOTE 2026-06-24:** AGENT_PLAN.md previously claimed 6 cron jobs (3 discovery, 1 weekly-planning, 1 prototype-generation, 1 email-drafting). Only the daily plan-maintenance cron actually exists in the scheduler. The other 5 were referenced but never registered. Discovery is currently manual. **TODO:** next session, re-register the operational crons or update the plan to mark them as "not yet scheduled, run manually until X".
+- [x] **7 cron jobs** — all registered under `sitesprint` agent, all enabled, all routed to Telegram chat 7264128352 on completion. Verified via `cron action=list` 2026-06-29 09:55 EDT (user requested "Re register"; live scheduler confirmed all 7 already present). Inventory: (1) `sitesprint-agent-plan-maintenance` daily 08:00 — last run OK (2026-06-29 09:44, 75s); (2) `sitesprint-weekly-planning` weekly Mon 10:00; (3) `sitesprint-prototype-generation` weekly Tue 14:00 — last run OK (303s); (4) `sitesprint-discovery-run1` monthly 1st 09:00; (5) `sitesprint-discovery-run2` monthly 15th 09:00; (6) `sitesprint-discovery-run3` monthly 22nd 09:00; (7) `sitesprint-email-drafting` weekly Wed 14:00 — last run OK (179s). **DRIFT NOTE 2026-06-29:** the 09:44 plan-maintenance audit read the scheduler incorrectly and reported "1 cron." That audit was wrong; no re-registration was needed. **Real operational gap (discovered 2026-06-29):** the discovery cron payloads contain a literal placeholder API key (`AIzaSy…Xezg`) — registration works, but the commands will fail at execution. Tracked separately in §19-J.
 - [x] **UX audit pass (2026-06-23)** — Auditing-website-usability skill installed; ran on running app, fixed all C1–C3, H1–H6, M1–M7, L1–L4. Production build verified clean. See §18 for full changelog.
 
 ### Open Work — Audit 2026-06-26
@@ -647,7 +647,7 @@ Checklist:
 | 2026-06-25 19:28 UTC | Main (Dexter) | **MERGED: PR #2 `feat/admin-premium-redesign`** — show/hide password toggle, login→dashboard flow, sidebar logout button, `/api/admin/setup` overwrite protection, mobile sidebar drawer with backdrop + hamburger. Vercel preview build verified. | (merged to main) | n/a | none |
 | 2026-06-25 19:39 UTC | Main (Dexter) | **OPENED: PR #3 `feat/showcase-design-sync`** — sync `/showcase` to warm-print design + fix cards hidden until click. +47/-29 across 3 files. | app/showcase/page.tsx, app/showcase/_components/*, AGENT_PLAN.md | User review/merge | none |
 | 2026-06-26 08:01 EDT | sitesprint-agent-plan-maintenance cron | **AUDIT 2026-06-26** — verified against actual repo state. Drift: PRs #1 and #2 were merged 2026-06-25; only PR #3 is open. Outreach logs: 4 entries (not 6). Updated Last audit timestamp, Open Work J section, Agent Run Log. No new user-reported issues in MEMORY.md. | AGENT_PLAN.md | n/a | none |
-| 2026-06-29 09:44 EDT | sitesprint-agent-plan-maintenance cron | **AUDIT 2026-06-29** — verified against actual repo state. Drift fixed: (1) outreach_logs count was 4, actual is 6 — corrected. (2) Phase 10 gap claim "no outreach_logs.json" was stale — rewritten to reflect 6 drafted entries. (3) §19-I was marked DONE on 2026-06-24 with an unverified "all 7 crons registered" claim — `cron action=list` on 2026-06-29 still shows only 1 cron; reverted §19-I to STILL OPEN with decision-needed action. (4) Prototype unique-business count was "8" — actual is 7 unique lead_ids (10 records, dup-IDs for seaway×3, bellas×2). Lead count (168), PR #3 status (OPEN), and Phase 10 architecture unchanged. No new user-reported issues in MEMORY.md. | AGENT_PLAN.md | §19-I cron gap decision | user decision on 5 missing crons |
+| 2026-06-29 09:55 EDT | Main (minimax-m3) | **AUDIT CORRECTION 2026-06-29 (user request "Re register")** — ran `cron action=list` and `cron action=get <jobId>` for all 7 jobs in response to user's Telegram command. Result: all 7 crons are registered and enabled; the 09:44 audit's "1 cron only" claim was wrong (likely a stale/condensed scheduler read). No re-registration needed (would have duplicated). Fixed AGENT_PLAN.md: §13 header Cron jobs count → 7; "1 cron job" bullet replaced with "7 cron jobs" inventory + per-cron last-run status; §19-I flipped to DONE; new §19-J opened for the actual operational gap (discovery cron payloads use a placeholder `GOOGLE_PLACES_API_KEY=***` so they will fail at execution even though registration is fine). Committed + pushed (pending this turn). | AGENT_PLAN.md | §19-J cron payload fix | user decision on env-var passing strategy (a/b/c) |
 
 | 2026-06-22 | GLM 5.2 | Phase 0+1+2: tool research, scaffold, docs, sample data, GitHub repo created & pushed | AGENT_PLAN.md, docs/*, data/*, logs/* | Start Phase 3 (lead discovery), get Yelp API key | Domain name, Yelp API key |
 | 2026-06-22 | browser-tool | Phase 3: Lead discovery for Cornwall, ON | data/leads.json, logs/agent-runs.md | Phase 4 - Lead Scoring | None |
@@ -1066,14 +1066,34 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 
 ### I. Operational cron jobs (discovered 2026-06-24)
 
-**Status:** STILL OPEN (2026-06-29). **The 2026-06-24 15:31 claim of "all 7 crons registered" was unverified.** `cron action=list` on 2026-06-29 09:44 EDT confirms only 1 cron is actually registered (`sitesprint-agent-plan-maintenance`). The 5 missing crons (discovery×3, weekly-planning, prototype-generation, email-drafting) remain referenced in plan docs but are NOT in the scheduler. Discovery is currently manual; prototype + outreach work has only happened ad-hoc.
+**Status:** DONE (2026-06-29 09:55 EDT, verified via `cron action=list` on user request "Re register"). All 7 crons are registered and enabled in the scheduler. The 09:44 plan-maintenance audit's claim of "1 cron only, 5 missing" was wrong — it misread the scheduler output, possibly because `cron action=list` returned a paginated/condensed view that day and only the daily maintenance job was obvious in the output. No actual re-registration needed; re-running `cron add` would have created duplicate-name jobs or clobbered existing payloads.
 
-**Why this matters:** The 2026-06-24 15:31 Dexter note said the audit cron "added the missing 6 to the scheduler within minutes of running" and "by 15:30 EDT all 7 were live." That was reported but not actually persisted. Future audits must verify with `cron action=list` BEFORE marking cron-related work DONE.
+**Why this matters:** When a future audit sees "cron count mismatch between file and scheduler," the correct first move is `cron action=get <jobId>` on each claimed job — not assume the file is right, and not assume the scheduler is right. Both have been wrong at different times.
 
-**Action needed (next session):**
-1. Decide: re-register the 5 missing operational crons (discovery×3, weekly-planning, prototype-generation, email-drafting), OR
-2. Update the plan to mark them as "not yet scheduled, run manually until <date>"
-3. Either way: §13 Progress Tracker "1 cron job" entry currently correctly reflects reality — leave as-is until decision made.
+**Lessons (carry into MEMORY.md next maintenance pass):**
+- Always run `cron action=list` *and* `cron action=get <id>` for each registered job when verifying a "cron count" claim.
+- The "still open" wording in §19-I was premature; the open question was always "did they actually fire?" not "are they registered?" — see §19-J for the execution-side follow-up that became the real open item.
+
+---
+
+### J. Cron payloads use a placeholder Google Places API key (discovered 2026-06-29)
+
+**Status:** OPEN.
+
+**What:** All three discovery cron payloads (`sitesprint-discovery-run1`, `-run2`, `-run3`) contain the literal string `GOOGLE_PLACES_API_KEY=***` in their `agentTurn.message`. That's a placeholder, not a real key — the commands will fail when the cron actually executes. The real `GOOGLE_PLACES_API_KEY` lives in `.env.local` on the host; the cron payload runs in an isolated agent session that does **not** inherit the host shell's env automatically.
+
+**Why this matters:** Discovery is the only cron pipeline that actually fetches new data. If it can't execute, the leads.json file just sits at 168 and slowly goes stale. Prototype-generation and email-drafting work on existing data so they can still produce useful output, but discovery is dead.
+
+**Action needed:**
+1. Confirm the canonical key location (host env vs. .env.local vs. agent-runtime env).
+2. Patch the three discovery cron payloads so the key is passed correctly. Options:
+   - **(a)** Move the key into the sitesprint agent's runtime env (one-time, cleanest).
+   - **(b)** Read from a path-based file (`scripts/run_with_key.sh` that `source`s .env.local, then exec the python).
+   - **(c)** Inline the key into the payload (least safe; only if we trust cron-payload storage).
+3. Run one discovery cron manually (`cron action=run --runMode force`) to confirm the fix works.
+4. Verify a new lead appears in `data/leads.json` and that Supabase sync fires.
+
+**Blocked on:** user decision on option (a) vs (b) vs (c).
 
 ---
 
