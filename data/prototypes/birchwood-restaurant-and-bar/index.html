@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birchwood Restaurant & Bar — Demo Preview</title>
+  <meta name="description" content="Unofficial preview concept for Birchwood Restaurant & Bar — restaurant in Cornwall.">
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    *,*::before,*::after { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; color: #1a1a1a; }
+    a { color: inherit; }
+    img { max-width: 100%; height: auto; }
+    .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+  </style>
+</head>
+<body>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #2c2c2c; line-height: 1.6; }
+  img { max-width: 100%; display: block; }
+  
+  /* Header Banner */
+  .demo-banner {
+    background: linear-gradient(90deg, #1a3a2e 0%, #2d5a3d 100%);
+    color: #f4d35e;
+    text-align: center;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #f4d35e;
+  }
+  
+  /* Header Nav */
+  header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a3a2e;
+    letter-spacing: 1px;
+  }
+  .logo span { color: #c9302c; }
+  header nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+  }
+  header nav a {
+    text-decoration: none;
+    color: #2c2c2c;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  header nav a:hover { color: #2d5a3d; }
+  
+  /* Hero */
+  .hero {
+    position: relative;
+    height: 85vh;
+    min-height: 500px;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('./images/hero.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    padding: 20px;
+  }
+  .hero-content { max-width: 800px; }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    margin-bottom: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+  .hero .tagline {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    margin-bottom: 35px;
+    font-style: italic;
+    opacity: 0.95;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: #c9302c;
+    color: #fff;
+    padding: 16px 40px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    border: none;
+    cursor: pointer;
+  }
+  .cta-btn:hover {
+    background: #a82824;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(201,48,44,0.3);
+  }
+  
+  /* Services */
+  .services {
+    padding: 80px 5%;
+    background: #f9f7f3;
+    text-align: center;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: #1a3a2e;
+    margin-bottom: 15px;
+  }
+  .section-subtitle {
+    color: #666;
+    margin-bottom: 50px;
+    font-size: 1.1rem;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .service-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  }
+  .service-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  .service-card h3 {
+    color: #1a3a2e;
+    margin: 20px 20px 10px;
+    font-size: 1.3rem;
+  }
+  .service-card p {
+    padding: 0 20px 25px;
+    color: #666;
+    font-size: 0.95rem;
+  }
+  
+  /* About */
+  .about {
+    padding: 80px 5%;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .about p {
+    font-size: 1.15rem;
+    color: #444;
+    line-height: 1.9;
+    margin-top: 20px;
+  }
+  .about-divider {
+    width: 60px;
+    height: 3px;
+    background: #c9302c;
+    margin: 20px auto 0;
+  }
+  
+  /* Book Call */
+  .book-call {
+    background: linear-gradient(135deg, #1a3a2e 0%, #2d5a3d 100%);
+    color: #fff;
+    padding: 70px 5%;
+    text-align: center;
+  }
+  .book-call h2 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    margin-bottom: 15px;
+  }
+  .book-call p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+  }
+  .cal-embed {
+    max-width: 900px;
+    margin: 40px auto 0;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+  }
+  .cal-placeholder {
+    padding: 40px;
+    text-align: center;
+  }
+  .cal-placeholder .icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+  }
+  
+  /* Footer */
+  footer {
+    background: #1a1a1a;
+    color: #999;
+    text-align: center;
+    padding: 25px 5%;
+    font-size: 14px;
+  }
+  footer a { color: #f4d35e; text-decoration: none; }
+  
+  /* Mobile */
+  @media (max-width: 768px) {
+    header nav ul { display: none; }
+    .hero { height: 70vh; }
+  }
+</style>
+
+<div class="demo-banner">Demo Preview — Claim this website to make it live</div>
+
+<header>
+  <nav>
+    <div class="logo">BIRCHWOOD<span>.</span></div>
+    <ul>
+      <li><a href="#services" onclick="alert('Claim this website to unlock the live version'); return false;">Menu</a></li>
+      <li><a href="#about" onclick="alert('Claim this website to unlock the live version'); return false;">About</a></li>
+      <li><a href="#book" onclick="alert('Claim this website to unlock the live version'); return false;">Reserve</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <h1>Birchwood Restaurant & Bar</h1>
+    <p class="tagline">Locally inspired cuisine & craft cocktails in the heart of Cornwall, Ontario</p>
+    <a href="#" class="cta-btn" onclick="alert('Claim this website to unlock the live version'); return false;">Claim this website to unlock</a>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <h2 class="section-title">What We Offer</h2>
+  <p class="section-subtitle">Fresh flavors, warm hospitality, unforgettable evenings</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <img src="./images/section_1.jpg" alt="Fine Dining">
+      <h3>Fine Dining</h3>
+      <p>Seasonal menus crafted from locally sourced ingredients, served in an intimate setting perfect for any occasion.</p>
+    </div>
+    <div class="service-card">
+      <img src="./images/section_2.jpg" alt="Craft Cocktails">
+      <h3>Craft Cocktails</h3>
+      <p>Signature drinks and classic cocktails mixed by our skilled bartenders, paired with an extensive wine list.</p>
+    </div>
+    <div class="service-card">
+      <img src="./images/section_1.jpg" alt="Private Events">
+      <h3>Private Events</h3>
+      <p>Host your special celebrations, corporate gatherings, and family milestones with customized menus and dedicated service.</p>
+    </div>
+    <div class="service-card">
+      <img src="./images/section_2.jpg" alt="Weekend Brunch">
+      <h3>Weekend Brunch</h3>
+      <p>Join us every Saturday and Sunday for a delicious brunch featuring sweet and savory favorites with a local twist.</p>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <h2 class="section-title">Our Story</h2>
+  <p>Birchwood Restaurant & Bar is a beloved local restaurant in Cornwall, Ontario, where community and cuisine come together. We're passionate about showcasing the best of our region's ingredients, supporting nearby farms and producers, and creating a welcoming space where friends, families, and visitors can enjoy exceptional food, handcrafted drinks, and the kind of warm hospitality that makes you feel right at home.</p>
+  <div class="about-divider"></div>
+</section>
+
+<section class="book-call" id="book">
+  <h2>Want to chat?</h2>
+  <p>Let's talk about how we can host your next memorable meal</p>
+  <a href="#" class="cta-btn" onclick="alert('Claim this website to unlock the live version'); return false;">Book a 5-min call</a>
+  <div class="cal-embed">
+    <div class="cal-placeholder">
+      <div class="icon">📅</div>
+      <h3>Cal.com Booking Calendar</h3>
+      <p style="margin-top:10px; color:#666;">Available time slots will appear here once the website is claimed.</p>
+      <button class="cta-btn" style="margin-top:20px;" onclick="alert('Claim this website to unlock the live version'); return false;">Schedule Now</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Concept by <a href="#" onclick="alert('Claim this website to unlock the live version'); return false;">SiteSprint</a> · Demo Preview</p>
+</footer>
+<div style="position:fixed;bottom:20px;right:20px;background:rgba(255,255,255,0.95);padding:8px 16px;border-radius:4px;font-size:12px;color:#666;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+  SiteSprint Preview · Birchwood Restaurant & Bar
+</div>
+</body>
+</html>

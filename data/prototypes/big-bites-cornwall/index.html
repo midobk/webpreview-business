@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Big Bites Cornwall — Demo Preview</title>
+  <meta name="description" content="Unofficial preview concept for Big Bites Cornwall — restaurant in Cornwall.">
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    *,*::before,*::after { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; color: #1a1a1a; }
+    a { color: inherit; }
+    img { max-width: 100%; height: auto; }
+    .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+  </style>
+</head>
+<body>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #222; line-height: 1.6; }
+  .watermark { background: repeating-linear-gradient(45deg, #ffd700, #ffd700 10px, #ffed4e 10px, #ffed4e 20px); color: #1a1a1a; text-align: center; padding: 8px; font-weight: 600; font-size: 14px; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #d4a800; }
+  .hero { position: relative; min-height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white; background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)), url('./images/hero.jpg') center/cover no-repeat; padding: 40px 20px; }
+  .hero-content { max-width: 800px; }
+  .hero h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); margin-bottom: 16px; font-weight: 800; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
+  .hero .tagline { font-size: clamp(1rem, 2.5vw, 1.4rem); margin-bottom: 32px; opacity: 0.95; }
+  .btn { display: inline-block; background: #e85d2c; color: white; padding: 16px 36px; text-decoration: none; border: none; border-radius: 50px; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(232, 93, 44, 0.4); }
+  .btn:hover { background: #c94a1f; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(232, 93, 44, 0.5); }
+  .btn-secondary { background: white; color: #e85d2c; }
+  .btn-secondary:hover { background: #f5f5f5; color: #c94a1f; }
+  section { padding: 80px 20px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); text-align: center; margin-bottom: 16px; color: #1a1a1a; }
+  .section-subtitle { text-align: center; max-width: 600px; margin: 0 auto 50px; color: #666; font-size: 1.05rem; }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+  .service-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .service-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.15); }
+  .service-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
+  .service-card-content { padding: 24px; }
+  .service-card h3 { font-size: 1.3rem; margin-bottom: 10px; color: #1a1a1a; }
+  .service-card p { color: #666; font-size: 0.95rem; }
+  .about { background: #f9f5f0; }
+  .about-content { max-width: 800px; margin: 0 auto; text-align: center; }
+  .about-content p { font-size: 1.1rem; color: #444; margin-bottom: 20px; }
+  .book-call { background: #1a1a1a; color: white; text-align: center; }
+  .book-call h2 { color: white; }
+  .book-call .section-subtitle { color: #aaa; }
+  .cal-embed { max-width: 900px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; }
+  .cal-embed iframe { width: 100%; height: 700px; border: none; display: block; }
+  footer { background: #0d0d0d; color: #999; text-align: center; padding: 30px 20px; font-size: 0.9rem; }
+  footer a { color: #e85d2c; text-decoration: none; }
+  @media (max-width: 600px) {
+    section { padding: 60px 20px; }
+    .hero { min-height: 70vh; }
+  }
+</style>
+
+<div class="watermark">Demo Preview — Claim this website to make it live</div>
+
+<header>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Big Bites Cornwall</h1>
+      <p class="tagline">Fresh flavors, hearty portions, and a taste of Cornwall's best local dining experience.</p>
+      <a href="#" class="btn" onclick="alert('Claim this website to unlock the live version'); return false;">Claim this website to unlock</a>
+    </div>
+  </section>
+</header>
+
+<section class="services">
+  <div class="container">
+    <h2>What We Serve</h2>
+    <p class="section-subtitle">From morning coffee to evening dinner, we've got your day covered.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <img src="./images/section_1.jpg" alt="Breakfast and brunch">
+        <div class="service-card-content">
+          <h3>Breakfast & Brunch</h3>
+          <p>Start your day right with our fluffy pancakes, fresh omelets, and signature morning platters.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="./images/section_2.jpg" alt="Lunch specials">
+        <div class="service-card-content">
+          <h3>Lunch Specials</h3>
+          <p>Quick, delicious midday meals featuring locally-sourced ingredients and house-made recipes.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="./images/section_1.jpg" alt="Dinner menu">
+        <div class="service-card-content">
+          <h3>Dinner Menu</h3>
+          <p>Elevated evening dining with chef-crafted dishes, premium cuts, and seasonal specialties.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="./images/section_2.jpg" alt="Catering services">
+        <div class="service-card-content">
+          <h3>Catering & Events</h3>
+          <p>Let us bring the flavor to your next gathering with custom catering packages for any occasion.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="container">
+    <div class="about-content">
+      <h2>About Big Bites Cornwall</h2>
+      <p style="margin-top: 24px;">Big Bites Cornwall is a beloved local restaurant nestled in the heart of Cornwall, Ontario. We're passionate about serving up fresh, flavorful meals made with quality ingredients and a whole lot of heart. Whether you're a longtime regular or a first-time visitor, our friendly team is dedicated to making every meal a memorable one. Come hungry, leave happy.</p>
+      <a href="#" class="btn" style="margin-top: 20px;" onclick="alert('Claim this website to unlock the live version'); return false;">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<section class="book-call">
+  <div class="container">
+    <h2>Want to chat?</h2>
+    <p class="section-subtitle">Book a quick 5-minute call with us to learn how we can serve you better.</p>
+    <a href="#" class="btn btn-secondary" style="margin-bottom: 40px;" onclick="alert('Claim this website to unlock the live version'); return false;">Book a 5-min call</a>
+    <div class="cal-embed">
+      <iframe src="https://cal.com/sitesprint/5min" loading="lazy" title="Book a 5-minute call"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Concept by <a href="#">SiteSprint</a> · Demo Preview</p>
+</footer>
+<div style="position:fixed;bottom:20px;right:20px;background:rgba(255,255,255,0.95);padding:8px 16px;border-radius:4px;font-size:12px;color:#666;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+  SiteSprint Preview · Big Bites Cornwall
+</div>
+</body>
+</html>
