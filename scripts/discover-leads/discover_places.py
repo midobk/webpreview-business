@@ -221,8 +221,11 @@ def main():
     api_key = get_api_key()
     region = os.environ.get("GOOGLE_PLACES_REGION", "ca").lower()
 
-    city = args.city.split(",")[0].strip()
-    province = args.city.split(",")[1].strip() if "," in args.city else ""
+    city = None
+    province = ""
+    if args.city:
+        city = args.city.split(",")[0].strip()
+        province = args.city.split(",")[1].strip() if "," in args.city else ""
 
     if args.test:
         industries = ["coffee shop"]
