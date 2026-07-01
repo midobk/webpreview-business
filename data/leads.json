@@ -31,10 +31,10 @@
     "contact_safety_status": "pending",
     "contact_safety_reasoning": "No public email found \u2014 would need phone contact or social DM",
     "created_at": "2026-06-22T00:00:00Z",
-    "updated_at": "2026-06-22T21:58:29.999855+00:00Z",
+    "updated_at": "2026-07-01T18:01:14.580138+00:00",
     "lead_score": 84,
     "score_reasoning": "No website (20), No public email (0), Basic info (8), Clear services (10), Simple landing-page fit (15), Moderate visual potential (8), Canada-based (10), Small business (10), Some social presence (3), No reviews data (0)",
-    "status": "ready_for_prototype"
+    "status": "email_drafted_pending_email"
   },
   {
     "id": "lead-002",
@@ -136,10 +136,10 @@
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
     "created_at": "2026-06-22T03:26:01.016366+00:00Z",
-    "updated_at": "2026-06-22T21:58:30.003942+00:00Z",
+    "updated_at": "2026-07-01T18:01:14.580359+00:00",
     "lead_score": 70,
     "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
-    "status": "ready_for_prototype"
+    "status": "email_drafted_pending_email"
   },
   {
     "id": "lead-005",
@@ -316,10 +316,10 @@
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
     "created_at": "2026-06-22T03:32:20.803951+00:00Z",
-    "updated_at": "2026-06-22T21:58:30.009875+00:00Z",
+    "updated_at": "2026-07-01T18:01:14.580524+00:00",
     "lead_score": 70,
     "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
-    "status": "ready_for_prototype"
+    "status": "email_drafted_pending_email"
   },
   {
     "id": "lead-011",
@@ -406,10 +406,10 @@
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
     "created_at": "2026-06-22T03:32:20.804024+00:00Z",
-    "updated_at": "2026-06-22T21:58:30.013001+00:00Z",
+    "updated_at": "2026-07-01T18:01:14.580653+00:00",
     "lead_score": 70,
     "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
-    "status": "ready_for_prototype"
+    "status": "email_drafted_pending_email"
   },
   {
     "id": "lead-014",
@@ -436,10 +436,10 @@
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
     "created_at": "2026-06-22T03:32:20.804039+00:00Z",
-    "updated_at": "2026-06-22T21:58:30.013730+00:00Z",
+    "updated_at": "2026-07-01T18:01:14.580777+00:00",
     "lead_score": 70,
     "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
-    "status": "ready_for_prototype"
+    "status": "email_drafted_pending_email"
   },
   {
     "id": "lead-015",
@@ -533,10 +533,10 @@
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
     "created_at": "2026-06-22T18:41:35.218297+00:00Z",
-    "updated_at": "2026-06-22T21:58:30.016937+00:00Z",
+    "updated_at": "2026-07-01T18:01:14.580903+00:00",
     "lead_score": 45,
     "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Complex landing-page fit (0), Some visual potential (5), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
-    "status": "flag_for_review"
+    "status": "email_drafted_pending_email"
   },
   {
     "id": "lead-018",
@@ -3854,10 +3854,10 @@
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
     "created_at": "2026-06-22T19:02:42.066057+00:00Z",
-    "updated_at": "2026-06-22T21:58:30.133313+00:00Z",
+    "updated_at": "2026-07-01T18:01:14.581035+00:00",
     "lead_score": 70,
     "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
-    "status": "ready_for_prototype"
+    "status": "email_drafted_pending_email"
   },
   {
     "id": "lead-106",
@@ -3891,10 +3891,10 @@
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
     "created_at": "2026-06-22T19:02:42.066093+00:00Z",
-    "updated_at": "2026-06-22T21:58:30.134746+00:00Z",
+    "updated_at": "2026-07-01T18:01:14.581184+00:00",
     "lead_score": 70,
     "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
-    "status": "ready_for_prototype"
+    "status": "email_drafted_pending_email"
   },
   {
     "id": "lead-107",
@@ -3928,10 +3928,10 @@
     "contact_safety_status": "pending",
     "contact_safety_reasoning": null,
     "created_at": "2026-06-22T19:02:42.066106+00:00Z",
-    "updated_at": "2026-06-22T21:58:30.136070+00:00Z",
+    "updated_at": "2026-07-01T18:01:14.581310+00:00",
     "lead_score": 70,
     "score_reasoning": "No website (20), No public email (0), Minimal info (0), Unclear services (0), Simple landing-page fit (15), Strong visual potential (15), Canada-based (10), Small business (10), No social presence (0), No reviews data (0)",
-    "status": "ready_for_prototype"
+    "status": "email_drafted_pending_email"
   },
   {
     "id": "lead-108",

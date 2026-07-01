@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "generated_at": "2026-07-01T13:00:54.561750+00:00Z",
+    "generated_at": "2026-07-01T18:01:23.449573+00:00Z",
     "data_sources": [
       "data/leads.json",
       "data/prototypes.json",
@@ -9,7 +9,7 @@
   },
   "total_leads": 168,
   "total_prototypes": 15,
-  "total_emails_drafted": 6,
+  "total_emails_drafted": 23,
   "total_emails_sent": 0,
   "total_replies": 0,
   "total_conversions": 0,
