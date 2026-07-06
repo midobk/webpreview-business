@@ -23,6 +23,13 @@ import urllib.request
 import urllib.error
 from datetime import datetime, timezone
 
+# Force UTF-8 stdout so em-dashes / non-ASCII place names don't crash on latin-1 consoles.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 API_BASE = "https://places.googleapis.com/v1/places:searchText"
 DETAILS_BASE = "https://places.googleapis.com/v1/places/{place_id}"
 
@@ -96,6 +103,19 @@ def get_api_key():
     if not key:
         print("ERROR: GOOGLE_PLACES_API_KEY env var is not set.", file=sys.stderr)
         sys.exit(1)
+    # Guard against placeholder/display values like "AIzaSy…Xezg" — the unicode
+    # ellipsis (…) is not valid in a real key and would crash urllib on the
+    # first request with a misleading 'latin-1 codec' error.
+    if "…" in key or "..." in key or len(key) < 20 or not key.startswith("AIza"):
+        print(
+            "ERROR: GOOGLE_PLACES_API_KEY looks like a placeholder/display value, not a real key.\n"
+            f"  Got: {key[:6]}…{key[-4:]} (len={len(key)})\n"
+            "  Expected: an AIzaSy… string of ~39 characters from the Google Cloud Console.\n"
+            "  → Open https://console.cloud.google.com/apis/credentials, copy the FULL key, "
+            "and update .env.local (then re-source it).",
+            file=sys.stderr,
+        )
+        sys.exit(2)
     return key
 
 

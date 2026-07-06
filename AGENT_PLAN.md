@@ -1414,3 +1414,97 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 - [x] **Telegram bot** — @MehdisWebsiteBuilderBot (token 863439…rpWA), bound to sitesprint agent, accountId=sitesprint.
 - [x] **1 cron job live** — only `sitesprint-agent-plan-maintenance` is registered + enabled in the scheduler. **The other 6 (prototype-generation, email-drafting, discovery-run1/2/3, sitesprint-weekly-planning) are NOT scheduled** — §19-I still open as priority #1. **DO NOT** mark this as DONE in §13 again until `cron action=list` returns 7.
 - [x] **UX audit pass (2026-06-23)** — Auditing-website-usability skill installed; ran on running app, fixed all C1–C3, H1–H6, M1–M7, L1–L4. Production build verified clean. See §18 for full changelog.
+
+---
+
+## 21. Weekly Planning — 2026-07-06 (Mon, Week 2)
+
+**Trigger:** `sitesprint-weekly-planning` cron, scheduled Mon 10:00 America/Toronto.
+
+### Honest state of the project (delta vs. Week 1)
+
+- **Leads:** 168 (unchanged from Week 1). 167 Cornwall, 1 Tangier. **Still single-geography.**
+- **Leads by status:** 121 `flag_for_review`, 19 `pending_review`, 15 `ready_for_prototype`, 9 `email_drafted_pending_email`, 3 `email_drafted`, 1 `ignore`. 27 leads are in the "warm" funnel buckets vs. 26 last week (one lead moved from `ready_for_prototype` to `email_drafted_pending_email`).
+- **Prototypes:** 15 (14 completed, 1 pending). +5 since 2026-06-29.
+- **Outreach:** 23 entries (12 email + 11 SMS, all `drafted`, **zero sent**). +17 since 2026-06-29 (the 2026-07-01 "Weekly email drafting cycle" commit `52934e6` did 9 email + 8 SMS).
+- **Cron scheduler:** still 1 job live (`sitesprint-weekly-planning`, this job). §19-I still open. No new crons created this week.
+- **Live site:** `webpreview-business.vercel.app` HTTP 200 (unchanged).
+
+### 🚨 NEW FINDING — `GOOGLE_PLACES_API_KEY` is a placeholder, not a real key
+
+While preparing a Tier-1 city expansion (Ottawa, Kingston) I ran:
+
+```
+$ python3 scripts/discover-leads/discover_places.py --city "Ottawa, Ontario" --industry "barber"
+ERROR for 'barber': 'latin-1' codec can't encode character '\u2026' in position 6: ordinal not in range(256)
+SUMMARY
+API requests used: 0
+Estimated cost: $0.00
+No new leads found.
+Monthly budget: ~$0.00 of $10.00 target
+```
+
+Traced via wrapping `http.client.HTTPConnection.putheader` → the unicode `…` (U+2026) is in the **X-Goog-Api-Key header itself**, not in a place name. `.env.local` contains:
+
+```
+GOOGLE_PLACES_API_KEY=AIzaSy…Xezg
+```
+
+Length = 11 chars. The literal `…` is a display ellipsis, not a valid API key character. The real Google Places API key is ~39 characters and would never contain `…`. **The Places API has never actually been called successfully. The 168 leads all came from the `discover_browser.py` browser-based path, not the API.** The "Monthly budget: ~$0.00" line was literally true.
+
+**Implication for the credit estimate:** "~$2-5 used of $415" from last week's report was wrong. **Real spend: $0.** The $415 trial credit is fully intact and unused.
+
+**Implication for the cron story:** the discovery cron payloads (referenced in §13 + §19-J) probably never worked end-to-end. They would have hit this same error and silently returned "0 leads, $0.00" — meaning even if the 6 missing crons are re-registered, they won't produce leads without a real key.
+
+**This is a higher-priority blocker than the missing crons or AgentMail.** Without a real Places API key, geographic expansion is impossible.
+
+### Credit estimate (corrected)
+
+- **Trial:** $415, started 2026-06-22, expires 2026-09-21 (76 days remaining as of 2026-07-06).
+- **Used so far:** $0 (browser-based discovery uses Playwright + Google Maps web UI, which is free; only the API path costs money).
+- **Remaining:** $415 (effectively untouched).
+- **Verdict:** spending is exactly $0 — not because we have plenty of headroom, but because the API path is non-functional. The "spend more on discovery once we can send emails" framing from last week is still right, but the "once" gate is now "once we have a real key AND can send emails."
+
+### Product improvement shipped this week
+
+1. **`scripts/discover-leads/discover_places.py` hardening** (commit pending, in this session):
+   - Added `get_api_key()` guard that detects placeholder/display values (`…`, `...`, length < 20, wrong prefix) and exits with a clear error pointing to the Google Cloud Console. The previous behavior was a cryptic `latin-1 codec` error from `http.client.putheader`, which read as a generic network bug.
+   - Added `sys.stdout/stderr.reconfigure(encoding="utf-8")` at script start, so future scripts with em-dashes / non-ASCII place names don't crash on latin-1 consoles.
+   - **Verified:** running with the current placeholder key now prints a clear "looks like a placeholder" error and exits with code 2. The fix is a no-op for the Vercel/deployed env if the real key is set there.
+
+### Product improvement skipped on purpose
+
+- **Landing page polish / A/B test / new hero section** — last week's lesson stands. Token-burning UI work doesn't unblock the funnel when the funnel is closed at "no real API key" and "no AgentMail key."
+- **Generate new prototype via `image_generate`** — pointless. We already have 14 completed prototypes sitting on disk and the showcase filter is correctly excluding 12 of them (only 2 are `showcase_approved`). Adding more prototypes doesn't help conversion until we can actually email them.
+- **Showcase page tweaks** — current page is well-structured, industry chips work, anonymization is enforced server-side. No change needed.
+
+### Cron management this turn
+
+- **No cron actions.** The §19-I gap is the same as last week: 6 operational crons (prototype-generation, email-drafting, discovery-run1/2/3, sitesprint-weekly-planning) are not registered. I am not going to register them autonomously this week for the same reason as last week:
+  1. The discovery crons are useless until the real Google Places API key is in `.env.local` (see finding above).
+  2. The email-drafting cron is useless until `AGENTMAIL_API_KEY` is set.
+  3. The prototype-generation cron already runs in the same week as manual cycles (commit `867b315` for 5 prototypes on 2026-06-30, commit `52934e6` for 17 outreach drafts on 2026-07-01) — the cadence is healthy enough that registering a cron is theater.
+- **What I will do next week once a real API key + AgentMail key are in place:** register the 3 discovery crons (one per Tier-1 city batch: Ottawa, Kingston, Belleville) + 1 prototype-generation cron + 1 outreach cron. That's 5 crons; combined with the 2 already live (this weekly-planning job + `sitesprint-agent-plan-maintenance`), that gets us to 7 — closing §19-I for real.
+
+### Pre-existing build issue (not mine)
+
+- `npm run build` fails with 13 × `Module not found: Can't resolve 'motion/react'`. The `motion` package is in `package.json` and `package-lock.json` but missing from `node_modules/`. Likely a partial `npm ci` at some point. **Not related to my changes this session.** Surfacing here so the user is aware; will fix in a follow-up turn if the user wants the production build green.
+
+### Next week's prioritized lever list (in strict order)
+
+1. **User action: replace the placeholder `GOOGLE_PLACES_API_KEY` in `.env.local` with the real key** from https://console.cloud.google.com/apis/credentials. Without this, geographic expansion is impossible and all "spend more on discovery" plans are moot. (One-time fix.)
+2. **User action: provision `AGENTMAIL_API_KEY`** so the 23 drafted outreach entries can be sent. (One env var + provider setup.)
+3. **Then:** register 5 missing crons once 1+2 are done.
+4. **Then:** re-run discovery for Ottawa + Kingston + Belleville (Tier-1 cities, ~$2-5 spend expected).
+5. **Then:** first batch of real sends (3 highest-confidence leads: Bella's Hair Studio, Seaway Cleaning Services, Big Bites Cornwall — all have prototypes + emails).
+
+### Files touched this session
+
+- `scripts/discover-leads/discover_places.py` — placeholder-key guard + utf-8 stdout (20 lines added).
+- `AGENT_PLAN.md` — this §21 entry.
+- (No `.env.local` change — I will not touch credentials without explicit user instruction.)
+
+### Screenshots / artifacts
+
+- None this session. Build issue prevented `npm run dev` verification, so no UI changes to verify.
+
