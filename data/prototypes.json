@@ -519,5 +519,26 @@
     "showcase_anonymized_html_path": "data/prototypes-anonymized/northwind-ecommerce/index.html",
     "created_at": "2026-07-09T15:24:00Z",
     "updated_at": "2026-07-09T15:24:00Z"
+  },
+  {
+    "id": "proto-catalyst-online-course",
+    "lead_id": null,
+    "industry": "online_course",
+    "prototype_url": "data/prototypes-anonymized/catalyst-online-course/index.html",
+    "screenshot_url": "/prototype-screenshots/catalyst-online-course-desktop.png",
+    "title": "Unfold — Preview",
+    "design_summary": "Cohort-based online course landing: floating-shape hero (6 drifting gradients), three-card promise grid, six-week curriculum timeline with alternating left/right cards, instructor story with metrics, three-card testimonial grid, accordion FAQ, three-tier pricing, lavender + purple/pink palette.",
+    "prototype_score": 91,
+    "generation_status": "completed",
+    "watermark_enabled": true,
+    "demo_locked": true,
+    "showcase_eligible": true,
+    "showcase_approved": true,
+    "anonymized": true,
+    "showcase_score": 91,
+    "showcase_issues": [],
+    "showcase_anonymized_html_path": "data/prototypes-anonymized/catalyst-online-course/index.html",
+    "created_at": "2026-07-09T15:24:00Z",
+    "updated_at": "2026-07-09T15:24:00Z"
   }
 ]
