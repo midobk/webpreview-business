@@ -7,12 +7,26 @@ interface PreviewPageProps {
   params: Promise<{ slug: string }>;
 }
 
+/**
+ * Lookup order — historically the directory was `data/prototypes/`. After the
+ * playground-vetting workflow (plan_03446241) we standardised on
+ * `data/prototypes-anonymized/` for new prototypes, but older entries still
+ * live in the legacy directory. Try both so a slug served by `/showcase`
+ * always resolves to a real HTML file.
+ */
+function resolvePrototypePath(slug: string): string | null {
+  const candidates = [
+    path.join(process.cwd(), 'data', 'prototypes-anonymized', slug, 'index.html'),
+    path.join(process.cwd(), 'data', 'prototypes', slug, 'index.html'),
+  ];
+  return candidates.find((p) => fs.existsSync(p)) ?? null;
+}
+
 export default async function PreviewPage({ params }: PreviewPageProps) {
   const { slug } = await params;
 
-  const prototypePath = path.join(process.cwd(), 'data', 'prototypes', slug, 'index.html');
-
-  if (!fs.existsSync(prototypePath)) {
+  const prototypePath = resolvePrototypePath(slug);
+  if (!prototypePath) {
     notFound();
   }
 
@@ -34,18 +48,24 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
 }
 
 export async function generateStaticParams() {
-  const prototypesDir = path.join(process.cwd(), 'data', 'prototypes');
-  
-  if (!fs.existsSync(prototypesDir)) {
-    return [];
+  // Enumerate both directories so production builds pre-render every slug
+  // referenced by the showcase. Deduplicate so a slug that lives in both
+  // (e.g. seaway-cleaning-services) doesn't get emitted twice.
+  const dirs = [
+    path.join(process.cwd(), 'data', 'prototypes-anonymized'),
+    path.join(process.cwd(), 'data', 'prototypes'),
+  ];
+  const slugs = new Set<string>();
+  for (const dir of dirs) {
+    if (!fs.existsSync(dir)) continue;
+    try {
+      const entries = await readdir(dir, { withFileTypes: true });
+      for (const d of entries) {
+        if (d.isDirectory()) slugs.add(d.name);
+      }
+    } catch {
+      // Ignore unreadable dirs.
+    }
   }
-
-  try {
-    const entries = await readdir(prototypesDir, { withFileTypes: true });
-    return entries
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => ({ slug: dirent.name }));
-  } catch {
-    return [];
-  }
+  return Array.from(slugs).map((slug) => ({ slug }));
 }
