@@ -20,6 +20,14 @@ const INDUSTRY_LABELS: Record<string, string> = {
   landscaper: 'Landscaping Service',
   tutor: 'Private Tutor Service',
   retail: 'Local Retail Store',
+  saas: 'Modern SaaS Product',
+  real_estate: 'Modern Real Estate Brokerage',
+  dental_clinic: 'Modern Dental Studio',
+  fitness_gym: 'Modern Fitness Studio',
+  law_firm: 'Modern Law Firm',
+  home_services: 'Modern Home Services',
+  ecommerce_product: 'Modern E-commerce Brand',
+  online_course: 'Modern Online Course',
   default: 'Local Service Business',
 };
 
@@ -61,15 +69,15 @@ interface Lead {
   province: string;
 }
 
-function anonymizeTitle(prototype: Prototype, lead?: Lead): string {
-  const industry = lead?.industry ?? 'default';
-  const baseLabel = INDUSTRY_LABELS[industry] || INDUSTRY_LABELS.default;
+function anonymizeTitle(prototype: Prototype, lead?: Lead, industry?: string): string {
+  const resolved = industry ?? lead?.industry ?? 'default';
+  const baseLabel = INDUSTRY_LABELS[resolved] || INDUSTRY_LABELS.default;
   return `${baseLabel} Landing Page`;
 }
 
-function taglineFor(prototype: Prototype, lead?: Lead): string {
-  const industry = lead?.industry ?? 'default';
-  return INDUSTRY_TAGLINES[industry] || INDUSTRY_TAGLINES.default;
+function taglineFor(prototype: Prototype, lead?: Lead, industry?: string): string {
+  const resolved = industry ?? lead?.industry ?? 'default';
+  return INDUSTRY_TAGLINES[resolved] || INDUSTRY_TAGLINES.default;
 }
 
 async function loadShowcase(): Promise<
@@ -106,11 +114,15 @@ async function loadShowcase(): Promise<
 
   return visible.map((p) => {
     const lead = leadsById.get(p.lead_id);
+    // Resolve industry from the prototype first (playground / orphan prototypes
+    // have lead_id: null), then the lead, then fall back to 'default'.
+    const industry: string =
+      (p as any).industry ?? lead?.industry ?? 'default';
     return {
       id: p.id,
-      anonymizedTitle: anonymizeTitle(p, lead),
-      tagline: taglineFor(p, lead),
-      industry: lead?.industry ?? 'default',
+      anonymizedTitle: anonymizeTitle(p, lead, industry),
+      tagline: taglineFor(p, lead, industry),
+      industry,
       prototypeUrl: p.prototype_url,
       screenshotUrl: p.screenshot_url,
       prototypeScore: p.prototype_score,

@@ -31,6 +31,14 @@ const INDUSTRY_LABELS: Record<string, string> = {
   landscaper: 'Landscaping',
   tutor: 'Tutor',
   retail: 'Retail',
+  saas: 'SaaS',
+  real_estate: 'Real Estate',
+  dental_clinic: 'Dental Clinic',
+  fitness_gym: 'Fitness Gym',
+  law_firm: 'Law Firm',
+  home_services: 'Home Services',
+  ecommerce_product: 'E-commerce',
+  online_course: 'Online Course',
   default: 'Other',
 };
 
@@ -45,6 +53,15 @@ const INDUSTRY_COLORS: Record<string, string> = {
   landscaper: 'bg-[#E1EED7] text-[#2F5A1F]',
   tutor: 'bg-[#EFE4F4] text-[#5B2A66]',
   retail: 'bg-[#F8E1E1] text-[#7A2A2A]',
+  // New playground prototypes — warm-print palette, distinct from neighbors.
+  saas: 'bg-[#E0E4F0] text-[#2C3E70]',
+  real_estate: 'bg-[#F4E5D4] text-[#7A4F2C]',
+  dental_clinic: 'bg-[#D9EEEA] text-[#1F5C55]',
+  fitness_gym: 'bg-[#E5EDD8] text-[#3D5A1F]',
+  law_firm: 'bg-[#DCE3EE] text-[#1A2A50]',
+  home_services: 'bg-[#E0E8F5] text-[#0E3A7A]',
+  ecommerce_product: 'bg-[#F8E0DC] text-[#9B3A2A]',
+  online_course: 'bg-[#ECE0F2] text-[#5A2A7A]',
   default: 'bg-mist text-steel',
 };
 
@@ -148,6 +165,9 @@ function ShowcaseCard({ item }: { item: Item }) {
   return (
     <motion.article
       layout
+      initial="hidden"
+      animate="visible"
+      exit="exit"
       variants={gridCard}
       whileHover={reduce ? undefined : { y: -4 }}
       transition={{ type: 'spring', stiffness: 300, damping: 22 }}
