@@ -456,5 +456,26 @@
     "showcase_anonymized_html_path": "data/prototypes-anonymized/summit-fitness-gym/index.html",
     "created_at": "2026-07-09T15:24:00Z",
     "updated_at": "2026-07-09T15:24:00Z"
+  },
+  {
+    "id": "proto-meridian-law-firm",
+    "lead_id": null,
+    "industry": "law_firm",
+    "prototype_url": "data/prototypes-anonymized/meridian-law-firm/index.html",
+    "screenshot_url": "/prototype-screenshots/meridian-law-firm-desktop.png",
+    "title": "Holloway & Vance — Preview",
+    "design_summary": "Formal law firm: utility bar, split hero with 6-field consultation form, navy awards strip, six-cell practice-area grid, three-attorney profile block, four-stat strip, navy testimonial callout, contact CTA.",
+    "prototype_score": 94,
+    "generation_status": "completed",
+    "watermark_enabled": true,
+    "demo_locked": true,
+    "showcase_eligible": true,
+    "showcase_approved": true,
+    "anonymized": true,
+    "showcase_score": 94,
+    "showcase_issues": [],
+    "showcase_anonymized_html_path": "data/prototypes-anonymized/meridian-law-firm/index.html",
+    "created_at": "2026-07-09T15:24:00Z",
+    "updated_at": "2026-07-09T15:24:00Z"
   }
 ]

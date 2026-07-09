@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Holloway & Vance — Attorneys at Law</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--ink:#1a1a1a;--paper:#f7f5f0;--navy:#0e2240;--gold:#b8924b;--gold-light:#d4b674;--muted:#5a5a5a;--line:rgba(26,26,26,.12)}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Libre Caslon Text','Georgia',serif;-webkit-font-smoothing:antialiased;line-height:1.6}
+  .sans{font-family:'Inter',-apple-system,sans-serif}
+  a{color:inherit;text-decoration:none}
+
+  .container{max-width:1280px;margin:0 auto;padding:0 32px}
+
+  /* TOP UTILITY */
+  .utility{background:var(--ink);color:#fff;padding:8px 0;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.05em}
+  .utility .container{display:flex;justify-content:space-between;align-items:center}
+  .utility a{opacity:.7;transition:opacity .2s;margin-left:24px}
+  .utility a:hover{opacity:1}
+
+  /* NAV */
+  nav{padding:20px 0;border-bottom:1px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);background:rgba(247,245,240,.95)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:14px}
+  .brand-mark{width:50px;height:50px;border:2px solid var(--navy);display:flex;align-items:center;justify-content:center;font-family:'Libre Caslon Text',serif;font-size:22px;font-weight:700;color:var(--navy);position:relative}
+  .brand-mark::before{content:"";position:absolute;inset:4px;border:1px solid var(--gold)}
+  .brand-text{font-size:20px;font-weight:700;letter-spacing:.02em;line-height:1.1}
+  .brand-text small{display:block;font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-top:2px}
+  .nav-links{display:flex;gap:32px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500}
+  .nav-links a{padding:6px 0;position:relative}
+  .nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s;transform-origin:left}
+  .nav-links a:hover::after{transform:scaleX(1)}
+  .nav-cta{padding:12px 24px;background:var(--navy);color:#fff;font-family:'Inter',sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;transition:background .3s}
+  .nav-cta:hover{background:var(--gold)}
+
+  /* HERO - Traditional split with formal tone */
+  .hero{padding:60px 0 100px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(184,146,75,.15),transparent 60%);top:-200px;right:-150px}
+  .hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:60px;align-items:start}
+  .eyebrow{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:12px;font-weight:600}
+  .eyebrow::before{content:"";width:30px;height:2px;background:var(--gold)}
+  h1{font-size:clamp(40px,5vw,68px);line-height:1.1;letter-spacing:-.02em;font-weight:700;margin-bottom:30px;color:var(--navy)}
+  h1 em{font-style:italic;color:var(--gold);font-weight:400}
+  .lede{font-size:19px;color:var(--muted);margin-bottom:40px;line-height:1.7;max-width:560px}
+  .hero-cta{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:40px}
+  .btn{padding:14px 28px;font-family:'Inter',sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;transition:all .3s;display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer}
+  .btn-solid{background:var(--navy);color:#fff}
+  .btn-solid:hover{background:var(--gold)}
+  .btn-outline{background:transparent;color:var(--navy);border:1px solid var(--navy)}
+  .btn-outline:hover{background:var(--navy);color:#fff}
+  .credentials{display:flex;gap:30px;padding-top:30px;border-top:1px solid var(--line);font-family:'Inter',sans-serif}
+  .cred{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+  .cred .badge{width:36px;height:36px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--navy);font-size:11px}
+  .cred strong{display:block;color:var(--ink);font-size:13px}
+  .cred small{display:block;font-size:11px;color:var(--muted)}
+
+  /* CONSULTATION FORM CARD */
+  .consult-card{background:#fff;border:1px solid var(--line);padding:40px;box-shadow:0 30px 60px -20px rgba(26,26,26,.15);position:relative}
+  .consult-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--navy),var(--gold),var(--navy))}
+  .consult-card h3{font-size:24px;font-weight:700;color:var(--navy);margin-bottom:6px;letter-spacing:-.01em}
+  .consult-card h3+p{font-family:'Inter',sans-serif;font-size:13px;color:var(--muted);margin-bottom:24px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+  .form-group{margin-bottom:14px}
+  .form-group label{display:block;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:600}
+  .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 14px;background:var(--paper);border:1px solid var(--line);font-family:'Inter',sans-serif;font-size:14px;color:var(--ink);outline:0;transition:border-color .2s;font-family:inherit}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold)}
+  .form-group textarea{resize:vertical;min-height:80px}
+  .form-submit{width:100%;padding:14px;background:var(--navy);color:#fff;font-family:'Inter',sans-serif;font-size:13px;letter-spacing:.15em;text-transform:uppercase;transition:background .3s;border:0;cursor:pointer;font-weight:600}
+  .form-submit:hover{background:var(--gold)}
+  .form-foot{font-family:'Inter',sans-serif;font-size:11px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.5}
+  .form-foot .lock{display:inline-flex;align-items:center;gap:6px;margin-bottom:6px}
+
+  /* AWARDS STRIP */
+  .awards{background:var(--navy);color:#fff;padding:50px 0;position:relative;overflow:hidden}
+  .awards::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'><defs><pattern id='p' width='30' height='30' patternUnits='userSpaceOnUse'><circle cx='15' cy='15' r='1' fill='%23ffffff' opacity='.05'/></pattern></defs><rect width='400' height='400' fill='url(%23p)'/></svg>")}
+  .awards .container{position:relative;z-index:1}
+  .awards-row{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;align-items:center}
+  .award{text-align:center;padding:20px;border-left:1px solid rgba(255,255,255,.15)}
+  .award:first-child{border-left:0}
+  .award .rank{font-size:60px;font-weight:700;line-height:1;letter-spacing:-.04em;color:var(--gold);font-style:italic}
+  .award .name{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-top:10px;opacity:.7}
+
+  /* PRACTICE AREAS */
+  .practice{padding:100px 0}
+  .section-head{text-align:center;margin-bottom:60px;max-width:700px;margin-left:auto;margin-right:auto}
+  .section-head h2{font-size:clamp(36px,4vw,56px);font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--navy);margin-bottom:20px}
+  .section-head h2 em{font-style:italic;color:var(--gold);font-weight:400}
+  .section-head p{font-family:'Inter',sans-serif;font-size:16px;color:var(--muted);line-height:1.7}
+
+  .practice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+  .practice-item{padding:40px 32px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff;transition:background .3s;position:relative}
+  .practice-item:hover{background:var(--paper)}
+  .practice-item .num{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--gold);margin-bottom:20px}
+  .practice-item .ico{width:50px;height:50px;display:flex;align-items:center;justify-content:center;border:1px solid var(--gold);color:var(--navy);margin-bottom:24px;transition:background .3s,color .3s}
+  .practice-item:hover .ico{background:var(--navy);color:#fff}
+  .practice-item h3{font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--navy);margin-bottom:12px}
+  .practice-item p{font-family:'Inter',sans-serif;font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px}
+  .practice-item .more{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--navy);display:inline-flex;align-items:center;gap:8px}
+  .practice-item .more::after{content:"→";transition:transform .3s}
+  .practice-item:hover .more::after{transform:translateX(4px)}
+
+  /* ATTORNEYS */
+  .attorneys{padding:100px 0;background:var(--ink);color:#fff}
+  .attorneys .section-head h2{color:#fff}
+  .attorneys .section-head p{color:rgba(255,255,255,.7)}
+  .attorneys .section-head .eyebrow{color:var(--gold-light)}
+  .attorneys .section-head .eyebrow::before{background:var(--gold-light)}
+  .att-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:0;border-top:1px solid rgba(255,255,255,.1)}
+  .attorney{padding:0;border-right:1px solid rgba(255,255,255,.1);position:relative;cursor:pointer;transition:background .3s}
+  .attorney:last-child{border-right:0}
+  .attorney:hover{background:rgba(255,255,255,.03)}
+  .attorney-photo{height:340px;background:linear-gradient(180deg,#3a3a3a,#1a1a1a);position:relative;overflow:hidden}
+  .attorney-photo::before{content:"";position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60%;height:80%;background:radial-gradient(ellipse,rgba(184,146,75,.3),transparent 70%)}
+  .attorney-photo::after{content:"";position:absolute;bottom:30%;left:50%;transform:translateX(-50%);width:30%;height:50%;background:rgba(255,255,255,.1);border-radius:50% 50% 0 0}
+  .attorney-photo .frame{position:absolute;inset:30px;border:1px solid rgba(255,255,255,.15)}
+  .attorney-info{padding:30px}
+  .attorney-info h3{font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
+  .attorney-info .role{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-light);margin-bottom:16px}
+  .attorney-info p{font-family:'Inter',sans-serif;font-size:14px;line-height:1.7;opacity:.7;margin-bottom:20px}
+  .attorney-info .more{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-light);display:inline-flex;align-items:center;gap:6px}
+
+  /* STATS */
+  .stats{padding:80px 0;background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;text-align:center}
+  .stat .num{font-size:clamp(40px,5vw,64px);font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--navy);font-style:italic}
+  .stat .lbl{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+
+  /* TESTIMONIAL */
+  .testimonial{padding:120px 0;background:var(--navy);color:#fff;position:relative;overflow:hidden}
+  .testimonial::before{content:"";position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(184,146,75,.15),transparent 60%);top:-200px;left:-200px}
+  .testimonial-inner{max-width:880px;margin:0 auto;text-align:center;position:relative;z-index:1}
+  .quote-mark{font-size:120px;line-height:.5;color:var(--gold);font-family:Georgia,serif;margin-bottom:20px}
+  .testimonial blockquote{font-size:clamp(22px,2.5vw,32px);line-height:1.4;letter-spacing:-.01em;font-style:italic;margin-bottom:30px;font-weight:400}
+  .testimonial cite{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-light);font-style:normal}
+  .testimonial cite b{display:block;font-size:16px;font-weight:600;font-family:'Libre Caslon Text',serif;font-style:normal;letter-spacing:0;text-transform:none;margin-bottom:4px;color:#fff}
+
+  /* CTA */
+  .cta-band{padding:100px 0;background:var(--paper);text-align:center}
+  .cta-band h2{font-size:clamp(36px,4.5vw,56px);font-weight:700;letter-spacing:-.02em;color:var(--navy);margin-bottom:18px;line-height:1.1}
+  .cta-band h2 em{font-style:italic;color:var(--gold);font-weight:400}
+  .cta-band p{font-family:'Inter',sans-serif;font-size:17px;color:var(--muted);max-width:560px;margin:0 auto 30px;line-height:1.7}
+  .cta-band-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .cta-info{display:flex;gap:30px;justify-content:center;margin-top:50px;padding-top:40px;border-top:1px solid var(--line);font-family:'Inter',sans-serif;font-size:14px;color:var(--muted);flex-wrap:wrap}
+  .cta-info strong{color:var(--ink);display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:6px}
+
+  /* FOOTER */
+  footer{padding:60px 0 30px;background:#0a0a0a;color:#fff}
+  .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px;margin-bottom:40px}
+  .foot-grid h4{font-family:'Inter',sans-serif;font-size:13px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:18px;color:var(--gold-light);font-weight:600}
+  .foot-grid a{display:block;padding:6px 0;font-family:'Inter',sans-serif;font-size:14px;opacity:.7;transition:opacity .2s}
+  .foot-grid a:hover{opacity:1}
+  .foot-grid p{font-family:'Inter',sans-serif;font-size:14px;opacity:.7;line-height:1.7;max-width:300px;margin-top:14px}
+  .foot-bottom{font-family:'Inter',sans-serif;font-size:12px;opacity:.5;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
+
+  @media (max-width:900px){
+    .utility .container>span{display:none}
+    .nav-links{display:none}
+    .hero{padding:40px 0 60px}
+    .hero-grid{grid-template-columns:1fr;gap:40px}
+    .consult-card{padding:30px 20px}
+    .form-row{grid-template-columns:1fr}
+    .awards-row{grid-template-columns:1fr 1fr;gap:20px}
+    .award{border-left:0;border-top:1px solid rgba(255,255,255,.15);padding-top:30px}
+    .award:first-child,.award:nth-child(2){border-top:0;padding-top:0}
+    .practice-grid{grid-template-columns:1fr}
+    .att-grid{grid-template-columns:1fr}
+    .attorney{border-right:0;border-bottom:1px solid rgba(255,255,255,.1)}
+    .attorney:last-child{border-bottom:0}
+    .stats-grid{grid-template-columns:1fr 1fr;gap:30px}
+    .foot-grid{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="utility">
+  <div class="container">
+    <span>Available 24/7 for emergencies · Free initial consultation</span>
+    <span>
+      <a href="#">Call (212) 555-0142</a>
+      <a href="#">client@hollowayvance.com</a>
+    </span>
+  </div>
+</div>
+
+<nav>
+  <div class="container nav-inner">
+    <a class="brand" href="#">
+      <div class="brand-mark">H&V</div>
+      <div class="brand-text">Holloway &amp; Vance<small>Attorneys at Law · Est. 1987</small></div>
+    </a>
+    <div class="nav-links">
+      <a href="#">Practice Areas</a>
+      <a href="#">Our Attorneys</a>
+      <a href="#">Case Results</a>
+      <a href="#">Insights</a>
+      <a href="#">About</a>
+    </div>
+    <a class="nav-cta" href="#consult">Free Consultation</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">39 years of trusted advocacy</div>
+      <h1>When the stakes are <em>high</em>, experience matters.</h1>
+      <p class="lede">Holloway &amp; Vance is a boutique litigation firm representing businesses, families, and individuals in complex matters across New York, New Jersey, and Connecticut. We don't take every case — only the ones we can win.</p>
+      <div class="hero-cta">
+        <a class="btn btn-solid" href="#consult">Schedule consultation →</a>
+        <a class="btn btn-outline" href="#">Read our case results</a>
+      </div>
+      <div class="credentials">
+        <div class="cred">
+          <div class="badge">AV</div>
+          <div><strong>AV Preeminent</strong><small>Martindale-Hubbell</small></div>
+        </div>
+        <div class="cred">
+          <div class="badge">★</div>
+          <div><strong>5.0 / 5.0</strong><small>Client rating</small></div>
+        </div>
+        <div class="cred">
+          <div class="badge">$2B</div>
+          <div><strong>$2.4B</strong><small>Recovered since 1987</small></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="consult-card" id="consult">
+      <h3>Request a free consultation</h3>
+      <p>Confidential. We respond within 4 business hours.</p>
+      <form onsubmit="event.preventDefault(); alert('Thank you. A partner will contact you within 4 business hours.')">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First name</label>
+            <input type="text" placeholder="Sarah" required>
+          </div>
+          <div class="form-group">
+            <label>Last name</label>
+            <input type="text" placeholder="Mitchell" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" placeholder="(212) 555-0100" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Matter type</label>
+          <select required>
+            <option value="">Select your matter…</option>
+            <option>Commercial Litigation</option>
+            <option>Family Law / Divorce</option>
+            <option>Estate Planning / Probate</option>
+            <option>Real Estate Disputes</option>
+            <option>Personal Injury</option>
+            <option>Employment / Wrongful Termination</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Brief description (optional)</label>
+          <textarea placeholder="A few sentences about your situation…"></textarea>
+        </div>
+        <button type="submit" class="form-submit">Request my consultation</button>
+        <div class="form-foot">
+          <div class="lock">🔒 Your information is protected by attorney-client privilege</div>
+          By submitting, you agree to our privacy policy. We never share your data.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="awards">
+  <div class="container">
+    <div class="awards-row">
+      <div class="award"><div class="rank">Tier 1</div><div class="name">Best Lawyers 2026</div></div>
+      <div class="award"><div class="rank">A+</div><div class="name">BBB Rating</div></div>
+      <div class="award"><div class="rank">Top 100</div><div class="name">Super Lawyers</div></div>
+      <div class="award"><div class="rank">10/10</div><div class="name">Avvo Rating</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="practice">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" style="justify-content:center">Practice areas</div>
+      <h2>Deep expertise, <em>focused</em> representation.</h2>
+      <p>We don't try to be everything to everyone. We concentrate on six practice areas where we've built decades of experience and a track record of results.</p>
+    </div>
+
+    <div class="practice-grid">
+      <div class="practice-item">
+        <div class="num">01 / Practice</div>
+        <div class="ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h6M9 13h6M9 17h4"/></svg>
+        </div>
+        <h3>Commercial Litigation</h3>
+        <p>Contract disputes, partnership conflicts, fraud claims, and complex commercial matters for businesses of all sizes.</p>
+        <a class="more" href="#">Learn more</a>
+      </div>
+
+      <div class="practice-item">
+        <div class="num">02 / Practice</div>
+        <div class="ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+        </div>
+        <h3>Family Law</h3>
+        <p>Divorce, custody, prenuptial agreements, and adoption — handled with discretion and care during life's hardest moments.</p>
+        <a class="more" href="#">Learn more</a>
+      </div>
+
+      <div class="practice-item">
+        <div class="num">03 / Practice</div>
+        <div class="ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+        </div>
+        <h3>Estate Planning</h3>
+        <p>Wills, trusts, probate, and estate administration — protecting your legacy and your loved ones for generations.</p>
+        <a class="more" href="#">Learn more</a>
+      </div>
+
+      <div class="practice-item">
+        <div class="num">04 / Practice</div>
+        <div class="ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10"/></svg>
+        </div>
+        <h3>Real Estate Law</h3>
+        <p>Property disputes, transactions, zoning, and landlord-tenant matters for owners, developers, and investors.</p>
+        <a class="more" href="#">Learn more</a>
+      </div>
+
+      <div class="practice-item">
+        <div class="num">05 / Practice</div>
+        <div class="ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M5 9l7-7 7 7M3 22h18"/></svg>
+        </div>
+        <h3>Personal Injury</h3>
+        <p>Catastrophic injury, medical malpractice, and wrongful death — aggressive advocacy when you need it most.</p>
+        <a class="more" href="#">Learn more</a>
+      </div>
+
+      <div class="practice-item">
+        <div class="num">06 / Practice</div>
+        <div class="ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 13.255A23.931 23.931 0 0 1 12 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2m4 6h.01M5 20h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
+        </div>
+        <h3>Employment Law</h3>
+        <p>Wrongful termination, discrimination, harassment, and wage disputes — protecting your career and dignity.</p>
+        <a class="more" href="#">Learn more</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="attorneys">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow" style="justify-content:center">The team</div>
+      <h2>Counsel you'll <em>trust</em>.</h2>
+      <p>Three partners, twelve associates, and a deep network of expert witnesses. Lean, focused, and personally invested in every case we take.</p>
+    </div>
+
+    <div class="att-grid">
+      <div class="attorney">
+        <div class="attorney-photo">
+          <div class="frame"></div>
+        </div>
+        <div class="attorney-info">
+          <h3>Eleanor Holloway</h3>
+          <div class="role">Founding Partner</div>
+          <p>39 years of commercial litigation experience. Former federal prosecutor. Lead counsel in 200+ trials.</p>
+          <a class="more" href="#">View profile →</a>
+        </div>
+      </div>
+      <div class="attorney">
+        <div class="attorney-photo">
+          <div class="frame"></div>
+        </div>
+        <div class="attorney-info">
+          <h3>Marcus Vance</h3>
+          <div class="role">Managing Partner</div>
+          <p>Specializes in estate and trust litigation. J.D. Yale Law, LL.M. Tax NYU.</p>
+          <a class="more" href="#">View profile →</a>
+        </div>
+      </div>
+      <div class="attorney">
+        <div class="attorney-photo">
+          <div class="frame"></div>
+        </div>
+        <div class="attorney-info">
+          <h3>Priya Sharma</h3>
+          <div class="role">Senior Partner</div>
+          <p>Family law and mediation. Board-certified in marital and family law. 22 years in practice.</p>
+          <a class="more" href="#">View profile →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat"><div class="num">$2.4B</div><div class="lbl">Total recovered</div></div>
+      <div class="stat"><div class="num">96%</div><div class="lbl">Success rate</div></div>
+      <div class="stat"><div class="num">2,400+</div><div class="lbl">Cases handled</div></div>
+      <div class="stat"><div class="num">39</div><div class="lbl">Years practicing</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonial">
+  <div class="container testimonial-inner">
+    <div class="quote-mark">"</div>
+    <blockquote>Holloway &amp; Vance didn't just win our case — they restored our company's reputation and gave us back our future. Twelve other firms said our case was unwinnable.</blockquote>
+    <cite><b>Richard Kavanagh, CEO</b>Westbridge Holdings, Inc.</cite>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container">
+    <h2>When you need the <em>best</em>, we're here.</h2>
+    <p>The sooner we review your matter, the more options you have. Reach out today for a confidential, no-obligation consultation with a partner.</p>
+    <div class="cta-band-buttons">
+      <a class="btn btn-solid" href="#consult">Schedule consultation →</a>
+      <a class="btn btn-outline" href="#">Call (212) 555-0142</a>
+    </div>
+    <div class="cta-info">
+      <div><strong>Office</strong>521 Park Avenue, NYC 10065</div>
+      <div><strong>Hours</strong>Mon–Fri, 8am – 7pm ET</div>
+      <div><strong>Emergencies</strong>Available 24/7 for existing clients</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="brand" style="color:#fff">
+          <div class="brand-mark" style="border-color:var(--gold-light);color:var(--gold-light)">H&amp;V</div>
+          <div class="brand-text">Holloway &amp; Vance<small>Attorneys at Law</small></div>
+        </div>
+        <p>521 Park Avenue, New York, NY 10065<br>(212) 555-0142 · client@hollowayvance.com</p>
+      </div>
+      <div>
+        <h4>Practice</h4>
+        <a>Commercial</a><a>Family</a><a>Estate</a><a>Real Estate</a><a>Injury</a><a>Employment</a>
+      </div>
+      <div>
+        <h4>Firm</h4>
+        <a>About</a><a>Attorneys</a><a>Case results</a><a>Insights</a><a>Careers</a>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <a>FAQs</a><a>Fees</a><a>Privacy</a><a>Disclaimer</a><a>Accessibility</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Holloway &amp; Vance LLP. All rights reserved.</span>
+      <span>Attorney Advertising. Prior results do not guarantee a similar outcome.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        en.target.style.opacity = 1;
+        en.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, {threshold: 0.08});
+  document.querySelectorAll('.practice-item, .attorney, .stat, .award, .cta-info').forEach(el => {
+    el.style.opacity = 0;
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity .7s ease, transform .7s ease';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
