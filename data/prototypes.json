@@ -393,5 +393,26 @@
     "showcase_anonymized_html_path": "data/prototypes-anonymized/premier-real-estate/index.html",
     "created_at": "2026-07-09T15:24:00Z",
     "updated_at": "2026-07-09T15:24:00Z"
+  },
+  {
+    "id": "proto-harvest-table-restaurant",
+    "lead_id": null,
+    "industry": "restaurant",
+    "prototype_url": "data/prototypes-anonymized/harvest-table-restaurant/index.html",
+    "screenshot_url": "/prototype-screenshots/harvest-table-restaurant-desktop.png",
+    "title": "Maison du Sel — Preview",
+    "design_summary": "Magazine-style coastal French bistro: three-column editorial hero with drop-cap lede and Michelin badge, scrolling marquee, two-column seasonal menu with prices, dark story section, reservation form widget.",
+    "prototype_score": 96,
+    "generation_status": "completed",
+    "watermark_enabled": true,
+    "demo_locked": true,
+    "showcase_eligible": true,
+    "showcase_approved": true,
+    "anonymized": true,
+    "showcase_score": 96,
+    "showcase_issues": [],
+    "showcase_anonymized_html_path": "data/prototypes-anonymized/harvest-table-restaurant/index.html",
+    "created_at": "2026-07-09T15:24:00Z",
+    "updated_at": "2026-07-09T15:24:00Z"
   }
 ]
