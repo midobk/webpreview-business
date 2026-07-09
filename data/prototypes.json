@@ -498,5 +498,26 @@
     "showcase_anonymized_html_path": "data/prototypes-anonymized/allied-home-services/index.html",
     "created_at": "2026-07-09T15:24:00Z",
     "updated_at": "2026-07-09T15:24:00Z"
+  },
+  {
+    "id": "proto-northwind-ecommerce",
+    "lead_id": null,
+    "industry": "ecommerce_product",
+    "prototype_url": "data/prototypes-anonymized/northwind-ecommerce/index.html",
+    "screenshot_url": "/prototype-screenshots/northwind-ecommerce-desktop.png",
+    "title": "Aura Bottle — Preview",
+    "design_summary": "Single-product e-commerce page: CSS-illustrated bottle with color-picker JS (4 SKUs), price card with savings, qty-stepper + add-to-cart + buy-now CTAs, three-feature story, lifestyle gallery, competitor comparison table, review grid, dark final CTA.",
+    "prototype_score": 92,
+    "generation_status": "completed",
+    "watermark_enabled": true,
+    "demo_locked": true,
+    "showcase_eligible": true,
+    "showcase_approved": true,
+    "anonymized": true,
+    "showcase_score": 92,
+    "showcase_issues": [],
+    "showcase_anonymized_html_path": "data/prototypes-anonymized/northwind-ecommerce/index.html",
+    "created_at": "2026-07-09T15:24:00Z",
+    "updated_at": "2026-07-09T15:24:00Z"
   }
 ]
