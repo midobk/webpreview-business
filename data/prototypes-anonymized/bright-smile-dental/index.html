@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bright Smile Studio — Modern Dental Care</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--mint:#9ed5c5;--mint-dark:#5fb39e;--peach:#ffb59e;--peach-dark:#ff8a6a;--cream:#fef9f3;--ink:#2c3e3a;--sky:#cee5f2;--yellow:#ffd56b;--muted:#6b7975}
+  html,body{background:var(--cream);color:var(--ink);font-family:'Plus Jakarta Sans','Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1240px;margin:0 auto;padding:0 28px}
+
+  /* TOP PROMO BAR */
+  .promo{background:linear-gradient(90deg,var(--mint),var(--sky));padding:10px 0;font-size:13px;text-align:center;font-weight:500}
+  .promo a{text-decoration:underline;font-weight:600}
+
+  /* NAV */
+  nav{padding:18px 0;background:var(--cream)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between}
+  .logo{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:700;letter-spacing:-.02em}
+  .logo-mark{width:36px;height:36px;background:var(--mint);border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;position:relative}
+  .logo-mark::after{content:"";width:10px;height:10px;background:#fff;border-radius:50%}
+  .nav-links{display:flex;gap:30px;font-size:14px;font-weight:500}
+  .nav-links a:hover{color:var(--mint-dark)}
+  .nav-cta{display:flex;gap:12px;align-items:center}
+  .btn-book{padding:12px 22px;background:var(--ink);color:#fff;border-radius:100px;font-size:14px;font-weight:500;transition:transform .2s,box-shadow .2s;display:inline-flex;align-items:center;gap:8px}
+  .btn-book:hover{transform:translateY(-2px);box-shadow:0 10px 20px -8px var(--ink)}
+
+  /* HERO */
+  .hero{padding:50px 0 80px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,var(--peach),transparent 60%);top:-200px;right:-200px;opacity:.4;filter:blur(40px)}
+  .hero::after{content:"";position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,var(--mint),transparent 60%);bottom:-200px;left:-100px;opacity:.3;filter:blur(40px)}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:50px;align-items:center;position:relative;z-index:1}
+  h1{font-size:clamp(38px,5vw,68px);line-height:1.05;letter-spacing:-.03em;font-weight:800;margin-bottom:24px}
+  h1 .highlight{position:relative;display:inline-block;white-space:nowrap}
+  h1 .highlight::after{content:"";position:absolute;left:0;right:0;bottom:5px;height:14px;background:var(--yellow);z-index:-1;border-radius:4px}
+  h1 .highlight.peach::after{background:var(--peach)}
+  .sub{font-size:18px;color:var(--muted);max-width:520px;margin-bottom:36px;line-height:1.6}
+  .hero-buttons{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .btn-secondary{padding:12px 22px;background:#fff;color:var(--ink);border-radius:100px;font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 14px -2px rgba(44,62,58,.08);transition:transform .2s}
+  .btn-secondary:hover{transform:translateY(-2px)}
+  .hero-trust{display:flex;align-items:center;gap:24px;margin-top:36px;padding-top:30px;border-top:1px solid rgba(44,62,58,.1)}
+  .stars{color:var(--yellow);font-size:20px;letter-spacing:2px}
+  .trust-text{font-size:14px;color:var(--muted)}
+  .trust-text strong{color:var(--ink)}
+
+  /* HERO RIGHT - Illustration with smile */
+  .hero-visual{position:relative;height:560px;display:flex;align-items:center;justify-content:center}
+  .blob{position:absolute;width:480px;height:480px;border-radius:50%;background:linear-gradient(135deg,var(--mint) 0%,var(--sky) 100%);animation:blob 8s ease-in-out infinite}
+  @keyframes blob{0%,100%{border-radius:50% 50% 50% 50%}33%{border-radius:60% 40% 50% 50%}66%{border-radius:40% 60% 60% 40%}}
+  .blob-2{position:absolute;width:200px;height:200px;border-radius:50%;background:var(--peach);top:30px;right:50px;opacity:.7;animation:float 6s ease-in-out infinite}
+  .blob-3{position:absolute;width:120px;height:120px;border-radius:50%;background:var(--yellow);bottom:60px;left:30px;opacity:.6;animation:float 7s ease-in-out infinite reverse}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+  .tooth-wrap{position:relative;z-index:2;width:280px;height:320px;display:flex;align-items:center;justify-content:center}
+  .tooth{width:220px;height:280px;background:#fff;border-radius:100px 100px 60% 60%;box-shadow:0 30px 60px -20px rgba(44,62,58,.3),inset 0 -20px 40px rgba(158,213,197,.3);position:relative;transform:rotate(-5deg)}
+  .tooth::before{content:"";position:absolute;width:40px;height:80px;background:linear-gradient(180deg,transparent,#fff);top:30px;left:50px;border-radius:50%;opacity:.6}
+  .tooth::after{content:"";position:absolute;width:100px;height:50px;border:8px solid var(--mint-dark);border-radius:0 0 50px 50px;border-top:0;bottom:60px;left:50%;transform:translateX(-50%)}
+  .sparkle{position:absolute;font-size:24px;animation:twinkle 2s ease-in-out infinite}
+  .sparkle.s1{top:50px;left:30px;color:var(--yellow);animation-delay:0s}
+  .sparkle.s2{top:80px;right:40px;color:var(--peach);animation-delay:.7s}
+  .sparkle.s3{bottom:100px;left:50px;color:var(--mint-dark);animation-delay:1.4s}
+  @keyframes twinkle{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.5}}
+  .floating-card{position:absolute;background:#fff;padding:14px 18px;border-radius:16px;box-shadow:0 20px 40px -10px rgba(44,62,58,.15);z-index:3;display:flex;align-items:center;gap:12px;animation:float 5s ease-in-out infinite}
+  .floating-card.c1{top:100px;left:-30px;animation-delay:0s}
+  .floating-card.c2{bottom:100px;right:-30px;animation-delay:1.5s}
+  .floating-card .ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+  .floating-card.c1 .ico{background:rgba(158,213,197,.3);color:var(--mint-dark)}
+  .floating-card.c2 .ico{background:rgba(255,181,158,.3);color:var(--peach-dark)}
+  .floating-card .txt strong{display:block;font-size:14px}
+  .floating-card .txt small{font-size:11px;color:var(--muted)}
+
+  /* BOOKING STRIP */
+  .booking{padding:0 0 80px;position:relative;z-index:2}
+  .booking-card{background:#fff;border-radius:24px;padding:30px;box-shadow:0 30px 60px -20px rgba(44,62,58,.2);display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr auto;gap:20px;align-items:center;border:1px solid rgba(44,62,58,.05)}
+  .booking-card label{display:block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .booking-card select,.booking-card input{padding:10px 0;background:transparent;border:0;border-bottom:1px solid rgba(44,62,58,.1);font-size:15px;color:var(--ink);outline:0;width:100%;font-family:inherit}
+  .booking-card select:focus,.booking-card input:focus{border-color:var(--mint-dark)}
+  .booking-card .btn-book{padding:14px 28px}
+
+  /* SERVICES */
+  .services{padding:100px 0;background:#fff;border-radius:60px 60px 0 0;margin-top:-40px;position:relative;z-index:1}
+  .section-head{text-align:center;margin-bottom:60px}
+  .section-head .eyebrow{font-size:13px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--mint-dark);margin-bottom:14px}
+  .section-head h2{font-size:clamp(32px,4vw,52px);letter-spacing:-.03em;font-weight:800;line-height:1.1;max-width:680px;margin:0 auto}
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .service{padding:36px 30px;border-radius:20px;background:var(--cream);transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden}
+  .service:hover{transform:translateY(-6px);box-shadow:0 30px 50px -20px rgba(44,62,58,.15)}
+  .service::before{content:"";position:absolute;width:100px;height:100px;border-radius:50%;right:-30px;top:-30px;opacity:.4}
+  .service.s1::before{background:var(--mint)}
+  .service.s2::before{background:var(--peach)}
+  .service.s3::before{background:var(--sky)}
+  .service .ico{width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+  .service.s1 .ico{background:var(--mint);color:#fff}
+  .service.s2 .ico{background:var(--peach);color:#fff}
+  .service.s3 .ico{background:var(--sky);color:#fff}
+  .service h3{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:10px}
+  .service p{color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:20px}
+  .service .more{font-size:14px;font-weight:600;color:var(--mint-dark);display:inline-flex;align-items:center;gap:6px}
+
+  /* WHY US */
+  .why{display:grid;grid-template-columns:1fr 1fr;gap:60px;padding:100px 0;align-items:center}
+  .why-img{height:500px;background:linear-gradient(135deg,var(--mint),var(--sky));border-radius:30px;position:relative;overflow:hidden}
+  .why-img::before{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.3);top:50px;right:50px}
+  .why-img::after{content:"";position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.2);bottom:50px;left:50px}
+  .why-img .smile{position:absolute;width:200px;height:100px;border:8px solid #fff;border-top:0;border-radius:0 0 100px 100px;bottom:30%;left:50%;transform:translateX(-50%)}
+  .why-img .sparkles{position:absolute;inset:0}
+  .why-img .sparkles span{position:absolute;width:10px;height:10px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite}
+  .why-img .sparkles span:nth-child(1){top:20%;left:20%}
+  .why-img .sparkles span:nth-child(2){top:30%;right:25%;animation-delay:1s}
+  .why-img .sparkles span:nth-child(3){bottom:25%;left:30%;animation-delay:2s}
+  .why-img .sparkles span:nth-child(4){bottom:35%;right:20%;animation-delay:.5s}
+  .why h2{font-size:clamp(32px,4vw,48px);letter-spacing:-.03em;font-weight:800;line-height:1.1;margin-bottom:24px}
+  .why>p{color:var(--muted);font-size:17px;line-height:1.7;margin-bottom:30px}
+  .feature{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid rgba(44,62,58,.08)}
+  .feature:last-child{border-bottom:0}
+  .feature .check{width:36px;height:36px;border-radius:10px;background:var(--mint);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:700}
+  .feature h4{font-size:17px;font-weight:700;margin-bottom:4px}
+  .feature p{font-size:14px;color:var(--muted);margin:0;line-height:1.5}
+
+  /* TESTIMONIALS */
+  .testimonials{padding:100px 0;background:var(--mint);color:var(--ink);position:relative;overflow:hidden}
+  .testimonials::before{content:"";position:absolute;width:400px;height:400px;border-radius:50%;background:rgba(255,255,255,.2);top:-100px;right:-100px}
+  .testimonials .section-head h2{color:var(--ink)}
+  .testimonials .section-head .eyebrow{color:var(--ink);opacity:.6}
+  .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative;z-index:1}
+  .test{background:#fff;padding:30px;border-radius:20px;position:relative}
+  .test .quote{font-size:60px;line-height:.5;color:var(--mint);font-family:Georgia,serif;margin-bottom:10px}
+  .test p{font-size:15px;line-height:1.6;margin-bottom:20px}
+  .test .author{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid rgba(44,62,58,.1)}
+  .test .avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+  .test:nth-child(1) .avatar{background:var(--mint-dark)}
+  .test:nth-child(2) .avatar{background:var(--peach-dark)}
+  .test:nth-child(3) .avatar{background:var(--ink)}
+  .test .author-info strong{display:block;font-size:14px}
+  .test .author-info small{font-size:12px;color:var(--muted)}
+
+  /* CTA */
+  .cta{padding:100px 0;text-align:center}
+  .cta-card{background:linear-gradient(135deg,var(--peach),var(--yellow));border-radius:30px;padding:80px 40px;position:relative;overflow:hidden}
+  .cta-card::before{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.3);top:-100px;right:-50px}
+  .cta-card::after{content:"";position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.2);bottom:-50px;left:-50px}
+  .cta-card>*{position:relative;z-index:1}
+  .cta h2{font-size:clamp(36px,4.5vw,58px);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:18px}
+  .cta p{font-size:18px;margin-bottom:30px;max-width:500px;margin-left:auto;margin-right:auto;opacity:.9}
+  .cta-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .btn-dark{padding:14px 28px;background:var(--ink);color:#fff;border-radius:100px;font-weight:500;display:inline-flex;align-items:center;gap:8px;transition:transform .2s}
+  .btn-dark:hover{transform:translateY(-2px)}
+  .btn-light{padding:14px 28px;background:#fff;color:var(--ink);border-radius:100px;font-weight:500;display:inline-flex;align-items:center;gap:8px;transition:transform .2s}
+  .btn-light:hover{transform:translateY(-2px)}
+
+  /* FOOTER */
+  footer{padding:60px 0 30px;background:var(--ink);color:#fff}
+  .foot{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:50px;margin-bottom:50px}
+  .foot h4{font-size:14px;font-weight:600;margin-bottom:18px;opacity:.9}
+  .foot a{display:block;padding:6px 0;font-size:14px;opacity:.6;transition:opacity .2s}
+  .foot a:hover{opacity:1}
+  .foot p{opacity:.6;font-size:14px;line-height:1.7;max-width:320px;margin-top:14px}
+  .foot-bottom{font-size:12px;opacity:.5;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);text-align:center}
+
+  @media (max-width:900px){
+    .nav-links{display:none}
+    .hero-grid{grid-template-columns:1fr;gap:30px}
+    .hero-visual{height:400px;order:-1}
+    .blob{width:300px;height:300px}
+    .booking-card{grid-template-columns:1fr;gap:14px}
+    .services{grid-template-columns:1fr}
+    .services-grid{grid-template-columns:1fr}
+    .why{grid-template-columns:1fr;gap:40px;padding:60px 0}
+    .why-img{height:350px}
+    .test-grid{grid-template-columns:1fr}
+    .foot{grid-template-columns:1fr 1fr;gap:30px}
+  }
+</style>
+</head>
+<body>
+
+<div class="promo">
+  🌟 New patients: <a href="#">Get a free consultation + 20% off your first cleaning</a> · Limited spots this month
+</div>
+
+<nav>
+  <div class="container nav-inner">
+    <a class="logo" href="#"><div class="logo-mark"></div>Bright Smile</a>
+    <div class="nav-links">
+      <a href="#">Services</a>
+      <a href="#">Our Team</a>
+      <a href="#">Insurance</a>
+      <a href="#">Reviews</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn-book" href="#booking">Book online <span>→</span></a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <h1>Dental care that <span class="highlight">actually</span> feels <span class="highlight peach">good</span></h1>
+      <p class="sub">A modern dental studio where prevention is celebrated, anxiety is met with kindness, and your smile gets the attention it deserves. Same-day appointments available — most insurance accepted.</p>
+      <div class="hero-buttons">
+        <a class="btn-book" href="#booking">Book your visit <span>→</span></a>
+        <a class="btn-secondary" href="#"><span>▶</span> Meet the team</a>
+      </div>
+      <div class="hero-trust">
+        <div>
+          <div class="stars">★★★★★</div>
+          <div class="trust-text"><strong>4.9</strong> from 2,847 happy patients</div>
+        </div>
+        <div>
+          <div class="trust-text"><strong>15+ years</strong> caring for our community</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="blob"></div>
+      <div class="blob-2"></div>
+      <div class="blob-3"></div>
+      <div class="tooth-wrap">
+        <div class="tooth"></div>
+        <div class="sparkle s1">✦</div>
+        <div class="sparkle s2">✦</div>
+        <div class="sparkle s3">✦</div>
+      </div>
+      <div class="floating-card c1">
+        <div class="ico">✓</div>
+        <div class="txt"><strong>Insurance verified</strong><small>in under 2 minutes</small></div>
+      </div>
+      <div class="floating-card c2">
+        <div class="ico">♥</div>
+        <div class="txt"><strong>98% painless</strong><small>patient satisfaction</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="booking" id="booking">
+  <div class="container">
+    <div class="booking-card">
+      <div>
+        <label>I'm looking for</label>
+        <select>
+          <option>General Checkup & Cleaning</option>
+          <option>Teeth Whitening</option>
+          <option>Invisalign / Orthodontics</option>
+          <option>Dental Implants</option>
+          <option>Emergency Care</option>
+        </select>
+      </div>
+      <div>
+        <label>Preferred date</label>
+        <input type="date" value="2026-06-20" />
+      </div>
+      <div>
+        <label>Time</label>
+        <select>
+          <option>Morning (8am – 12pm)</option>
+          <option>Afternoon (12pm – 5pm)</option>
+          <option>Evening (5pm – 8pm)</option>
+        </select>
+      </div>
+      <div>
+        <label>Insurance</label>
+        <select>
+          <option>I have insurance</option>
+          <option>No insurance / Self-pay</option>
+          <option>Not sure — help me check</option>
+        </select>
+      </div>
+      <a class="btn-book" href="#">Find times</a>
+    </div>
+  </div>
+</section>
+
+<section class="services">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">What we do</div>
+      <h2>Comprehensive care, designed around you</h2>
+    </div>
+
+    <div class="services-grid">
+      <div class="service s1">
+        <div class="ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 6 5 6 8c0 2 1 4 1 6 0 4 2 8 5 8s5-4 5-8c0-2 1-4 1-6 0-3-2-6-6-6z"/></svg>
+        </div>
+        <h3>Preventive Care</h3>
+        <p>Cleanings, exams, and gentle coaching to keep small issues from becoming big ones. Twice-yearly visits, fully covered by most plans.</p>
+        <a class="more" href="#">Learn more →</a>
+      </div>
+
+      <div class="service s2">
+        <div class="ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        </div>
+        <h3>Cosmetic & Whitening</h3>
+        <p>Veneers, bonding, and professional whitening that brightens up to 8 shades — done in a single visit, with zero sensitivity.</p>
+        <a class="more" href="#">Learn more →</a>
+      </div>
+
+      <div class="service s3">
+        <div class="ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3 4-3 9-3 9 1.34 9 3z"/><path d="M3 12v4c0 1.66 4 3 9 3s9-1.34 9-3v-4"/></svg>
+        </div>
+        <h3>Orthodontics</h3>
+        <p>Invisalign and clear-aligner therapy for adults and teens. Complimentary 3D scan included at your first consultation.</p>
+        <a class="more" href="#">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="why">
+  <div class="container" style="display:contents">
+    <div class="why-img">
+      <div class="smile"></div>
+      <div class="sparkles"><span></span><span></span><span></span><span></span></div>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--mint-dark);margin-bottom:14px">Why Bright Smile</div>
+      <h2>The dental visit you actually look forward to</h2>
+      <p>We've redesigned everything — from the waiting room playlist to the way we explain x-rays — to make dentistry feel less like a chore and more like self-care.</p>
+
+      <div class="feature">
+        <div class="check">✓</div>
+        <div>
+          <h4>Same-day appointments</h4>
+          <p>In pain? Most emergencies seen within 2 hours. Always.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="check">✓</div>
+        <div>
+          <h4>Transparent pricing</h4>
+          <p>Your estimate, in writing, before any work begins. No surprise bills.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="check">✓</div>
+        <div>
+          <h4>Family-friendly</h4>
+          <p>Pediatric room with a play wall, plus warm blankets and TVs for grown-ups.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="container">
+    <div class="section-head">
+      <div class="eyebrow">Patient stories</div>
+      <h2>Why families choose us, year after year</h2>
+    </div>
+
+    <div class="test-grid">
+      <div class="test">
+        <div class="quote">"</div>
+        <p>I used to dread the dentist. After my first visit here, I actually look forward to my cleanings. The whole team is warm, gentle, and explains everything.</p>
+        <div class="author">
+          <div class="avatar">M</div>
+          <div class="author-info"><strong>Marisol R.</strong><small>Patient for 4 years</small></div>
+        </div>
+      </div>
+      <div class="test">
+        <div class="quote">"</div>
+        <p>Took my two kids (ages 4 and 7) for their first visit. They left asking when we could come back. That's a miracle.</p>
+        <div class="author">
+          <div class="avatar">D</div>
+          <div class="author-info"><strong>David T.</strong><small>Parent & new patient</small></div>
+        </div>
+      </div>
+      <div class="test">
+        <div class="quote">"</div>
+        <p>My Invisalign results were even better than the 3D mockup they showed me. Worth every penny — and the payment plan made it doable.</p>
+        <div class="author">
+          <div class="avatar">A</div>
+          <div class="author-info"><strong>Aisha K.</strong><small>Invisalign, 2025</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <div class="cta-card">
+      <h2>Ready for a smile you love?</h2>
+      <p>Book online in 60 seconds. Most insurance accepted. New patients always welcome.</p>
+      <div class="cta-buttons">
+        <a class="btn-dark" href="#booking">Book my visit <span>→</span></a>
+        <a class="btn-light" href="#">Call (555) 234-5678</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot">
+      <div>
+        <div class="logo" style="color:#fff"><div class="logo-mark"></div>Bright Smile</div>
+        <p>1208 Pearl Street, Boulder CO 80302<br>Mon–Fri 8am–6pm · Sat 9am–2pm<br>(555) 234-5678</p>
+      </div>
+      <div>
+        <h4>Care</h4>
+        <a>Cleanings</a><a>Whitening</a><a>Invisalign</a><a>Implants</a><a>Emergency</a>
+      </div>
+      <div>
+        <h4>Studio</h4>
+        <a>Our team</a><a>Insurance</a><a>Financing</a><a>Reviews</a><a>FAQs</a>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <a>Instagram</a><a>Newsletter</a><a>Careers</a><a>Press</a>
+      </div>
+    </div>
+    <div class="foot-bottom">© 2026 Bright Smile Studio · All rights reserved</div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        en.target.style.opacity = 1;
+        en.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, {threshold: 0.1});
+  document.querySelectorAll('.service, .feature, .test, .why-img, .why h2, .why p, .booking-card, .hero-buttons, .hero-trust, .cta-card').forEach(el => {
+    el.style.opacity = 0;
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity .7s ease, transform .7s ease';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>

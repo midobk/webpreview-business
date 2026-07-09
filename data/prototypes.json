@@ -414,5 +414,26 @@
     "showcase_anonymized_html_path": "data/prototypes-anonymized/harvest-table-restaurant/index.html",
     "created_at": "2026-07-09T15:24:00Z",
     "updated_at": "2026-07-09T15:24:00Z"
+  },
+  {
+    "id": "proto-bright-smile-dental",
+    "lead_id": null,
+    "industry": "dental_clinic",
+    "prototype_url": "data/prototypes-anonymized/bright-smile-dental/index.html",
+    "screenshot_url": "/prototype-screenshots/bright-smile-dental-desktop.png",
+    "title": "Bright Smile Studio — Preview",
+    "design_summary": "Friendly modern dental clinic: gradient hero with illustrated tooth + floating cards, inline 5-field booking widget, three-tile services grid, why-us feature list with icons, mint-background testimonials, peach/yellow CTA card.",
+    "prototype_score": 93,
+    "generation_status": "completed",
+    "watermark_enabled": true,
+    "demo_locked": true,
+    "showcase_eligible": true,
+    "showcase_approved": true,
+    "anonymized": true,
+    "showcase_score": 93,
+    "showcase_issues": [],
+    "showcase_anonymized_html_path": "data/prototypes-anonymized/bright-smile-dental/index.html",
+    "created_at": "2026-07-09T15:24:00Z",
+    "updated_at": "2026-07-09T15:24:00Z"
   }
 ]
