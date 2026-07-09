@@ -477,5 +477,26 @@
     "showcase_anonymized_html_path": "data/prototypes-anonymized/meridian-law-firm/index.html",
     "created_at": "2026-07-09T15:24:00Z",
     "updated_at": "2026-07-09T15:24:00Z"
+  },
+  {
+    "id": "proto-allied-home-services",
+    "lead_id": null,
+    "industry": "home_services",
+    "prototype_url": "data/prototypes-anonymized/allied-home-services/index.html",
+    "screenshot_url": "/prototype-screenshots/allied-home-services-desktop.png",
+    "title": "TrustFix — Preview",
+    "design_summary": "Multi-trade home-services hub: live instant-quote calculator (service pick × home-size multiplier), eight-service card grid, three-step process, four-promise guarantee card, verified-review grid on dark background, blue + orange CTA.",
+    "prototype_score": 93,
+    "generation_status": "completed",
+    "watermark_enabled": true,
+    "demo_locked": true,
+    "showcase_eligible": true,
+    "showcase_approved": true,
+    "anonymized": true,
+    "showcase_score": 93,
+    "showcase_issues": [],
+    "showcase_anonymized_html_path": "data/prototypes-anonymized/allied-home-services/index.html",
+    "created_at": "2026-07-09T15:24:00Z",
+    "updated_at": "2026-07-09T15:24:00Z"
   }
 ]
