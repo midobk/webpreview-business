@@ -372,5 +372,26 @@
     "showcase_anonymized_html_path": "data/prototypes-anonymized/flowdesk-saas/index.html",
     "created_at": "2026-07-09T15:24:00Z",
     "updated_at": "2026-07-09T15:24:00Z"
+  },
+  {
+    "id": "proto-premier-real-estate",
+    "lead_id": null,
+    "industry": "real_estate",
+    "prototype_url": "data/prototypes-anonymized/premier-real-estate/index.html",
+    "screenshot_url": "/prototype-screenshots/premier-real-estate-desktop.png",
+    "title": "Westmark Realty — Preview",
+    "design_summary": "Editorial boutique real-estate landing: split hero with search-bar filter and parallax property card, three featured listings, founder story with signature, dark CTA strip, navy + rust + parchment palette.",
+    "prototype_score": 90,
+    "generation_status": "completed",
+    "watermark_enabled": true,
+    "demo_locked": true,
+    "showcase_eligible": true,
+    "showcase_approved": true,
+    "anonymized": true,
+    "showcase_score": 90,
+    "showcase_issues": [],
+    "showcase_anonymized_html_path": "data/prototypes-anonymized/premier-real-estate/index.html",
+    "created_at": "2026-07-09T15:24:00Z",
+    "updated_at": "2026-07-09T15:24:00Z"
   }
 ]
