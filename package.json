@@ -8,8 +8,11 @@
     "start": "next start",
     "lint": "eslint",
     "screenshot": "node scripts/screenshot/capture.js",
-    "prebuild": "node scripts/build-data-bundle.js",
-    "build:data": "node scripts/build-data-bundle.js"
+    "prebuild": "node scripts/sync-prototypes-to-supabase.mjs --auto && node scripts/build-data-bundle.js",
+    "build:data": "node scripts/build-data-bundle.js",
+    "sync:showcase": "node scripts/sync-prototypes-to-supabase.mjs --sync",
+    "check:showcase-sync": "node scripts/sync-prototypes-to-supabase.mjs --check",
+    "check:showcase-metadata": "node scripts/sync-prototypes-to-supabase.mjs --local"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "^1.4.0",
