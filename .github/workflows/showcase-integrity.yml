@@ -1,0 +1,57 @@
+name: Showcase integrity
+
+on:
+  pull_request:
+    paths:
+      - 'data/prototypes.json'
+      - 'scripts/sync-prototypes-to-supabase.mjs'
+      - 'scripts/sync_to_supabase.py'
+      - 'app/showcase/**'
+      - 'package.json'
+      - '.github/workflows/showcase-integrity.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/prototypes.json'
+      - 'scripts/sync-prototypes-to-supabase.mjs'
+      - 'scripts/sync_to_supabase.py'
+      - 'app/showcase/**'
+      - 'package.json'
+      - '.github/workflows/showcase-integrity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-showcase:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate local showcase metadata
+        run: npm run check:showcase-metadata
+
+      - name: Check Supabase drift
+        if: env.SUPABASE_URL != '' && env.SUPABASE_SERVICE_ROLE_KEY != ''
+        run: npm run check:showcase-sync
+
+      - name: Explain skipped remote check
+        if: env.SUPABASE_URL == '' || env.SUPABASE_SERVICE_ROLE_KEY == ''
+        run: |
+          echo 'Remote drift check skipped because GitHub Actions secrets are not configured.'
+          echo 'Production Vercel builds still perform a required sync-and-verify gate.'
