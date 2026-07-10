@@ -42,12 +42,21 @@ const INDUSTRY_TAGLINES: Record<string, string> = {
   landscaper: 'Seasonal services, before/after gallery, free estimate CTA.',
   tutor: 'Subjects, tutor profile, booking CTA.',
   retail: 'Featured products, story, visit-us CTA.',
+  saas: 'Product positioning, feature showcase, social proof, and trial-focused CTA.',
+  real_estate: 'Featured listings, property search, agent story, and inquiry CTA.',
+  dental_clinic: 'Treatment highlights, trust signals, online booking, and patient testimonials.',
+  fitness_gym: 'Programs, challenge offer, member stories, and membership pricing.',
+  law_firm: 'Practice areas, attorney profiles, consultation form, and credibility signals.',
+  home_services: 'Service selector, instant quote, guarantees, and verified reviews.',
+  ecommerce_product: 'Interactive product options, comparison table, reviews, and checkout CTAs.',
+  online_course: 'Course outcomes, curriculum timeline, instructor proof, FAQ, and enrollment tiers.',
   default: 'Clean one-page website with services, contact, and CTA.',
 };
 
 interface Prototype {
   id: string;
-  lead_id: string;
+  lead_id: string | null;
+  industry?: string | null;
   prototype_url: string | null;
   screenshot_url: string | null;
   title: string;
@@ -113,11 +122,10 @@ async function loadShowcase(): Promise<
   );
 
   return visible.map((p) => {
-    const lead = leadsById.get(p.lead_id);
+    const lead = p.lead_id ? leadsById.get(p.lead_id) : undefined;
     // Resolve industry from the prototype first (playground / orphan prototypes
     // have lead_id: null), then the lead, then fall back to 'default'.
-    const industry: string =
-      (p as any).industry ?? lead?.industry ?? 'default';
+    const industry = p.industry ?? lead?.industry ?? 'default';
     return {
       id: p.id,
       anonymizedTitle: anonymizeTitle(p, lead, industry),
@@ -239,4 +247,3 @@ export default async function ShowcasePage() {
     </div>
   );
 }
-
