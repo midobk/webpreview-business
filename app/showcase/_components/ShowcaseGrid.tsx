@@ -169,6 +169,9 @@ function ShowcaseCard({ item }: { item: Item }) {
       animate="visible"
       exit="exit"
       variants={gridCard}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
       whileHover={reduce ? undefined : { y: -4 }}
       transition={{ type: 'spring', stiffness: 300, damping: 22 }}
       className="group bg-paper rounded-2xl border border-paint/10 overflow-hidden shadow-sm"
