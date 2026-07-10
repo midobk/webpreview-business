@@ -19,10 +19,12 @@ Autonomous AI pipeline that finds Canadian small businesses with no/ugly/broken 
 - **Email:** AgentMail
 - **SMS:** Telnyx
 - **Frontend:** Next.js + Vercel
-- **Data:** JSON files (MVP) → Supabase (later)
+- **Data:** Version-controlled JSON for agent workflows, synchronized to Supabase for production runtime data
 
 ## Project Structure
 See `AGENT_PLAN.md` for the full living project plan.
+
+For the public showcase data flow, deployment gate, Supabase synchronization, visibility rules, incident history, security hardening, and troubleshooting procedures, see `docs/SHOWCASE_SYNC_AND_SUPABASE_RUNBOOK.md`.
 
 ## Current Status
 Phases 0-12 complete:
@@ -38,12 +40,26 @@ Phases 0-12 complete:
 - ✅ Homepage polish (gradient hero, features, testimonials, FAQ, pricing, MetaSEO)
 - ✅ `.env.example` with all 8 sections + comments
 - ✅ SiteSprint isolated agent registered (`openclaw agents list`)
+- ✅ Production showcase sync gate: repository validation → Supabase upsert → zero-drift verification
+- ✅ Showcase metadata regression workflow and industry-specific showcase copy
+- ✅ Supabase prototype-industry migration and helper-function security hardening
 
 ## Operating Manual
-- `AGENT_PLAN.md` — living project plan, Progress Tracker, Agent Run Log (source of truth)
+- `AGENT_PLAN.md` — living project plan, Progress Tracker, Agent Run Log
+- `docs/SHOWCASE_SYNC_AND_SUPABASE_RUNBOOK.md` — canonical showcase/Supabase operations, deployment safeguards, incident record, and troubleshooting
 - `SYSTEM.md` — agent system prompt (loaded by the `sitesprint` OpenClaw agent)
 - `IDENTITY.md` — agent identity (name, emoji 🚀, theme)
 - `docs/SECURITY_REVIEW.md` — Phase 12 findings + remediation
+
+## Showcase Integrity Commands
+
+```bash
+npm run check:showcase-metadata
+npm run check:showcase-sync
+npm run sync:showcase
+```
+
+Production Vercel builds automatically validate prototype metadata, synchronize `data/prototypes.json` to Supabase, verify zero drift, and block deployment when the expected showcase state cannot be confirmed.
 
 ## Setup
 1. Clone the repository
