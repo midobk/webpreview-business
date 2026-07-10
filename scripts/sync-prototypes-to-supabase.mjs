@@ -33,6 +33,8 @@ const PROTOTYPE_COLUMNS = [
   'updated_at',
 ];
 
+const TIMESTAMP_COLUMNS = new Set(['showcase_scored_at', 'created_at', 'updated_at']);
+
 const COMPARED_COLUMNS = [
   'lead_id',
   'industry',
@@ -80,9 +82,24 @@ function sameValue(left, right) {
   return JSON.stringify(normalizeComparable(left)) === JSON.stringify(normalizeComparable(right));
 }
 
+function normalizeTimestamp(value) {
+  if (!value || typeof value !== 'string') return value;
+
+  // Some legacy JSON records were serialized with both an explicit UTC offset
+  // and a trailing Z, for example `2026-06-22T21:33:15+00:00Z`. PostgreSQL
+  // correctly rejects that as two timezone designators. Keep the explicit
+  // offset and remove only the redundant trailing Z.
+  return value
+    .replace(/([+-]\d{2}:\d{2})Z$/i, '$1')
+    .replace(/([+-]\d{4})Z$/i, '$1');
+}
+
 function selectAllowedColumns(row) {
   return Object.fromEntries(
-    PROTOTYPE_COLUMNS.filter((column) => Object.hasOwn(row, column)).map((column) => [column, row[column]])
+    PROTOTYPE_COLUMNS.filter((column) => Object.hasOwn(row, column)).map((column) => [
+      column,
+      TIMESTAMP_COLUMNS.has(column) ? normalizeTimestamp(row[column]) : row[column],
+    ])
   );
 }
 
