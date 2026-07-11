@@ -3,5 +3,10 @@
     "useSourcePrototype": true,
     "genericTitle": "Modern Hair Salon",
     "genericShortName": "The Studio"
+  },
+  "seaway-cleaning-services": {
+    "useSourcePrototype": true,
+    "genericTitle": "Modern Cleaning Service",
+    "genericShortName": "Spotless Cleaning"
   }
 }
