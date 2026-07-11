@@ -33,8 +33,8 @@ const INDUSTRY_LABELS: Record<string, string> = {
 
 // Industry → tagline / one-liner used on the card
 const INDUSTRY_TAGLINES: Record<string, string> = {
-  cleaning: 'One-page website with services, before/after gallery, instant quote CTA.',
-  salon: 'Stylist profiles, services grid, online booking CTA.',
+  cleaning: 'Premium service storytelling, trust cues, before/after results, and a guided quote CTA.',
+  salon: 'Editorial lookbook, consultation-led services, booking journey, and luxury brand polish.',
   auto_repair: 'Service list, certifications, contact + map, quote CTA.',
   restaurant: 'Menu highlights, reservation CTA, photo gallery.',
   contractor: 'Project gallery, quote request, before/after showcase.',
@@ -51,6 +51,14 @@ const INDUSTRY_TAGLINES: Record<string, string> = {
   ecommerce_product: 'Interactive product options, comparison table, reviews, and checkout CTAs.',
   online_course: 'Course outcomes, curriculum timeline, instructor proof, FAQ, and enrollment tiers.',
   default: 'Clean one-page website with services, contact, and CTA.',
+};
+
+// Some legacy prototype records still reference their original generated PNG.
+// Keep repository-owned artwork overrides here so upgraded concepts can ship a
+// new showcase thumbnail without mutating the canonical Supabase metadata.
+const SHOWCASE_THUMBNAIL_OVERRIDES: Record<string, string> = {
+  'proto-bellas-hair-studio': '/prototype-screenshots/bellas-hair-studio-desktop.svg',
+  'proto-seaway-cleaning-services': '/prototype-screenshots/seaway-cleaning-services-desktop.svg',
 };
 
 interface Prototype {
@@ -132,7 +140,7 @@ async function loadShowcase(): Promise<
       tagline: taglineFor(p, lead, industry),
       industry,
       prototypeUrl: p.prototype_url,
-      screenshotUrl: p.screenshot_url,
+      screenshotUrl: SHOWCASE_THUMBNAIL_OVERRIDES[p.id] ?? p.screenshot_url,
       prototypeScore: p.prototype_score,
       createdAt: p.created_at,
     };
