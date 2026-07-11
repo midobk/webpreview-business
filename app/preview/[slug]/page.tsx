@@ -7,38 +7,164 @@ interface PreviewPageProps {
   params: Promise<{ slug: string }>;
 }
 
+type ShowcaseSourceOverride = {
+  useSourcePrototype?: boolean;
+  genericTitle?: string;
+  genericShortName?: string;
+};
+
+type ShowcaseSourceOverrides = Record<string, ShowcaseSourceOverride>;
+
+type LeadRecord = {
+  slug?: string;
+  business_name?: string;
+};
+
+function readJsonFile<T>(filePath: string, fallback: T): T {
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8')) as T;
+  } catch {
+    return fallback;
+  }
+}
+
+function loadSourceOverrides(): ShowcaseSourceOverrides {
+  return readJsonFile<ShowcaseSourceOverrides>(
+    path.join(process.cwd(), 'data', 'showcase-source-overrides.json'),
+    {}
+  );
+}
+
 /**
- * Lookup order — historically the directory was `data/prototypes/`. After the
- * playground-vetting workflow (plan_03446241) we standardised on
- * `data/prototypes-anonymized/` for new prototypes, but older entries still
- * live in the legacy directory. Try both so a slug served by `/showcase`
- * always resolves to a real HTML file.
+ * Most public previews use their pre-generated anonymized HTML. A small number
+ * of upgraded legacy prototypes may explicitly use the current source HTML;
+ * those are anonymized at render time using their lead metadata.
  */
-function resolvePrototypePath(slug: string): string | null {
-  const candidates = [
-    path.join(process.cwd(), 'data', 'prototypes-anonymized', slug, 'index.html'),
-    path.join(process.cwd(), 'data', 'prototypes', slug, 'index.html'),
-  ];
-  return candidates.find((p) => fs.existsSync(p)) ?? null;
+function resolvePrototypePath(
+  slug: string,
+  override?: ShowcaseSourceOverride
+): { filePath: string; requiresRuntimeAnonymization: boolean } | null {
+  const anonymizedPath = path.join(
+    process.cwd(),
+    'data',
+    'prototypes-anonymized',
+    slug,
+    'index.html'
+  );
+  const sourcePath = path.join(process.cwd(), 'data', 'prototypes', slug, 'index.html');
+
+  if (override?.useSourcePrototype && fs.existsSync(sourcePath)) {
+    return { filePath: sourcePath, requiresRuntimeAnonymization: true };
+  }
+  if (fs.existsSync(anonymizedPath)) {
+    return { filePath: anonymizedPath, requiresRuntimeAnonymization: false };
+  }
+  if (fs.existsSync(sourcePath)) {
+    return { filePath: sourcePath, requiresRuntimeAnonymization: false };
+  }
+  return null;
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function anonymizeSourceHtml(
+  html: string,
+  slug: string,
+  override: ShowcaseSourceOverride
+): string {
+  const leads = readJsonFile<LeadRecord[]>(path.join(process.cwd(), 'data', 'leads.json'), []);
+  const lead = leads.find((candidate) => candidate.slug === slug);
+  const businessName = lead?.business_name;
+  const genericTitle = override.genericTitle || 'Local Business';
+  const genericShortName = override.genericShortName || 'The Studio';
+
+  if (!businessName) return html;
+
+  const shortName = businessName
+    .replace(/\s+(hair\s+studio|hair\s+salon|salon|studio)$/i, '')
+    .trim();
+
+  let anonymized = html;
+
+  if (shortName && shortName !== businessName) {
+    const escapedShortName = escapeRegExp(shortName);
+    anonymized = anonymized
+      .replace(
+        new RegExp(`The\\s+${escapedShortName}\\s+experience`, 'gi'),
+        'The studio experience'
+      )
+      .replace(
+        new RegExp(`${escapedShortName}\\s+latest`, 'gi'),
+        "the studio's latest"
+      );
+  }
+
+  anonymized = anonymized.replace(
+    new RegExp(escapeRegExp(businessName), 'gi'),
+    genericTitle
+  );
+
+  if (shortName && shortName !== businessName) {
+    anonymized = anonymized.replace(
+      new RegExp(escapeRegExp(shortName), 'gi'),
+      genericShortName
+    );
+  }
+
+  return anonymized;
+}
+
+/**
+ * Prototype HTML is embedded with srcDoc, so relative image URLs otherwise
+ * resolve against /preview/... instead of the prototype directory. Route all
+ * local prototype images through the path-constrained image endpoint.
+ */
+function rewriteLocalPrototypeAssets(html: string, slug: string): string {
+  const imagesDirectory = path.join(process.cwd(), 'data', 'prototypes', slug, 'images');
+  if (!fs.existsSync(imagesDirectory)) return html;
+
+  const publicImageUrl = (filename: string) =>
+    `/api/showcase-image?path=${encodeURIComponent(
+      path.posix.join('data', 'prototypes', slug, 'images', filename)
+    )}`;
+
+  return html
+    .replace(
+      /src=(['"])\.\/images\/([^'"]+)\1/gi,
+      (_match, quote: string, filename: string) =>
+        `src=${quote}${publicImageUrl(filename)}${quote}`
+    )
+    .replace(
+      /url\((['"]?)\.\/images\/([^)'"\s]+)\1\)/gi,
+      (_match, _quote: string, filename: string) => `url('${publicImageUrl(filename)}')`
+    );
 }
 
 export default async function PreviewPage({ params }: PreviewPageProps) {
   const { slug } = await params;
+  const override = loadSourceOverrides()[slug];
+  const resolved = resolvePrototypePath(slug, override);
 
-  const prototypePath = resolvePrototypePath(slug);
-  if (!prototypePath) {
+  if (!resolved) {
     notFound();
   }
 
-  const htmlContent = fs.readFileSync(prototypePath, 'utf8');
+  let htmlContent = fs.readFileSync(resolved.filePath, 'utf8');
+
+  if (resolved.requiresRuntimeAnonymization && override) {
+    htmlContent = anonymizeSourceHtml(htmlContent, slug, override);
+  }
+  htmlContent = rewriteLocalPrototypeAssets(htmlContent, slug);
 
   const titleMatch = htmlContent.match(/<title>(.*?)<\/title>/i);
   const title = titleMatch ? titleMatch[1] : `Preview for ${slug}`;
 
   return (
     <div className="w-full h-screen">
-      <iframe 
-        srcDoc={htmlContent} 
+      <iframe
+        srcDoc={htmlContent}
         title={title}
         className="w-full h-full border-0"
         sandbox="allow-scripts allow-same-origin"
@@ -49,8 +175,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
 
 export async function generateStaticParams() {
   // Enumerate both directories so production builds pre-render every slug
-  // referenced by the showcase. Deduplicate so a slug that lives in both
-  // (e.g. seaway-cleaning-services) doesn't get emitted twice.
+  // referenced by the showcase. Deduplicate slugs present in both locations.
   const dirs = [
     path.join(process.cwd(), 'data', 'prototypes-anonymized'),
     path.join(process.cwd(), 'data', 'prototypes'),
@@ -60,11 +185,11 @@ export async function generateStaticParams() {
     if (!fs.existsSync(dir)) continue;
     try {
       const entries = await readdir(dir, { withFileTypes: true });
-      for (const d of entries) {
-        if (d.isDirectory()) slugs.add(d.name);
+      for (const entry of entries) {
+        if (entry.isDirectory()) slugs.add(entry.name);
       }
     } catch {
-      // Ignore unreadable dirs.
+      // Ignore unreadable directories.
     }
   }
   return Array.from(slugs).map((slug) => ({ slug }));
