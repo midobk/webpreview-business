@@ -1,350 +1,709 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bella's Hair Studio — Demo Preview</title>
-  <meta name="description" content="Unofficial preview concept for Bella's Hair Studio — salon in Cornwall.">
-  <meta name="robots" content="noindex,nofollow">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bella's Hair Studio — Premium Demo Preview</title>
+  <meta name="description" content="Unofficial premium website preview concept for Bella's Hair Studio in Cornwall." />
+  <meta name="robots" content="noindex,nofollow" />
   <style>
-    *,*::before,*::after { box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; color: #1a1a1a; }
-    a { color: inherit; }
-    img { max-width: 100%; height: auto; }
-    .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --ink: #181513;
+      --espresso: #2b211d;
+      --paper: #f7f2ec;
+      --paper-deep: #eee4da;
+      --wine: #743c48;
+      --wine-deep: #572832;
+      --rose: #c89083;
+      --gold: #b9935f;
+      --taupe: #8b7c73;
+      --line: rgba(24, 21, 19, 0.14);
+      --white: #fffdfb;
+      --shadow: 0 28px 80px rgba(43, 33, 29, 0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body.modal-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .serif { font-family: Georgia, "Times New Roman", serif; }
+    .container { width: min(1220px, calc(100% - 48px)); margin: 0 auto; }
+
+    .demo-ribbon {
+      min-height: 38px;
+      padding: 10px 24px;
+      background: var(--ink);
+      color: rgba(255,255,255,.82);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .demo-ribbon span { width: 5px; height: 5px; border-radius: 50%; background: var(--rose); }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(24,21,19,.08);
+      background: rgba(247,242,236,.92);
+      backdrop-filter: blur(18px);
+    }
+    .nav-inner {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-family: Georgia, serif;
+      font-size: 18px;
+      font-style: italic;
+    }
+    .brand-copy strong { display: block; font-family: Georgia, serif; font-size: 20px; font-weight: 500; line-height: 1; }
+    .brand-copy small { display: block; margin-top: 5px; color: var(--taupe); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 28px; font-size: 13px; font-weight: 600; }
+    .nav-links a { position: relative; }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 100%;
+      bottom: -7px;
+      height: 1px;
+      background: var(--wine);
+      transition: right .25s ease;
+    }
+    .nav-links a:hover::after { right: 0; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      min-height: 46px;
+      padding: 0 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--wine); color: #fff; box-shadow: 0 14px 34px rgba(116,60,72,.25); }
+    .btn-primary:hover { background: var(--wine-deep); box-shadow: 0 18px 38px rgba(116,60,72,.32); }
+    .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+    .btn-light { background: var(--white); color: var(--ink); box-shadow: 0 16px 40px rgba(24,21,19,.12); }
+    .btn svg { width: 15px; height: 15px; }
+
+    .hero { position: relative; padding: 76px 0 92px; overflow: hidden; }
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      right: -250px;
+      top: -260px;
+      background: radial-gradient(circle, rgba(200,144,131,.26), transparent 66%);
+      pointer-events: none;
+    }
+    .hero-grid { display: grid; grid-template-columns: .92fr 1.08fr; gap: 68px; align-items: center; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--wine);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 32px; height: 1px; background: currentColor; }
+    .hero h1 {
+      max-width: 670px;
+      margin: 25px 0 24px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(48px, 6.2vw, 92px);
+      font-weight: 400;
+      line-height: .97;
+      letter-spacing: -.05em;
+    }
+    .hero h1 em { color: var(--wine); font-weight: 400; }
+    .hero-lede { max-width: 560px; color: #5e514a; font-size: 17px; line-height: 1.75; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+    .hero-proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+      margin-top: 42px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+    .proof-item { min-width: 120px; }
+    .proof-item strong { display: block; font-family: Georgia, serif; font-size: 20px; font-weight: 500; }
+    .proof-item span { display: block; margin-top: 3px; color: var(--taupe); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+
+    .hero-art { position: relative; min-height: 640px; }
+    .hero-main {
+      position: absolute;
+      inset: 18px 0 20px 92px;
+      overflow: hidden;
+      border-radius: 190px 190px 24px 24px;
+      box-shadow: var(--shadow);
+      background: var(--paper-deep);
+    }
+    .hero-main img { object-position: center 34%; transform: scale(1.02); }
+    .hero-main::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 54%, rgba(24,21,19,.42));
+    }
+    .hero-thumb {
+      position: absolute;
+      width: 205px;
+      height: 260px;
+      left: 0;
+      bottom: 0;
+      border: 9px solid var(--paper);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 22px 55px rgba(43,33,29,.22);
+      transform: rotate(-3deg);
+    }
+    .hero-thumb img { object-position: center 36%; }
+    .floating-note {
+      position: absolute;
+      right: -20px;
+      bottom: 58px;
+      width: 224px;
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(255,253,251,.95);
+      box-shadow: 0 20px 55px rgba(43,33,29,.18);
+      backdrop-filter: blur(12px);
+    }
+    .floating-note .stars { color: var(--gold); letter-spacing: 2px; font-size: 14px; }
+    .floating-note strong { display: block; margin-top: 8px; font-family: Georgia, serif; font-size: 18px; font-weight: 500; }
+    .floating-note p { margin: 6px 0 0; color: var(--taupe); font-size: 12px; line-height: 1.5; }
+    .monogram {
+      position: absolute;
+      top: -4px;
+      left: 28px;
+      color: rgba(116,60,72,.13);
+      font-family: Georgia, serif;
+      font-size: 110px;
+      font-style: italic;
+      line-height: 1;
+    }
+
+    .ticker { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--white); }
+    .ticker-track {
+      width: max-content;
+      display: flex;
+      gap: 44px;
+      padding: 17px 0;
+      animation: ticker 25s linear infinite;
+      color: var(--taupe);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    .ticker-track span::after { content: "✦"; margin-left: 44px; color: var(--rose); }
+    @keyframes ticker { to { transform: translateX(-50%); } }
+
+    section { position: relative; }
+    .section-pad { padding: 110px 0; }
+    .section-head { max-width: 720px; margin-bottom: 56px; }
+    .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .section-head.center .eyebrow { justify-content: center; }
+    .section-head h2 {
+      margin: 18px 0 16px;
+      font-family: Georgia, serif;
+      font-size: clamp(38px, 5vw, 68px);
+      font-weight: 400;
+      line-height: 1.02;
+      letter-spacing: -.045em;
+    }
+    .section-head p { margin: 0; color: #675a53; font-size: 16px; line-height: 1.75; }
+
+    .services { background: var(--white); }
+    .service-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .service-card {
+      position: relative;
+      min-height: 295px;
+      padding: 38px;
+      border: 1px solid rgba(24,21,19,.09);
+      border-radius: 24px;
+      background: var(--paper);
+      overflow: hidden;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .service-card:hover { transform: translateY(-5px); box-shadow: 0 25px 55px rgba(43,33,29,.1); border-color: rgba(116,60,72,.26); }
+    .service-number { color: var(--wine); font-size: 10px; font-weight: 900; letter-spacing: .2em; }
+    .service-card h3 { margin: 55px 0 10px; font-family: Georgia, serif; font-size: 31px; font-weight: 500; }
+    .service-card p { max-width: 430px; margin: 0; color: #6d5f57; font-size: 14px; line-height: 1.75; }
+    .service-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; color: var(--wine); font-size: 11px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    .service-orbit {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      right: -42px;
+      top: -42px;
+      border: 1px solid rgba(116,60,72,.17);
+      border-radius: 50%;
+    }
+    .service-orbit::after { content: ""; position: absolute; width: 82px; height: 82px; border-radius: 50%; inset: 48px; background: rgba(200,144,131,.13); }
+
+    .signature { background: var(--espresso); color: #fff; overflow: hidden; }
+    .signature::before {
+      content: "Bella's";
+      position: absolute;
+      right: -20px;
+      bottom: -65px;
+      color: rgba(255,255,255,.035);
+      font-family: Georgia, serif;
+      font-size: clamp(130px, 18vw, 270px);
+      font-style: italic;
+      white-space: nowrap;
+    }
+    .signature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 74px; align-items: center; }
+    .signature-image { height: 620px; border-radius: 28px; overflow: hidden; box-shadow: 0 36px 90px rgba(0,0,0,.3); }
+    .signature-image img { object-position: center 32%; }
+    .signature-copy .eyebrow { color: var(--rose); }
+    .signature-copy h2 { margin: 20px 0 20px; font-family: Georgia, serif; font-size: clamp(40px, 5vw, 66px); font-weight: 400; line-height: 1.02; letter-spacing: -.04em; }
+    .signature-copy > p { color: rgba(255,255,255,.66); font-size: 16px; line-height: 1.8; }
+    .process { margin-top: 36px; border-top: 1px solid rgba(255,255,255,.14); }
+    .process-row { display: grid; grid-template-columns: 48px 1fr; gap: 16px; padding: 19px 0; border-bottom: 1px solid rgba(255,255,255,.12); }
+    .process-row span { color: var(--rose); font-family: Georgia, serif; font-style: italic; font-size: 20px; }
+    .process-row strong { display: block; font-size: 14px; }
+    .process-row p { margin: 3px 0 0; color: rgba(255,255,255,.52); font-size: 12px; }
+
+    .lookbook { background: var(--paper); }
+    .lookbook-grid { display: grid; grid-template-columns: 1.1fr .8fr 1.1fr; grid-template-rows: 270px 270px; gap: 18px; }
+    .look { position: relative; overflow: hidden; border-radius: 22px; background: var(--paper-deep); }
+    .look:nth-child(1) { grid-row: 1 / 3; }
+    .look:nth-child(4) { grid-column: 3; grid-row: 1 / 3; }
+    .look img { transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+    .look:hover img { transform: scale(1.055); }
+    .look::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(24,21,19,.55)); }
+    .look-label { position: absolute; z-index: 2; left: 22px; bottom: 20px; color: #fff; }
+    .look-label strong { display: block; font-family: Georgia, serif; font-size: 20px; font-weight: 500; }
+    .look-label span { font-size: 9px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; opacity: .74; }
+
+    .experience { background: var(--white); }
+    .experience-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 70px; align-items: start; }
+    .experience-copy { position: sticky; top: 120px; }
+    .promise-list { display: grid; gap: 14px; }
+    .promise {
+      padding: 28px 30px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      display: grid;
+      grid-template-columns: 46px 1fr;
+      gap: 17px;
+      background: var(--paper);
+    }
+    .promise-icon { width: 46px; height: 46px; border-radius: 50%; background: rgba(116,60,72,.1); color: var(--wine); display: grid; place-items: center; }
+    .promise-icon svg { width: 21px; height: 21px; }
+    .promise h3 { margin: 0 0 6px; font-family: Georgia, serif; font-size: 22px; font-weight: 500; }
+    .promise p { margin: 0; color: #6d5f57; font-size: 13px; line-height: 1.65; }
+
+    .booking { padding: 110px 0; background: linear-gradient(145deg, #7d4651 0%, #5c2e38 100%); color: #fff; overflow: hidden; }
+    .booking::before, .booking::after { content: ""; position: absolute; border-radius: 50%; border: 1px solid rgba(255,255,255,.12); }
+    .booking::before { width: 520px; height: 520px; right: -170px; top: -180px; }
+    .booking::after { width: 360px; height: 360px; left: -130px; bottom: -150px; }
+    .booking-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 72px; align-items: center; position: relative; z-index: 2; }
+    .booking-copy .eyebrow { color: #f1b8ab; }
+    .booking-copy h2 { margin: 20px 0 20px; font-family: Georgia, serif; font-size: clamp(44px, 5.6vw, 76px); line-height: .98; font-weight: 400; letter-spacing: -.045em; }
+    .booking-copy p { color: rgba(255,255,255,.68); max-width: 520px; }
+    .booking-card { padding: 34px; border-radius: 28px; background: var(--white); color: var(--ink); box-shadow: 0 34px 90px rgba(43,15,23,.32); }
+    .booking-card-head { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding-bottom: 23px; border-bottom: 1px solid var(--line); }
+    .booking-card-head strong { font-family: Georgia, serif; font-size: 24px; font-weight: 500; }
+    .booking-card-head span { color: var(--wine); font-size: 10px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
+    .field { margin-top: 22px; }
+    .field label { display: block; margin-bottom: 8px; color: var(--taupe); font-size: 9px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+    .field select { width: 100%; height: 48px; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink); outline: 0; }
+    .date-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin-top: 12px; }
+    .date-chip { border: 1px solid var(--line); border-radius: 14px; padding: 12px 6px; background: transparent; text-align: center; cursor: pointer; }
+    .date-chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .date-chip strong { display: block; font-size: 14px; }
+    .date-chip span { display: block; margin-top: 3px; font-size: 9px; opacity: .68; text-transform: uppercase; }
+    .booking-submit { width: 100%; margin-top: 24px; }
+    .booking-note { margin: 13px 0 0; color: var(--taupe); font-size: 10px; text-align: center; }
+
+    footer { padding: 68px 0 28px; background: var(--ink); color: rgba(255,255,255,.7); }
+    .footer-grid { display: grid; grid-template-columns: 1.2fr .8fr .8fr; gap: 60px; padding-bottom: 50px; }
+    .footer-brand strong { display: block; color: #fff; font-family: Georgia, serif; font-size: 30px; font-weight: 500; }
+    .footer-brand p { max-width: 390px; color: rgba(255,255,255,.48); font-size: 13px; }
+    .footer-col h4 { margin: 0 0 15px; color: #fff; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+    .footer-col a, .footer-col span { display: block; margin-top: 9px; color: rgba(255,255,255,.52); font-size: 13px; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.1); padding-top: 24px; display: flex; justify-content: space-between; gap: 20px; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+
+    .preview-badge {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 40;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(24,21,19,.9);
+      color: rgba(255,255,255,.8);
+      box-shadow: 0 12px 35px rgba(24,21,19,.22);
+      backdrop-filter: blur(12px);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .claim-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      background: rgba(24,21,19,.72);
+      backdrop-filter: blur(12px);
+    }
+    .claim-modal.open { display: flex; }
+    .modal-card { width: min(520px, 100%); padding: 38px; border-radius: 28px; background: var(--white); box-shadow: 0 40px 120px rgba(0,0,0,.35); text-align: center; }
+    .modal-icon { width: 62px; height: 62px; border-radius: 50%; margin: 0 auto 20px; background: rgba(116,60,72,.11); color: var(--wine); display: grid; place-items: center; }
+    .modal-icon svg { width: 26px; height: 26px; }
+    .modal-card h3 { margin: 0; font-family: Georgia, serif; font-size: 34px; font-weight: 500; }
+    .modal-card p { margin: 14px auto 24px; max-width: 410px; color: #6d5f57; font-size: 14px; }
+    .modal-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 1040px) {
+      .nav-links { display: none; }
+      .hero-grid, .signature-grid, .booking-grid { grid-template-columns: 1fr; }
+      .hero-copy { max-width: 760px; }
+      .hero-art { min-height: 600px; width: min(720px, 100%); margin: 0 auto; }
+      .hero-main { left: 86px; }
+      .signature-image { height: 520px; }
+      .experience-grid { grid-template-columns: 1fr; }
+      .experience-copy { position: static; }
+    }
+    @media (max-width: 760px) {
+      .container { width: min(100% - 30px, 1220px); }
+      .demo-ribbon { font-size: 9px; letter-spacing: .1em; }
+      .nav-inner { height: 68px; }
+      .brand-copy small, .nav-actions .btn-ghost { display: none; }
+      .nav-actions .btn { min-height: 42px; padding: 0 16px; font-size: 10px; }
+      .hero { padding: 56px 0 70px; }
+      .hero-grid { gap: 42px; }
+      .hero h1 { font-size: clamp(48px, 15vw, 70px); }
+      .hero-lede { font-size: 15px; }
+      .hero-proof { gap: 14px; }
+      .hero-art { min-height: 500px; }
+      .hero-main { inset: 0 0 0 45px; border-radius: 120px 120px 22px 22px; }
+      .hero-thumb { width: 145px; height: 190px; border-width: 6px; }
+      .floating-note { right: 8px; bottom: 22px; width: 190px; padding: 15px; }
+      .monogram { font-size: 76px; left: 8px; }
+      .section-pad { padding: 78px 0; }
+      .service-grid { grid-template-columns: 1fr; }
+      .service-card { min-height: 255px; padding: 30px; }
+      .service-card h3 { margin-top: 42px; font-size: 27px; }
+      .signature-grid { gap: 42px; }
+      .signature-image { height: 430px; }
+      .lookbook-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(2, 300px); }
+      .look:nth-child(1), .look:nth-child(4) { grid-column: auto; grid-row: auto; }
+      .date-row { grid-template-columns: repeat(2, 1fr); }
+      .booking-card { padding: 25px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; }
+      .preview-badge { display: none; }
+    }
+    @media (max-width: 520px) {
+      .brand-copy strong { font-size: 17px; }
+      .hero-actions .btn { width: 100%; }
+      .hero-art { min-height: 430px; }
+      .hero-main { left: 30px; }
+      .hero-thumb { width: 120px; height: 160px; }
+      .floating-note { width: 170px; }
+      .lookbook-grid { grid-template-columns: 1fr; grid-template-rows: repeat(4, 330px); }
+      .promise { grid-template-columns: 38px 1fr; padding: 23px; }
+      .promise-icon { width: 38px; height: 38px; }
+      .modal-card { padding: 28px 20px; }
+      .modal-actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
   </style>
 </head>
 <body>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { 
-    font-family: 'Helvetica Neue', Arial, sans-serif; 
-    line-height: 1.6; 
-    color: #2c2c2c;
-    -webkit-font-smoothing: antialiased;
-    background: #fff;
-  }
+  <div class="demo-ribbon"><span></span> Unofficial design preview — interactions are demo locked <span></span></div>
 
-  /* Demo Banner */
-  .demo-banner {
-    background: linear-gradient(90deg, #ff6b6b 0%, #ee5a52 50%, #ff6b6b 100%);
-    background-size: 200% 100%;
-    color: white;
-    text-align: center;
-    padding: 14px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    animation: gradient-shift 6s ease infinite;
-    position: relative;
-    z-index: 10;
-  }
-  @keyframes gradient-shift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  /* Hero */
-  .hero {
-    position: relative;
-    height: 92vh;
-    min-height: 540px;
-    background: url('./images/hero.jpg') center/cover no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: white;
-    padding: 20px;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(44,44,44,0.65), rgba(0,0,0,0.45));
-  }
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 850px;
-  }
-  .hero h1 {
-    font-size: clamp(2.4rem, 7vw, 5rem);
-    font-weight: 200;
-    letter-spacing: 5px;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    line-height: 1.1;
-  }
-  .hero .tagline {
-    font-size: clamp(1rem, 2vw, 1.35rem);
-    margin-bottom: 45px;
-    font-weight: 300;
-    letter-spacing: 2px;
-    font-style: italic;
-    opacity: 0.95;
-  }
-  .cta-btn {
-    display: inline-block;
-    background: transparent;
-    color: white;
-    padding: 18px 48px;
-    text-decoration: none;
-    border: 2px solid white;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: inherit;
-  }
-  .cta-btn:hover {
-    background: white;
-    color: #2c2c2c;
-    transform: translateY(-2px);
-  }
-  .cta-btn.primary {
-    background: #d4a574;
-    border-color: #d4a574;
-    color: white;
-  }
-  .cta-btn.primary:hover {
-    background: #b8895a;
-    border-color: #b8895a;
-    color: white;
-  }
-
-  /* Sections common */
-  .section-title {
-    text-align: center;
-    font-size: clamp(2rem, 4vw, 2.8rem);
-    font-weight: 200;
-    letter-spacing: 5px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-  }
-  .section-subtitle {
-    text-align: center;
-    color: #888;
-    font-weight: 300;
-    margin-bottom: 60px;
-    letter-spacing: 1.5px;
-    font-style: italic;
-  }
-  .accent-line {
-    width: 50px;
-    height: 2px;
-    background: #d4a574;
-    margin: 0 auto 20px;
-  }
-
-  /* Services */
-  .services {
-    padding: 110px 20px;
-    background: #faf7f4;
-  }
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 28px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .service-card {
-    background: white;
-    overflow: hidden;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  }
-  .service-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 14px 40px rgba(0,0,0,0.14);
-  }
-  .service-image {
-    width: 100%;
-    height: 280px;
-    background-size: cover;
-    background-position: center;
-  }
-  .service-image.placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 3.5rem;
-  }
-  .service-image.placeholder-1 { background: linear-gradient(135deg, #d4a574 0%, #8b6f47 100%); }
-  .service-image.placeholder-2 { background: linear-gradient(135deg, #c9a87c 0%, #5a4a3a 100%); }
-  .service-content {
-    padding: 32px 28px;
-    text-align: center;
-  }
-  .service-content h3 {
-    font-size: 1.2rem;
-    font-weight: 400;
-    letter-spacing: 2.5px;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-  }
-  .service-content p {
-    color: #666;
-    font-size: 0.95rem;
-    font-weight: 300;
-    line-height: 1.7;
-  }
-
-  /* About */
-  .about {
-    padding: 120px 20px;
-    max-width: 880px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .about h2 {
-    font-size: clamp(2rem, 4vw, 2.8rem);
-    font-weight: 200;
-    letter-spacing: 5px;
-    margin-bottom: 18px;
-    text-transform: uppercase;
-  }
-  .about p {
-    font-size: 1.1rem;
-    line-height: 2;
-    color: #555;
-    font-weight: 300;
-  }
-
-  /* Book Call */
-  .book-call {
-    padding: 100px 20px;
-    background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
-    color: white;
-    text-align: center;
-  }
-  .book-call h2 {
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
-    font-weight: 200;
-    letter-spacing: 4px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-  }
-  .book-call .subtitle {
-    margin-bottom: 50px;
-    font-weight: 300;
-    opacity: 0.75;
-    letter-spacing: 1.5px;
-    font-style: italic;
-  }
-  .cal-embed {
-    max-width: 1000px;
-    margin: 0 auto 40px;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-  }
-  .cal-embed iframe {
-    width: 100%;
-    height: 650px;
-    border: none;
-    display: block;
-  }
-
-  /* Footer */
-  footer {
-    background: #0a0a0a;
-    color: #777;
-    text-align: center;
-    padding: 28px 20px;
-    font-size: 0.8rem;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .hero { height: 78vh; }
-    .services, .about, .book-call { padding: 70px 20px; }
-    .service-image { height: 220px; }
-    .cal-embed iframe { height: 580px; }
-    .demo-banner { font-size: 11px; letter-spacing: 1px; padding: 12px 10px; }
-  }
-  @media (max-width: 480px) {
-    .cta-btn { padding: 16px 36px; font-size: 12px; }
-  }
-</style>
-
-<header>
-  <div class="demo-banner">Demo Preview — Claim this website to make it live</div>
-</header>
-
-<section class="hero">
-  <div class="hero-content">
-    <h1>Bella's Hair Studio</h1>
-    <p class="tagline">Cuts · Color · Confidence — in the heart of Cornwall</p>
-    <a href="#" class="cta-btn primary" onclick="alert('Claim this website to unlock the live version'); return false;">Claim this website to unlock</a>
-  </div>
-</section>
-
-<section class="services">
-  <h2 class="section-title">Our Services</h2>
-  <div class="accent-line"></div>
-  <p class="section-subtitle">Everything you need for beautiful, healthy hair</p>
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-image" style="background-image: url('./images/section_1.jpg');"></div>
-      <div class="service-content">
-        <h3>Precision Cuts</h3>
-        <p>Custom cuts and modern styling tailored to your face shape, hair type, and personal style.</p>
+  <nav class="site-nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="Bella's Hair Studio home">
+        <div class="brand-mark">B</div>
+        <div class="brand-copy"><strong>Bella's</strong><small>Hair Studio · Cornwall</small></div>
+      </a>
+      <div class="nav-links" aria-label="Primary navigation">
+        <a href="#services">Services</a>
+        <a href="#signature">The experience</a>
+        <a href="#lookbook">Lookbook</a>
+        <a href="#booking">Book</a>
+      </div>
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="#lookbook">View our work</a>
+        <button class="btn btn-primary" type="button" onclick="openClaimModal()">Book a visit</button>
       </div>
     </div>
-    <div class="service-card">
-      <div class="service-image" style="background-image: url('./images/section_2.jpg');"></div>
-      <div class="service-content">
-        <h3>Color & Highlights</h3>
-        <p>Balayage, ombre, full color, and corrective color services by our expert colorists.</p>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">Cornwall · Hair artistry</div>
+          <h1>Hair, tailored to the way you want to <em>feel.</em></h1>
+          <p class="hero-lede">Thoughtful cuts, dimensional colour, and polished styling in a warm studio where every appointment begins with listening.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" type="button" onclick="openClaimModal()">
+              Start your consultation
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+            <a class="btn btn-ghost" href="#services">Explore services</a>
+          </div>
+          <div class="hero-proof">
+            <div class="proof-item"><strong>4.9</strong><span>Client love</span></div>
+            <div class="proof-item"><strong>15+</strong><span>Signature services</span></div>
+            <div class="proof-item"><strong>Walk-ins</strong><span>Always welcome</span></div>
+          </div>
+        </div>
+
+        <div class="hero-art reveal" aria-label="Salon styling collage">
+          <div class="monogram">B</div>
+          <div class="hero-main"><img src="./images/hero.jpg" alt="Finished salon hairstyle" /></div>
+          <div class="hero-thumb"><img src="./images/section_1.jpg" alt="Detailed salon styling work" /></div>
+          <div class="floating-note">
+            <div class="stars">★★★★★</div>
+            <strong>Your best hair day, designed.</strong>
+            <p>Personal consultation · premium finish · confidence that lasts beyond the chair.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Precision cuts</span><span>Dimensional colour</span><span>Balayage</span><span>Gloss treatments</span><span>Event styling</span><span>Healthy hair rituals</span>
+        <span>Precision cuts</span><span>Dimensional colour</span><span>Balayage</span><span>Gloss treatments</span><span>Event styling</span><span>Healthy hair rituals</span>
       </div>
     </div>
-    <div class="service-card">
-      <div class="service-image placeholder placeholder-1">✂️</div>
-      <div class="service-content">
-        <h3>Hair Treatments</h3>
-        <p>Keratin smoothing, deep conditioning, and scalp therapies to restore shine and strength.</p>
+
+    <section class="services section-pad" id="services">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">The service menu</div>
+          <h2>Elevated essentials, shaped around you.</h2>
+          <p>Every service starts with a real conversation about your texture, routine, inspiration, and the result you want to live with.</p>
+        </div>
+        <div class="service-grid">
+          <article class="service-card reveal">
+            <div class="service-orbit"></div><div class="service-number">01 · CUT</div>
+            <h3>Signature cuts</h3>
+            <p>Precision shaping, movement, and a finish designed to look considered even on the days you style it yourself.</p>
+            <button class="service-link" type="button" onclick="openClaimModal()">Choose this service <span>→</span></button>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-orbit"></div><div class="service-number">02 · COLOUR</div>
+            <h3>Dimensional colour</h3>
+            <p>Balayage, highlights, rich all-over colour, and corrective work planned around tone, maintenance, and hair health.</p>
+            <button class="service-link" type="button" onclick="openClaimModal()">Choose this service <span>→</span></button>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-orbit"></div><div class="service-number">03 · CARE</div>
+            <h3>Restorative rituals</h3>
+            <p>Gloss, hydration, smoothing, and scalp-focused treatments that bring softness, strength, and shine back into balance.</p>
+            <button class="service-link" type="button" onclick="openClaimModal()">Choose this service <span>→</span></button>
+          </article>
+          <article class="service-card reveal">
+            <div class="service-orbit"></div><div class="service-number">04 · STYLE</div>
+            <h3>Polished styling</h3>
+            <p>Signature blowouts, soft waves, sleek finishes, and occasion hair that photographs beautifully and still feels like you.</p>
+            <button class="service-link" type="button" onclick="openClaimModal()">Choose this service <span>→</span></button>
+          </article>
+        </div>
       </div>
+    </section>
+
+    <section class="signature section-pad" id="signature">
+      <div class="container signature-grid">
+        <div class="signature-image reveal"><img src="./images/section_2.jpg" alt="Salon colour and styling detail" /></div>
+        <div class="signature-copy reveal">
+          <div class="eyebrow">The Bella's experience</div>
+          <h2>Luxury without the distance.</h2>
+          <p>A premium appointment should feel personal, calm, and easy. The concept is built around the details clients remember: being heard, understanding the plan, and leaving with hair that works in real life.</p>
+          <div class="process">
+            <div class="process-row"><span>01</span><div><strong>Consult</strong><p>We align on goals, maintenance, texture, and inspiration before the service begins.</p></div></div>
+            <div class="process-row"><span>02</span><div><strong>Create</strong><p>Technique, tone, and shape are tailored carefully instead of applied as a template.</p></div></div>
+            <div class="process-row"><span>03</span><div><strong>Care</strong><p>You leave with a simple plan for styling, product use, and keeping the result fresh.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lookbook section-pad" id="lookbook">
+      <div class="container">
+        <div class="section-head center reveal">
+          <div class="eyebrow">The lookbook</div>
+          <h2>Soft dimension. Strong shape. Effortless finish.</h2>
+          <p>A visual direction built to make Bella's latest work the star of the site and turn social inspiration into appointments.</p>
+        </div>
+        <div class="lookbook-grid">
+          <article class="look reveal"><img src="./images/hero.jpg" alt="Dimensional salon hairstyle" /><div class="look-label"><strong>Dimensional blonde</strong><span>Colour story</span></div></article>
+          <article class="look reveal"><img src="./images/section_1.jpg" alt="Precision haircut detail" /><div class="look-label"><strong>Modern shape</strong><span>Cut story</span></div></article>
+          <article class="look reveal"><img src="./images/section_2.jpg" alt="Glossy hair finish" /><div class="look-label"><strong>High-gloss finish</strong><span>Care story</span></div></article>
+          <article class="look reveal"><img src="./images/section_1.jpg" alt="Salon styling transformation" /><div class="look-label"><strong>Soft movement</strong><span>Style story</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience section-pad">
+      <div class="container experience-grid">
+        <div class="experience-copy section-head reveal">
+          <div class="eyebrow">Why clients return</div>
+          <h2>Beautiful hair is only half the experience.</h2>
+          <p>The page now communicates the service standards that make a local salon feel premium before a client ever walks through the door.</p>
+        </div>
+        <div class="promise-list">
+          <article class="promise reveal">
+            <div class="promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s7-4.4 7-11V5l-7-3-7 3v5c0 6.6 7 11 7 11Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <div><h3>Consultation-first service</h3><p>A clear, confidence-building conversation before any cut, colour, or treatment begins.</p></div>
+          </article>
+          <article class="promise reveal">
+            <div class="promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v18M3 12h18"/><path d="m5.6 5.6 12.8 12.8M18.4 5.6 5.6 18.4"/></svg></div>
+            <div><h3>Healthy-hair thinking</h3><p>Results are planned around integrity, maintenance, and how your hair should feel weeks later.</p></div>
+          </article>
+          <article class="promise reveal">
+            <div class="promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div>
+            <div><h3>Warm, unhurried atmosphere</h3><p>Polished enough to feel special, relaxed enough to feel like your neighbourhood studio.</p></div>
+          </article>
+          <article class="promise reveal">
+            <div class="promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19V9l8-6 8 6v10"/><path d="M8 21v-8h8v8M2 21h20"/></svg></div>
+            <div><h3>Local and easy to book</h3><p>A straightforward path from discovering the studio to choosing a service and requesting a time.</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="booking" id="booking">
+      <div class="container booking-grid">
+        <div class="booking-copy reveal">
+          <div class="eyebrow">Your next appointment</div>
+          <h2>Let’s create your next look.</h2>
+          <p>Choose a service and a preferred day. In the live version, this section can connect to Bella's real booking calendar or inquiry workflow.</p>
+        </div>
+        <div class="booking-card reveal">
+          <div class="booking-card-head"><strong>Request an appointment</strong><span>Demo booking</span></div>
+          <div class="field">
+            <label for="service-select">Service</label>
+            <select id="service-select"><option>Signature cut & finish</option><option>Colour consultation</option><option>Balayage / highlights</option><option>Treatment & blowout</option><option>Event styling</option></select>
+          </div>
+          <div class="field">
+            <label>Preferred day</label>
+            <div class="date-row">
+              <button class="date-chip active" type="button" onclick="selectDate(this)"><strong>Tue</strong><span>Morning</span></button>
+              <button class="date-chip" type="button" onclick="selectDate(this)"><strong>Wed</strong><span>Afternoon</span></button>
+              <button class="date-chip" type="button" onclick="selectDate(this)"><strong>Fri</strong><span>Evening</span></button>
+              <button class="date-chip" type="button" onclick="selectDate(this)"><strong>Sat</strong><span>Flexible</span></button>
+            </div>
+          </div>
+          <button class="btn btn-primary booking-submit" type="button" onclick="openClaimModal()">Continue to booking</button>
+          <p class="booking-note">Preview only — booking becomes active when the website is claimed.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><strong>Bella's Hair Studio</strong><p>A premium local salon concept for cuts, colour, care, and styling in Cornwall.</p></div>
+        <div class="footer-col"><h4>Explore</h4><a href="#services">Services</a><a href="#signature">Experience</a><a href="#lookbook">Lookbook</a></div>
+        <div class="footer-col"><h4>Visit</h4><span>Cornwall, Ontario</span><span>Walk-ins welcome</span><a href="#booking">Request a time</a></div>
+      </div>
+      <div class="footer-bottom"><span>Unofficial preview concept by SiteSprint</span><span>Demo interactions are locked</span></div>
     </div>
-    <div class="service-card">
-      <div class="service-image placeholder placeholder-2">💇‍♀️</div>
-      <div class="service-content">
-        <h3>Styling & Blowouts</h3>
-        <p>Special-occasion updos, event styling, and signature blowouts for a polished finish.</p>
+  </footer>
+
+  <div class="preview-badge">SiteSprint preview · Bella's Hair Studio</div>
+
+  <div class="claim-modal" id="claim-modal" role="dialog" aria-modal="true" aria-labelledby="claim-title" onclick="closeOnBackdrop(event)">
+    <div class="modal-card">
+      <div class="modal-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg></div>
+      <h3 id="claim-title">This is a design preview.</h3>
+      <p>The live version can unlock real booking, contact details, service updates, Instagram content, and Bella's preferred appointment workflow.</p>
+      <div class="modal-actions">
+        <button class="btn btn-primary" type="button" onclick="closeClaimModal()">Continue exploring</button>
+        <button class="btn btn-ghost" type="button" onclick="closeClaimModal()">Close preview note</button>
       </div>
     </div>
   </div>
-</section>
 
-<section class="about">
-  <h2>About Bella's</h2>
-  <div class="accent-line"></div>
-  <p>Bella's Hair Studio is Cornwall's go-to destination for modern hair care. We offer a full range of services — from precision cuts and expert coloring to styling and revitalizing treatments. Walk-ins are always welcome, and our talented, friendly team is passionate about making every client leave feeling confident and beautiful. Follow us on Instagram to see our latest work and stay inspired for your next look.</p>
-</section>
+  <script>
+    const modal = document.getElementById('claim-modal');
+    function openClaimModal() {
+      modal.classList.add('open');
+      document.body.classList.add('modal-open');
+      modal.querySelector('button').focus();
+    }
+    function closeClaimModal() {
+      modal.classList.remove('open');
+      document.body.classList.remove('modal-open');
+    }
+    function closeOnBackdrop(event) { if (event.target === modal) closeClaimModal(); }
+    function selectDate(button) {
+      document.querySelectorAll('.date-chip').forEach((chip) => chip.classList.remove('active'));
+      button.classList.add('active');
+    }
+    document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeClaimModal(); });
 
-<section class="book-call">
-  <h2>Want to chat?</h2>
-  <p class="subtitle">Let's talk about your hair goals in a quick 5-minute call</p>
-  <div class="cal-embed">
-    <iframe src="https://cal.com/bellas-hairstudio" frameborder="0"></iframe>
-  </div>
-  <a href="#" class="cta-btn" onclick="alert('Claim this website to unlock the live version'); return false;">Book a 5-min call</a>
-</section>
-
-<footer>
-  <p>Concept by SiteSprint · Demo Preview</p>
-</footer>
-<div style="position:fixed;bottom:20px;right:20px;background:rgba(255,255,255,0.95);padding:8px 16px;border-radius:4px;font-size:12px;color:#666;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-  SiteSprint Preview · Bella's Hair Studio
-</div>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+  </script>
 </body>
 </html>
