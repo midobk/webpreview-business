@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title desc">
+  <title id="title">Premium hair salon website preview</title>
+  <desc id="desc">Editorial salon landing page with blush tones, luxury typography, a hair portrait and service cards.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2a1d20"/><stop offset="1" stop-color="#4a3036"/></linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fffaf7"/><stop offset="1" stop-color="#eadbd5"/></linearGradient>
+    <linearGradient id="hair" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2e1918"/><stop offset=".42" stop-color="#6c3b33"/><stop offset=".72" stop-color="#b87561"/><stop offset="1" stop-color="#3c211f"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#14090b" flood-opacity=".45"/></filter>
+  </defs>
+  <rect width="640" height="360" fill="url(#bg)"/>
+  <rect x="42" y="28" width="556" height="304" rx="18" fill="#f8efeb" filter="url(#shadow)"/>
+  <rect x="42" y="28" width="556" height="28" rx="18" fill="#fdf8f5"/>
+  <circle cx="59" cy="42" r="4" fill="#b78682"/><circle cx="72" cy="42" r="4" fill="#c8a19b"/><circle cx="85" cy="42" r="4" fill="#dac0ba"/>
+  <rect x="247" y="35" width="147" height="14" rx="7" fill="#eee2dd"/><circle cx="263" cy="42" r="3" fill="#8c716d"/>
+  <text x="64" y="81" font-family="Georgia,serif" font-size="18" letter-spacing="4" fill="#6d464c">LUMIÈRE</text>
+  <text x="65" y="92" font-family="Arial,sans-serif" font-size="5.5" letter-spacing="2" fill="#9b7c80">HAIR SALON</text>
+  <g font-family="Arial,sans-serif" font-size="6.5" fill="#704f54" letter-spacing=".7"><text x="262" y="82">HOME</text><text x="304" y="82">ABOUT</text><text x="349" y="82">SERVICES</text><text x="405" y="82">LOOKBOOK</text><text x="469" y="82">CONTACT</text></g>
+  <rect x="516" y="66" width="64" height="25" rx="2" fill="#765057"/><text x="548" y="81" text-anchor="middle" font-family="Arial,sans-serif" font-size="6" font-weight="700" letter-spacing=".8" fill="#fff">BOOK APPOINTMENT</text>
+  <rect x="55" y="104" width="530" height="152" fill="url(#paper)"/>
+  <text x="78" y="132" font-family="Arial,sans-serif" font-size="7" letter-spacing="1.5" fill="#a47d7d">LUXURY HAIR · TIMELESS BEAUTY</text>
+  <text x="78" y="172" font-family="Georgia,serif" font-size="38" fill="#6c444a">Elevated</text>
+  <text x="78" y="208" font-family="Georgia,serif" font-size="34" font-style="italic" fill="#7f555c">by Artistry</text>
+  <text x="79" y="226" font-family="Arial,sans-serif" font-size="7" fill="#786469">Bespoke hair experiences crafted</text><text x="79" y="237" font-family="Arial,sans-serif" font-size="7" fill="#786469">with precision, passion and elegance.</text>
+  <rect x="79" y="244" width="84" height="24" fill="#795159"/><text x="121" y="259" text-anchor="middle" font-family="Arial,sans-serif" font-size="6.5" font-weight="700" fill="#fff">BOOK APPOINTMENT</text>
+  <text x="179" y="258" font-family="Arial,sans-serif" font-size="6.5" font-weight="700" fill="#795159">EXPLORE SERVICES</text><line x1="179" y1="262" x2="240" y2="262" stroke="#795159" stroke-width=".7"/>
+  <path d="M320 104H585V256H320C340 217 338 139 320 104Z" fill="#d6b8ae"/>
+  <ellipse cx="461" cy="168" rx="74" ry="86" fill="#d5a991"/>
+  <path d="M393 236C379 205 377 148 399 117C421 84 487 85 519 116C546 142 546 191 520 234C494 213 465 219 441 237Z" fill="url(#hair)"/>
+  <path d="M416 122C448 101 496 112 519 145C487 133 457 142 425 171C412 160 408 140 416 122Z" fill="#3b211f" opacity=".9"/>
+  <path d="M484 139C477 167 463 189 443 209C468 198 491 178 505 148" fill="none" stroke="#c6846e" stroke-width="7" stroke-linecap="round" opacity=".75"/>
+  <path d="M499 154C494 184 479 210 459 229" fill="none" stroke="#e0a68d" stroke-width="4" stroke-linecap="round" opacity=".7"/>
+  <ellipse cx="457" cy="166" rx="27" ry="38" fill="#d8aa91"/><path d="M438 154C448 147 462 145 475 151" fill="none" stroke="#4d2b29" stroke-width="2"/><path d="M447 175C455 181 464 181 471 175" fill="none" stroke="#9f615c" stroke-width="1.5"/>
+  <g transform="translate(55 270)">
+    <rect width="530" height="49" fill="#f8efeb"/>
+    <g stroke="#d7c4bf" stroke-width=".7"><line x1="132" y1="0" x2="132" y2="49"/><line x1="265" y1="0" x2="265" y2="49"/><line x1="398" y1="0" x2="398" y2="49"/></g>
+    <g font-family="Arial,sans-serif" fill="#704f54"><text x="24" y="18" font-size="7" font-weight="700">HAIRCUT &amp; STYLING</text><text x="24" y="31" font-size="5.5">Expert cuts tailored to you.</text><text x="157" y="18" font-size="7" font-weight="700">COLOR EXPERTISE</text><text x="157" y="31" font-size="5.5">Multi-dimensional shine.</text><text x="290" y="18" font-size="7" font-weight="700">TREATMENTS</text><text x="290" y="31" font-size="5.5">Healthy, beautiful hair.</text><text x="423" y="18" font-size="7" font-weight="700">LOOKBOOK</text><text x="423" y="31" font-size="5.5">Inspiration for every you.</text></g>
+  </g>
+</svg>

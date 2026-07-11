@@ -1,145 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seaway Cleaning Services — Demo Preview</title>
-  <meta name="description" content="Unofficial preview concept for Seaway Cleaning Services — cleaning in Cornwall.">
-  <meta name="robots" content="noindex,nofollow">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seaway Cleaning Services — Premium Demo Preview</title>
+  <meta name="description" content="Unofficial premium website preview concept for Seaway Cleaning Services in Cornwall." />
+  <meta name="robots" content="noindex,nofollow" />
   <style>
-    *,*::before,*::after { box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; color: #1a1a1a; }
-    a { color: inherit; }
-    img { max-width: 100%; height: auto; }
-    .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+    *,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:#10243a;background:#f7f8f5;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}body.modal-open{overflow:hidden}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}button{cursor:pointer}img{display:block;width:100%;height:100%;object-fit:cover}.container{width:min(1220px,calc(100% - 48px));margin:auto}.ribbon{min-height:38px;padding:10px 24px;background:#10243a;color:#ffffffd1;display:flex;align-items:center;justify-content:center;gap:12px;font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;text-align:center}.ribbon i{width:5px;height:5px;border-radius:50%;background:#9fbd91}.nav{position:sticky;top:0;z-index:50;background:#fffffff0;border-bottom:1px solid #10243a14;backdrop-filter:blur(18px)}.navin{height:78px;display:flex;align-items:center;justify-content:space-between;gap:28px}.brand{display:flex;align-items:center;gap:13px;min-width:230px}.mark{width:42px;height:42px;border:1px solid #637a58;border-radius:50%;display:grid;place-items:center;color:#637a58}.mark svg{width:23px}.brand strong{display:block;font-family:Georgia,serif;font-size:19px;font-weight:500;line-height:1}.brand small{display:block;margin-top:5px;color:#66717b;font-size:9px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.links{display:flex;gap:27px;font-size:12px;font-weight:700}.actions{display:flex;gap:11px}.btn{min-height:46px;padding:0 22px;border:0;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:11px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;transition:.25s}.btn:hover{transform:translateY(-2px)}.primary{background:#0d5f91;color:white;box-shadow:0 15px 34px #0d5f913d}.ghost{background:white;color:#10243a;border:1px solid #10243a1f}.hero{background:white}.hero-grid{display:grid;grid-template-columns:.88fr 1.12fr;min-height:680px}.copy{display:flex;flex-direction:column;justify-content:center;padding:72px 52px 72px max(24px,calc((100vw - 1220px)/2));background:radial-gradient(circle at 5% 10%,#637a581a,transparent 35%),white}.eyebrow{display:inline-flex;align-items:center;gap:11px;color:#637a58;font-size:10px;font-weight:900;letter-spacing:.19em;text-transform:uppercase}.eyebrow::before{content:"";width:32px;height:1px;background:currentColor}.hero h1{max-width:720px;margin:24px 0;font:400 clamp(52px,6.2vw,88px)/.98 Georgia,serif;letter-spacing:-.05em}.hero h1 em{color:#0d5f91;font-weight:400}.lede{max-width:560px;color:#53606c;font-size:17px;line-height:1.75}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}.proof{display:flex;flex-wrap:wrap;gap:28px;margin-top:42px;padding-top:24px;border-top:1px solid #10243a1f}.proof strong{display:block;font:500 21px Georgia,serif}.proof span{display:block;margin-top:3px;color:#66717b;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.media{position:relative;min-height:680px;overflow:hidden}.media::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#ffffff1f,transparent 25%,#10243a1c)}.note{position:absolute;z-index:2;left:34px;bottom:34px;width:min(330px,calc(100% - 68px));padding:22px;border-radius:18px;background:#fffffff2;box-shadow:0 22px 60px #10243a33;backdrop-filter:blur(12px)}.note strong{display:block;font:500 22px Georgia,serif}.note p{margin:8px 0 0;color:#66717b;font-size:12px}.trust{background:#fbfcfa;border-block:1px solid #10243a1f}.trust-grid{display:grid;grid-template-columns:repeat(4,1fr)}.trust article{min-height:108px;padding:24px;display:grid;grid-template-columns:40px 1fr;align-items:center;gap:13px;border-right:1px solid #10243a1f}.trust article:last-child{border:0}.icon{width:40px;height:40px;border-radius:50%;background:#dfe8db;color:#637a58;display:grid;place-items:center}.icon svg{width:21px}.trust strong{display:block;font-size:12px}.trust span{display:block;margin-top:3px;color:#66717b;font-size:10px}.pad{padding:108px 0}.head{max-width:760px;margin:0 auto 54px;text-align:center}.head .eyebrow{justify-content:center}.head h2{margin:18px 0 16px;font:400 clamp(40px,5vw,66px)/1.03 Georgia,serif;letter-spacing:-.045em}.head p{margin:0;color:#5b6772;font-size:16px;line-height:1.75}.services{background:white}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:17px}.card{border:1px solid #10243a1f;border-radius:22px;overflow:hidden;background:white;box-shadow:0 18px 45px #10243a12;transition:.3s}.card:hover{transform:translateY(-6px);box-shadow:0 28px 60px #10243a1f}.card-img{position:relative;height:205px}.card-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,#10243a47)}.badge{position:absolute;z-index:2;left:22px;bottom:-21px;width:44px;height:44px;border-radius:50%;background:#637a58;color:white;display:grid;place-items:center}.badge svg{width:20px}.card-body{padding:38px 24px 24px}.card h3{margin:0 0 10px;font:500 23px Georgia,serif}.card p{margin:0;color:#66717b;font-size:13px;line-height:1.7}.card button{margin-top:22px;border:0;padding:0;background:none;color:#0d5f91;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.process{background:#eef3ed}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.step{text-align:center;padding:0 16px}.num{width:68px;height:68px;margin:0 auto 22px;border-radius:50%;background:white;border:1px solid #637a5847;color:#637a58;display:grid;place-items:center;font:400 24px Georgia,serif;box-shadow:0 14px 30px #637a581f}.step h3{margin:0 0 8px;font:500 23px Georgia,serif}.step p{margin:0;color:#66717b;font-size:12px;line-height:1.65}.results{background:white}.results-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:62px;align-items:center}.results h2{margin:18px 0;font:400 clamp(40px,4.7vw,64px)/1.04 Georgia,serif;letter-spacing:-.045em}.results p{color:#66717b;line-height:1.75}.compare{display:grid;grid-template-columns:1fr 1fr;min-height:470px;border-radius:26px;overflow:hidden;box-shadow:0 28px 70px #10243a24}.half{position:relative;overflow:hidden}.half:first-child img{filter:saturate(.65) brightness(.78)}.half::after{content:attr(data-label);position:absolute;left:20px;bottom:20px;padding:8px 12px;border-radius:999px;background:#10243ad1;color:white;font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}.half:last-child::after{background:#637a58e6}.testimonials{background:#f7f8f5}.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.quote{padding:30px;border:1px solid #10243a1f;border-radius:20px;background:white;box-shadow:0 16px 40px #10243a0f}.stars{color:#d5a438;letter-spacing:2px;font-size:13px}.quote p{margin:18px 0 24px;color:#4f5d68;font:400 21px/1.45 Georgia,serif}.quote strong{display:block;font-size:12px}.quote span{display:block;margin-top:3px;color:#66717b;font-size:10px}.booking{position:relative;padding:108px 0;background:linear-gradient(145deg,#12344d,#0a263b);color:white;overflow:hidden}.booking-grid{position:relative;z-index:2;display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:center}.booking .eyebrow{color:#b8d0af}.booking h2{margin:20px 0;font:400 clamp(44px,5.5vw,72px)/.99 Georgia,serif;letter-spacing:-.045em}.booking-copy p{color:#ffffffa8;line-height:1.75}.form{padding:34px;border-radius:26px;background:white;color:#10243a;box-shadow:0 34px 90px #00000047}.form-head{display:flex;justify-content:space-between;gap:20px;padding-bottom:22px;border-bottom:1px solid #10243a1f}.form-head strong{font:500 25px Georgia,serif}.form-head span{color:#637a58;font-size:9px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}.field{display:grid;gap:7px}.field.full{grid-column:1/-1}.field label{color:#66717b;font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase}.field input,.field select,.field textarea{width:100%;border:1px solid #10243a1f;border-radius:10px;background:#fbfcfa;color:#10243a;padding:13px 14px}.field textarea{min-height:86px;resize:vertical}.submit{width:100%;margin-top:18px}.form-note{margin:12px 0 0;color:#66717b;font-size:10px;text-align:center}footer{padding:66px 0 28px;background:#0b1c2a;color:#ffffffb3}.footer-grid{display:grid;grid-template-columns:1.25fr .75fr .75fr;gap:56px;padding-bottom:48px}.footer-grid strong{display:block;color:white;font:500 30px Georgia,serif}.footer-grid p{max-width:390px;color:#ffffff7a;font-size:13px}.footer-col h4{margin:0 0 15px;color:white;font-size:10px;letter-spacing:.16em;text-transform:uppercase}.footer-col a,.footer-col span{display:block;margin-top:9px;color:#ffffff85;font-size:13px}.bottom{border-top:1px solid #ffffff1a;padding-top:24px;display:flex;justify-content:space-between;gap:20px;font-size:9px;letter-spacing:.1em;text-transform:uppercase}.preview{position:fixed;right:18px;bottom:18px;z-index:40;padding:10px 14px;border-radius:999px;background:#10243aea;color:#ffffffd1;box-shadow:0 12px 35px #10243a38;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:22px;background:#081926bd;backdrop-filter:blur(12px)}.modal.open{display:flex}.modal-card{width:min(520px,100%);padding:38px;border-radius:26px;background:white;box-shadow:0 40px 120px #00000059;text-align:center}.modal-card h3{margin:0;font:500 34px Georgia,serif}.modal-card p{margin:14px auto 24px;max-width:410px;color:#66717b;font-size:14px}.modal-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}.reveal.visible{opacity:1;transform:none}@media(max-width:1080px){.links{display:none}.hero-grid{grid-template-columns:1fr}.copy{padding:70px max(24px,calc((100vw - 900px)/2))}.media{min-height:560px}.cards{grid-template-columns:repeat(2,1fr)}.results-grid,.booking-grid{grid-template-columns:1fr}}@media(max-width:760px){.container{width:min(100% - 30px,1220px)}.navin{height:68px}.brand small,.actions .ghost{display:none}.actions .btn{min-height:42px;padding:0 15px;font-size:9px}.copy{padding:58px 24px 64px}.hero h1{font-size:clamp(48px,15vw,70px)}.media{min-height:460px}.trust-grid{grid-template-columns:1fr 1fr}.pad{padding:78px 0}.cards{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr;row-gap:38px}.quotes{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.footer-grid{grid-template-columns:1fr;gap:30px}.bottom{flex-direction:column}.preview{display:none}}@media(max-width:520px){.brand strong{font-size:16px}.hero-actions .btn{width:100%}.trust-grid,.steps{grid-template-columns:1fr}.trust article{border-right:0;border-bottom:1px solid #10243a1f}.compare{grid-template-columns:1fr;min-height:620px}.modal-card{padding:28px 20px}.modal-actions .btn{width:100%}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}.reveal{opacity:1;transform:none}}
   </style>
 </head>
 <body>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a2b3c; line-height: 1.6; }
-  img { max-width: 100%; display: block; }
-  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-  /* Header Watermark */
-  header { background: repeating-linear-gradient(45deg, #ffd700, #ffd700 10px, #ffed4e 10px, #ffed4e 20px); padding: 10px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-  header p { font-weight: 700; color: #5a4a00; font-size: 0.9rem; letter-spacing: 0.5px; }
-
-  /* Hero */
-  .hero { position: relative; min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; color: white; background: linear-gradient(rgba(20, 40, 60, 0.55), rgba(20, 40, 60, 0.55)), url('./images/hero.jpg') center/cover no-repeat; padding: 60px 20px; }
-  .hero-content { max-width: 800px; }
-  .hero h1 { font-size: clamp(2.2rem, 5vw, 4rem); margin-bottom: 16px; font-weight: 800; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); }
-  .hero p.tagline { font-size: clamp(1.1rem, 2vw, 1.4rem); margin-bottom: 32px; font-weight: 300; text-shadow: 1px 1px 4px rgba(0,0,0,0.3); }
-  .btn { display: inline-block; padding: 16px 36px; background: #2e8b57; color: white; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.05rem; border: none; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 14px rgba(46,139,87,0.4); }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(46,139,87,0.5); }
-
-  /* Services */
-  .services { padding: 80px 20px; background: #f7faf9; }
-  .section-title { text-align: center; font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin-bottom: 48px; color: #1a2b3c; }
-  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
-  .service-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; }
-  .service-card:hover { transform: translateY(-6px); box-shadow: 0 10px 28px rgba(0,0,0,0.12); }
-  .service-card img { width: 100%; height: 200px; object-fit: cover; }
-  .service-card .card-body { padding: 24px; }
-  .service-card h3 { color: #2e8b57; margin-bottom: 10px; font-size: 1.25rem; }
-  .service-card p { color: #4a5a6a; font-size: 0.95rem; }
-
-  /* About */
-  .about { padding: 80px 20px; background: white; }
-  .about-content { max-width: 800px; margin: 0 auto; text-align: center; }
-  .about p { font-size: 1.1rem; color: #4a5a6a; margin-bottom: 16px; }
-
-  /* Book Call */
-  .book-call { padding: 80px 20px; background: linear-gradient(135deg, #2e8b57 0%, #1a5d3a 100%); color: white; text-align: center; }
-  .book-call h2 { font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin-bottom: 16px; }
-  .book-call p { font-size: 1.1rem; margin-bottom: 32px; opacity: 0.95; }
-  .cal-embed { background: white; border-radius: 12px; max-width: 500px; margin: 32px auto 0; padding: 24px; color: #1a2b3c; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-  .cal-embed .placeholder { border: 2px dashed #cbd5e0; padding: 40px 20px; border-radius: 8px; }
-  .cal-embed .placeholder strong { color: #2e8b57; display: block; margin-bottom: 8px; }
-
-  /* Footer */
-  footer { background: #1a2b3c; color: #a0aec0; text-align: center; padding: 24px 20px; font-size: 0.9rem; }
-  footer span { color: #2e8b57; font-weight: 600; }
-
-  @media (max-width: 600px) {
-    .hero { min-height: 70vh; }
-    .services, .about, .book-call { padding: 60px 20px; }
-  }
-</style>
-
-<header>
-  <p>Demo Preview — Claim this website to make it live</p>
-</header>
-
-<section class="hero">
-  <div class="hero-content">
-    <h1>Seaway Cleaning Services</h1>
-    <p class="tagline">Cornwall's trusted eco-friendly cleaning — homes & businesses sparkling clean, naturally.</p>
-    <a href="#" class="btn" onclick="alert('Claim this website to unlock the live version'); return false;">Claim this website to unlock</a>
-  </div>
-</section>
-
-<section class="services">
-  <div class="container">
-    <h2 class="section-title">Our Services</h2>
-    <div class="services-grid">
-      <div class="service-card">
-        <img src="./images/section_1.jpg" alt="Residential cleaning">
-        <div class="card-body">
-          <h3>Residential Cleaning</h3>
-          <p>Weekly, bi-weekly, or monthly house cleaning using safe, eco-friendly products that protect your family and pets.</p>
-        </div>
-      </div>
-      <div class="service-card">
-        <img src="./images/section_2.jpg" alt="Commercial cleaning">
-        <div class="card-body">
-          <h3>Commercial Cleaning</h3>
-          <p>Professional office, retail, and workspace cleaning tailored to your business schedule and standards.</p>
-        </div>
-      </div>
-      <div class="service-card">
-        <img src="./images/section_1.jpg" alt="Deep cleaning">
-        <div class="card-body">
-          <h3>Deep Cleaning</h3>
-          <p>Top-to-bottom intensive cleaning that reaches every corner — perfect for seasonal refreshes or special occasions.</p>
-        </div>
-      </div>
-      <div class="service-card">
-        <img src="./images/section_2.jpg" alt="Move-in/out cleaning">
-        <div class="card-body">
-          <h3>Move-In / Move-Out</h3>
-          <p>Detailed transition cleaning to ensure a spotless hand-off and help you get your full deposit back.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="about">
-  <div class="about-content">
-    <h2 class="section-title">About Seaway Cleaning Services</h2>
-    <p>Seaway Cleaning Services is Cornwall, Ontario's go-to choice for residential and commercial cleaning. We use eco-friendly products that are tough on dirt but gentle on your home, workplace, and the environment.</p>
-    <p>Whether you need weekly, bi-weekly, or monthly service, our trained team delivers consistent, high-quality results — every single visit. Locally owned and proudly serving the Cornwall community.</p>
-  </div>
-</section>
-
-<section class="book-call">
-  <h2>Want to chat?</h2>
-  <p>Let's talk about your cleaning needs — no pressure, just a quick conversation.</p>
-  <a href="#" class="btn" onclick="alert('Claim this website to unlock the live version'); return false;">Book a 5-min call</a>
-  <div class="cal-embed">
-    <div class="placeholder">
-      <strong>📅 Cal.com Booking Calendar</strong>
-      <p>Live scheduling embed will appear here once the site is claimed.</p>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <p>Concept by <span>SiteSprint</span> · Demo Preview</p>
-</footer>
-<div style="position:fixed;bottom:20px;right:20px;background:rgba(255,255,255,0.95);padding:8px 16px;border-radius:4px;font-size:12px;color:#666;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-  SiteSprint Preview · Seaway Cleaning Services
-</div>
+  <div class="ribbon"><i></i> Unofficial design preview — interactions are demo locked <i></i></div>
+  <nav class="nav"><div class="container navin">
+    <a class="brand" href="#top"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22V8M12 13c-4-1-6-4-6-8 4 0 7 2 8 6M12 17c4-1 6-4 6-8-4 0-7 2-8 6"/></svg></span><span><strong>Seaway Cleaning Services</strong><small>Cleaning Co. · Cornwall</small></span></a>
+    <div class="links"><a href="#services">Services</a><a href="#process">How it works</a><a href="#results">Results</a><a href="#quote">Free quote</a></div>
+    <div class="actions"><a class="btn ghost" href="#services">View services</a><button class="btn primary" onclick="openModal()">Book your clean</button></div>
+  </div></nav>
+  <main id="top">
+    <section class="hero"><div class="hero-grid">
+      <div class="copy reveal"><div class="eyebrow">A clean home. A clear mind.</div><h1>Spotless spaces. <em>Reliable care.</em></h1><p class="lede">Flexible residential and commercial cleaning for Cornwall households and workplaces — planned around your schedule and finished with care.</p><div class="hero-actions"><button class="btn primary" onclick="openModal()">Get a free quote →</button><a class="btn ghost" href="#services">Explore services</a></div><div class="proof"><div><strong>Flexible</strong><span>Service schedules</span></div><div><strong>Eco-conscious</strong><span>Product options</span></div><div><strong>Local</strong><span>Cornwall focused</span></div></div></div>
+      <div class="media reveal"><img src="./images/hero.jpg" alt="Bright, freshly cleaned home interior"/><div class="note"><strong>Come home to clean.</strong><p>Recurring, deep, move-in, move-out, and commercial cleaning presented through one easy booking journey.</p></div></div>
+    </div></section>
+    <section class="trust"><div class="container trust-grid">
+      <article><span class="icon">✓</span><div><strong>Consistent service</strong><span>Clear scope for every visit</span></div></article><article><span class="icon">♧</span><div><strong>Eco-conscious options</strong><span>Gentler choices when requested</span></div></article><article><span class="icon">◷</span><div><strong>Flexible scheduling</strong><span>Weekly, bi-weekly, or monthly</span></div></article><article><span class="icon">⌂</span><div><strong>Locally focused</strong><span>Cornwall and nearby communities</span></div></article>
+    </div></section>
+    <section class="services pad" id="services"><div class="container"><div class="head reveal"><div class="eyebrow">Our services</div><h2>Tailored cleaning for every kind of space.</h2><p>Choose the level of support you need, from dependable recurring maintenance to detailed resets between life’s biggest transitions.</p></div><div class="cards">
+      <article class="card reveal"><div class="card-img"><img src="./images/section_1.jpg" alt="Recurring home cleaning"/><span class="badge">01</span></div><div class="card-body"><h3>Recurring cleaning</h3><p>Weekly, bi-weekly, or monthly visits that keep everyday mess from taking over your time.</p><button onclick="openModal()">Choose service →</button></div></article>
+      <article class="card reveal"><div class="card-img"><img src="./images/section_2.jpg" alt="Deep cleaning"/><span class="badge">02</span></div><div class="card-body"><h3>Deep cleaning</h3><p>A detailed top-to-bottom refresh for seasonal resets, special occasions, or a healthier-feeling home.</p><button onclick="openModal()">Choose service →</button></div></article>
+      <article class="card reveal"><div class="card-img"><img src="./images/section_1.jpg" alt="Move cleaning"/><span class="badge">03</span></div><div class="card-body"><h3>Move-in / move-out</h3><p>Transition cleaning designed to leave the space ready for a new beginning or a smooth hand-off.</p><button onclick="openModal()">Choose service →</button></div></article>
+      <article class="card reveal"><div class="card-img"><img src="./images/section_2.jpg" alt="Commercial cleaning"/><span class="badge">04</span></div><div class="card-body"><h3>Commercial cleaning</h3><p>Office and workspace cleaning aligned with your operating hours and presentation standards.</p><button onclick="openModal()">Choose service →</button></div></article>
+    </div></div></section>
+    <section class="process pad" id="process"><div class="container"><div class="head reveal"><div class="eyebrow">How it works</div><h2>A simple, seamless experience.</h2><p>The page turns a service inquiry into a clear four-step journey.</p></div><div class="steps"><article class="step reveal"><div class="num">01</div><h3>Choose</h3><p>Select the type of clean, frequency, and space.</p></article><article class="step reveal"><div class="num">02</div><h3>Request</h3><p>Share your preferred day and contact details.</p></article><article class="step reveal"><div class="num">03</div><h3>Confirm</h3><p>The live version connects to the scheduling workflow.</p></article><article class="step reveal"><div class="num">04</div><h3>Enjoy</h3><p>Return to a cleaner home or polished workplace.</p></article></div></div></section>
+    <section class="results pad" id="results"><div class="container results-grid"><div class="reveal"><div class="eyebrow">The clean difference</div><h2>Make the result feel tangible.</h2><p>A premium cleaning website should communicate the visible transformation clients are really buying: more calm, more clarity, and less work waiting for them.</p><button class="btn ghost" onclick="openModal()">View service details</button></div><div class="compare reveal"><div class="half" data-label="Before"><img src="./images/section_2.jpg" alt="Before cleaning"/></div><div class="half" data-label="After"><img src="./images/hero.jpg" alt="After cleaning"/></div></div></div></section>
+    <section class="testimonials pad"><div class="container"><div class="head reveal"><div class="eyebrow">Client experience</div><h2>Trust starts before the first visit.</h2><p>Demo testimonials show how verified customer feedback can be surfaced in the live version.</p></div><div class="quotes"><article class="quote reveal"><div class="stars">★★★★★</div><p>“Professional, thorough, and easy to coordinate.”</p><strong>Sample client story</strong><span>Residential cleaning · Cornwall</span></article><article class="quote reveal"><div class="stars">★★★★★</div><p>“The house felt completely reset when we walked in.”</p><strong>Sample client story</strong><span>Deep cleaning · Cornwall</span></article><article class="quote reveal"><div class="stars">★★★★★</div><p>“Clear communication and a polished result.”</p><strong>Sample client story</strong><span>Commercial cleaning · Cornwall</span></article></div></div></section>
+    <section class="booking" id="quote"><div class="container booking-grid"><div class="booking-copy reveal"><div class="eyebrow">Your free quote</div><h2>Tell us what needs cleaning.</h2><p>The live version can route organized quote requests directly to Seaway Cleaning Services with service, schedule, and project details included.</p></div><div class="form reveal"><div class="form-head"><strong>Request a cleaning quote</strong><span>Demo form</span></div><div class="form-grid"><div class="field"><label>Name</label><input placeholder="Your name"/></div><div class="field"><label>Phone</label><input placeholder="Your phone number"/></div><div class="field"><label>Service</label><select><option>Recurring cleaning</option><option>Deep cleaning</option><option>Move-in / move-out</option><option>Commercial cleaning</option></select></div><div class="field"><label>Frequency</label><select><option>One-time</option><option>Weekly</option><option>Bi-weekly</option><option>Monthly</option></select></div><div class="field full"><label>Project details</label><textarea placeholder="Tell us about the space"></textarea></div></div><button class="btn primary submit" onclick="openModal()">Get my free quote</button><p class="form-note">Preview only — form delivery activates after the website is claimed.</p></div></div></section>
+  </main>
+  <footer><div class="container"><div class="footer-grid"><div><strong>Seaway Cleaning Services</strong><p>A premium local cleaning concept for homes, offices, deep cleans, and move-related resets in Cornwall.</p></div><div class="footer-col"><h4>Explore</h4><a href="#services">Services</a><a href="#process">How it works</a><a href="#results">Results</a></div><div class="footer-col"><h4>Service area</h4><span>Cornwall, Ontario</span><span>Residential & commercial</span><a href="#quote">Request a quote</a></div></div><div class="bottom"><span>Unofficial preview concept by SiteSprint</span><span>Demo interactions are locked</span></div></div></footer>
+  <div class="preview">SiteSprint preview · Seaway Cleaning Services</div>
+  <div class="modal" id="modal" onclick="if(event.target===this)closeModal()"><div class="modal-card"><h3>This is a design preview.</h3><p>The live version can unlock quote delivery, real contact details, scheduling, service-area updates, and the preferred follow-up workflow.</p><div class="modal-actions"><button class="btn primary" onclick="closeModal()">Continue exploring</button><button class="btn ghost" onclick="closeModal()">Close preview note</button></div></div></div>
+  <script>const modal=document.getElementById('modal');function openModal(){modal.classList.add('open');document.body.classList.add('modal-open')}function closeModal(){modal.classList.remove('open');document.body.classList.remove('modal-open')}document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible')}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));</script>
 </body>
 </html>
