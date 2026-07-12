@@ -150,6 +150,12 @@ export default function LiveBuild() {
     if (!inView) return;
     if (reduce) {
       // Reduced motion: hold the finished site, rotate businesses slowly.
+      // If the preference flipped on mid-cycle, land on 'done' first so
+      // users never sit on a frozen half-built frame.
+      if (phase !== 'done') {
+        setPhase('done');
+        return;
+      }
       const t = setTimeout(() => setBrandIdx((i) => (i + 1) % BRANDS.length), 6000);
       return () => clearTimeout(t);
     }
