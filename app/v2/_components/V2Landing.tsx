@@ -108,19 +108,19 @@ const PRICING = [
 const TESTIMONIALS = [
   {
     quote:
-      "I run a two-truck cleaning company in Etobicoke. SiteSprint had a preview waiting in my inbox before I'd finished my Tim Hortons. The booking form alone would have cost me $3,000 from an agency.",
+      "I run a two-truck cleaning company in Etobicoke. Seaway Sites had a preview waiting in my inbox before I'd finished my Tim Hortons. The booking form alone would have cost me $3,000 from an agency.",
     name: 'Maria D.',
     role: 'Sparkle & Shine Cleaning · Toronto, ON',
   },
   {
     quote:
-      "I'm a solo hairstylist in Kits. I don't have time to learn Squarespace for the third time. SiteSprint gave me something I was actually proud to text my clients — and the price was less than a single colour service.",
+      "I'm a solo hairstylist in Kits. I don't have time to learn Squarespace for the third time. Seaway Sites gave me something I was actually proud to text my clients — and the price was less than a single colour service.",
     name: 'Jenna T.',
     role: 'Jenna T. Hair Studio · Vancouver, BC',
   },
   {
     quote:
-      "My shop's old site still had my ex-wife's cell number on it. SiteSprint built a new one in my coffee break, and I got three bookings the first week. The fact that it's hosted in Canada mattered to me.",
+      "My shop's old site still had my ex-wife's cell number on it. Seaway Sites built a new one in my coffee break, and I got three bookings the first week. The fact that it's hosted in Canada mattered to me.",
     name: 'Dave R.',
     role: 'North Hill Auto · Calgary, AB',
   },
@@ -237,7 +237,7 @@ export default function V2Landing() {
       <header className={`v2-header fixed top-0 inset-x-0 z-50 ${scrolled ? 'is-scrolled' : ''}`}>
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 sm:px-8 py-4">
           <a href="#top" className="flex items-baseline gap-2">
-            <span className="v2-serif text-xl font-semibold tracking-tight">SiteSprint</span>
+            <span className="v2-serif text-xl font-semibold tracking-tight">Seaway Sites</span>
             <span className="v2-mono text-[9px] text-[var(--v2-lume)]">the drafting table</span>
           </a>
           <nav className="hidden md:flex items-center gap-7 text-sm text-[var(--v2-cream-dim)]" aria-label="Page sections">
@@ -666,7 +666,7 @@ export default function V2Landing() {
       <footer className="border-t border-[var(--v2-line)] py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 sm:px-8 sm:flex-row">
           <div className="flex items-baseline gap-2">
-            <span className="v2-serif text-lg font-semibold">SiteSprint</span>
+            <span className="v2-serif text-lg font-semibold">Seaway Sites</span>
             <span className="v2-mono text-[9px] text-[var(--v2-cream-faint)]">
               this page is our own preview
             </span>

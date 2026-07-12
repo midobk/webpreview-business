@@ -179,7 +179,7 @@ export default function LiveBuild() {
           </div>
           <div className="flex-1 min-w-0">
             <div className="mx-auto max-w-[280px] truncate rounded-md bg-[rgba(239,234,224,0.06)] border border-[var(--v2-line)] px-3 py-1 text-[11px] text-[var(--v2-cream-dim)] font-mono text-center">
-              sitesprint.ca/preview/{brand.slug}
+              seawaysites.ca/preview/{brand.slug}
             </div>
           </div>
           <div
@@ -331,7 +331,9 @@ export default function LiveBuild() {
 
       {/* Console strip */}
       <div className="mt-3 flex items-center justify-between gap-4 px-1">
-        <div className="font-mono text-[11px] text-[var(--v2-cream-dim)] truncate" aria-live="polite">
+        {/* Decorative console theater — deliberately NOT aria-live: it
+            changes on a timer and would spam screen readers. */}
+        <div className="font-mono text-[11px] text-[var(--v2-cream-dim)] truncate" aria-hidden="true">
           {CONSOLE_LINE[phase](brand)}
         </div>
         <div className="v2-mono hidden sm:block shrink-0 text-[9px] text-[var(--v2-cream-faint)]">

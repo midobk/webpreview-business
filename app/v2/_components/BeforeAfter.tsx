@@ -1,20 +1,50 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 /* ------------------------------------------------------------------ */
 /*  Draggable comparison: the average small-business site (last       */
-/*  touched in 2013) vs. the SiteSprint preview. A full-surface       */
-/*  range input drives the divider — native drag, click, keyboard     */
-/*  and screen-reader support with zero pointer math.                 */
+/*  touched in 2013) vs. the Seaway Sites preview. Pointer capture on */
+/*  the frame gives continuous drag on mouse AND touch (iOS Safari    */
+/*  treats a bare range input as tap-to-jump); the hidden range input */
+/*  stays for keyboard and screen-reader control.                     */
 /* ------------------------------------------------------------------ */
 
 export default function BeforeAfter() {
   const [pos, setPos] = useState(58);
+  const frameRef = useRef<HTMLDivElement | null>(null);
+  const dragging = useRef(false);
+
+  const posFromX = (clientX: number) => {
+    const rect = frameRef.current?.getBoundingClientRect();
+    if (!rect || rect.width === 0) return null;
+    return Math.min(98, Math.max(2, ((clientX - rect.left) / rect.width) * 100));
+  };
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    dragging.current = true;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    const p = posFromX(e.clientX);
+    if (p !== null) setPos(p);
+  };
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!dragging.current) return;
+    const p = posFromX(e.clientX);
+    if (p !== null) setPos(p);
+  };
+  const endDrag = () => {
+    dragging.current = false;
+  };
 
   return (
     <div className="relative">
-      <div className="v2-ba relative aspect-[4/3] sm:aspect-[16/9] rounded-2xl overflow-hidden border border-[var(--v2-line-strong)] shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)]">
+      <div
+        ref={frameRef}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        className="v2-ba relative aspect-[4/3] sm:aspect-[16/9] rounded-2xl overflow-hidden border border-[var(--v2-line-strong)] shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)]">
         {/* AFTER — fills the whole frame, revealed on the right */}
         <div className="absolute inset-0 bg-[#f7f5ef] text-[#181613] flex flex-col">
           <div className="flex items-center justify-between px-[5%] py-[2.4%] bg-[#12271c] text-[#f2efe7]">
@@ -102,8 +132,10 @@ export default function BeforeAfter() {
           </div>
         </div>
 
-        {/* The input precedes the divider so its :focus-visible state can
-            light up the visible handle via a sibling selector. */}
+        {/* Keyboard + screen-reader control only (pointer-events: none) —
+            pointer drag is handled by the frame above. The input precedes
+            the divider so its :focus-visible state can light up the
+            visible handle via a sibling selector. */}
         <input
           type="range"
           min={2}
@@ -111,7 +143,7 @@ export default function BeforeAfter() {
           value={pos}
           onChange={(e) => setPos(Number(e.target.value))}
           className="v2-ba-range"
-          aria-label="Drag to compare the old website with the SiteSprint preview"
+          aria-label="Drag to compare the old website with the Seaway Sites preview"
         />
 
         {/* Divider + handle (visual only — the input above drives it) */}

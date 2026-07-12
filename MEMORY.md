@@ -30,8 +30,9 @@ This applies to ALL future prototype generation, no exceptions.
 
 ## Key Decisions
 
-- Brand name: SiteSprint (working name, final TBC with user)
-- Domain: sitesprint.ca (not yet registered)
+- Brand name: **Seaway Sites** (confirmed by Mehdi 2026-07-12 — replaces the SiteSprint working name; he bought the domain)
+- Domain: purchased by Mehdi (2026-07-12). Exact domain string not yet confirmed in repo — the /v2 landing page assumes seawaysites.ca; verify before wiring DNS/email. (Old note: sitesprint.ca, never registered)
+- NOTE: the classic homepage (/), root layout metadata, showcase, admin UI and docs still say "SiteSprint" — site-wide rename pending. /v2 already says Seaway Sites.
 - Email provider: AgentMail (API key needed — user has not yet provided one)
 - Image generation: OpenAI confirmed working as of 2026-06-22
 - Google Gemini: API key suspended, user will provide a new key later
