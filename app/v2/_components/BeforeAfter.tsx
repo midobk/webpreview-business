@@ -102,19 +102,8 @@ export default function BeforeAfter() {
           </div>
         </div>
 
-        {/* Divider + handle (visual only — the input below drives it) */}
-        <div
-          className="v2-ba-divider absolute top-0 bottom-0 w-[2px] bg-[var(--v2-lume)] z-20"
-          style={{ left: `${pos}%` }}
-          aria-hidden="true"
-        >
-          <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 rounded-full bg-[var(--v2-lume)] text-[#0c0f08] shadow-lg">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-              <path d="M8 8l-4 4 4 4M16 8l4 4-4 4" />
-            </svg>
-          </span>
-        </div>
-
+        {/* The input precedes the divider so its :focus-visible state can
+            light up the visible handle via a sibling selector. */}
         <input
           type="range"
           min={2}
@@ -124,6 +113,19 @@ export default function BeforeAfter() {
           className="v2-ba-range"
           aria-label="Drag to compare the old website with the SiteSprint preview"
         />
+
+        {/* Divider + handle (visual only — the input above drives it) */}
+        <div
+          className="v2-ba-divider absolute top-0 bottom-0 w-[2px] bg-[var(--v2-lume)] z-20"
+          style={{ left: `${pos}%` }}
+          aria-hidden="true"
+        >
+          <span className="v2-ba-handle absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 rounded-full bg-[var(--v2-lume)] text-[#0c0f08] shadow-lg">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+              <path d="M8 8l-4 4 4 4M16 8l4 4-4 4" />
+            </svg>
+          </span>
+        </div>
       </div>
 
       {/* Labels */}

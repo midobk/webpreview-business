@@ -313,6 +313,15 @@ html:has(.v2-root) {
     0 0 24px rgba(205, 244, 99, 0.5);
 }
 
+/* The range input is transparent, so keyboard focus is made visible on
+   the handle instead of the (invisible) native outline. */
+.v2-ba-range:focus-visible ~ .v2-ba-divider .v2-ba-handle {
+  box-shadow:
+    0 0 0 3px var(--v2-ink),
+    0 0 0 6px var(--v2-lume),
+    0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
 /* =============================================================
    LiveBuild — the hero demo that assembles a website on screen
    =============================================================
