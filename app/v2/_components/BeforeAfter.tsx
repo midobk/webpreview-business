@@ -24,8 +24,13 @@ export default function BeforeAfter() {
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     dragging.current = true;
     e.currentTarget.setPointerCapture(e.pointerId);
-    const p = posFromX(e.clientX);
-    if (p !== null) setPos(p);
+    // Mouse clicks jump to the clicked spot; touches don't — a finger
+    // landing here may be starting a page scroll (touch-action: pan-y
+    // cancels our stream if so), and the divider shouldn't twitch first.
+    if (e.pointerType === 'mouse') {
+      const p = posFromX(e.clientX);
+      if (p !== null) setPos(p);
+    }
   };
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!dragging.current) return;

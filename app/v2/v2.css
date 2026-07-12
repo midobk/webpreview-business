@@ -276,7 +276,10 @@ html:has(.v2-root) {
 /* ---------- Before / After slider ---------- */
 
 .v2-ba {
-  touch-action: none;
+  /* pan-y: vertical swipes keep scrolling the page; horizontal drags
+     move the divider (the browser cancels our pointer stream when it
+     takes the gesture for scrolling). */
+  touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
   cursor: ew-resize;
