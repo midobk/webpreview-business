@@ -134,7 +134,7 @@ export default function BeforeAfter() {
           the site they have
         </span>
         <span className="v2-mono text-[10px] text-[var(--v2-lume)]">
-          the preview we send — 90 seconds old
+          the first draft we send — same day
         </span>
       </div>
     </div>

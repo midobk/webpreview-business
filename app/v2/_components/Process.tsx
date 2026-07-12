@@ -10,19 +10,19 @@ import { motion, useScroll, useSpring } from 'motion/react';
 
 const STEPS = [
   {
-    t: 'T+0:00',
+    t: '60 seconds',
     title: 'Tell us about your business',
     body: 'A 60-second form — your name, what you do, where you work. No brief, no discovery call, no "brand questionnaire". We read your public listings and reviews for the rest.',
   },
   {
-    t: 'T+1:30',
-    title: 'Your preview is already live',
-    body: 'A complete one-page site — real copy in your voice, your colours, mobile-first — waiting at a private link. Most previews arrive before the confirmation email does.',
+    t: 'same day',
+    title: 'A real first draft lands in your inbox',
+    body: "A complete one-page concept — real copy in your voice, your colours, mobile-first — assembled by our build agent and reviewed by a human before it's sent. It's a mock-up: the starting point, not the finish line.",
   },
   {
-    t: 'whenever',
-    title: 'Keep it, change it, or walk away',
-    body: 'Love it? We put it on your domain. Want tweaks? Reply with changes and we iterate. Not for you? Close the tab. No invoice, no follow-up spam.',
+    t: 'you decide',
+    title: 'Say yes, and the human work starts',
+    body: "Love the direction? We refine it with you — your photos, final wording, the details — until it's production-ready on your domain. Not for you? Close the tab. No invoice, no follow-up spam.",
   },
 ];
 

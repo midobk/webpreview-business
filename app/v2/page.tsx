@@ -5,11 +5,11 @@ import './v2.css';
 export const metadata: Metadata = {
   title: 'SiteSprint — Your website already exists',
   description:
-    'Watch a complete, personalized website preview assemble itself in 90 seconds. Free for Canadian small businesses — no credit card, no sales call.',
+    'A personalized first draft of your website, machine-fast and human-finished. Free draft the same day for Canadian small businesses — no credit card, no sales call.',
   openGraph: {
     title: 'SiteSprint — Your website already exists.',
     description:
-      'A complete website preview in 90 seconds, before you pay a dollar. Built for Canadian small businesses.',
+      'A real first draft of your website, free and same-day — then finished by hand when you say yes. Built for Canadian small businesses.',
     type: 'website',
   },
 };

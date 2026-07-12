@@ -71,10 +71,11 @@ export default function LeadForm() {
     return (
       <div className="v2-card p-8 sm:p-10 text-center" role="status">
         <SuccessCheck trigger className="mx-auto w-14 h-14 text-[var(--v2-lume)]" />
-        <h3 className="v2-serif mt-5 text-2xl font-medium">Your preview is in the queue.</h3>
+        <h3 className="v2-serif mt-5 text-2xl font-medium">Your draft is in the queue.</h3>
         <p className="mt-3 text-[15px] leading-relaxed text-[var(--v2-cream-dim)]">
-          Watch your inbox — the link usually lands in a couple of minutes. No
-          reply needed if you hate it. We only follow up once.
+          Watch your inbox — the first draft usually lands the same day, once
+          a human has looked it over. No reply needed if you hate it. We only
+          follow up once.
         </p>
       </div>
     );
@@ -170,7 +171,7 @@ export default function LeadForm() {
         disabled={busy}
         className="v2-btn v2-btn-primary w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        {busy ? 'Sending…' : 'Build my free preview'}
+        {busy ? 'Sending…' : 'Build my free draft'}
         {!busy && (
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6" />

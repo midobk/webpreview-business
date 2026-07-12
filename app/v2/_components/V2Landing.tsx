@@ -58,11 +58,11 @@ const TRADES = [
 ];
 
 const STATS: { value: string; prefix?: string; label: string }[] = [
-  { value: '90s', label: 'from form to finished preview' },
+  { value: 'Same day', label: 'your first draft, in your inbox' },
   // CountUp keeps only the digits + trailing text, so "$" must ride
   // through its prefix prop rather than the value string.
   { value: '0', prefix: '$', label: 'until you decide to keep it' },
-  { value: '0 contracts', label: 'cancel or walk away anytime' },
+  { value: '1 human', label: 'reviews every draft before it ships' },
   { value: '100%', label: 'yours on final delivery' },
 ];
 
@@ -71,17 +71,17 @@ const PRICING = [
     name: 'Preview',
     price: 'Free',
     cadence: 'no card required',
-    blurb: 'See your future site before you commit to anything.',
-    features: ['Complete one-page preview', 'Mobile + desktop design', 'Personalized copy & palette', 'Keep it or walk away'],
-    cta: 'Get my preview',
+    blurb: 'A personalized first draft — see the direction before you commit.',
+    features: ['Complete one-page first draft', 'Mobile + desktop design', 'Personalized copy & palette', 'Human-reviewed before it’s sent', 'Keep iterating or walk away'],
+    cta: 'Get my draft',
     featured: false,
   },
   {
     name: 'Managed',
     price: '$299',
     cadence: 'setup + $49/mo',
-    blurb: 'Most popular. Live on your domain, fully managed.',
-    features: ['Everything in Preview, finalized', 'Custom domain + SSL', 'Hosting + maintenance included', 'Unlimited small edits', 'Cancel anytime'],
+    blurb: 'Most popular. Finished by hand, live on your domain, fully managed.',
+    features: ['Your draft, refined to production-ready', 'Custom domain + SSL', 'Hosting + maintenance included', 'Unlimited small edits', 'Cancel anytime'],
     cta: 'Start managed',
     featured: true,
   },
@@ -128,8 +128,16 @@ const TESTIMONIALS = [
 
 const FAQS = [
   {
-    q: 'How fast is "90 seconds", really?',
-    a: "Most previews are ready in under two minutes. The longest part is waiting for you to fill out the form. We're not exaggerating — your preview link often arrives before the confirmation email does.",
+    q: 'How fast will I see my first draft?',
+    a: "Usually the same day — often within a few hours. The draft is assembled by our build system, then a person reviews it before it's sent. We'd rather be a little slower than send you something broken.",
+  },
+  {
+    q: 'Is the preview my finished website?',
+    a: "No — and we're up-front about that. It's a working first draft: real copy, real design, personalized to your business. If you decide to keep it, we refine it together — your photos, final wording, booking links, the details — until it's production-ready on your domain.",
+  },
+  {
+    q: 'Is this just AI-generated?',
+    a: "The first draft is machine-assembled — that's how it can be fast and free — but nothing ships without a person reviewing, editing and finishing it. You'll never be handed raw robot output, and the final site is finished by hand.",
   },
   {
     q: "Do I own the website when it's done?",
@@ -261,7 +269,7 @@ export default function V2Landing() {
               className="v2-mono flex items-center gap-3 text-[10px] text-[var(--v2-cream-faint)]"
             >
               <span className="inline-flex h-1.5 w-1.5 rounded-full bg-[var(--v2-lume)]" aria-hidden="true" />
-              websites for canadian small business · built while you watch
+              websites for canadian small business · drafted by machine · finished by hand
             </motion.div>
 
             <motion.h1
@@ -280,9 +288,10 @@ export default function V2Landing() {
               variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } } }}
               className="mt-7 max-w-xl text-base sm:text-lg leading-relaxed text-[var(--v2-cream-dim)]"
             >
-              Tell us your business name. Ninety seconds later, a complete,
-              personalized website preview is in your inbox — before you&apos;ve
-              paid a dollar or talked to a single salesperson.
+              Tell us about your business. The same day, a complete first
+              draft of your website is in your inbox — built from your real
+              listings and reviews, checked by a human before it&apos;s sent,
+              free. If you love the direction, we finish it together.
             </motion.p>
 
             <motion.div
@@ -307,7 +316,7 @@ export default function V2Landing() {
             className="mt-16 sm:mt-20 mx-auto max-w-3xl"
           >
             <div className="v2-mono mb-3 text-[10px] text-[var(--v2-cream-faint)]">
-              fig. 01 — a preview, assembling itself
+              fig. 01 — a first draft, assembling itself (sped up)
             </div>
             <LiveBuild />
           </motion.div>
@@ -345,8 +354,8 @@ export default function V2Landing() {
             </h2>
             <p className="mt-5 max-w-xl text-[15px] sm:text-base leading-relaxed text-[var(--v2-cream-dim)]">
               Drag the handle. The left side is the site your customers find
-              today. The right side is the preview we&apos;d send you before
-              lunch.
+              today. The right side is the first draft we&apos;d send you the
+              same day — before a human has even given it the final polish.
             </p>
           </Reveal>
           <Reveal delay={0.1} className="mt-12">
@@ -362,13 +371,14 @@ export default function V2Landing() {
             <Reveal>
               <Kicker fig="03">the process</Kicker>
               <h2 className="v2-serif v2-h2 mt-5">
-                Ninety seconds.
+                Drafted in hours.
                 <br />
-                <em className="font-light">Not ninety days.</em>
+                <em className="font-light">Finished by hand.</em>
               </h2>
               <p className="mt-5 max-w-md text-[15px] sm:text-base leading-relaxed text-[var(--v2-cream-dim)]">
-                Agencies sell process. We sell the finished thing, first, for
-                free — then you decide if it&apos;s worth paying for.
+                The machine does the fast part — a real, personalized first
+                draft, free. The part that makes it production-ready is
+                human, and it starts only after you say yes.
               </p>
             </Reveal>
           </div>
@@ -393,8 +403,9 @@ export default function V2Landing() {
                 <div className="v2-mono text-[9px] text-[var(--v2-cream-faint)]">04·a</div>
                 <h3 className="v2-serif mt-3 text-xl font-medium">Copy that sounds like you</h3>
                 <p className="mt-2 text-sm leading-relaxed text-[var(--v2-cream-dim)]">
-                  Drafted from your listings, reviews and description — not a
-                  template with your name pasted in.
+                  Drafted from your listings, reviews and description, then
+                  edited by a person — not a template with your name pasted
+                  in, and never raw robot output.
                 </p>
                 <div className="mt-6 rounded-xl border border-[var(--v2-line)] bg-[rgba(239,234,224,0.03)] p-4">
                   <Typewriter lines={COPY_LINES} />
@@ -633,7 +644,7 @@ export default function V2Landing() {
             </h2>
             <ul className="mt-8 space-y-3 text-[15px] text-[var(--v2-cream-dim)]">
               {[
-                'Preview link in ~90 seconds',
+                'First draft in your inbox — same day',
                 'No credit card, no sales call',
                 'One follow-up email, then silence',
               ].map((line) => (

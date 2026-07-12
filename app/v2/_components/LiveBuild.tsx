@@ -112,7 +112,7 @@ const CONSOLE_LINE: Record<Phase, (b: Brand) => string> = {
   wire: () => '» drafting layout — one page, five sections',
   content: () => '» writing copy in your voice',
   paint: () => '» applying palette + type',
-  done: (b) => `✓ preview ready — 0:${b.finishAt} · sent to your inbox`,
+  done: () => '✓ draft 01 assembled — queued for a human pass',
 };
 
 /** Stopwatch: compresses the fictional ~50s build into the ~6.4s of
@@ -320,7 +320,7 @@ export default function LiveBuild() {
                   transition={{ type: 'spring', stiffness: 420, damping: 24 }}
                 >
                   <span className="v2-mono inline-block rounded border-2 border-[var(--v2-lume)] px-2.5 py-1 text-[9px] text-[var(--v2-lume)] bg-[rgba(10,12,15,0.55)] backdrop-blur-sm">
-                    preview ready
+                    draft 01 · ready
                   </span>
                 </motion.div>
               )}
@@ -335,7 +335,7 @@ export default function LiveBuild() {
           {CONSOLE_LINE[phase](brand)}
         </div>
         <div className="v2-mono hidden sm:block shrink-0 text-[9px] text-[var(--v2-cream-faint)]">
-          time compressed ×8
+          sped-up dramatization
         </div>
       </div>
     </div>
