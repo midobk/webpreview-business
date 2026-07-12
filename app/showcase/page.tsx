@@ -167,10 +167,10 @@ export default async function ShowcasePage() {
             <span className="text-xl font-extrabold tracking-tight text-ink">Seaway Sites</span>
           </Link>
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-steel">
-            <Link href="/#features" className="hover:text-ink transition-colors">
-              Features
+            <Link href="/#proof" className="hover:text-ink transition-colors">
+              Proof
             </Link>
-            <Link href="/#how-it-works" className="hover:text-ink transition-colors">
+            <Link href="/#process" className="hover:text-ink transition-colors">
               How it works
             </Link>
             <Link href="/showcase" className="text-paint">
