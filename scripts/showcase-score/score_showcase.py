@@ -189,8 +189,10 @@ def anonymize_html(html: str, lead: dict) -> str:
         # Small cities — replace with generic
         html = re.sub(re.escape(city), "your area", html, flags=re.IGNORECASE)
 
-    # Add "Concept by Seaway Sites" credit if not present
-    if "siteSprint" not in html.lower() and "sitesprint" not in html.lower():
+    # Add "Concept by Seaway Sites" credit if not present. Old prototypes
+    # carry the retired SiteSprint credit — count that too so neither
+    # generation gets a duplicate footer.
+    if "sitesprint" not in html.lower() and "seaway sites" not in html.lower():
         html = html.replace("</body>", '<footer class="showcase-credit">Concept by Seaway Sites</footer></body>')
 
     # Replace tagline-style copy that mentions the real industry specifically
