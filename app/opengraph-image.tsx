@@ -1,0 +1,78 @@
+import { ImageResponse } from 'next/og';
+
+export const alt =
+  'Seaway Sites — your website already exists. Free first draft within the hour for Canadian small businesses.';
+export const size = { width: 1200, height: 630 };
+export const contentType = 'image/png';
+
+// Social card in the night-studio identity: ink canvas, blueprint
+// hairlines, phosphor-lume accent. Pure JSX — no font or image fetches.
+export default function Image() {
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          padding: '72px 80px',
+          background: '#0a0c0f',
+          backgroundImage:
+            'linear-gradient(to right, rgba(239,234,224,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(239,234,224,0.06) 1px, transparent 1px)',
+          backgroundSize: '80px 80px',
+          color: '#efeae0',
+          fontFamily: 'Georgia, serif',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <div style={{ width: 14, height: 14, borderRadius: 9999, background: '#cdf463' }} />
+          <div style={{ fontSize: 30, letterSpacing: 6, color: 'rgba(239,234,224,0.65)' }}>
+            SEAWAY SITES
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ fontSize: 92, lineHeight: 1.02, fontWeight: 600 }}>
+            Your website
+          </div>
+          <div style={{ fontSize: 92, lineHeight: 1.02, fontWeight: 600 }}>
+            already exists.
+          </div>
+          <div
+            style={{
+              marginTop: 26,
+              fontSize: 34,
+              fontStyle: 'italic',
+              color: 'rgba(239,234,224,0.62)',
+            }}
+          >
+            We just haven&apos;t shown it to you yet.
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+          <div
+            style={{
+              display: 'flex',
+              padding: '12px 26px',
+              borderRadius: 9999,
+              background: '#cdf463',
+              color: '#0c0f08',
+              fontSize: 26,
+              fontWeight: 700,
+              fontFamily: 'Arial, sans-serif',
+            }}
+          >
+            Free draft within the hour
+          </div>
+          <div style={{ fontSize: 24, color: 'rgba(239,234,224,0.55)', fontFamily: 'Arial, sans-serif' }}>
+            Canadian small business · no credit card
+          </div>
+        </div>
+      </div>
+    ),
+    { ...size }
+  );
+}

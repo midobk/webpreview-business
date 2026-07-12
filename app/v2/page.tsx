@@ -1,19 +1,7 @@
-import type { Metadata } from 'next';
-import V2Landing from './_components/V2Landing';
-import './v2.css';
+import { permanentRedirect } from 'next/navigation';
 
-export const metadata: Metadata = {
-  title: 'Seaway Sites — Your website already exists',
-  description:
-    'A personalized first draft of your website in minutes, not months — human-finished when you say yes. Free draft within the hour for Canadian small businesses. No credit card, no sales call.',
-  openGraph: {
-    title: 'Seaway Sites — Your website already exists.',
-    description:
-      'A real first draft of your website, free and within the hour — then finished by hand when you say yes. Built for Canadian small businesses.',
-    type: 'website',
-  },
-};
-
-export default function V2Page() {
-  return <V2Landing />;
+// The night-studio landing page graduated to the homepage; keep old
+// /v2 links working forever.
+export default function V2Redirect() {
+  permanentRedirect('/');
 }

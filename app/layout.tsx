@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   title: "Seaway Sites — Beautiful websites for Canadian small business",
   description:
     "A complete, on-brand website preview for your business within the hour — machine-drafted, human-checked. Built for Canadian small businesses. No credit card. No sales call.",
-  metadataBase: new URL("https://webpreview-business.vercel.app"),
+  metadataBase: new URL("https://seawaysites.com"),
   openGraph: {
     title: "Seaway Sites — See your new website before you pay a dollar.",
     description:
