@@ -11,7 +11,7 @@
  * Replace CAL_HANDLE with the user's real Cal.com handle when ready.
  */
 
-export const CAL_COM_HANDLE = process.env.CAL_COM_HANDLE || "sitesprint-demo";
+export const CAL_COM_HANDLE = process.env.CAL_COM_HANDLE || "seawaysites-demo";
 export const CAL_COM_EVENT = process.env.CAL_COM_EVENT || "5min";
 
 export const CAL_COM_SNIPPET = `

@@ -1,4 +1,4 @@
-# MEMORY.md — SiteSprint Agent Memory
+# MEMORY.md — Seaway Sites Agent Memory
 
 > Persistent memory across sessions. Read on startup. Update on learnings.
 
@@ -31,8 +31,9 @@ This applies to ALL future prototype generation, no exceptions.
 ## Key Decisions
 
 - Brand name: **Seaway Sites** (confirmed by Mehdi 2026-07-12 — replaces the SiteSprint working name; he bought the domain)
-- Domain: purchased by Mehdi (2026-07-12). Exact domain string not yet confirmed in repo — the /v2 landing page assumes seawaysites.ca; verify before wiring DNS/email. (Old note: sitesprint.ca, never registered)
-- NOTE: the classic homepage (/), root layout metadata, showcase, admin UI and docs still say "SiteSprint" — site-wide rename pending. /v2 already says Seaway Sites.
+- Domain: **seawaysites.com** (confirmed by Mehdi 2026-07-12). (Old note: sitesprint.ca, never registered)
+- Timing promise (confirmed by Mehdi 2026-07-12): first draft **within the hour**; tagline "in minutes, not months". The old 90-second claim is retired site-wide.
+- Site-wide rename DONE 2026-07-12 across app/**, lib, .env.example, README title, and future-output templates (outreach/generation scripts). NOT renamed on purpose: historical data/ records, generated prototypes, lib/data-bundle (regenerated from data), AGENT_PLAN.md / IDENTITY.md / SYSTEM.md (agent docs — reconcile via their own maintenance flow), and the registered OpenClaw agent id `sitesprint`.
 - Email provider: AgentMail (API key needed — user has not yet provided one)
 - Image generation: OpenAI confirmed working as of 2026-06-22
 - Google Gemini: API key suspended, user will provide a new key later

@@ -179,7 +179,7 @@ export default function LiveBuild() {
           </div>
           <div className="flex-1 min-w-0">
             <div className="mx-auto max-w-[280px] truncate rounded-md bg-[rgba(239,234,224,0.06)] border border-[var(--v2-line)] px-3 py-1 text-[11px] text-[var(--v2-cream-dim)] font-mono text-center">
-              seawaysites.ca/preview/{brand.slug}
+              seawaysites.com/preview/{brand.slug}
             </div>
           </div>
           <div

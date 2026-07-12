@@ -158,7 +158,7 @@ Required sections, in order:
 3. <section class="services"> with 3-4 service cards (use placeholder service names from industry)
 4. <section class="about"> short paragraph based on description
 5. <section class="book-call"> Cal.com booking embed with heading "Want to chat?" and CTA "Book a 5-min call"
-6. <footer> with "Concept by SiteSprint · Demo Preview"
+6. <footer> with "Concept by Seaway Sites · Demo Preview"
 
 Style: clean, modern, mobile-responsive via CSS grid/flexbox. Use inline CSS or a <style> tag in body.
 
@@ -241,7 +241,7 @@ def fallback_html(lead, hero_filename, section_filenames):
 </section>
 
 <footer style="padding:40px 20px;text-align:center;background:#0f3a2e;color:white;font-size:14px;">
-  <p>Concept by SiteSprint · Demo Preview · {business_name}</p>
+  <p>Concept by Seaway Sites · Demo Preview · {business_name}</p>
 </footer>
 """
 
@@ -273,7 +273,7 @@ def assemble_prototype(lead, hero_filename, section_filenames):
 <body>
 {body}
 <div style="position:fixed;bottom:20px;right:20px;background:rgba(255,255,255,0.95);padding:8px 16px;border-radius:4px;font-size:12px;color:#666;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-  SiteSprint Preview · {business_name}
+  Seaway Sites Preview · {business_name}
 </div>
 </body>
 </html>"""

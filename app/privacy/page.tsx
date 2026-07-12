@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Privacy Policy — SiteSprint',
+  title: 'Privacy Policy — Seaway Sites',
   description:
-    'How SiteSprint collects, uses, and protects your information under PIPEDA. Data hosted in Canada. We collect what we need and nothing more.',
+    'How Seaway Sites collects, uses, and protects your information under PIPEDA. Data hosted in Canada. We collect what we need and nothing more.',
 };
 
 /**
@@ -11,7 +11,7 @@ export const metadata = {
  *
  * Wires the footer link from app/page.tsx (the PIPEDA notice) to a
  * real route so the link no longer 404s. Content is honest, plain,
- * and aligned with the data SiteSprint actually collects:
+ * and aligned with the data Seaway Sites actually collects:
  *  - lead form: business name, email, optional website, optional message
  *  - hosting: Supabase (Canada), AgentMail for transactional replies
  *
@@ -26,7 +26,7 @@ export default function PrivacyPage() {
           href="/"
           className="inline-flex items-center gap-1.5 text-sm text-paint hover:text-signal transition-colors mb-10"
         >
-          ← Back to SiteSprint
+          ← Back to Seaway Sites
         </Link>
 
         <header className="mb-12">
@@ -46,7 +46,7 @@ export default function PrivacyPage() {
           </h1>
           <p className="mt-4 text-lg text-steel">
             Plain-language summary of what we collect, why, and how to ask us
-            to delete it. SiteSprint complies with Canada&apos;s{' '}
+            to delete it. Seaway Sites complies with Canada&apos;s{' '}
             <em>Personal Information Protection and Electronic Documents Act</em>{' '}
             (PIPEDA).
           </p>
@@ -115,10 +115,10 @@ export default function PrivacyPage() {
           <p>
             To exercise any of these rights, email{' '}
             <a
-              href="mailto:hello@sitesprint.ca"
+              href="mailto:hello@seawaysites.com"
               className="text-paint underline hover:text-signal"
             >
-              hello@sitesprint.ca
+              hello@seawaysites.com
             </a>{' '}
             and we will respond within 30 days.
           </p>
@@ -126,7 +126,7 @@ export default function PrivacyPage() {
 
         <Section title="Cookies">
           <p>
-            SiteSprint does not set marketing or advertising cookies. The only
+            Seaway Sites does not set marketing or advertising cookies. The only
             cookie in use is a single first-party session cookie required by
             the admin login flow if you choose to sign in.
           </p>
@@ -136,10 +136,10 @@ export default function PrivacyPage() {
           <p>
             Questions, complaints, or access requests:{' '}
             <a
-              href="mailto:hello@sitesprint.ca"
+              href="mailto:hello@seawaysites.com"
               className="text-paint underline hover:text-signal"
             >
-              hello@sitesprint.ca
+              hello@seawaysites.com
             </a>
             . If we cannot resolve a concern, you have the right to escalate
             to the Office of the Privacy Commissioner of Canada.

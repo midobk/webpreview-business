@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Migrate SiteSprint JSON files to Supabase.
+Migrate Seaway Sites JSON files to Supabase.
 
 Reads:
 - data/leads.json

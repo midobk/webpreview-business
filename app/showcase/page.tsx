@@ -5,7 +5,7 @@ import ShowcaseHero from './_components/ShowcaseHero';
 import ShowcaseCTA from './_components/ShowcaseCTA';
 
 export const metadata = {
-  title: 'Showcase — SiteSprint',
+  title: 'Showcase — Seaway Sites',
   description: 'See sample website concepts we create for small businesses. All examples are anonymized demo concepts.',
 };
 
@@ -164,7 +164,7 @@ export default async function ShowcasePage() {
                 <path d="M12 2l1.2 3.4 2.6-1.6-1 3 2.8.8-2.4 1.6 2.4 2.6-3.4.4 1.2 3.2-2.8-1.4L12 22l-.6-7.6-2.8 1.4 1.2-3.2-3.4-.4 2.4-2.6-2.4-1.6 2.8-.8-1-3 2.6 1.6z" />
               </svg>
             </div>
-            <span className="text-xl font-extrabold tracking-tight text-ink">SiteSprint</span>
+            <span className="text-xl font-extrabold tracking-tight text-ink">Seaway Sites</span>
           </Link>
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-steel">
             <Link href="/#features" className="hover:text-ink transition-colors">
@@ -238,7 +238,7 @@ export default async function ShowcasePage() {
       <footer className="py-12 bg-ink text-white/65">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-white/55">
-            © {new Date().getFullYear()} SiteSprint. All showcase examples are anonymized demo
+            © {new Date().getFullYear()} Seaway Sites. All showcase examples are anonymized demo
             concepts.
           </p>
           <div className="flex gap-6 text-sm">

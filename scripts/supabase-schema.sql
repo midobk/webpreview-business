@@ -1,4 +1,4 @@
--- Supabase schema for SiteSprint
+-- Supabase schema for Seaway Sites
 -- Run this in the Supabase SQL editor or via supabase-cli
 --
 -- This replaces the JSON-file data layer. Phase 2 of the dashboard fix.

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Google Places API (New) lead discovery for SiteSprint.
+Google Places API (New) lead discovery for Seaway Sites.
 
 Uses the Places API (New) Text Search + Place Details endpoints to find
 local businesses without websites in a given city/region.
@@ -171,12 +171,12 @@ def collect_businesses(api_key, query, region="ca", max_pages=3):
 
 
 def filter_no_website(places):
-    """Keep only places without a website — prime SiteSprint leads."""
+    """Keep only places without a website — prime Seaway Sites leads."""
     return [p for p in places if not p.get("websiteUri")]
 
 
 def place_to_lead(place, industry, city, province, existing_count):
-    """Convert a Google Place to SiteSprint lead format."""
+    """Convert a Google Place to Seaway Sites lead format."""
     display_name = place.get("displayName", {}).get("text", "Unknown")
     slug = display_name.lower().replace(" ", "-").replace("'", "").replace("&", "and")
     return {

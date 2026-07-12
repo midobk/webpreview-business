@@ -68,8 +68,8 @@ function useReveal() {
 /* ------------------------------------------------------------------ */
 const features = [
   {
-    title: '90-second previews',
-    body: 'Tell us about your business. Get a complete, on-brand website concept in the time it takes to make coffee.',
+    title: 'First draft within the hour',
+    body: 'Tell us about your business. Our build agent drafts a complete, on-brand website concept in minutes — and a human checks it before it reaches your inbox.',
     icon: (
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M13 10V3L4 14h7v7l9-11h-7z" />
     ),
@@ -203,7 +203,7 @@ const pricingTiers = [
 const testimonials = [
   {
     quote:
-      "I run a two-truck cleaning company in Etobicoke. SiteSprint had a preview waiting in my inbox before I'd finished my Tim Hortons. The booking form alone would have cost me $3,000 from an agency.",
+      "I run a two-truck cleaning company in Etobicoke. Seaway Sites had a preview waiting in my inbox before I'd finished my Tim Hortons. The booking form alone would have cost me $3,000 from an agency.",
     name: 'Maria D.',
     role: 'Sparkle & Shine Cleaning',
     location: 'Toronto, ON',
@@ -212,7 +212,7 @@ const testimonials = [
   },
   {
     quote:
-      "I'm a solo hairstylist in Kits. I don't have time to learn Squarespace for the third time. SiteSprint gave me something I was actually proud to text my clients — and the price was less than a single colour service.",
+      "I'm a solo hairstylist in Kits. I don't have time to learn Squarespace for the third time. Seaway Sites gave me something I was actually proud to text my clients — and the price was less than a single colour service.",
     name: 'Jenna T.',
     role: 'Jenna T. Hair Studio',
     location: 'Vancouver, BC',
@@ -221,7 +221,7 @@ const testimonials = [
   },
   {
     quote:
-      "My shop's old site still had my ex-wife's cell number on it. SiteSprint built a new one in my coffee break, and I got three bookings the first week. The fact that it's hosted in Canada mattered to me.",
+      "My shop's old site still had my ex-wife's cell number on it. Seaway Sites built a new one in my coffee break, and I got three bookings the first week. The fact that it's hosted in Canada mattered to me.",
     name: 'Dave R.',
     role: 'North Hill Auto',
     location: 'Calgary, AB',
@@ -232,8 +232,8 @@ const testimonials = [
 
 const faqs = [
   {
-    q: 'How fast is "90 seconds", really?',
-    a: "Most previews are ready in under two minutes. The longest part is waiting for you to fill out the form. We're not exaggerating — your preview link often arrives before the confirmation email does.",
+    q: 'How fast will I see my preview?',
+    a: "Within the hour, usually. The draft is assembled by our build system in minutes, then a person reviews it before it's sent — we'd rather be a little slower than send you something broken.",
   },
   {
     q: 'Do I own the website when it\'s done?',
@@ -258,7 +258,7 @@ const faqs = [
 ];
 
 const trustStats = [
-  { value: '90s', label: 'Average preview ready' },
+  { value: '60min', label: 'Or less to your first draft' },
   { value: 'PIPEDA', label: 'Aligned data handling' },
   { value: '0', label: 'Long-term contracts' },
   { value: '100%', label: 'Owned by you on final' },
@@ -283,7 +283,7 @@ const trustBadges = [
     ),
   },
   {
-    label: 'Average 87s preview',
+    label: 'First draft within the hour',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]" aria-hidden="true">
         <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" />
@@ -372,7 +372,7 @@ export default function Home() {
                 S
               </div>
               <span className="text-xl font-extrabold tracking-tight text-white">
-                SiteSprint
+                Seaway Sites
               </span>
             </a>
             <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-white/80">
@@ -459,8 +459,8 @@ export default function Home() {
 
             {/* Subhead */}
             <p className="mt-7 text-lg md:text-xl text-paper/75 max-w-2xl mx-auto leading-relaxed">
-              SiteSprint generates a complete, on-brand website preview for your business in 90 seconds.
-              No credit card. No sales call. Just your future site, right now.
+              Seaway Sites drafts a complete, on-brand website preview for your business within the
+              hour — machine-drafted, human-checked. No credit card. No sales call.
             </p>
 
             {/* CTAs */}
@@ -492,7 +492,7 @@ export default function Home() {
                 <span className="w-3 h-3 rounded-full bg-emerald-400/80" />
                 <div className="flex-1 flex justify-center">
                   <div className="px-3 py-1 rounded-md bg-white/10 text-xs text-white/70 font-mono">
-                    preview.sitesprint.ca/seaway-cleaning
+                    preview.seawaysites.com/seaway-cleaning
                   </div>
                 </div>
               </div>
@@ -603,7 +603,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center reveal">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest text-paint bg-[#E6F1ED]">
-              <span className="w-1.5 h-1.5 rounded-full bg-paint" /> Why SiteSprint
+              <span className="w-1.5 h-1.5 rounded-full bg-paint" /> Why Seaway Sites
             </div>
             <h2
               className="mt-5 text-4xl md:text-5xl text-ink tracking-tight"
@@ -918,7 +918,7 @@ export default function Home() {
                   Real person, real answer — usually within a couple of hours during business days. We&rsquo;re a small team that picks up its own email.
                 </p>
                 <a
-                  href="mailto:hello@sitesprint.ca"
+                  href="mailto:hello@seawaysites.com"
                   className="mt-6 inline-flex items-center gap-2 self-start text-paint font-semibold hover:text-signal transition-colors"
                 >
                   <span
@@ -928,7 +928,7 @@ export default function Home() {
                   >
                     →
                   </span>
-                  hello@sitesprint.ca
+                  hello@seawaysites.com
                 </a>
                 <div className="mt-8 pt-6 border-t border-paint/10 text-sm text-steel/80">
                   <p>
@@ -952,7 +952,7 @@ export default function Home() {
       >
         {/* Warm-print canvas — deep ink base + spruce/clay radial haze.
            Replaces the indigo→violet→pink SaaS gradient with the
-           SiteSprint signature palette. */}
+           Seaway Sites signature palette. */}
         <div className="absolute inset-0 bg-ink" aria-hidden="true" />
         <div
           className="absolute inset-0 pointer-events-none opacity-90"
@@ -975,7 +975,7 @@ export default function Home() {
             Ready to see your future site?
           </h2>
           <p className="mt-4 text-lg text-white/80 max-w-2xl mx-auto">
-            Free preview in 90 seconds. No credit card. We&rsquo;ll email you the link.
+            Free preview within the hour. No credit card. We&rsquo;ll email you the link.
           </p>
 
           <form
@@ -986,7 +986,7 @@ export default function Home() {
             {submitted && (
               <div className="mb-6 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 text-sm font-medium flex items-start gap-2" role="status">
                 <SuccessCheck trigger={submitted} className="w-5 h-5 flex-none mt-0.5 text-emerald-600" />
-                <span>Request received — check your inbox at <span className="font-semibold">{form.email || 'your email'}</span> for your preview link within a few minutes.</span>
+                <span>Request received — check your inbox at <span className="font-semibold">{form.email || 'your email'}</span> for your preview link within the hour.</span>
               </div>
             )}
             {submitError && (
@@ -1096,7 +1096,7 @@ export default function Home() {
 
       {/* ============================== FOOTER ============================== */}
       <footer className="bg-ink text-white/70 py-16 relative overflow-hidden">
-        {/* Maple-leaf SVG mark next to SiteSprint */}
+        {/* Maple-leaf SVG mark next to Seaway Sites */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
             <div className="md:col-span-2">
@@ -1117,14 +1117,14 @@ export default function Home() {
                   className="text-xl font-medium tracking-tight text-white"
                   style={{ fontFamily: 'var(--font-fraunces)', fontVariationSettings: '"opsz" 36' }}
                 >
-                  SiteSprint
+                  Seaway Sites
                 </span>
               </div>
               <p className="mt-4 text-sm text-white/55 max-w-md leading-relaxed">
                 Fast website previews for Canadian small businesses. Hosted in Montréal,
                 built for the trades, friendly to your wallet.
               </p>
-              <p className="mt-4 text-xs text-white/40">© {new Date().getFullYear()} SiteSprint. All rights reserved.</p>
+              <p className="mt-4 text-xs text-white/40">© {new Date().getFullYear()} Seaway Sites. All rights reserved.</p>
             </div>
             <div>
               <h3 className="text-sm font-semibold text-white uppercase tracking-widest">Product</h3>
@@ -1145,7 +1145,7 @@ export default function Home() {
           </div>
           {/* PIPEDA notice line */}
           <div className="mt-12 pt-6 border-t border-white/10 text-xs text-white/40">
-            SiteSprint complies with the Personal Information Protection and Electronic Documents Act (PIPEDA).
+            Seaway Sites complies with the Personal Information Protection and Electronic Documents Act (PIPEDA).
             Data hosted in Canada. Read our{' '}
             <a href="/privacy" className="underline hover:text-white/60 transition-colors">privacy policy</a>.
           </div>

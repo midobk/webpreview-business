@@ -139,7 +139,7 @@ section.content p {{ font-size: 18px; line-height: 1.6; color: #444; }}
 <p>Professional {lead.get('industry', 'service')} work, personalized to your needs. Get in touch to learn more.</p>
 <a href="#" class="cta" onclick="return false;">Unlock the live version</a>
 </section>
-<div class="watermark">SiteSprint Variant {variant_num} Preview</div>
+<div class="watermark">Seaway Sites Variant {variant_num} Preview</div>
 </body>
 </html>"""
 

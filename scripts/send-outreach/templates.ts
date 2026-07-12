@@ -95,8 +95,8 @@ export interface EmailContext {
   prototype: Prototype;
   previewBaseUrl: string;   // e.g. "https://webpreview-business.vercel.app"
   screenshotBaseUrl?: string;
-  senderName: string;       // e.g. "Dexter from SiteSprint"
-  senderEmail: string;      // e.g. "hello@sitesprint.example"
+  senderName: string;       // e.g. "Dexter from Seaway Sites"
+  senderEmail: string;      // e.g. "hello@seawaysites.example"
   unsubscribeUrl: string;   // appended to footer
   bookingUrl?: string;      // optional Cal.com / call link
 }
@@ -389,8 +389,8 @@ export interface BuildOptions {
 
 const DEFAULTS = {
   previewBaseUrl: "https://webpreview-business.vercel.app",
-  senderName: "Dexter from SiteSprint",
-  senderEmail: "hello@sitesprint.example",
+  senderName: "Dexter from Seaway Sites",
+  senderEmail: "hello@seawaysites.example",
 };
 
 /**

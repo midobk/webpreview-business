@@ -51,7 +51,7 @@ export function AuthShell({
           </div>
           <div className="leading-tight">
             <p className="text-sm font-semibold" style={{ color: 'var(--adm-text-primary)' }}>
-              SiteSprint
+              Seaway Sites
             </p>
             <p className="text-[11px]" style={{ color: 'var(--adm-text-muted)' }}>
               Admin Console

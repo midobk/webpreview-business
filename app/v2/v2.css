@@ -508,11 +508,6 @@ html:has(.v2-root) {
   }
 }
 
-/* Typewriter block in the bento grid */
-.v2-type-line {
-  min-height: 1.6em;
-}
-
 /* Ping rings for the local-SEO bento cell */
 @keyframes v2-ping {
   0%   { transform: scale(0.5); opacity: 0.9; }

@@ -1,4 +1,4 @@
-# SiteSprint — AI Website Preview Business Agent
+# Seaway Sites — AI Website Preview Business Agent
 
 Autonomous AI pipeline that finds Canadian small businesses with no/ugly/broken websites, generates beautiful personalized website previews, and reaches out via email + SMS to sell them a simple one-page website.
 
@@ -39,7 +39,7 @@ Phases 0-12 complete:
 - ✅ Phase 12 security review (auth gates + logout + PII removal)
 - ✅ Homepage polish (gradient hero, features, testimonials, FAQ, pricing, MetaSEO)
 - ✅ `.env.example` with all 8 sections + comments
-- ✅ SiteSprint isolated agent registered (`openclaw agents list`)
+- ✅ Seaway Sites isolated agent registered (`openclaw agents list`)
 - ✅ Production showcase sync gate: repository validation → Supabase upsert → zero-drift verification
 - ✅ Showcase metadata regression workflow and industry-specific showcase copy
 - ✅ Supabase prototype-industry migration and helper-function security hardening

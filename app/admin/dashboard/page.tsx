@@ -196,7 +196,7 @@ export default function AdminDashboard() {
         title="Leads"
         breadcrumb={
           <>
-            <span>SiteSprint</span>
+            <span>Seaway Sites</span>
             <span>/</span>
             <span style={{ color: 'var(--adm-text-primary)' }}>Console</span>
           </>

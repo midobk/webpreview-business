@@ -157,7 +157,7 @@ export default function PrototypesPage() {
         title="Prototypes"
         breadcrumb={
           <>
-            <span>SiteSprint</span>
+            <span>Seaway Sites</span>
             <span>/</span>
             <span style={{ color: 'var(--adm-text-primary)' }}>Prototypes</span>
           </>

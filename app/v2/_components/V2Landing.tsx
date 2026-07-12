@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion, useReducedMotion, useScroll, useSpring } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useInView, useReducedMotion, useScroll, useSpring } from 'motion/react';
 import MagneticButton from '@/components/motion/MagneticButton';
 import CountUp from '@/components/motion/CountUp';
 import LiveBuild from './LiveBuild';
@@ -174,11 +174,15 @@ const COPY_LINES = [
 
 function Typewriter({ lines }: { lines: string[] }) {
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLSpanElement | null>(null);
+  // Pause while off-screen: no timers burning in the background, and no
+  // work happening under a scrolling thumb.
+  const inView = useInView(ref, { amount: 0.4 });
   const [lineIdx, setLineIdx] = useState(0);
   const [chars, setChars] = useState(0);
 
   useEffect(() => {
-    if (reduce) return;
+    if (reduce || !inView) return;
     const line = lines[lineIdx];
     if (chars < line.length) {
       const t = setTimeout(() => setChars((c) => c + 1), 34);
@@ -189,15 +193,29 @@ function Typewriter({ lines }: { lines: string[] }) {
       setLineIdx((i) => (i + 1) % lines.length);
     }, 2400);
     return () => clearTimeout(t);
-  }, [chars, lineIdx, lines, reduce]);
+  }, [chars, lineIdx, lines, reduce, inView]);
 
-  if (reduce) {
-    return <span className="v2-type-line block font-mono text-sm text-[var(--v2-cream)]">{lines[0]}</span>;
-  }
+  // Grid-stacked invisible ghosts of every line reserve the tallest
+  // wrapped height up front, so the box never resizes while typing —
+  // that resize was shifting the whole page on narrow screens.
   return (
-    <span className="v2-type-line block font-mono text-sm text-[var(--v2-cream)]">
-      {lines[lineIdx].slice(0, chars)}
-      <span className="v2-caret" aria-hidden="true" />
+    <span ref={ref} className="grid font-mono text-sm text-[var(--v2-cream)]">
+      {lines.map((l) => (
+        <span key={l} className="invisible [grid-area:1/1]" aria-hidden="true">
+          {l}
+          <span className="inline-block w-[0.55em]" />
+        </span>
+      ))}
+      <span className="[grid-area:1/1]">
+        {reduce ? (
+          lines[0]
+        ) : (
+          <>
+            {lines[lineIdx].slice(0, chars)}
+            <span className="v2-caret" aria-hidden="true" />
+          </>
+        )}
+      </span>
     </span>
   );
 }

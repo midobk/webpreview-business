@@ -33,12 +33,12 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "SiteSprint — Beautiful websites for Canadian small business",
+  title: "Seaway Sites — Beautiful websites for Canadian small business",
   description:
-    "Generate a complete, on-brand website preview for your business in 90 seconds. Built for Canadian small businesses. No credit card. No sales call.",
+    "A complete, on-brand website preview for your business within the hour — machine-drafted, human-checked. Built for Canadian small businesses. No credit card. No sales call.",
   metadataBase: new URL("https://webpreview-business.vercel.app"),
   openGraph: {
-    title: "SiteSprint — See your new website before you pay a dollar.",
+    title: "Seaway Sites — See your new website before you pay a dollar.",
     description:
       "Fast website previews for Canadian small businesses. Free preview, no credit card, no commitment.",
     type: "website",

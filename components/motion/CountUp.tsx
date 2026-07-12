@@ -56,7 +56,10 @@ export default function CountUp({
       return;
     }
     if (reduce) {
-      setDisplay(to);
+      // Only the numeric part — the render already appends
+      // suffixFromString, so setting the full string here would
+      // double the suffix ("60min" + "min").
+      setDisplay(String(target));
       return;
     }
     const isFloat = to.includes(".");
