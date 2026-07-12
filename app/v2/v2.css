@@ -555,7 +555,9 @@ html:has(.v2-root) {
   background: #d6d2c8;
   color: #1a1a1a;
 }
-.v2-before a {
+/* Decorative "link" in the mock — plain text so it never enters the
+   tab order (the whole before-layer is aria-hidden set dressing). */
+.v2-before .v2-before-link {
   color: #0000cc;
   text-decoration: underline;
 }

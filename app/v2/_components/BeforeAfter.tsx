@@ -82,7 +82,7 @@ export default function BeforeAfter() {
             />
             <p className="text-[10px] sm:text-xs leading-relaxed">
               We are a landscaping company. We do landscaping. Please call for
-              landscaping. <a href="#proof" onClick={(e) => e.preventDefault()}>Click here</a> to
+              landscaping. <span className="v2-before-link">Click here</span> to
               enter site.
             </p>
             <div className="mt-[3%] inline-block border-2 border-dashed border-[#8a8a8a] bg-[#e9e6dd] px-4 py-2 text-[9px] sm:text-[10px]">
