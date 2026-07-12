@@ -15,7 +15,7 @@ const STEPS = [
     body: 'A 60-second form — your name, what you do, where you work. No brief, no discovery call, no "brand questionnaire". We read your public listings and reviews for the rest.',
   },
   {
-    t: 'same day',
+    t: 'within the hour',
     title: 'A real first draft lands in your inbox',
     body: "A complete one-page concept — real copy in your voice, your colours, mobile-first — assembled by our build agent and reviewed by a human before it's sent. It's a mock-up: the starting point, not the finish line.",
   },

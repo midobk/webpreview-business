@@ -58,7 +58,7 @@ const TRADES = [
 ];
 
 const STATS: { value: string; prefix?: string; label: string }[] = [
-  { value: 'Same day', label: 'your first draft, in your inbox' },
+  { value: '60min', label: 'or less — first draft in your inbox' },
   // CountUp keeps only the digits + trailing text, so "$" must ride
   // through its prefix prop rather than the value string.
   { value: '0', prefix: '$', label: 'until you decide to keep it' },
@@ -129,7 +129,7 @@ const TESTIMONIALS = [
 const FAQS = [
   {
     q: 'How fast will I see my first draft?',
-    a: "Usually the same day — often within a few hours. The draft is assembled by our build system, then a person reviews it before it's sent. We'd rather be a little slower than send you something broken.",
+    a: "Within the hour, usually. The build agent assembles the draft in minutes, then a person reviews it before it's sent — we'd rather be a little slower than send you something broken.",
   },
   {
     q: 'Is the preview my finished website?',
@@ -288,7 +288,7 @@ export default function V2Landing() {
               variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } } }}
               className="mt-7 max-w-xl text-base sm:text-lg leading-relaxed text-[var(--v2-cream-dim)]"
             >
-              Tell us about your business. The same day, a complete first
+              Tell us about your business. Within the hour, a complete first
               draft of your website is in your inbox — built from your real
               listings and reviews, checked by a human before it&apos;s sent,
               free. If you love the direction, we finish it together.
@@ -354,8 +354,8 @@ export default function V2Landing() {
             </h2>
             <p className="mt-5 max-w-xl text-[15px] sm:text-base leading-relaxed text-[var(--v2-cream-dim)]">
               Drag the handle. The left side is the site your customers find
-              today. The right side is the first draft we&apos;d send you the
-              same day — before a human has even given it the final polish.
+              today. The right side is the first draft we&apos;d send you within
+              the hour — before the human polish that makes it production-ready.
             </p>
           </Reveal>
           <Reveal delay={0.1} className="mt-12">
@@ -371,14 +371,15 @@ export default function V2Landing() {
             <Reveal>
               <Kicker fig="03">the process</Kicker>
               <h2 className="v2-serif v2-h2 mt-5">
-                Drafted in hours.
+                In minutes.
                 <br />
-                <em className="font-light">Finished by hand.</em>
+                <em className="font-light">Not months.</em>
               </h2>
               <p className="mt-5 max-w-md text-[15px] sm:text-base leading-relaxed text-[var(--v2-cream-dim)]">
-                The machine does the fast part — a real, personalized first
-                draft, free. The part that makes it production-ready is
-                human, and it starts only after you say yes.
+                Our build agent drafts your site in minutes and a human
+                checks it — first draft in your inbox within the hour. The
+                work that makes it production-ready is human, and it starts
+                only after you say yes.
               </p>
             </Reveal>
           </div>
@@ -644,7 +645,7 @@ export default function V2Landing() {
             </h2>
             <ul className="mt-8 space-y-3 text-[15px] text-[var(--v2-cream-dim)]">
               {[
-                'First draft in your inbox — same day',
+                'First draft in your inbox — within the hour',
                 'No credit card, no sales call',
                 'One follow-up email, then silence',
               ].map((line) => (

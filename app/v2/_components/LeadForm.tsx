@@ -73,9 +73,9 @@ export default function LeadForm() {
         <SuccessCheck trigger className="mx-auto w-14 h-14 text-[var(--v2-lume)]" />
         <h3 className="v2-serif mt-5 text-2xl font-medium">Your draft is in the queue.</h3>
         <p className="mt-3 text-[15px] leading-relaxed text-[var(--v2-cream-dim)]">
-          Watch your inbox — the first draft usually lands the same day, once
-          a human has looked it over. No reply needed if you hate it. We only
-          follow up once.
+          Watch your inbox — the first draft usually lands within the hour,
+          once a human has looked it over. No reply needed if you hate it. We
+          only follow up once.
         </p>
       </div>
     );
