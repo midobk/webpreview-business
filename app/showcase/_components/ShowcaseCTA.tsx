@@ -35,7 +35,7 @@ export default function ShowcaseCTA() {
             you to review.
           </p>
           <MagneticButton
-            href="/#request-preview"
+            href="/#preview"
             className="bg-action text-white px-8 py-4 rounded-full font-medium text-lg shadow-lg shadow-action/30 hover:bg-action-deep transition-colors"
           >
             Request My Preview →

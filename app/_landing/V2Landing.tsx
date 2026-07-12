@@ -147,6 +147,67 @@ function Typewriter({ lines }: { lines: string[] }) {
   );
 }
 
+/* Persistent mobile CTA — slides in once the visitor scrolls past the
+   hero, slides away while the lead form itself is on screen (never
+   cover the thing it points to). Desktop keeps the header CTA. */
+function MobileCta() {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    let pastHero = false;
+    let formVisible = false;
+    const update = () => setShow(pastHero && !formVisible);
+
+    const onScroll = () => {
+      pastHero = window.scrollY > 640;
+      update();
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    const form = document.getElementById('preview');
+    const io =
+      typeof IntersectionObserver !== 'undefined'
+        ? new IntersectionObserver(
+            (entries) => {
+              formVisible = entries[0]?.isIntersecting ?? false;
+              update();
+            },
+            { threshold: 0.15 }
+          )
+        : null;
+    if (form && io) io.observe(form);
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      io?.disconnect();
+    };
+  }, []);
+
+  return (
+    <div
+      className={`md:hidden fixed inset-x-0 bottom-0 z-50 px-5 pt-10 pb-[calc(env(safe-area-inset-bottom,0px)+16px)] transition-[transform,opacity] duration-300 motion-reduce:transition-none ${
+        show ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0 pointer-events-none'
+      }`}
+      style={{
+        background: 'linear-gradient(to top, rgba(10,12,15,0.92) 55%, transparent)',
+      }}
+      aria-hidden={!show}
+    >
+      <a
+        href="#preview"
+        tabIndex={show ? 0 : -1}
+        className="v2-btn v2-btn-primary w-full justify-center !py-3.5 text-[15px] shadow-[0_10px_40px_-8px_rgba(205,244,99,0.45)]"
+      >
+        Get my free preview
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </a>
+    </div>
+  );
+}
+
 function useHeaderScrolled() {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
@@ -177,6 +238,8 @@ export default function V2Landing() {
       />
 
       <div className="v2-grain" aria-hidden="true" />
+
+      <MobileCta />
 
       {/* ---------- Header ---------- */}
       <header className={`v2-header fixed top-0 inset-x-0 z-50 ${scrolled ? 'is-scrolled' : ''}`}>
@@ -578,6 +641,9 @@ export default function V2Landing() {
 
       {/* ---------- Final CTA + form ---------- */}
       <section id="preview" className="scroll-mt-24 relative border-t border-[var(--v2-line)] py-24 sm:py-32 overflow-hidden">
+        {/* Legacy anchor — outreach emails and older links target
+            /#request-preview; keep them landing on the form. */}
+        <span id="request-preview" className="absolute top-0 block h-0 scroll-mt-24" aria-hidden="true" />
         <div className="v2-glow absolute inset-0 rotate-180" aria-hidden="true" />
         <div className="relative mx-auto grid max-w-6xl gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:items-center">
           <Reveal>

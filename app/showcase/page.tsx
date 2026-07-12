@@ -184,7 +184,7 @@ export default async function ShowcasePage() {
             </Link>
           </nav>
           <Link
-            href="/#request-preview"
+            href="/#preview"
             className="inline-flex items-center gap-1.5 bg-action text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-action-deep transition-colors shadow-lg shadow-action/20"
           >
             Get my preview
@@ -212,7 +212,7 @@ export default async function ShowcasePage() {
                 here with anonymized screenshots.
               </p>
               <Link
-                href="/#request-preview"
+                href="/#preview"
                 className="inline-flex items-center gap-1.5 bg-action text-white px-6 py-3 rounded-full font-semibold hover:bg-action-deep transition-colors shadow-lg shadow-action/20"
               >
                 Request a preview →
