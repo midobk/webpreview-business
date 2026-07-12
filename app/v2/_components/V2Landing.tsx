@@ -57,9 +57,11 @@ const TRADES = [
   'Contractors', 'Groomers', 'Caterers', 'HVAC techs',
 ];
 
-const STATS = [
+const STATS: { value: string; prefix?: string; label: string }[] = [
   { value: '90s', label: 'from form to finished preview' },
-  { value: '$0', label: 'until you decide to keep it' },
+  // CountUp keeps only the digits + trailing text, so "$" must ride
+  // through its prefix prop rather than the value string.
+  { value: '0', prefix: '$', label: 'until you decide to keep it' },
   { value: '0 contracts', label: 'cancel or walk away anytime' },
   { value: '100%', label: 'yours on final delivery' },
 ];
@@ -495,6 +497,7 @@ export default function V2Landing() {
             >
               <CountUp
                 to={s2.value}
+                prefix={s2.prefix}
                 className="v2-serif block text-3xl sm:text-5xl font-medium text-[var(--v2-lume)] tabular-nums"
               />
               <div className="mt-2 text-xs sm:text-sm text-[var(--v2-cream-dim)]">{s2.label}</div>
