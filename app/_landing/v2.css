@@ -22,7 +22,8 @@
   /* Type */
   --v2-cream: #efeae0;
   --v2-cream-dim: rgba(239, 234, 224, 0.64);
-  --v2-cream-faint: rgba(239, 234, 224, 0.4);
+  /* 58% keeps small labels readable against the ink canvas. */
+  --v2-cream-faint: rgba(239, 234, 224, 0.58);
 
   /* Accents — phosphor lume (primary) + brand clay (sparing) */
   --v2-lume: #cdf463;
@@ -156,6 +157,40 @@ html:has(.v2-root) {
 .v2-btn-ghost:hover {
   border-color: var(--v2-cream-faint);
   background: rgba(239, 234, 224, 0.05);
+}
+
+.v2-menu-button {
+  display: inline-flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--v2-line-strong);
+  border-radius: 0.75rem;
+  color: var(--v2-cream);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.v2-menu-button:hover {
+  background: rgba(239, 234, 224, 0.06);
+}
+
+.v2-skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  transform: translateY(-180%);
+  border-radius: 999px;
+  background: var(--v2-lume);
+  color: var(--v2-ink);
+  padding: 0.7rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: transform 160ms ease;
+}
+.v2-skip-link:focus-visible {
+  transform: translateY(0);
 }
 
 /* ---------- Header ---------- */

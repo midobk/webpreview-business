@@ -388,7 +388,7 @@ export interface BuildOptions {
 }
 
 const DEFAULTS = {
-  previewBaseUrl: "https://webpreview-business.vercel.app",
+  previewBaseUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://seawaysites.com",
   senderName: "Dexter from Seaway Sites",
   senderEmail: "hello@seawaysites.example",
 };

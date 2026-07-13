@@ -174,6 +174,9 @@ export default function BeforeAfter() {
           the personalized direction we prepare
         </span>
       </div>
+      <p className="v2-mono mt-3 text-[9px] text-[var(--v2-cream-faint)]">
+        Illustrative comparison — the businesses, copy and review counts are placeholders.
+      </p>
     </div>
   );
 }

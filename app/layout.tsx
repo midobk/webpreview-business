@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Plus_Jakarta_Sans, Fraunces } from "next/font/google
 import Providers from "./providers";
 import "./globals.css";
 import { ThemeScript } from "./admin/_components/ThemeScript";
+import { SITE_URL } from '@/lib/site-config';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
   title: "Seaway Sites — Beautiful websites for Canadian small businesses",
   description:
     "Request a free, personalized first draft of your website. Most eligible requests are delivered within the hour during service hours. No credit card and no sales call.",
-  metadataBase: new URL("https://seawaysites.com"),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     title: "Seaway Sites — See your new website before you pay a dollar.",
     description:

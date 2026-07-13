@@ -37,7 +37,7 @@ export default function ProductionProcess() {
   const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.25 });
 
   return (
-    <ol ref={rootRef} className="relative space-y-14 sm:space-y-20 list-none">
+    <div className="relative">
       <div
         className="absolute left-[13px] top-2 bottom-2 w-px bg-[var(--v2-line)]"
         aria-hidden="true"
@@ -48,35 +48,37 @@ export default function ProductionProcess() {
         aria-hidden="true"
       />
 
-      {STEPS.map((step, index) => (
-        <motion.li
-          key={step.title}
-          className="relative pl-14"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.35 }}
-          transition={{ duration: 0.65, ease, delay: index * 0.05 }}
-        >
-          <span
-            className="absolute left-0 top-0.5 flex h-[27px] w-[27px] items-center justify-center rounded-full border border-[var(--v2-line-strong)] bg-[var(--v2-ink)] font-mono text-[11px] text-[var(--v2-lume)]"
-            aria-hidden="true"
+      <ol ref={rootRef} className="relative list-none space-y-14 sm:space-y-20">
+        {STEPS.map((step, index) => (
+          <motion.li
+            key={step.title}
+            className="relative pl-14"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.65, ease, delay: index * 0.05 }}
           >
-            {index + 1}
-          </span>
-          <div className="v2-mono text-[10px] text-[var(--v2-cream-faint)]">{step.t}</div>
-          <h3 className="v2-serif mt-2 text-2xl sm:text-[2rem] font-medium leading-tight">
-            {step.title}
-          </h3>
-          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[var(--v2-cream-dim)]">
-            {step.body}
-          </p>
-        </motion.li>
-      ))}
+            <span
+              className="absolute left-0 top-0.5 flex h-[27px] w-[27px] items-center justify-center rounded-full border border-[var(--v2-line-strong)] bg-[var(--v2-ink)] font-mono text-[11px] text-[var(--v2-lume)]"
+              aria-hidden="true"
+            >
+              {index + 1}
+            </span>
+            <div className="v2-mono text-[10px] text-[var(--v2-cream-faint)]">{step.t}</div>
+            <h3 className="v2-serif mt-2 text-2xl font-medium leading-tight sm:text-[2rem]">
+              {step.title}
+            </h3>
+            <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[var(--v2-cream-dim)]">
+              {step.body}
+            </p>
+          </motion.li>
+        ))}
 
-      <li className="pl-14 text-xs leading-relaxed text-[var(--v2-cream-faint)]">
-        Most eligible requests are delivered within the hour during service hours. Complete
-        submission details and current request volume can affect timing.
-      </li>
-    </ol>
+        <li className="pl-14 text-xs leading-relaxed text-[var(--v2-cream-faint)]">
+          Most eligible requests are delivered within the hour during service hours. Complete
+          submission details and current request volume can affect timing.
+        </li>
+      </ol>
+    </div>
   );
 }

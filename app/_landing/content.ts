@@ -20,7 +20,7 @@ export const PRICING = [
   {
     name: 'Managed Website',
     price: '$399',
-    cadence: 'setup + $69/mo · founding-client pricing',
+    cadence: 'setup + $69/mo · early-client pricing',
     blurb: 'We finish, launch, host and maintain the website for you.',
     features: [
       'Draft refined to production-ready',

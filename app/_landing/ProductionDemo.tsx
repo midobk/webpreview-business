@@ -114,12 +114,7 @@ function useStopwatch(step: number, business: Business, running: boolean) {
   const [seconds, setSeconds] = useState(step === LAST_STEP ? totalSeconds : 0);
 
   useEffect(() => {
-    if (step === LAST_STEP) {
-      setSeconds(totalSeconds);
-      return;
-    }
-    if (step === 0) setSeconds(0);
-    if (!running) return;
+    if (step === LAST_STEP || !running) return;
     const activeMs = LAST_STEP * STEP_MS;
     const perTick = (totalSeconds / activeMs) * 100;
     const timer = setInterval(() => {
@@ -128,7 +123,9 @@ function useStopwatch(step: number, business: Business, running: boolean) {
     return () => clearInterval(timer);
   }, [step, totalSeconds, running]);
 
-  const whole = Math.floor(seconds);
+  // Derive boundary states instead of synchronously resetting state in an
+  // effect; this keeps the animation stable under React's strict checks.
+  const whole = Math.floor(step === LAST_STEP ? totalSeconds : step === 0 ? 0 : seconds);
   const mm = String(Math.floor(whole / 60)).padStart(2, '0');
   const ss = String(whole % 60).padStart(2, '0');
   return `${mm}:${ss}`;
@@ -148,8 +145,8 @@ export default function ProductionDemo() {
     if (reduceMotion) {
       // Land on the finished draft first, then rotate businesses slowly.
       if (step !== LAST_STEP) {
-        setStep(LAST_STEP);
-        return;
+        const instant = setTimeout(() => setStep(LAST_STEP), 0);
+        return () => clearTimeout(instant);
       }
       const rotate = setTimeout(
         () => setBusinessIndex((index) => (index + 1) % BUSINESSES.length),

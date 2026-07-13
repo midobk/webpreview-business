@@ -982,23 +982,17 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 
 ### A. Persistence: move leads from `data/leads.json` to Supabase
 
-**Why:** The homepage form POST to `/api/leads` now writes to local filesystem, which works on the dev machine but fails on Vercel (read-only runtime). The build-time `lib/data-bundle/bundle.ts` freezes data at deploy time, so admin changes don't propagate to production without a redeploy.
+**Current state:** The Supabase project is active, the canonical schema already exists, Vercel has been configured with the project URL and service key, and PR10's `/api/leads` route has been verified locally against Supabase. Local development falls back to `data/leads.json` only when the service key is absent.
 
-**What needs to happen:**
-1. User creates a Supabase project (any tier with RLS)
-2. Run `scripts/supabase-schema.sql` against the project
-3. Set `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` on Vercel
-4. Run `scripts/migrate_to_supabase.py` for one-time JSON → Postgres copy
-5. `lib/data-source.ts` already prefers Supabase when env vars are present — should "just work"
-6. Verify: PATCH a lead's status on the dashboard, refresh `/showcase` on Vercel, see change appear
+**Remaining verification:** Redeploy PR10, submit a controlled live request, verify the canonical row in Supabase, and confirm dashboard/showcase reads use the live project. The project already contains the existing lead set, so a one-time JSON migration is not currently required.
 
-**Blocked on:** Supabase credentials.
+**Blocked on:** next Vercel deployment and smoke test.
 
 **Related to:** C1 from §17 (showcase approve → visibility) is solved by this.
 
 ### B. Email: wire AgentMail so the "check your inbox" promise is real
 
-**Why:** The form's success message tells users to check their email, but no mailer is currently wired. Users will think the system is broken when nothing arrives.
+**Why:** The form records the requested email and explains that the draft will be sent there, but no mailer is currently wired. Users will think the system is broken when nothing arrives.
 
 **What needs to happen:**
 1. Activate the `sitesprint-test@agentmail.to` inbox (already created, see `scripts/setup-agentmail/setup_agentmail_test.py`)
@@ -1021,7 +1015,11 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 3. For real protection: Turnstile is ~5 minutes of work and free
 4. Apply to `/api/leads` (and consider `/api/admin/login` while at it — login endpoint has no brute-force protection)
 
-**Blocked on:** none — can be done any time. Recommended before exposing the form on production traffic.
+**Current state:** Basic request-size limits, honeypot protection, and a five-per-minute in-memory per-IP limit are now implemented in `app/api/leads/route.ts`. The in-memory limiter is only a burst guard on a single serverless instance.
+
+**Deferred follow-up:** Move rate limiting to a distributed store or add Cloudflare Turnstile before meaningful public traffic. Apply equivalent brute-force protection to `/api/admin/login`.
+
+**Blocked on:** none. Recommended before scaling production traffic.
 
 ### D. Screenshot pipeline for new prototypes (carried over from §17 C3)
 
@@ -1115,6 +1113,34 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 4. Verify a new lead appears in `data/leads.json` and that Supabase sync fires.
 
 **Blocked on:** user decision on option (a) vs (b) vs (c).
+
+### K. Draft fulfillment pipeline (deferred after PR10)
+
+**Status:** OPEN — intake is durable, fulfillment is not yet automated.
+
+**Why:** PR10 now stores public draft requests in Supabase and returns a truthful confirmation, but the request does not yet enqueue prototype generation, notify the owner, or deliver a completed preview link to the customer. The landing page should not promise an inbox delivery path until this workflow is connected end to end.
+
+**What needs to happen:**
+1. Create an idempotent generation job/queue keyed by the lead ID.
+2. Trigger the existing prototype-generation workflow after a successful lead insert.
+3. Add owner notification and retry/failure logging.
+4. Send the customer a confirmation email, then a preview-link email when `generation_status` becomes `completed`.
+5. Add an end-to-end test covering lead insert → generation → delivery, with cleanup for test records.
+
+**Blocked on:** choosing the production queue/worker and email provider configuration.
+
+### L. PR10 production launch verification (deferred)
+
+**Status:** OPEN — run after the next Vercel deployment.
+
+**What needs to happen:**
+1. Redeploy the PR10 head with `NEXT_PUBLIC_SITE_URL`, Supabase URL, and server-only Supabase key configured in Vercel.
+2. Submit and clean up a controlled live smoke-test request; verify the canonical lead shape in Supabase.
+3. Verify `/`, `/showcase`, `/privacy`, `/sitemap.xml`, `/robots.txt`, and `/opengraph-image` from the live domain.
+4. Confirm no outreach email uses the retired Vercel host.
+5. Replace the illustrative testimonials, review counts, phone numbers, and demo evidence with verified, consented proof before public launch.
+
+**Blocked on:** next deployment and approved real-world proof assets.
 
 ---
 
@@ -1509,4 +1535,3 @@ Length = 11 chars. The literal `…` is a display ellipsis, not a valid API key 
 ### Screenshots / artifacts
 
 - None this session. Build issue prevented `npm run dev` verification, so no UI changes to verify.
-

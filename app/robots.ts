@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next';
+import { SITE_URL } from '@/lib/site-config';
 
 // AI/answer-engine crawlers are explicitly welcomed (GEO): being
 // citable by ChatGPT, Claude, Perplexity and AI Overviews is lead
@@ -31,6 +32,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin', '/api/', '/classic'],
       })),
     ],
-    sitemap: 'https://seawaysites.com/sitemap.xml',
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import V2Landing from './_landing/V2Landing';
 import { FAQS, PRICING } from './_landing/content';
 import './_landing/v2.css';
-
-const SITE_URL = 'https://seawaysites.com';
+import { SITE_URL } from '@/lib/site-config';
 
 export const metadata: Metadata = {
   title: 'Seaway Sites — Website drafts for Canadian small businesses',

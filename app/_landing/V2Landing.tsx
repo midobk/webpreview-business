@@ -83,7 +83,7 @@ const TRADES = [
 const STATS: { value: string; prefix?: string; label: string }[] = [
   { value: '60min', label: 'target for most eligible first drafts' },
   { value: '0', prefix: '$', label: 'until you approve the direction' },
-  { value: '10+', label: 'production steps before delivery' },
+  { value: '9', label: 'production steps before delivery' },
   { value: '100%', label: 'responsive by default' },
 ];
 
@@ -203,6 +203,11 @@ function MobileCta() {
     >
       <a
         href="#preview"
+        onClick={() => {
+          requestAnimationFrame(() => {
+            document.getElementById('preview-heading')?.focus({ preventScroll: true });
+          });
+        }}
         tabIndex={show ? 0 : -1}
         className="v2-btn v2-btn-primary w-full justify-center !py-3.5 text-[15px] shadow-[0_10px_40px_-8px_rgba(205,244,99,0.45)]"
       >
@@ -239,11 +244,13 @@ function useHeaderScrolled() {
 
 export default function V2Landing() {
   const scrolled = useHeaderScrolled();
+  const [menuOpen, setMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 });
 
   return (
     <div className="v2-root relative min-h-screen overflow-x-clip">
+      <a href="#main-content" className="v2-skip-link">Skip to main content</a>
       <motion.div
         className="fixed top-0 left-0 right-0 z-[70] h-[2px] origin-left bg-[var(--v2-lume)]"
         style={{ scaleX: progress }}
@@ -252,29 +259,66 @@ export default function V2Landing() {
       <div className="v2-grain" aria-hidden="true" />
       <MobileCta />
 
-      <header className={`v2-header fixed top-0 inset-x-0 z-50 ${scrolled ? 'is-scrolled' : ''}`}>
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-          <a href="#top" className="flex items-baseline gap-2">
-            <span className="v2-serif text-xl font-semibold tracking-tight">Seaway Sites</span>
-            <span className="v2-mono text-[9px] text-[var(--v2-lume)]">the drafting table</span>
-          </a>
+      <header className={`v2-header fixed inset-x-0 top-0 z-50 ${scrolled ? 'is-scrolled' : ''}`}>
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
+          <div className="flex items-center justify-between py-4">
+            <a href="#top" className="flex items-baseline gap-2">
+              <span className="v2-serif text-xl font-semibold tracking-tight">Seaway Sites</span>
+              <span className="v2-mono text-[9px] text-[var(--v2-lume)]">the drafting table</span>
+            </a>
+            <div className="flex items-center gap-3">
+              <nav
+                className="hidden items-center gap-7 text-sm text-[var(--v2-cream-dim)] md:flex"
+                aria-label="Page sections"
+              >
+                <a href="#proof" className="transition-colors hover:text-[var(--v2-cream)]">Proof</a>
+                <a href="#process" className="transition-colors hover:text-[var(--v2-cream)]">Process</a>
+                <a href="#pricing" className="transition-colors hover:text-[var(--v2-cream)]">Pricing</a>
+                <a href="#faq" className="transition-colors hover:text-[var(--v2-cream)]">FAQ</a>
+                <a href="/showcase" className="transition-colors hover:text-[var(--v2-cream)]">Showcase</a>
+              </nav>
+              <a href="#preview" className="v2-btn v2-btn-primary !px-4 !py-2 text-sm">
+                Free draft
+              </a>
+              <button
+                type="button"
+                className="v2-menu-button md:hidden"
+                aria-expanded={menuOpen}
+                aria-controls="mobile-page-nav"
+                aria-label={menuOpen ? 'Close page menu' : 'Open page menu'}
+                onClick={() => setMenuOpen((open) => !open)}
+              >
+                <span aria-hidden="true">{menuOpen ? '×' : '☰'}</span>
+              </button>
+            </div>
+          </div>
           <nav
-            className="hidden items-center gap-7 text-sm text-[var(--v2-cream-dim)] md:flex"
+            id="mobile-page-nav"
             aria-label="Page sections"
+            className={`${menuOpen ? 'grid' : 'hidden'} gap-1 border-t border-[var(--v2-line)] pb-4 pt-3 md:hidden`}
           >
-            <a href="#proof" className="transition-colors hover:text-[var(--v2-cream)]">Proof</a>
-            <a href="#process" className="transition-colors hover:text-[var(--v2-cream)]">Process</a>
-            <a href="#pricing" className="transition-colors hover:text-[var(--v2-cream)]">Pricing</a>
-            <a href="#faq" className="transition-colors hover:text-[var(--v2-cream)]">FAQ</a>
-            <a href="/showcase" className="transition-colors hover:text-[var(--v2-cream)]">Showcase</a>
+            {[
+              ['#proof', 'Proof'],
+              ['#process', 'Process'],
+              ['#pricing', 'Pricing'],
+              ['#faq', 'FAQ'],
+              ['/showcase', 'Showcase'],
+            ].map(([href, label]) => (
+              <a
+                key={href}
+                href={href}
+                className="rounded-lg px-3 py-2 text-sm text-[var(--v2-cream-dim)] hover:bg-[rgba(239,234,224,0.06)] hover:text-[var(--v2-cream)]"
+                onClick={() => setMenuOpen(false)}
+              >
+                {label}
+              </a>
+            ))}
           </nav>
-          <a href="#preview" className="v2-btn v2-btn-primary !px-4 !py-2 text-sm">
-            Free draft
-          </a>
         </div>
       </header>
 
-      <section id="top" className="relative pb-20 pt-32 sm:pb-28 sm:pt-40">
+      <main id="main-content" tabIndex={-1} className="outline-none">
+      <section id="top" className="relative pb-20 pt-28 sm:pb-28 sm:pt-32">
         <div className="v2-blueprint absolute inset-0" aria-hidden="true" />
         <div className="v2-glow absolute inset-0" aria-hidden="true" />
 
@@ -300,7 +344,7 @@ export default function V2Landing() {
                 hidden: { opacity: 0, y: 22 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease } },
               }}
-              className="v2-serif v2-display mt-6 max-w-4xl"
+              className="v2-serif v2-display mt-5 max-w-4xl"
             >
               Your website
               <br />
@@ -315,7 +359,7 @@ export default function V2Landing() {
                 hidden: { opacity: 0, y: 18 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
               }}
-              className="mt-7 max-w-xl text-base leading-relaxed text-[var(--v2-cream-dim)] sm:text-lg"
+              className="mt-5 max-w-xl text-base leading-relaxed text-[var(--v2-cream-dim)] sm:text-lg"
             >
               Tell us about your business. We study the public details, shape the message,
               design the page and quality-check the result. Most eligible requests receive a
@@ -327,7 +371,7 @@ export default function V2Landing() {
                 hidden: { opacity: 0, y: 16 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
               }}
-              className="mt-9 flex flex-wrap items-center gap-4"
+              className="mt-6 flex flex-wrap items-center gap-4"
             >
               <MagneticButton href="#preview" className="v2-btn v2-btn-primary">
                 Request my free draft
@@ -352,7 +396,7 @@ export default function V2Landing() {
                 hidden: { opacity: 0 },
                 visible: { opacity: 1, transition: { duration: 0.6, delay: 0.2 } },
               }}
-              className="mt-4 max-w-xl text-xs leading-relaxed text-[var(--v2-cream-faint)]"
+              className="mt-2 max-w-xl text-xs leading-relaxed text-[var(--v2-cream-faint)]"
             >
               Within-hour delivery applies to most eligible requests submitted with complete
               details during service hours and depends on current request volume.
@@ -363,11 +407,14 @@ export default function V2Landing() {
             initial={{ opacity: 0, y: 44 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease, delay: 0.45 }}
-            className="mx-auto mt-16 max-w-4xl sm:mt-20"
+            className="mx-auto mt-10 max-w-4xl sm:mt-12"
           >
             <div className="v2-mono mb-3 text-[10px] text-[var(--v2-cream-faint)]">
-              fig. 01 — a Seaway Sites draft in production (condensed)
+              fig. 01 — illustrative Seaway Sites production demo
             </div>
+            <p className="v2-mono mb-3 text-[9px] text-[var(--v2-cream-faint)]">
+              Example businesses, phone numbers and review counts are placeholders.
+            </p>
             <ProductionDemo />
           </motion.div>
         </div>
@@ -575,7 +622,7 @@ export default function V2Landing() {
                 <div className={`v2-card relative flex h-full flex-col p-7 ${tier.featured ? 'v2-card-featured' : ''}`}>
                   {tier.featured && (
                     <span className="v2-mono absolute -top-3 left-6 rounded-full bg-[var(--v2-lume)] px-3 py-1 text-[9px] font-bold text-[#0c0f08]">
-                      founding-client offer
+                      early-client pricing
                     </span>
                   )}
                   <div className="v2-mono text-[10px] text-[var(--v2-cream-faint)]">{tier.name}</div>
@@ -612,10 +659,14 @@ export default function V2Landing() {
       <section className="border-t border-[var(--v2-line)] py-24 sm:py-32">
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
           <Reveal>
-            <Kicker fig="06">word of mouth</Kicker>
+            <Kicker fig="06">sample stories</Kicker>
             <h2 className="v2-serif v2-h2 mt-5 max-w-2xl">
               From people who <em className="font-light">fix pipes, not pixels.</em>
             </h2>
+            <p className="mt-4 max-w-xl text-xs leading-relaxed text-[var(--v2-cream-faint)]">
+              Illustrative composite stories for the service brief — verified founding-client
+              stories will replace these as launches happen.
+            </p>
           </Reveal>
           <div className="mt-12 grid gap-4 md:grid-cols-3">
             {TESTIMONIALS.map((testimonial, index) => (
@@ -644,11 +695,11 @@ export default function V2Landing() {
                     Help shape a better website service for Canadian small businesses.
                   </h3>
                   <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-[var(--v2-cream-dim)]">
-                    We&apos;re inviting a small first group of businesses to launch on founding-client pricing. You&apos;ll receive direct onboarding and careful support; we&apos;ll ask for candid feedback after launch so the service improves around real business needs.
+                    We&apos;re inviting an initial group of businesses to launch on early-client pricing. Exact package terms are confirmed before work begins; you&apos;ll receive direct onboarding and careful support while the service grows around real business needs.
                   </p>
                 </div>
                 <a href="#preview" className="v2-btn v2-btn-primary justify-center whitespace-nowrap">
-                  Request a founding-client draft
+                  Request an early-client draft
                 </a>
               </div>
             </div>
@@ -688,7 +739,11 @@ export default function V2Landing() {
         <div className="relative mx-auto grid max-w-6xl gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:items-center">
           <Reveal>
             <Kicker fig="08">your turn</Kicker>
-            <h2 className="v2-serif mt-5 text-[clamp(2.6rem,6vw,5rem)] font-medium leading-[0.98]">
+            <h2
+              id="preview-heading"
+              tabIndex={-1}
+              className="v2-serif mt-5 text-[clamp(2.6rem,6vw,5rem)] font-medium leading-[0.98] outline-none"
+            >
               See yours.
               <span className="block italic font-light text-[var(--v2-cream-dim)]">
                 Before you pay a dollar.
@@ -714,6 +769,8 @@ export default function V2Landing() {
         </div>
       </section>
 
+      </main>
+
       <footer className="border-t border-[var(--v2-line)] py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 sm:flex-row sm:px-8">
           <div className="flex items-baseline gap-2">
@@ -721,7 +778,7 @@ export default function V2Landing() {
             <span className="v2-mono text-[9px] text-[var(--v2-cream-faint)]">this page is our own preview</span>
           </div>
           <nav className="flex items-center gap-6 text-sm text-[var(--v2-cream-dim)]" aria-label="Footer">
-            <a href="/classic" className="transition-colors hover:text-[var(--v2-cream)]">Classic site</a>
+            <a href="mailto:hello@seawaysites.com" className="transition-colors hover:text-[var(--v2-cream)]">Contact</a>
             <a href="/showcase" className="transition-colors hover:text-[var(--v2-cream)]">Showcase</a>
             <a href="/privacy" className="transition-colors hover:text-[var(--v2-cream)]">Privacy</a>
           </nav>

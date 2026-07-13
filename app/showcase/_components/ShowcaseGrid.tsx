@@ -136,6 +136,7 @@ function ShowcaseCard({ item }: { item: Item }) {
     : null;
 
   const reduce = useReducedMotion();
+  const previewSlug = item.prototypeUrl ? getPreviewSlug(item.prototypeUrl) : null;
 
   return (
     <motion.article
@@ -154,6 +155,9 @@ function ShowcaseCard({ item }: { item: Item }) {
             src={screenshotSrc}
             alt={`${item.anonymizedTitle} — screenshot preview`}
             className="h-full w-full object-cover object-top"
+            loading="lazy"
+            decoding="async"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
             whileHover={reduce ? undefined : { scale: 1.04 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
           />
@@ -182,9 +186,9 @@ function ShowcaseCard({ item }: { item: Item }) {
       <div className="p-6">
         <h3 className="v2-serif mb-2 text-lg font-medium">{item.anonymizedTitle}</h3>
         <p className="mb-5 text-sm leading-relaxed text-[var(--v2-cream-dim)]">{item.tagline}</p>
-        {item.prototypeUrl && (
+        {previewSlug && (
           <a
-            href={`/preview/${encodeURIComponent(item.prototypeUrl.split('/').slice(-2, -1)[0] || '')}`}
+            href={`/preview/${previewSlug}`}
             className="v2-mono text-[10px] text-[var(--v2-lume)] transition-colors hover:text-[#dcff79]"
           >
             view concept →
@@ -193,6 +197,14 @@ function ShowcaseCard({ item }: { item: Item }) {
       </div>
     </motion.article>
   );
+}
+
+function getPreviewSlug(prototypeUrl: string) {
+  const cleanPath = prototypeUrl.split(/[?#]/, 1)[0].replace(/\/+$/, '');
+  const segments = cleanPath.split('/').filter(Boolean);
+  if (segments.at(-1)?.toLowerCase() === 'index.html') segments.pop();
+  const slug = segments.at(-1);
+  return slug ? encodeURIComponent(slug) : null;
 }
 
 /* ------------------------------------------------------------------ */

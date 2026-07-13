@@ -45,23 +45,17 @@ export default function CountUp({
   const [, suffixFromString] = match ? to.split(match[1]) : [null, ""];
 
   const mv = useMotionValue(0);
+  // Keep the meaningful value visible before IntersectionObserver settles.
+  // The animation resets to zero when the stat actually enters the viewport.
   const [display, setDisplay] = useState<string>(
-    target !== null ? (target % 1 === 0 ? "0" : "0.0") : to
+    target !== null ? (match?.[1] ?? String(target)) : to
   );
 
   useEffect(() => {
-    if (!inView) return;
-    if (target === null) {
-      setDisplay(to);
-      return;
-    }
-    if (reduce) {
-      // Only the numeric part — the render already appends
-      // suffixFromString, so setting the full string here would
-      // double the suffix ("60min" + "min").
-      setDisplay(String(target));
-      return;
-    }
+    // Non-numeric and reduced-motion values already render their final
+    // value from state initialization, so they need no effect update.
+    if (!inView || target === null || reduce) return;
+    mv.set(0);
     const isFloat = to.includes(".");
     const controls = animate(mv, target, {
       duration,

@@ -1,21 +1,20 @@
 import type { MetadataRoute } from 'next';
-
-const BASE = 'https://seawaysites.com';
+import { SITE_URL } from '@/lib/site-config';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: `${BASE}/`,
+      url: `${SITE_URL}/`,
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: `${BASE}/showcase`,
+      url: `${SITE_URL}/showcase`,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${BASE}/privacy`,
+      url: `${SITE_URL}/privacy`,
       changeFrequency: 'yearly',
       priority: 0.2,
     },

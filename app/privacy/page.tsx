@@ -1,9 +1,11 @@
 import Link from 'next/link';
+import { SITE_URL } from '@/lib/site-config';
 
 export const metadata = {
   title: 'Privacy Policy — Seaway Sites',
   description:
     'How Seaway Sites collects, uses and handles information submitted through the website.',
+  alternates: { canonical: `${SITE_URL}/privacy` },
 };
 
 export default function PrivacyPage() {
@@ -37,12 +39,7 @@ export default function PrivacyPage() {
             website, why it is used and how to contact us about it.
           </p>
           <p className="mt-2 text-sm text-steel/70">
-            Last updated:{' '}
-            {new Date().toLocaleDateString('en-CA', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
+            Last updated: July 13, 2026
           </p>
         </header>
 

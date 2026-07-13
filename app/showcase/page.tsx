@@ -4,10 +4,12 @@ import ShowcaseGrid from './_components/ShowcaseGrid';
 import ShowcaseHero from './_components/ShowcaseHero';
 import ShowcaseCTA from './_components/ShowcaseCTA';
 import '../_landing/v2.css';
+import { SITE_URL } from '@/lib/site-config';
 
 export const metadata = {
   title: 'Showcase — Seaway Sites',
   description: 'See sample website concepts we create for small businesses. All examples are anonymized demo concepts.',
+  alternates: { canonical: `${SITE_URL}/showcase` },
 };
 
 // Industry → generic anonymized label
