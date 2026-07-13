@@ -171,7 +171,7 @@ export default function BeforeAfter() {
           the site they have
         </span>
         <span className="v2-mono text-[10px] text-[var(--v2-lume)]">
-          the first draft we send — an hour old
+          the personalized direction we prepare
         </span>
       </div>
     </div>
