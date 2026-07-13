@@ -6,9 +6,9 @@ import './_landing/v2.css';
 const SITE_URL = 'https://seawaysites.com';
 
 export const metadata: Metadata = {
-  title: 'Seaway Sites — Website drafts for Canadian small business',
+  title: 'Seaway Sites — Website drafts for Canadian small businesses',
   description:
-    'See a free, personalized first draft of your website within the hour — machine-drafted, human-finished. Built for Canadian small businesses. No credit card, no sales call.',
+    'Request a free, personalized first draft of your website. Most eligible requests are delivered within the hour during service hours. Built for Canadian small businesses — no credit card and no sales call.',
   keywords: [
     'small business website Canada',
     'website design Canada',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Seaway Sites — Your website already exists.',
     description:
-      'A real first draft of your website, free and within the hour — then finished by hand when you say yes. Built for Canadian small businesses.',
+      'A personalized first draft of your website, free. Most eligible requests are delivered within the hour during service hours.',
     url: '/',
     siteName: 'Seaway Sites',
     locale: 'en_CA',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Seaway Sites — Your website already exists.',
     description:
-      'A real first draft of your website, free and within the hour. Built for Canadian small businesses.',
+      'Request a free, personalized first draft for your Canadian small business.',
   },
   robots: {
     index: true,
@@ -45,8 +45,6 @@ export const metadata: Metadata = {
   },
 };
 
-/* Structured data: the service + site identity, and the on-page FAQ so
-   search engines can surface it as rich results. Prices mirror PRICING. */
 const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -57,13 +55,13 @@ const jsonLd = {
       url: SITE_URL,
       email: 'hello@seawaysites.com',
       description:
-        'Personalized website drafts for Canadian small businesses — free first draft within the hour, finished by hand when you say yes.',
+        'Personalized website drafts and managed one-page websites for Canadian small businesses.',
       areaServed: { '@type': 'Country', name: 'Canada' },
-      priceRange: '$0–$799 CAD',
+      priceRange: '$0–$899 CAD',
       makesOffer: PRICING.map((tier) => ({
         '@type': 'Offer',
-        name: `${tier.name} plan`,
-        description: tier.blurb,
+        name: tier.name,
+        description: `${tier.blurb} ${tier.cadence}.`,
         price: tier.price === 'Free' ? '0' : tier.price.replace('$', ''),
         priceCurrency: 'CAD',
       })),
@@ -79,10 +77,10 @@ const jsonLd = {
     {
       '@type': 'FAQPage',
       '@id': `${SITE_URL}/#faq`,
-      mainEntity: FAQS.map((f) => ({
+      mainEntity: FAQS.map((faq) => ({
         '@type': 'Question',
-        name: f.q,
-        acceptedAnswer: { '@type': 'Answer', text: f.a },
+        name: faq.q,
+        acceptedAnswer: { '@type': 'Answer', text: faq.a },
       })),
     },
   ],
