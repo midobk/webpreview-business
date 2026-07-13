@@ -3,6 +3,7 @@ import Link from 'next/link';
 import ShowcaseGrid from './_components/ShowcaseGrid';
 import ShowcaseHero from './_components/ShowcaseHero';
 import ShowcaseCTA from './_components/ShowcaseCTA';
+import '../_landing/v2.css';
 
 export const metadata = {
   title: 'Showcase — Seaway Sites',
@@ -153,42 +154,35 @@ export default async function ShowcasePage() {
   const items = await loadShowcase();
 
   return (
-    <div className="min-h-screen bg-paper">
-      {/* Header — light warm-print, sticky */}
-      <header className="border-b border-paint/10 bg-paper/85 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <div className="relative w-9 h-9 rounded-lg bg-warm-gradient flex items-center justify-center text-white font-extrabold text-lg shadow-lg shadow-paint/30">
-              S
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="absolute -top-1.5 -right-1.5 w-4 h-4 text-signal">
-                <path d="M12 2l1.2 3.4 2.6-1.6-1 3 2.8.8-2.4 1.6 2.4 2.6-3.4.4 1.2 3.2-2.8-1.4L12 22l-.6-7.6-2.8 1.4 1.2-3.2-3.4-.4 2.4-2.6-2.4-1.6 2.8-.8-1-3 2.6 1.6z" />
-              </svg>
-            </div>
-            <span className="text-xl font-extrabold tracking-tight text-ink">Seaway Sites</span>
+    <div className="v2-root relative min-h-screen overflow-x-clip">
+      <div className="v2-grain" aria-hidden="true" />
+
+      {/* Header — same night-studio shell as the landing page */}
+      <header className="v2-header is-scrolled sticky top-0 z-50">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 sm:px-8 py-4">
+          <Link href="/" className="flex items-baseline gap-2">
+            <span className="v2-serif text-xl font-semibold tracking-tight">Seaway Sites</span>
+            <span className="v2-mono text-[9px] text-[var(--v2-lume)]">the drafting table</span>
           </Link>
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-steel">
-            <Link href="/#proof" className="hover:text-ink transition-colors">
+          <nav className="hidden md:flex items-center gap-7 text-sm text-[var(--v2-cream-dim)]" aria-label="Site">
+            <Link href="/#proof" className="hover:text-[var(--v2-cream)] transition-colors">
               Proof
             </Link>
-            <Link href="/#process" className="hover:text-ink transition-colors">
+            <Link href="/#process" className="hover:text-[var(--v2-cream)] transition-colors">
               How it works
             </Link>
-            <Link href="/showcase" className="text-paint">
+            <Link href="/showcase" aria-current="page" className="text-[var(--v2-lume)]">
               Examples
             </Link>
-            <Link href="/#pricing" className="hover:text-ink transition-colors">
+            <Link href="/#pricing" className="hover:text-[var(--v2-cream)] transition-colors">
               Pricing
             </Link>
-            <Link href="/#faq" className="hover:text-ink transition-colors">
+            <Link href="/#faq" className="hover:text-[var(--v2-cream)] transition-colors">
               FAQ
             </Link>
           </nav>
-          <Link
-            href="/#preview"
-            className="inline-flex items-center gap-1.5 bg-action text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-action-deep transition-colors shadow-lg shadow-action/20"
-          >
+          <Link href="/#preview" className="v2-btn v2-btn-primary !px-4 !py-2 text-sm">
             Get my preview
-            <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" /></svg>
           </Link>
         </div>
       </header>
@@ -199,22 +193,16 @@ export default async function ShowcasePage() {
       {/* Empty state */}
       {items.length === 0 && (
         <section className="pb-24">
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="border border-dashed border-paint/30 rounded-2xl bg-paper p-12 text-center shadow-sm">
-              <h2
-                className="text-2xl md:text-3xl font-medium text-ink mb-2"
-                style={{ fontFamily: 'var(--font-fraunces)', fontVariationSettings: '"opsz" 96' }}
-              >
+          <div className="mx-auto max-w-3xl px-5 sm:px-8">
+            <div className="rounded-2xl border border-dashed border-[var(--v2-line-strong)] p-12 text-center">
+              <h2 className="v2-serif mb-2 text-2xl font-medium md:text-3xl">
                 Examples coming soon
               </h2>
-              <p className="text-steel mb-6 max-w-md mx-auto leading-relaxed">
-                We&rsquo;re polishing our first round of concepts. Approved previews will appear
+              <p className="mx-auto mb-7 max-w-md leading-relaxed text-[var(--v2-cream-dim)]">
+                We&rsquo;re polishing our first round of drafts. Approved previews will appear
                 here with anonymized screenshots.
               </p>
-              <Link
-                href="/#preview"
-                className="inline-flex items-center gap-1.5 bg-action text-white px-6 py-3 rounded-full font-semibold hover:bg-action-deep transition-colors shadow-lg shadow-action/20"
-              >
+              <Link href="/#preview" className="v2-btn v2-btn-primary">
                 Request a preview →
               </Link>
             </div>
@@ -225,7 +213,7 @@ export default async function ShowcasePage() {
       {/* Grid (client component handles filter chips) */}
       {items.length > 0 && (
         <section className="pb-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-6xl px-5 sm:px-8">
             <ShowcaseGrid items={items} />
           </div>
         </section>
@@ -234,23 +222,28 @@ export default async function ShowcasePage() {
       {/* CTA */}
       <ShowcaseCTA />
 
-      {/* Footer — warm ink, matches the landing footer */}
-      <footer className="py-12 bg-ink text-white/65">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-white/55">
-            © {new Date().getFullYear()} Seaway Sites. All showcase examples are anonymized demo
-            concepts.
-          </p>
-          <div className="flex gap-6 text-sm">
-            <Link href="/" className="hover:text-signal transition-colors">
+      {/* Footer — mirrors the landing footer */}
+      <footer className="border-t border-[var(--v2-line)] py-10">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 sm:px-8 sm:flex-row">
+          <div className="flex items-baseline gap-2">
+            <span className="v2-serif text-lg font-semibold">Seaway Sites</span>
+            <span className="v2-mono text-[9px] text-[var(--v2-cream-faint)]">
+              all examples anonymized
+            </span>
+          </div>
+          <nav className="flex items-center gap-6 text-sm text-[var(--v2-cream-dim)]" aria-label="Footer">
+            <Link href="/" className="hover:text-[var(--v2-cream)] transition-colors">
               Home
             </Link>
-            <Link href="/showcase" className="hover:text-signal transition-colors">
-              Examples
-            </Link>
-            <Link href="/#pricing" className="hover:text-signal transition-colors">
+            <Link href="/#pricing" className="hover:text-[var(--v2-cream)] transition-colors">
               Pricing
             </Link>
+            <Link href="/privacy" className="hover:text-[var(--v2-cream)] transition-colors">
+              Privacy
+            </Link>
+          </nav>
+          <div className="v2-mono text-[9px] text-[var(--v2-cream-faint)]">
+            © {new Date().getFullYear()} · made in canada
           </div>
         </div>
       </footer>
