@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const alt =
-  'Seaway Sites — your website already exists. Free first draft within the hour for Canadian small businesses.';
+  'Seaway Sites — your website already exists. Personalized first drafts for Canadian small businesses; most eligible requests are delivered within the hour during service hours.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -60,15 +60,15 @@ export default function Image() {
               borderRadius: 9999,
               background: '#cdf463',
               color: '#0c0f08',
-              fontSize: 26,
+              fontSize: 24,
               fontWeight: 700,
               fontFamily: 'Arial, sans-serif',
             }}
           >
-            Free draft within the hour
+            Most eligible drafts within the hour
           </div>
-          <div style={{ fontSize: 24, color: 'rgba(239,234,224,0.55)', fontFamily: 'Arial, sans-serif' }}>
-            Canadian small business · no credit card
+          <div style={{ fontSize: 23, color: 'rgba(239,234,224,0.55)', fontFamily: 'Arial, sans-serif' }}>
+            During service hours · no credit card
           </div>
         </div>
       </div>
