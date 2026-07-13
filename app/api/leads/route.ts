@@ -53,8 +53,15 @@ export async function POST(request: Request) {
 
     const body = await request.json().catch(() => null);
     // Quiet honeypot: automated submissions receive a neutral response but
-    // never reach persistence or the production queue.
-    if (readString(body?.company, 120)) {
+    // never reach persistence or the production queue. We check two names:
+    //   - honey_field_v2 is the current off-screen input on the form
+    //   - company is the legacy name; kept so an older cached form, a
+    //     direct API caller, or a script replaying the old payload is still
+    //     treated as a bot. The real form only ever sends honey_field_v2.
+    if (
+      readString(body?.honey_field_v2, 120) ||
+      readString(body?.company, 120)
+    ) {
       return NextResponse.json({ message: 'Draft request received.' }, { status: 201 });
     }
     const businessName = readString(body?.businessName, LIMITS.businessName);

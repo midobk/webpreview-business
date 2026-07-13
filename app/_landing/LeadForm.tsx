@@ -50,7 +50,12 @@ export default function LeadForm() {
     setBusy(true);
     setError('');
     const formElement = event.currentTarget as HTMLFormElement;
-    const honeypot = (formElement.elements.namedItem('company') as HTMLInputElement)?.value || '';
+    // Honeypot field name is intentionally non-semantic so browser autofill
+    // and password-manager extensions (1Password, Bitwarden, Chrome, Safari)
+    // don't populate it with a stored value. A real user never sees or fills
+    // this input; only a bot does.
+    const honeypot =
+      (formElement.elements.namedItem('honey_field_v2') as HTMLInputElement)?.value || '';
 
     try {
       const response = await fetch('/api/leads', {
@@ -61,7 +66,7 @@ export default function LeadForm() {
           email: form.email.trim(),
           website: form.website.trim(),
           message: form.message.trim(),
-          company: honeypot,
+          honey_field_v2: honeypot,
         }),
       });
 
@@ -98,7 +103,7 @@ export default function LeadForm() {
   return (
     <form onSubmit={handleSubmit} className="v2-card space-y-4 p-6 sm:p-8" noValidate aria-busy={busy}>
       <input
-        name="company"
+        name="honey_field_v2"
         type="text"
         tabIndex={-1}
         autoComplete="off"
