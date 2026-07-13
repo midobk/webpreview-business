@@ -1,16 +1,16 @@
 # Graph Report - webpreview-business  (2026-07-13)
 
 ## Corpus Check
-- 158 files · ~1,427,798 words
+- 158 files · ~1,427,961 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1021 nodes · 1293 edges · 95 communities (81 shown, 14 thin omitted)
+- 1023 nodes · 1298 edges · 94 communities (80 shown, 14 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e3e37f56`
+- Built from commit: `65ea5462`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -56,7 +56,6 @@
 - Findings
 - GridStagger.tsx
 - generate_variant.py
-- route.ts
 - eslint.config.mjs
 - next.config.ts
 - postcss.config.mjs
@@ -127,7 +126,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (95 total, 14 thin omitted)
+## Communities (94 total, 14 thin omitted)
 
 ### Community 0 - "icons.tsx"
 Cohesion: 0.06
@@ -230,8 +229,8 @@ Cohesion: 0.36
 Nodes (7): load_existing_leads(), log_run(), main(), Load existing leads from data/leads.json, Save leads to data/leads.json, Log the discovery run to logs/agent-runs.md, save_leads()
 
 ### Community 25 - "middleware.ts"
-Cohesion: 0.43
-Nodes (4): isPasswordSet(), checkPasswordSet(), config, middleware()
+Cohesion: 0.39
+Nodes (6): base64UrlToBytes(), isPasswordSet(), isValidAdminSession(), checkPasswordSet(), config, middleware()
 
 ### Community 26 - "enrich_leads.py"
 Cohesion: 0.33
@@ -250,8 +249,8 @@ Cohesion: 0.12
 Nodes (17): 13. Progress Tracker, A. Public-site wiring (C1 + H1) — DONE, Agent Run Log, Agent Run Log (continued), B. Admin hardening (C2, C3, H4, H5, H6) — DONE, C. Admin-only content (H2) — DONE, Current Status — What Actually Works, D. Showcase polish (H3, L2, L3) — DONE (+9 more)
 
 ### Community 30 - "AGENT_PLAN.md — AI Website Preview Business Agent"
-Cohesion: 0.15
-Nodes (12): 10. Project File Structure, 13. Progress Tracker — DRIFT CORRECTION 2026-06-29 10:08 EDT, 14. Approval Checkpoints, 15. Success Metrics, 1. Agent Philosophy, 22. Prototype quality contract, revision capture, and showcase operations — 2026-07-13, 8. Model Assignment, AGENT_PLAN.md — AI Website Preview Business Agent (+4 more)
+Cohesion: 0.12
+Nodes (16): 10. Project File Structure, 13. Progress Tracker — DRIFT CORRECTION 2026-06-29 10:08 EDT, 14. Approval Checkpoints, 15. Success Metrics, 18. UX Audit + Fix Pass — 2026-06-23 (Live Verification), 1. Agent Philosophy, 22. Prototype quality contract, revision capture, and showcase operations — 2026-07-13, 8. Model Assignment (+8 more)
 
 ### Community 31 - "capture.js"
 Cohesion: 0.40
@@ -280,10 +279,6 @@ Nodes (3): load_json(), main(), score_bucket()
 ### Community 38 - "Findings"
 Cohesion: 0.13
 Nodes (14): Auth model after this PR, 🔴 CRITICAL-1: Admin API routes have no authentication check, Files changed in this PR, Findings, ℹ️ INFO-1: `.password` correctly gitignored, ℹ️ INFO-2: `.env*` correctly gitignored, ℹ️ INFO-3: No passwords, API keys, or secrets in client code, 🟢 LOW-1: Public `isPasswordSet` boolean leaks admin state (+6 more)
-
-### Community 43 - "route.ts"
-Cohesion: 0.50
-Nodes (4): 18. UX Audit + Fix Pass — 2026-06-23 (Live Verification), Bonus fixes included while in code, Findings (16 total, all addressed or accepted), Verification
 
 ### Community 52 - "Industry Templates"
 Cohesion: 0.14
@@ -417,7 +412,7 @@ Nodes (3): name, private, version
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `AGENT_PLAN.md — AI Website Preview Business Agent` connect `AGENT_PLAN.md — AI Website Preview Business Agent` to `5. Outreach Strategy`, `3. Offer and Pricing`, `0. Project Identity`, `11. Data Model (MVP simplified)`, `17. User-Reported Issues — 2026-06-23 (Live Verification)`, `20. Weekly Planning — 2026-06-29 (Mon, Week 1)`, `4. Prototype Strategy`, `4A. Image Asset Pipeline`, `9. Enhanced Features (added to impress)`, `route.ts`, `2. Business Scope`, `7. Architecture`, `13. Progress Tracker`, `19. Follow-Up Work (Queued, Not Started)`, `21. Weekly Planning — 2026-07-06 (Mon, Week 2)`, `12. Implementation Phases (compressed)`, `16. Tool Research Findings (Phase 0)`, `6. Lead Discovery and Scoring`?**
+- **Why does `AGENT_PLAN.md — AI Website Preview Business Agent` connect `AGENT_PLAN.md — AI Website Preview Business Agent` to `5. Outreach Strategy`, `3. Offer and Pricing`, `0. Project Identity`, `11. Data Model (MVP simplified)`, `17. User-Reported Issues — 2026-06-23 (Live Verification)`, `20. Weekly Planning — 2026-06-29 (Mon, Week 1)`, `4. Prototype Strategy`, `4A. Image Asset Pipeline`, `9. Enhanced Features (added to impress)`, `2. Business Scope`, `7. Architecture`, `13. Progress Tracker`, `19. Follow-Up Work (Queued, Not Started)`, `21. Weekly Planning — 2026-07-06 (Mon, Week 2)`, `12. Implementation Phases (compressed)`, `16. Tool Research Findings (Phase 0)`, `6. Lead Discovery and Scoring`?**
   _High betweenness centrality (0.025) - this node is a cross-community bridge._
 - **Why does `SITE_URL` connect `layout.tsx` to `page.tsx`, `V2Landing.tsx`?**
   _High betweenness centrality (0.024) - this node is a cross-community bridge._

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { isPasswordSet } from '@/lib/auth-edge';
+import { isPasswordSet, isValidAdminSession } from '@/lib/auth-edge';
 
 async function checkPasswordSet(req: NextRequest): Promise<boolean> {
   // Fast path: env var is set (Vercel + local with .env)
@@ -46,7 +46,7 @@ export async function middleware(request: NextRequest) {
 
     // Check session cookie for protected admin pages
     const session = request.cookies.get('admin_session');
-    if (!session || session.value !== 'authenticated') {
+    if (!session || !(await isValidAdminSession(session.value))) {
       // Allow the login page itself
       if (request.nextUrl.pathname === '/admin') {
         return NextResponse.next();

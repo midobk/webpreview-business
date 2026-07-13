@@ -2634,6 +2634,26 @@
       "norm_label": "getpasswordhashfromenv()"
     },
     {
+      "label": "base64UrlToBytes()",
+      "file_type": "code",
+      "source_file": "lib/auth-edge.ts",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "lib_auth_edge_base64urltobytes",
+      "community": 25,
+      "norm_label": "base64urltobytes()"
+    },
+    {
+      "label": "isValidAdminSession()",
+      "file_type": "code",
+      "source_file": "lib/auth-edge.ts",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "lib_auth_edge_isvalidadminsession",
+      "community": 25,
+      "norm_label": "isvalidadminsession()"
+    },
+    {
       "label": "auth-server.ts",
       "file_type": "code",
       "source_file": "lib/auth-server.ts",
@@ -7850,7 +7870,7 @@
       "source_location": "L935",
       "_origin": "ast",
       "id": "agent_plan_18_ux_audit_fix_pass_2026_06_23_live_verification",
-      "community": 43,
+      "community": 30,
       "norm_label": "18. ux audit + fix pass \u2014 2026-06-23 (live verification)"
     },
     {
@@ -7860,7 +7880,7 @@
       "source_location": "L939",
       "_origin": "ast",
       "id": "agent_plan_findings_16_total_all_addressed_or_accepted",
-      "community": 43,
+      "community": 30,
       "norm_label": "findings (16 total, all addressed or accepted)"
     },
     {
@@ -7870,7 +7890,7 @@
       "source_location": "L964",
       "_origin": "ast",
       "id": "agent_plan_bonus_fixes_included_while_in_code",
-      "community": 43,
+      "community": 30,
       "norm_label": "bonus fixes included while in code"
     },
     {
@@ -7880,7 +7900,7 @@
       "source_location": "L969",
       "_origin": "ast",
       "id": "agent_plan_verification",
-      "community": 43,
+      "community": 30,
       "norm_label": "verification"
     },
     {
@@ -14873,6 +14893,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "lib/auth-edge.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "lib_auth_edge",
+      "target": "lib_auth_edge_base64urltobytes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/auth-edge.ts",
       "source_location": "L8",
       "weight": 1.0,
       "source": "lib_auth_edge",
@@ -14887,6 +14917,16 @@
       "weight": 1.0,
       "source": "lib_auth_edge",
       "target": "lib_auth_edge_ispasswordset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/auth-edge.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "lib_auth_edge",
+      "target": "lib_auth_edge_isvalidadminsession",
       "confidence_score": 1.0
     },
     {
@@ -14921,6 +14961,39 @@
       "source": "middleware_checkpasswordset",
       "target": "lib_auth_edge_ispasswordset",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "lib/auth-edge.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "lib_auth_edge_isvalidadminsession",
+      "target": "lib_auth_edge_base64urltobytes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "middleware.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "middleware",
+      "target": "lib_auth_edge_isvalidadminsession",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "middleware.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "middleware_middleware",
+      "target": "lib_auth_edge_isvalidadminsession"
     },
     {
       "relation": "contains",
@@ -23575,5 +23648,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e3e37f5639b1b86300a1ed67610e4bf791f5d3b6"
+  "built_at_commit": "65ea5462aedec98064b55894275a0c1dac86a55c"
 }

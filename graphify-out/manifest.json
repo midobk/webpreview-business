@@ -230,8 +230,8 @@
     "semantic_hash": "58ac0e0fda1845d557039a3700ba8092"
   },
   "data/leads.json": {
-    "mtime": 1783976419.8927722,
-    "ast_hash": "431f1567f4b00c885f4bde7b583703a8",
+    "mtime": 1783976483.7447097,
+    "ast_hash": "b20b71c255cece1a0ab3248e38ed86ca",
     "semantic_hash": ""
   },
   "data/outreach/bellas-hair-studio/email.json": {
@@ -370,9 +370,9 @@
     "semantic_hash": "dfa1f5f6a7037bf39dc510f30b180002"
   },
   "lib/auth-edge.ts": {
-    "mtime": 1782245751.2924244,
-    "ast_hash": "2eb8e9af1dbaf14637ca11e515bb40f3",
-    "semantic_hash": "2eb8e9af1dbaf14637ca11e515bb40f3"
+    "mtime": 1783979712.410539,
+    "ast_hash": "dfcd725db9ba72a19b113942353f6754",
+    "semantic_hash": ""
   },
   "lib/auth-server.ts": {
     "mtime": 1783976045.1355855,
@@ -415,9 +415,9 @@
     "semantic_hash": "788d7fe7a7f95eab77f72bb160e05b9b"
   },
   "middleware.ts": {
-    "mtime": 1783609846.095851,
-    "ast_hash": "c3135ecf3647bff6a8226057a3ef3388",
-    "semantic_hash": "c3135ecf3647bff6a8226057a3ef3388"
+    "mtime": 1783979682.799585,
+    "ast_hash": "3405ec8fa3c91eaa4443419caf8cb430",
+    "semantic_hash": ""
   },
   "next.config.ts": {
     "mtime": 1782245751.3061059,
