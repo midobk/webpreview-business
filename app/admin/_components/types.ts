@@ -37,6 +37,8 @@ export interface Prototype {
   demo_locked?: boolean;
   showcase_eligible?: boolean | null;
   showcase_approved?: boolean;
+  showcase_score?: number | null;
+  showcase_issues?: string[];
   created_at?: string;
   updated_at?: string;
 }

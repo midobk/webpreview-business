@@ -7,14 +7,18 @@ export function PrototypeCard({
   proto,
   lead,
   onToggleShowcase,
+  onToggleEligible,
   updating,
 }: {
   proto: Prototype;
   lead?: Lead;
   onToggleShowcase: (id: string, approved: boolean) => void;
+  onToggleEligible: (id: string, eligible: boolean) => void;
   updating: boolean;
 }) {
   const slug = lead?.slug || '';
+  const prototypeSlug = proto.prototype_url?.match(/data\/prototypes(?:-anonymized)?\/([^/]+)/)?.[1] || '';
+  const previewHref = slug ? `/preview/${slug}` : prototypeSlug ? `/preview/${prototypeSlug}` : proto.prototype_url;
   const status = (proto.generation_status || '').toLowerCase();
   const statusTone =
     status === 'complete' || status === 'completed' || status === 'generated'
@@ -69,6 +73,14 @@ export function PrototypeCard({
             <IconCheck size={10} /> Showcase
           </span>
         )}
+        {proto.showcase_eligible && !proto.showcase_approved && (
+          <span
+            className="absolute top-2 right-2 text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full"
+            style={{ background: 'rgba(99,102,241,0.88)', color: 'white' }}
+          >
+            Review ready
+          </span>
+        )}
       </div>
 
       <div className="p-4 flex-1 flex flex-col">
@@ -108,6 +120,20 @@ export function PrototypeCard({
               Demo locked
             </span>
           )}
+          <span
+            className="text-[10px] font-medium px-1.5 py-0.5 rounded"
+            style={{
+              background: proto.showcase_eligible ? 'var(--adm-success-soft)' : 'var(--adm-bg-subtle)',
+              color: proto.showcase_eligible ? 'var(--adm-success)' : 'var(--adm-text-muted)',
+            }}
+          >
+            {proto.showcase_eligible ? 'Eligible' : 'Needs review'}
+          </span>
+          {proto.showcase_score != null && (
+            <span className="text-[10px] font-medium px-1.5 py-0.5 rounded" style={{ background: 'var(--adm-bg-subtle)', color: 'var(--adm-text-secondary)' }}>
+              Score {proto.showcase_score}/40
+            </span>
+          )}
         </div>
 
         {proto.design_summary && (
@@ -120,9 +146,9 @@ export function PrototypeCard({
           className="mt-auto pt-3 flex gap-2"
           style={{ borderTop: '1px solid var(--adm-border)' }}
         >
-          {slug ? (
+          {previewHref ? (
             <a
-              href={`/preview/${slug}`}
+              href={previewHref}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 text-xs font-semibold text-center py-2 rounded-md transition-colors adm-brand-gradient text-white"
@@ -140,33 +166,33 @@ export function PrototypeCard({
               No slug
             </span>
           )}
-          {proto.showcase_approved ? (
+          <div className="flex gap-2">
             <button
-              onClick={() => onToggleShowcase(proto.id, false)}
+              onClick={() => onToggleEligible(proto.id, !proto.showcase_eligible)}
               disabled={updating}
               className="text-xs font-semibold px-3 py-2 rounded-md transition-all"
               style={{
-                background: 'var(--adm-success-soft)',
-                color: 'var(--adm-success)',
-                boxShadow: 'inset 0 0 0 1px rgba(16,185,129,0.30)',
-              }}
-            >
-              ✓ On
-            </button>
-          ) : (
-            <button
-              onClick={() => onToggleShowcase(proto.id, true)}
-              disabled={updating}
-              className="text-xs font-semibold px-3 py-2 rounded-md transition-all"
-              style={{
-                background: 'var(--adm-bg-subtle)',
-                color: 'var(--adm-text-secondary)',
+                background: proto.showcase_eligible ? 'var(--adm-success-soft)' : 'var(--adm-bg-subtle)',
+                color: proto.showcase_eligible ? 'var(--adm-success)' : 'var(--adm-text-secondary)',
                 boxShadow: 'inset 0 0 0 1px var(--adm-border)',
               }}
             >
-              Showcase
+              {proto.showcase_eligible ? 'Eligible' : 'Review'}
             </button>
-          )}
+            <button
+              onClick={() => onToggleShowcase(proto.id, !proto.showcase_approved)}
+              disabled={updating || (!proto.showcase_approved && !proto.showcase_eligible)}
+              title={!proto.showcase_eligible && !proto.showcase_approved ? 'Mark eligible before approving' : undefined}
+              className="text-xs font-semibold px-3 py-2 rounded-md transition-all disabled:opacity-40"
+              style={{
+                background: proto.showcase_approved ? 'var(--adm-success-soft)' : 'var(--adm-bg-subtle)',
+                color: proto.showcase_approved ? 'var(--adm-success)' : 'var(--adm-text-secondary)',
+                boxShadow: 'inset 0 0 0 1px var(--adm-border)',
+              }}
+            >
+              {proto.showcase_approved ? '✓ Live' : 'Approve'}
+            </button>
+          </div>
         </div>
       </div>
     </div>

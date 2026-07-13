@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { verifyPassword, getPasswordHash } from '@/lib/auth';
+import { createAdminSession } from '@/lib/auth-server';
 
 // POST /api/admin/login - Authenticate admin user
 export async function POST(request: Request) {
@@ -32,11 +33,16 @@ export async function POST(request: Request) {
       );
     }
 
-    // Set a simple session cookie (24h expiry)
+    const session = createAdminSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Admin session secret is not configured.' }, { status: 500 });
+    }
+
+    // Set a signed session cookie (24h expiry)
     const res = NextResponse.json({ message: 'Authentication successful' }, { status: 200 });
-    res.cookies.set('admin_session', 'authenticated', {
+    res.cookies.set('admin_session', session, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       maxAge: 86400,
       path: '/',
@@ -56,7 +62,7 @@ export async function DELETE() {
   const res = NextResponse.json({ message: 'Logged out' }, { status: 200 });
   res.cookies.set('admin_session', '', {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
     maxAge: 0,
     path: '/',

@@ -3,6 +3,23 @@ import { requireAdmin } from '@/lib/auth-server';
 import { getPrototypes, DATA_SOURCE } from '@/lib/data-source';
 import { getSupabase } from '@/lib/supabase';
 
+function prototypeSlug(proto: any): string {
+  const url = typeof proto.prototype_url === 'string' ? proto.prototype_url : '';
+  const previewMatch = url.match(/\/preview\/([^/?#]+)/);
+  if (previewMatch) return previewMatch[1];
+  const dataMatch = url.match(/data\/prototypes(?:-anonymized)?\/([^/]+)/);
+  return dataMatch?.[1] || proto.lead_id || proto.id;
+}
+
+function canPublish(proto: any) {
+  const status = String(proto.generation_status || '').toLowerCase();
+  return ['completed', 'complete', 'generated'].includes(status) &&
+    proto.showcase_eligible === true &&
+    proto.anonymized === true &&
+    Boolean(proto.prototype_url) &&
+    Boolean(proto.screenshot_url);
+}
+
 // GET /api/admin/prototypes - Fetch all prototypes (admin-only)
 export async function GET(request: Request) {
   const denied = requireAdmin(request);
@@ -17,7 +34,7 @@ export async function GET(request: Request) {
       const prototypesDir = path.join(process.cwd(), 'data', 'prototypes');
       const publicScreensDir = path.join(process.cwd(), 'public', 'prototype-screenshots');
       for (const proto of prototypes) {
-        const slug = proto.lead_id || proto.id;
+        const slug = prototypeSlug(proto);
         if (!proto.screenshot_url) {
           // Prefer the public screenshot (served on Vercel + dev)
           const publicDesktop = path.join(publicScreensDir, `${slug}-desktop.png`);
@@ -50,12 +67,26 @@ export async function PATCH(request: Request) {
   try {
     const body = await request.json();
     const { id, showcase_approved, showcase_eligible } = body;
+    if (!id || (showcase_approved === undefined && showcase_eligible === undefined)) {
+      return NextResponse.json({ error: 'Prototype id and an update are required.' }, { status: 400 });
+    }
 
     const supabase = getSupabase();
     if (supabase) {
+      const current = await supabase.from('prototypes').select('*').eq('id', id).maybeSingle();
+      if (current.error) return NextResponse.json({ error: current.error.message }, { status: 500 });
+      if (!current.data) return NextResponse.json({ error: 'Prototype not found' }, { status: 404 });
+
+      const next = { ...current.data, ...body };
+      if (showcase_approved === true && !canPublish(next)) {
+        return NextResponse.json({ error: 'Prototype must be completed, eligible, anonymized, and have both preview URLs before approval.' }, { status: 409 });
+      }
       const updates: Record<string, unknown> = { updated_at: new Date().toISOString() };
       if (showcase_approved !== undefined) updates.showcase_approved = showcase_approved;
-      if (showcase_eligible !== undefined) updates.showcase_eligible = showcase_eligible;
+      if (showcase_eligible !== undefined) {
+        updates.showcase_eligible = showcase_eligible;
+        if (showcase_eligible === false) updates.showcase_approved = false;
+      }
       const { error } = await supabase
         .from("prototypes")
         .update(updates)
@@ -83,8 +114,15 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: 'Prototype not found' }, { status: 404 });
     }
 
+    const next = { ...prototypes[index], ...body };
+    if (showcase_approved === true && !canPublish(next)) {
+      return NextResponse.json({ error: 'Prototype must be completed, eligible, anonymized, and have both preview URLs before approval.' }, { status: 409 });
+    }
     if (showcase_approved !== undefined) prototypes[index].showcase_approved = showcase_approved;
-    if (showcase_eligible !== undefined) prototypes[index].showcase_eligible = showcase_eligible;
+    if (showcase_eligible !== undefined) {
+      prototypes[index].showcase_eligible = showcase_eligible;
+      if (showcase_eligible === false) prototypes[index].showcase_approved = false;
+    }
     prototypes[index].updated_at = new Date().toISOString();
 
     try {

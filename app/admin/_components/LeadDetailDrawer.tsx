@@ -194,6 +194,13 @@ export function LeadDetailDrawer({
                 Mark contacted
               </ActionButton>
               <ActionButton
+                tone="danger"
+                onClick={() => onUpdateStatus(lead.id, 'revision_requested')}
+                disabled={updating}
+              >
+                Mark hot / revision
+              </ActionButton>
+              <ActionButton
                 tone="neutral"
                 onClick={() => onUpdateStatus(lead.id, 'do_not_contact')}
                 disabled={updating}

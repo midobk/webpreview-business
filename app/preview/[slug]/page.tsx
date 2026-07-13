@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import path from 'path';
 import fs from 'fs';
 import { readdir } from 'fs/promises';
+import { RevisionRequest } from './RevisionRequest';
 
 interface PreviewPageProps {
   params: Promise<{ slug: string }>;
@@ -162,13 +163,14 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
   const title = titleMatch ? titleMatch[1] : `Preview for ${slug}`;
 
   return (
-    <div className="w-full h-screen">
+    <div className="relative w-full h-screen">
       <iframe
         srcDoc={htmlContent}
         title={title}
         className="w-full h-full border-0"
         sandbox="allow-scripts allow-same-origin"
       />
+      <RevisionRequest slug={slug} />
     </div>
   );
 }

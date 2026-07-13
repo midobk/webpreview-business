@@ -78,6 +78,21 @@ CREATE INDEX IF NOT EXISTS idx_prototypes_lead ON prototypes(lead_id);
 CREATE INDEX IF NOT EXISTS idx_prototypes_status ON prototypes(generation_status);
 CREATE INDEX IF NOT EXISTS idx_prototypes_showcase ON prototypes(showcase_eligible, showcase_approved);
 
+-- ============ revision_requests ============
+-- Customer feedback captured from a prototype preview. RLS stays deny-by-default;
+-- the server-side service-role route is the only writer/reader.
+CREATE TABLE IF NOT EXISTS revision_requests (
+  id TEXT PRIMARY KEY,
+  lead_id TEXT NOT NULL REFERENCES leads(id) ON DELETE CASCADE,
+  request TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'new',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_revision_requests_lead ON revision_requests(lead_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_revision_requests_status ON revision_requests(status, created_at DESC);
+
 -- ============ outreach_logs ============
 -- Each row is one outreach attempt (email or SMS), tracked through the lifecycle
 CREATE TABLE IF NOT EXISTS outreach_logs (
@@ -145,6 +160,7 @@ CREATE TABLE IF NOT EXISTS agentmail_inboxes (
 
 ALTER TABLE leads ENABLE ROW LEVEL SECURITY;
 ALTER TABLE prototypes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE revision_requests ENABLE ROW LEVEL SECURITY;
 ALTER TABLE outreach_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE conversion_stats ENABLE ROW LEVEL SECURITY;
 ALTER TABLE agentmail_inboxes ENABLE ROW LEVEL SECURITY;

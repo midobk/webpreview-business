@@ -6,9 +6,22 @@
 // IMPORTANT: This is server-only (uses next/server). Do not import from middleware.
 
 import { NextResponse } from 'next/server';
+import { createHmac, timingSafeEqual } from 'crypto';
 
 const ADMIN_COOKIE = 'admin_session';
-const ADMIN_COOKIE_VALUE = 'authenticated';
+const SESSION_TTL_SECONDS = 60 * 60 * 24;
+
+function sessionSecret() {
+  return process.env.ADMIN_SESSION_SECRET || process.env.PASSWORD_HASH || '';
+}
+
+export function createAdminSession(now = Math.floor(Date.now() / 1000)) {
+  const secret = sessionSecret();
+  if (!secret) return null;
+  const payload = `${now}.${now + SESSION_TTL_SECONDS}`;
+  const signature = createHmac('sha256', secret).update(payload).digest('base64url');
+  return `${Buffer.from(payload).toString('base64url')}.${signature}`;
+}
 
 /**
  * Returns a 401 NextResponse if the request is not from an authenticated admin.
@@ -22,13 +35,32 @@ export function requireAdmin(request: Request): NextResponse | null {
   const cookieHeader = request.headers.get('cookie') || '';
   const cookies = parseCookies(cookieHeader);
   const session = cookies[ADMIN_COOKIE];
-  if (session !== ADMIN_COOKIE_VALUE) {
+  if (!isValidAdminSession(session)) {
     return NextResponse.json(
       { error: 'Unauthorized' },
       { status: 401 }
     );
   }
   return null;
+}
+
+function isValidAdminSession(value?: string) {
+  if (!value) return false;
+  const [encodedPayload, signature] = value.split('.');
+  if (!encodedPayload || !signature) return false;
+  try {
+    const payload = Buffer.from(encodedPayload, 'base64url').toString('utf8');
+    const [issuedAt, expiresAt] = payload.split('.').map(Number);
+    const now = Math.floor(Date.now() / 1000);
+    if (!Number.isFinite(issuedAt) || !Number.isFinite(expiresAt)) return false;
+    if (expiresAt <= now || issuedAt > now + 60) return false;
+    const expected = createHmac('sha256', sessionSecret()).update(payload).digest('base64url');
+    const actualBytes = Buffer.from(signature);
+    const expectedBytes = Buffer.from(expected);
+    return actualBytes.length === expectedBytes.length && timingSafeEqual(actualBytes, expectedBytes);
+  } catch {
+    return false;
+  }
 }
 
 /**

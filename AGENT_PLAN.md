@@ -1535,3 +1535,16 @@ Length = 11 chars. The literal `…` is a display ellipsis, not a valid API key 
 ### Screenshots / artifacts
 
 - None this session. Build issue prevented `npm run dev` verification, so no UI changes to verify.
+## 22. Prototype quality contract, revision capture, and showcase operations — 2026-07-13
+
+This is the active handoff for the next prototype-generation agent after PR10 merges.
+
+- **Required reading:** `docs/PROTOTYPE_GENERATION_PLAYBOOK.md`, `docs/PROTOTYPE_QA.md`, `docs/PROTOTYPE_RULES.md`, `docs/SHOWCASE_RULES.md`, plus the `premium-saas-design` and `frontend-skill` skills.
+- **Creative bar:** inspect the best approved prototypes before generating; define a visual thesis and page job; build a complete industry-specific landing page with real-looking imagery, restrained motion, accessible copy, and a deliberate mobile composition. Do not copy a template or invent business facts.
+- **Release bar:** generation stays pending review until clean HTML, valid assets, desktop/mobile browser screenshots, technical checks, and human visual review all pass. No 1×1 placeholders, leaked model text, fake proof, or silent fallback is allowed.
+- **Customer loop:** the preview now exposes a `Request changes` action. A submitted request is tied to the lead, appended to the lead history, and moves the lead to `revision_requested` so it is treated as a hot lead instead of disappearing from the funnel.
+- **Admin loop:** `/admin/prototypes` is the operational surface for search, review state, showcase eligibility, and showcase approval. Keep these states distinct: generated, reviewed/eligible, and approved/live.
+- **Google Places:** the local key was tested on 2026-07-13 and Google returned `403 PERMISSION_DENIED` for Places Text Search. Do not spend credits or run discovery until the user enables Places API (New), billing, and the required key restrictions in Google Cloud.
+- **Next steps still queued:** email the customer’s change-request confirmation, add a structured revision-request table/history if lead notes become insufficient, and finish the production live smoke test after the PR10 deployment.
+
+The detailed quality and implementation notes are in `docs/PROTOTYPE_GENERATION_PLAYBOOK.md` and the revision/admin changes in this PR.

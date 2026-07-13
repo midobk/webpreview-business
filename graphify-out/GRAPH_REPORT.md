@@ -1,16 +1,16 @@
 # Graph Report - webpreview-business  (2026-07-13)
 
 ## Corpus Check
-- 154 files · ~1,421,367 words
+- 158 files · ~1,427,798 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 993 nodes · 1250 edges · 93 communities (80 shown, 13 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 11 edges (avg confidence: 0.58)
+- 1021 nodes · 1293 edges · 95 communities (81 shown, 14 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2ff0279f`
+- Built from commit: `e3e37f56`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -89,9 +89,11 @@
 - 7. Architecture
 - LEAD_SCORING.md
 - IDENTITY.md — SiteSprint Agent
+- regenerate_images.py
 - package.json
 - layout.tsx
 - opengraph-image.tsx
+- draft_sms.py
 - ScrollParallax.tsx
 - AGENTS.md
 - agent-runs.md
@@ -99,16 +101,16 @@
 - @types/react-dom
 
 ## God Nodes (most connected - your core abstractions)
-1. `AGENT_PLAN.md — AI Website Preview Business Agent` - 25 edges
+1. `AGENT_PLAN.md — AI Website Preview Business Agent` - 26 edges
 2. `19. Follow-Up Work (Queued, Not Started)` - 22 edges
 3. `base()` - 21 edges
-4. `compilerOptions` - 16 edges
-5. `getSupabase()` - 14 edges
+4. `getSupabase()` - 16 edges
+5. `compilerOptions` - 16 edges
 6. `Showcase Sync and Supabase Operations Runbook` - 14 edges
 7. `Color Expert` - 13 edges
 8. `SiteSprint Agent — System Prompt` - 12 edges
 9. `scripts` - 11 edges
-10. `main()` - 11 edges
+10. `21. Weekly Planning — 2026-07-06 (Mon, Week 2)` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `GET()` --calls--> `requireAdmin()`  [EXTRACTED]
@@ -125,23 +127,23 @@
 ## Import Cycles
 - None detected.
 
-## Communities (93 total, 13 thin omitted)
+## Communities (95 total, 14 thin omitted)
 
 ### Community 0 - "icons.tsx"
 Cohesion: 0.06
 Nodes (50): AdminShell(), NAV, NavItem, AuthShell(), base(), IconBolt(), IconBuilding(), IconCheck() (+42 more)
 
 ### Community 1 - "page.tsx"
-Cohesion: 0.11
-Nodes (34): fsAccess(), GET(), PATCH(), fsAccess(), GET(), PATCH(), LIMITS, POST() (+26 more)
+Cohesion: 0.09
+Nodes (43): fsAccess(), GET(), PATCH(), canPublish(), fsAccess(), GET(), PATCH(), prototypeSlug() (+35 more)
 
 ### Community 2 - "compilerOptions"
 Cohesion: 0.06
 Nodes (30): ./*, dom, dom.iterable, esnext, **/*.mts, .next/dev/types/**/*.ts, next-env.d.ts, .next/types/**/*.ts (+22 more)
 
 ### Community 3 - "draft_personalized_emails.py"
-Cohesion: 0.11
-Nodes (27): Path, generate_email_deterministic(), generate_email_via_ollama(), get_prototype_for_lead(), lead_has_draft(), lead_has_prototype(), load_leads(), load_outreach_log() (+19 more)
+Cohesion: 0.23
+Nodes (14): generate_email_deterministic(), generate_email_via_ollama(), get_prototype_for_lead(), lead_has_draft(), lead_has_prototype(), load_leads(), load_outreach_log(), load_prototypes() (+6 more)
 
 ### Community 4 - "dependencies"
 Cohesion: 0.12
@@ -164,16 +166,16 @@ Cohesion: 0.30
 Nodes (16): Client, get_client(), load_json(), main(), migrate_conversion_stats(), migrate_inboxes(), migrate_leads(), migrate_outreach() (+8 more)
 
 ### Community 9 - "generate.py"
-Cohesion: 0.19
-Nodes (15): assemble_prototype(), fallback_html(), generate_html_minimax(), generate_image_openai(), generate_prototype(), http_get(), http_post_json(), main() (+7 more)
+Cohesion: 0.14
+Nodes (20): assemble_prototype(), fallback_html(), generate_html_minimax(), generate_image_openai(), generate_prototype(), http_get(), http_post_json(), main() (+12 more)
 
 ### Community 10 - "build-data-bundle.js"
 Cohesion: 0.14
 Nodes (11): agentmailInboxes, conversionStats, DATA_DIR, fs, generatedAt, leads, OUT_FILE, outreachLog (+3 more)
 
 ### Community 11 - "auth.ts"
-Cohesion: 0.27
-Nodes (8): POST(), POST(), getPasswordHash(), getPasswordHashFromFile(), hashPassword(), isPasswordSet(), isPasswordSetNode(), verifyPassword()
+Cohesion: 0.25
+Nodes (9): POST(), POST(), getPasswordHash(), getPasswordHashFromFile(), hashPassword(), isPasswordSet(), isPasswordSetNode(), createAdminSession() (+1 more)
 
 ### Community 12 - "discover_places.py"
 Cohesion: 0.24
@@ -181,7 +183,7 @@ Nodes (12): collect_businesses(), filter_no_website(), get_api_key(), load_exist
 
 ### Community 13 - "variants.ts"
 Cohesion: 0.06
-Nodes (25): getPreviewSlug(), INDUSTRY_LABELS, Item, ShowcaseCard(), CornerStampProps, HeaderScrollProps, MagneticButtonProps, BlobConfig (+17 more)
+Nodes (26): getPreviewSlug(), INDUSTRY_LABELS, Item, ShowcaseCard(), ShowcaseHero(), CornerStampProps, HeaderScrollProps, MagneticButtonProps (+18 more)
 
 ### Community 14 - "Showcase Sync and Supabase Operations Runbook"
 Cohesion: 0.07
@@ -240,16 +242,16 @@ Cohesion: 0.47
 Nodes (5): anonymize_html(), check_quality(), main(), Replace identifying info with generic labels. Returns cleaned HTML., Return (score 0-100, list of issues).
 
 ### Community 28 - "page.tsx"
-Cohesion: 0.24
-Nodes (11): anonymizeSourceHtml(), escapeRegExp(), LeadRecord, loadSourceOverrides(), PreviewPage(), PreviewPageProps, readJsonFile(), resolvePrototypePath() (+3 more)
+Cohesion: 0.21
+Nodes (12): anonymizeSourceHtml(), escapeRegExp(), LeadRecord, loadSourceOverrides(), PreviewPage(), PreviewPageProps, readJsonFile(), resolvePrototypePath() (+4 more)
 
 ### Community 29 - "13. Progress Tracker"
 Cohesion: 0.12
 Nodes (17): 13. Progress Tracker, A. Public-site wiring (C1 + H1) — DONE, Agent Run Log, Agent Run Log (continued), B. Admin hardening (C2, C3, H4, H5, H6) — DONE, C. Admin-only content (H2) — DONE, Current Status — What Actually Works, D. Showcase polish (H3, L2, L3) — DONE (+9 more)
 
 ### Community 30 - "AGENT_PLAN.md — AI Website Preview Business Agent"
-Cohesion: 0.17
-Nodes (11): 10. Project File Structure, 13. Progress Tracker — DRIFT CORRECTION 2026-06-29 10:08 EDT, 14. Approval Checkpoints, 15. Success Metrics, 1. Agent Philosophy, 8. Model Assignment, AGENT_PLAN.md — AI Website Preview Business Agent, Current Status — What Actually Works (+3 more)
+Cohesion: 0.15
+Nodes (12): 10. Project File Structure, 13. Progress Tracker — DRIFT CORRECTION 2026-06-29 10:08 EDT, 14. Approval Checkpoints, 15. Success Metrics, 1. Agent Philosophy, 22. Prototype quality contract, revision capture, and showcase operations — 2026-07-13, 8. Model Assignment, AGENT_PLAN.md — AI Website Preview Business Agent (+4 more)
 
 ### Community 31 - "capture.js"
 Cohesion: 0.40
@@ -292,8 +294,8 @@ Cohesion: 0.14
 Nodes (13): 2026-06-22 — Prototype Quality Incident (Craftmans Cafe), C1. Showcase approve → visibility gap (PARTIAL BUG), C2. Showcase link from landing page (EXISTS, WEAK), C3. Screenshots not working (REAL BUG), C4. Pricing — $49 only, no first-payment tier (BUG), Critical Lessons, Infrastructure Status (as of 2026-06-22), Key Decisions (+5 more)
 
 ### Community 54 - "PROTOTYPE_QA.md — Prototype Generation Quality Protocol"
-Cohesion: 0.15
-Nodes (12): File Structure (standard for every prototype), Mandatory QA Protocol (BEFORE every prototype push), Prototype Generation Workflow (step by step), PROTOTYPE_QA.md — Prototype Generation Quality Protocol, Reminder, Step 1: HTML Cleanliness Check, Step 2: Image Asset Validation, Step 3: Browser Rendering Check (+4 more)
+Cohesion: 0.10
+Nodes (19): Creative brief for each prototype, Failure policy, Handoff record, Prototype Generation Playbook, Quality gate, Recommended MiniMax brief, Required operating mode, File Structure (standard for every prototype) (+11 more)
 
 ### Community 55 - "SiteSprint Agent — System Prompt"
 Cohesion: 0.15
@@ -399,29 +401,33 @@ Nodes (3): Decision Thresholds, Leniency Rule, Score Dimensions (100 total)
 Cohesion: 0.40
 Nodes (4): IDENTITY.md — SiteSprint Agent, Notes, Operating Principles, Stack Quick Reference
 
+### Community 81 - "regenerate_images.py"
+Cohesion: 0.26
+Nodes (11): find_lead_for_slug(), gradient_fallback(), http_post_json(), main(), openai_generate(), Path, Regenerate broken images for one prototype slug. Returns summary., Look up the lead record to get industry, name, etc. (+3 more)
+
 ### Community 82 - "package.json"
 Cohesion: 0.50
 Nodes (3): name, private, version
 
 ## Knowledge Gaps
-- **468 isolated node(s):** `FormState`, `initialForm`, `Business`, `BUSINESSES`, `ease` (+463 more)
+- **477 isolated node(s):** `FormState`, `initialForm`, `Business`, `BUSINESSES`, `ease` (+472 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `AGENT_PLAN.md — AI Website Preview Business Agent` connect `AGENT_PLAN.md — AI Website Preview Business Agent` to `5. Outreach Strategy`, `3. Offer and Pricing`, `0. Project Identity`, `11. Data Model (MVP simplified)`, `17. User-Reported Issues — 2026-06-23 (Live Verification)`, `20. Weekly Planning — 2026-06-29 (Mon, Week 1)`, `4. Prototype Strategy`, `4A. Image Asset Pipeline`, `9. Enhanced Features (added to impress)`, `route.ts`, `2. Business Scope`, `7. Architecture`, `13. Progress Tracker`, `19. Follow-Up Work (Queued, Not Started)`, `21. Weekly Planning — 2026-07-06 (Mon, Week 2)`, `12. Implementation Phases (compressed)`, `16. Tool Research Findings (Phase 0)`, `6. Lead Discovery and Scoring`?**
-  _High betweenness centrality (0.026) - this node is a cross-community bridge._
+  _High betweenness centrality (0.025) - this node is a cross-community bridge._
 - **Why does `SITE_URL` connect `layout.tsx` to `page.tsx`, `V2Landing.tsx`?**
-  _High betweenness centrality (0.015) - this node is a cross-community bridge._
+  _High betweenness centrality (0.024) - this node is a cross-community bridge._
 - **Why does `ThemeScript()` connect `layout.tsx` to `icons.tsx`?**
-  _High betweenness centrality (0.011) - this node is a cross-community bridge._
+  _High betweenness centrality (0.018) - this node is a cross-community bridge._
 - **What connects `FormState`, `initialForm`, `Business` to the rest of the system?**
-  _468 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _477 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `icons.tsx` be split into smaller, more focused modules?**
   _Cohesion score 0.05981981981981982 - nodes in this community are weakly interconnected._
 - **Should `page.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.11341463414634147 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09019607843137255 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._

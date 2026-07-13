@@ -30,6 +30,12 @@ LEADS_PATH = "data/leads.json"
 PROTOS_PATH = "data/prototypes.json"
 PROTOTYPES_DIR = "data/prototypes"
 
+GENERATION_DIRECTIVE = """
+You are the senior art director, brand strategist, UX writer, and front-end designer for a premium local-business landing page.
+Use the verified business facts only. Before writing markup, choose one intentional visual thesis and one clear page job for the first ten seconds. Build a complete, industry-specific composition with a strong first viewport, proof/story, services, process or differentiator, and final CTA. Make mobile a first-class layout at 390px. Use one disciplined type system, a deliberate palette, real-looking image direction, restrained motion, accessible headings/alt text, and no fake testimonials, awards, reviews, pricing, guarantees, or invented facts.
+The output will be rejected if it is generic, card-heavy, visually incoherent, missing the conversion path, contains model reasoning, or contains prompt text.
+""".strip()
+
 INDUSTRY_HERO_PROMPTS = {
     "cleaning": "Modern, bright office interior being professionally cleaned, sparkling surfaces, eco-friendly supplies visible, soft natural light, clean composition, photographic, 4k",
     "salon": "Modern hair salon interior, stylish chairs, large mirrors, professional lighting, warm wood tones, clean welcoming atmosphere, photographic, 4k",
@@ -91,10 +97,7 @@ def generate_image_openai(prompt: str, out_path: str, openai_api_key: str = None
         openai_api_key = os.environ.get("OPENAI_API_KEY")
 
     if not openai_api_key:
-        # Fallback: write a placeholder
-        print(f"    No OPENAI_API_KEY, writing placeholder to {out_path}", file=sys.stderr)
-        write_placeholder_image(out_path)
-        return False
+        raise RuntimeError("OPENAI_API_KEY is required; refusing to create a placeholder image")
 
     status, data = http_post_json(
         "https://api.openai.com/v1/images/generations",
@@ -102,9 +105,7 @@ def generate_image_openai(prompt: str, out_path: str, openai_api_key: str = None
         headers={"Authorization": f"Bearer {openai_api_key}"},
     )
     if status != 200 or not data.get("data"):
-        print(f"    OpenAI image API failed ({status}): {data}", file=sys.stderr)
-        write_placeholder_image(out_path)
-        return False
+        raise RuntimeError(f"OpenAI image API failed ({status})")
 
     # gpt-image-1 returns base64 directly
     import base64
@@ -123,19 +124,12 @@ def generate_image_openai(prompt: str, out_path: str, openai_api_key: str = None
                 f.write(content)
             return True
 
-    write_placeholder_image(out_path)
-    return False
+    raise RuntimeError("OpenAI image API returned no usable image")
 
 
 def write_placeholder_image(out_path: str):
-    """Write a simple gradient placeholder PNG."""
-    # Minimal 1x1 transparent PNG
-    import base64
-    png_bytes = base64.b64decode(
-        "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkAAIAAAoAAv/lxKUAAAAASUVORK5CYII="
-    )
-    with open(out_path, "wb") as f:
-        f.write(png_bytes)
+    """Retained for compatibility, but placeholder assets are forbidden."""
+    raise RuntimeError(f"Placeholder images are disabled: {out_path}")
 
 
 def generate_html_minimax(lead: dict, hero_filename: str, section_filenames: list) -> str:
@@ -145,14 +139,16 @@ def generate_html_minimax(lead: dict, hero_filename: str, section_filenames: lis
     city = lead.get("city", "your area")
     description = lead.get("description", f"A trusted local {industry} business in {city}.")
 
-    prompt = f"""Generate only the HTML <body> content (no <html>, <head>, <style>) for a one-page landing page for this business:
+    prompt = f"""{GENERATION_DIRECTIVE}
+
+Generate only the HTML <body> content (no <html>, <head>, <style>) for this business:
 
 Business: {business_name}
 Industry: {industry}
 City: {city}
 Description: {description}
 
-Required sections, in order:
+Required structure, in order (you may add purposeful supporting sections):
 1. <header> with watermark banner "Demo Preview — Claim this website to make it live"
 2. <section class="hero"> using hero image: {hero_filename}, h1 with business name, tagline, primary CTA button "Claim this website to unlock"
 3. <section class="services"> with 3-4 service cards (use placeholder service names from industry)
@@ -160,15 +156,16 @@ Required sections, in order:
 5. <section class="book-call"> Cal.com booking embed with heading "Want to chat?" and CTA "Book a 5-min call"
 6. <footer> with "Concept by Seaway Sites · Demo Preview"
 
-Style: clean, modern, mobile-responsive via CSS grid/flexbox. Use inline CSS or a <style> tag in body.
+Style: use a coherent art direction rather than a generic template. Mobile-responsive via CSS grid/flexbox. Use inline CSS or a <style> tag in body. Use semantic landmarks, useful alt text, visible focus states, and `prefers-reduced-motion`.
 
 Each form/CTA must have onclick="alert('Claim this website to unlock the live version'); return false;" — demo locked.
 Reference images as: ./images/{hero_filename} for hero, ./images/{section_filenames[0]} and ./images/{section_filenames[1]} for services.
 
-Return ONLY the HTML body, no explanation."""
+Return ONLY the HTML body, no explanation, no markdown fences, and no invented business facts."""
 
     payload = json.dumps({
         "model": "minimax-m3:cloud",
+        "system": GENERATION_DIRECTIVE,
         "prompt": prompt,
         "stream": False,
         "options": {"num_ctx": 16000, "temperature": 0.7}
@@ -189,8 +186,26 @@ Return ONLY the HTML body, no explanation."""
             body = re.sub(r"\n?```\s*$", "", body)
             return body
     except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as e:
-        print(f"    Ollama error: {e}", file=sys.stderr)
-        return fallback_html(lead, hero_filename, section_filenames)
+        raise RuntimeError(f"Ollama generation failed: {e}") from e
+
+
+def validate_generated_html(body: str):
+    """Fail closed when model output is empty, generic commentary, or prompt leakage."""
+    if not body or not re.search(r"<(header|main|section|footer)\b", body, re.I):
+        raise RuntimeError("Generated HTML did not contain the required semantic page structure")
+    leaked = re.search(r"(as an ai|here is|certainly|thinking process|prompt:|```)", body, re.I)
+    if leaked:
+        raise RuntimeError(f"Generated HTML contains model/commentary text near: {leaked.group(0)!r}")
+
+
+def validate_image(path: Path):
+    """Reject missing, tiny, or non-image files before they can enter a prototype."""
+    if not path.exists() or path.stat().st_size <= 5 * 1024:
+        raise RuntimeError(f"Image failed quality gate: {path} (must be larger than 5KB)")
+    header = path.read_bytes()[:12]
+    valid = header.startswith(b"\xff\xd8\xff") or header.startswith(b"\x89PNG\r\n\x1a\n") or header[:4] == b"RIFF" and header[8:12] == b"WEBP"
+    if not valid:
+        raise RuntimeError(f"Image failed format gate: {path}")
 
 
 def fallback_html(lead, hero_filename, section_filenames):
@@ -301,18 +316,21 @@ def generate_prototype(slug: str, variant: int = 1):
     # Generate images
     hero_filename = "hero.jpg"
     print(f"  Generating hero image...")
-    hero_ok = generate_image_openai(hero_prompt, str(images_dir / hero_filename))
+    generate_image_openai(hero_prompt, str(images_dir / hero_filename))
+    validate_image(images_dir / hero_filename)
 
     section_filenames = []
     for i, prompt in enumerate(section_prompts[:2]):
         filename = f"section_{i+1}.jpg"
         print(f"  Generating section image {i+1}...")
-        ok = generate_image_openai(prompt, str(images_dir / filename))
+        generate_image_openai(prompt, str(images_dir / filename))
+        validate_image(images_dir / filename)
         section_filenames.append(filename)
 
     # Generate HTML
     print(f"  Generating HTML body via MiniMax M3...")
     html = assemble_prototype(lead, hero_filename, section_filenames)
+    validate_generated_html(html)
 
     html_path = out_dir / "index.html"
     with open(html_path, "w") as f:
@@ -331,7 +349,9 @@ def generate_prototype(slug: str, variant: int = 1):
         "design_summary": f"Generated v{variant} for {lead.get('business_name', '')} ({industry})",
         "prototype_score": None,
         "generation_model": "minimax-m3:cloud + gpt-image-1-mini",
-        "generation_status": "completed",
+        # Browser screenshots and an operator review are required before this
+        # can become completed/showcase-eligible. See docs/PROTOTYPE_QA.md.
+        "generation_status": "pending_review",
         "watermark_enabled": True,
         "demo_locked": True,
         "showcase_eligible": False,
