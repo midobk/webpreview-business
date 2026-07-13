@@ -3,11 +3,6 @@
 import { useState } from 'react';
 import SuccessCheck from '@/components/motion/SuccessCheck';
 
-/* ------------------------------------------------------------------ */
-/*  Lead capture — same /api/leads contract as the classic homepage   */
-/*  (businessName + email required; website + message optional).      */
-/* ------------------------------------------------------------------ */
-
 type FormState = {
   businessName: string;
   email: string;
@@ -28,23 +23,26 @@ export default function LeadForm() {
   const urlValid = form.website === '' || /^https?:\/\/.+\..+/.test(form.website);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    const { name, value } = event.target;
+    setForm((previous) => ({ ...previous, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     setTouched({ email: true, website: true });
+
     if (!form.businessName.trim() || !emailValid || !urlValid) {
       setError('Please fix the highlighted fields and try again.');
       return;
     }
+
     setBusy(true);
     setError('');
+
     try {
-      const res = await fetch('/api/leads', {
+      const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -54,11 +52,13 @@ export default function LeadForm() {
           message: form.message.trim(),
         }),
       });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
         setError(data.error || 'Something went wrong. Please try again.');
         return;
       }
+
       setSubmitted(true);
     } catch {
       setError('Network error — please try again in a moment.');
@@ -69,22 +69,22 @@ export default function LeadForm() {
 
   if (submitted) {
     return (
-      <div className="v2-card p-8 sm:p-10 text-center" role="status">
-        <SuccessCheck trigger className="mx-auto w-14 h-14 text-[var(--v2-lume)]" />
+      <div className="v2-card p-8 text-center sm:p-10" role="status">
+        <SuccessCheck trigger className="mx-auto h-14 w-14 text-[var(--v2-lume)]" />
         <h3 className="v2-serif mt-5 text-2xl font-medium">Your draft is in the queue.</h3>
         <p className="mt-3 text-[15px] leading-relaxed text-[var(--v2-cream-dim)]">
-          Watch your inbox — the first draft usually lands within the hour,
-          once a human has looked it over. No reply needed if you hate it. We
-          only follow up once.
+          Watch your inbox. Most eligible requests are delivered within the hour during
+          service hours after the submission details and production checks are complete.
+          We only follow up once.
         </p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="v2-card p-6 sm:p-8 space-y-4" noValidate>
+    <form onSubmit={handleSubmit} className="v2-card space-y-4 p-6 sm:p-8" noValidate>
       <div>
-        <label htmlFor="v2-businessName" className="v2-mono block text-[10px] text-[var(--v2-cream-faint)] mb-2">
+        <label htmlFor="v2-businessName" className="v2-mono mb-2 block text-[10px] text-[var(--v2-cream-faint)]">
           business name *
         </label>
         <input
@@ -101,7 +101,7 @@ export default function LeadForm() {
       </div>
 
       <div>
-        <label htmlFor="v2-email" className="v2-mono block text-[10px] text-[var(--v2-cream-faint)] mb-2">
+        <label htmlFor="v2-email" className="v2-mono mb-2 block text-[10px] text-[var(--v2-cream-faint)]">
           email *
         </label>
         <input
@@ -115,7 +115,7 @@ export default function LeadForm() {
           aria-invalid={touched.email && !emailValid ? 'true' : undefined}
           value={form.email}
           onChange={handleChange}
-          onBlur={() => setTouched((t) => ({ ...t, email: true }))}
+          onBlur={() => setTouched((current) => ({ ...current, email: true }))}
         />
         {touched.email && !emailValid && form.email !== '' && (
           <p className="mt-1.5 text-xs text-[#e0604a]">That email doesn&apos;t look right.</p>
@@ -123,7 +123,7 @@ export default function LeadForm() {
       </div>
 
       <div>
-        <label htmlFor="v2-website" className="v2-mono block text-[10px] text-[var(--v2-cream-faint)] mb-2">
+        <label htmlFor="v2-website" className="v2-mono mb-2 block text-[10px] text-[var(--v2-cream-faint)]">
           current website — if any
         </label>
         <input
@@ -136,7 +136,7 @@ export default function LeadForm() {
           aria-invalid={touched.website && !urlValid ? 'true' : undefined}
           value={form.website}
           onChange={handleChange}
-          onBlur={() => setTouched((t) => ({ ...t, website: true }))}
+          onBlur={() => setTouched((current) => ({ ...current, website: true }))}
         />
         {touched.website && !urlValid && (
           <p className="mt-1.5 text-xs text-[#e0604a]">
@@ -146,14 +146,14 @@ export default function LeadForm() {
       </div>
 
       <div>
-        <label htmlFor="v2-message" className="v2-mono block text-[10px] text-[var(--v2-cream-faint)] mb-2">
+        <label htmlFor="v2-message" className="v2-mono mb-2 block text-[10px] text-[var(--v2-cream-faint)]">
           anything we should know?
         </label>
         <textarea
           id="v2-message"
           name="message"
           rows={3}
-          placeholder="What you do, where you work, the vibe you want…"
+          placeholder="What you do, where you work, the direction you want…"
           className="v2-input resize-none"
           value={form.message}
           onChange={handleChange}
@@ -169,18 +169,27 @@ export default function LeadForm() {
       <button
         type="submit"
         disabled={busy}
-        className="v2-btn v2-btn-primary w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+        className="v2-btn v2-btn-primary w-full justify-center disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {busy ? 'Sending…' : 'Build my free draft'}
+        {busy ? 'Sending…' : 'Request my free draft'}
         {!busy && (
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-4 w-4"
+            aria-hidden="true"
+          >
             <path d="M5 12h14M13 6l6 6-6 6" />
           </svg>
         )}
       </button>
 
       <p className="text-center text-[11px] text-[var(--v2-cream-faint)]">
-        No credit card. No sales call. One follow-up, ever.
+        One personalized initial draft. No credit card. No sales call. One follow-up, ever.
       </p>
     </form>
   );
