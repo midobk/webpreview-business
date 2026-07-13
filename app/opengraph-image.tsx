@@ -12,6 +12,7 @@ export default function Image() {
     (
       <div
         style={{
+          position: 'relative',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -19,13 +20,39 @@ export default function Image() {
           justifyContent: 'space-between',
           padding: '72px 80px',
           background: '#0a0c0f',
-          backgroundImage:
-            'linear-gradient(to right, rgba(239,234,224,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(239,234,224,0.06) 1px, transparent 1px)',
-          backgroundSize: '80px 80px',
           color: '#efeae0',
           fontFamily: 'Georgia, serif',
         }}
       >
+        {/* Satori supports one background image per node, so each grid axis
+            is rendered on its own full-size layer. */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            display: 'flex',
+            backgroundImage:
+              'linear-gradient(to right, rgba(239,234,224,0.06) 1px, transparent 1px)',
+            backgroundSize: '80px 80px',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            display: 'flex',
+            backgroundImage:
+              'linear-gradient(to bottom, rgba(239,234,224,0.06) 1px, transparent 1px)',
+            backgroundSize: '80px 80px',
+          }}
+        />
+
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <div style={{ width: 14, height: 14, borderRadius: 9999, background: '#cdf463' }} />
           <div style={{ fontSize: 30, letterSpacing: 6, color: 'rgba(239,234,224,0.65)' }}>
