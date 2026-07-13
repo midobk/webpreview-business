@@ -1,0 +1,1382 @@
+{
+  "app/admin/_components/AdminShell.tsx": {
+    "mtime": 1783962422.7466915,
+    "ast_hash": "2444ff23bdbce6f7445f9946df48bf1a",
+    "semantic_hash": ""
+  },
+  "app/admin/_components/AuthShell.tsx": {
+    "mtime": 1783962422.7469358,
+    "ast_hash": "18d21d39437177d7c6f8566bbcf15cfe",
+    "semantic_hash": ""
+  },
+  "app/admin/_components/EmptyState.tsx": {
+    "mtime": 1783609846.0758162,
+    "ast_hash": "72f1c293ff8e545085295fe89d86d4f2",
+    "semantic_hash": "72f1c293ff8e545085295fe89d86d4f2"
+  },
+  "app/admin/_components/LeadDetailDrawer.tsx": {
+    "mtime": 1783609846.076254,
+    "ast_hash": "b1862445e32c8fc4a58571d2370384ab",
+    "semantic_hash": "b1862445e32c8fc4a58571d2370384ab"
+  },
+  "app/admin/_components/PrototypeCard.tsx": {
+    "mtime": 1783609846.0764267,
+    "ast_hash": "3079c1d27f0162b737af60a13b1b6d86",
+    "semantic_hash": "3079c1d27f0162b737af60a13b1b6d86"
+  },
+  "app/admin/_components/StatCard.tsx": {
+    "mtime": 1783609846.0765586,
+    "ast_hash": "e47a20c11bfdb8a6deda6b646be12e1a",
+    "semantic_hash": "e47a20c11bfdb8a6deda6b646be12e1a"
+  },
+  "app/admin/_components/StatusBadge.tsx": {
+    "mtime": 1783609846.0766945,
+    "ast_hash": "347f2c5aace3148f83221d148ea7afff",
+    "semantic_hash": "347f2c5aace3148f83221d148ea7afff"
+  },
+  "app/admin/_components/ThemeScript.tsx": {
+    "mtime": 1783609846.0769005,
+    "ast_hash": "af804fa863a06c84bbe98d066bdb3a60",
+    "semantic_hash": "af804fa863a06c84bbe98d066bdb3a60"
+  },
+  "app/admin/_components/ThemeToggle.tsx": {
+    "mtime": 1783609846.077431,
+    "ast_hash": "2811d248875789f0a58948ae99df05e1",
+    "semantic_hash": "2811d248875789f0a58948ae99df05e1"
+  },
+  "app/admin/_components/Toast.tsx": {
+    "mtime": 1783609846.0776396,
+    "ast_hash": "c459431cacd8c24e5aeb093e70ce0655",
+    "semantic_hash": "c459431cacd8c24e5aeb093e70ce0655"
+  },
+  "app/admin/_components/icons.tsx": {
+    "mtime": 1783609846.078296,
+    "ast_hash": "c11a31c6d4bca6b64bb95086099320cb",
+    "semantic_hash": "c11a31c6d4bca6b64bb95086099320cb"
+  },
+  "app/admin/_components/types.ts": {
+    "mtime": 1783609846.078429,
+    "ast_hash": "6292a90c296c4f8f9fcd929ad2e67cae",
+    "semantic_hash": "6292a90c296c4f8f9fcd929ad2e67cae"
+  },
+  "app/admin/dashboard/page.tsx": {
+    "mtime": 1783962422.747755,
+    "ast_hash": "8c96d0aec2434f2096902be32cf48d29",
+    "semantic_hash": ""
+  },
+  "app/admin/page.tsx": {
+    "mtime": 1783609846.080027,
+    "ast_hash": "dd25fb1a1ad75166cf6f75e1dc1a8c8d",
+    "semantic_hash": "dd25fb1a1ad75166cf6f75e1dc1a8c8d"
+  },
+  "app/admin/prototypes/page.tsx": {
+    "mtime": 1783962422.7480006,
+    "ast_hash": "0c27fed426d8d3f177c3bfe129bd3082",
+    "semantic_hash": ""
+  },
+  "app/admin/setup/page.tsx": {
+    "mtime": 1783609846.0808241,
+    "ast_hash": "5bd4b25fd14aef6f0728b7539f549b00",
+    "semantic_hash": "5bd4b25fd14aef6f0728b7539f549b00"
+  },
+  "app/api/admin/check-setup/route.ts": {
+    "mtime": 1783609846.0812292,
+    "ast_hash": "1eb29ebe9a791991910dc672e1b91ae8",
+    "semantic_hash": "1eb29ebe9a791991910dc672e1b91ae8"
+  },
+  "app/api/admin/leads/route.ts": {
+    "mtime": 1782245751.2268243,
+    "ast_hash": "43d9ba3802a27e97c2fe59e00e869ee7",
+    "semantic_hash": "43d9ba3802a27e97c2fe59e00e869ee7"
+  },
+  "app/api/admin/login/route.ts": {
+    "mtime": 1783609846.0816197,
+    "ast_hash": "d136d9b9fa5ed98a8f737f536b5ba809",
+    "semantic_hash": "d136d9b9fa5ed98a8f737f536b5ba809"
+  },
+  "app/api/admin/prototypes/route.ts": {
+    "mtime": 1782251032.387319,
+    "ast_hash": "611520db1a25786669871e9ad21596bc",
+    "semantic_hash": "611520db1a25786669871e9ad21596bc"
+  },
+  "app/api/admin/setup/route.ts": {
+    "mtime": 1783609846.081931,
+    "ast_hash": "2b941888f14f7365097e5628189c0291",
+    "semantic_hash": "2b941888f14f7365097e5628189c0291"
+  },
+  "app/api/leads/route.ts": {
+    "mtime": 1783963381.3724394,
+    "ast_hash": "fac327eb5153c2b48aa0ea4eab674f9f",
+    "semantic_hash": ""
+  },
+  "app/api/preview-image/route.ts": {
+    "mtime": 1782245751.2273288,
+    "ast_hash": "9be0f8ee8988bb733af65328b60faad1",
+    "semantic_hash": "9be0f8ee8988bb733af65328b60faad1"
+  },
+  "app/api/showcase-image/route.ts": {
+    "mtime": 1783963372.3021412,
+    "ast_hash": "19ff0d595ed7b9f5f09c0783c3cafa4c",
+    "semantic_hash": ""
+  },
+  "app/layout.tsx": {
+    "mtime": 1783963456.684584,
+    "ast_hash": "f00bb4e7870daf9eb307bb7846d3c3f2",
+    "semantic_hash": ""
+  },
+  "app/page.tsx": {
+    "mtime": 1783963456.684236,
+    "ast_hash": "84f3ebc9982f891b440b75de9f5b8c76",
+    "semantic_hash": ""
+  },
+  "app/preview/[slug]/page.tsx": {
+    "mtime": 1783962422.749567,
+    "ast_hash": "6a06d8f3733223c8f2c1fc4718241760",
+    "semantic_hash": ""
+  },
+  "app/privacy/page.tsx": {
+    "mtime": 1783963558.8263743,
+    "ast_hash": "87a4581bd0976885ac2301043b74a8d3",
+    "semantic_hash": ""
+  },
+  "app/providers.tsx": {
+    "mtime": 1783609846.0845716,
+    "ast_hash": "6f943b5d295ddb5d30469bbd2e87bf83",
+    "semantic_hash": "6f943b5d295ddb5d30469bbd2e87bf83"
+  },
+  "app/showcase/_components/ShowcaseCTA.tsx": {
+    "mtime": 1783962422.7504761,
+    "ast_hash": "2de2abc81a108d4084fdd23e337647d8",
+    "semantic_hash": ""
+  },
+  "app/showcase/_components/ShowcaseGrid.tsx": {
+    "mtime": 1783963389.3232436,
+    "ast_hash": "ccc968fdd38a9a925e172367bcdb15a0",
+    "semantic_hash": ""
+  },
+  "app/showcase/_components/ShowcaseHero.tsx": {
+    "mtime": 1783962422.7510033,
+    "ast_hash": "b37a31e7ea313e4be28599bc79b0792a",
+    "semantic_hash": ""
+  },
+  "app/showcase/page.tsx": {
+    "mtime": 1783963558.825509,
+    "ast_hash": "793b10ef713f575e63d900ee78dd94cd",
+    "semantic_hash": ""
+  },
+  "components/motion/Checkmark.tsx": {
+    "mtime": 1783609846.0862186,
+    "ast_hash": "bf20e3f9c9ee45af13120956a665d0e7",
+    "semantic_hash": "bf20e3f9c9ee45af13120956a665d0e7"
+  },
+  "components/motion/CornerStamp.tsx": {
+    "mtime": 1783609846.0863981,
+    "ast_hash": "a88e3d65b7a113d3e5eefc65ce6e8509",
+    "semantic_hash": "a88e3d65b7a113d3e5eefc65ce6e8509"
+  },
+  "components/motion/CountUp.tsx": {
+    "mtime": 1783962840.6334896,
+    "ast_hash": "0579f254b124fcac5c396267fd8c03b3",
+    "semantic_hash": ""
+  },
+  "components/motion/GridStagger.tsx": {
+    "mtime": 1783609846.0868313,
+    "ast_hash": "e30cebfc9dc0fd21d536f8613d6500b7",
+    "semantic_hash": "e30cebfc9dc0fd21d536f8613d6500b7"
+  },
+  "components/motion/HeaderScroll.tsx": {
+    "mtime": 1783609846.0872579,
+    "ast_hash": "804b7ac05410503f6618db74b77ef422",
+    "semantic_hash": "804b7ac05410503f6618db74b77ef422"
+  },
+  "components/motion/MagneticButton.tsx": {
+    "mtime": 1783609846.0874522,
+    "ast_hash": "4f3fa412e53cd08cc9eec5c98fe33be7",
+    "semantic_hash": "4f3fa412e53cd08cc9eec5c98fe33be7"
+  },
+  "components/motion/MouseBlobs.tsx": {
+    "mtime": 1783609846.0876296,
+    "ast_hash": "d766cafba55dad5af04fb86e252c132d",
+    "semantic_hash": "d766cafba55dad5af04fb86e252c132d"
+  },
+  "components/motion/Reveal.tsx": {
+    "mtime": 1783609846.0878139,
+    "ast_hash": "d3360a2db412908687d826fd1e263b82",
+    "semantic_hash": "d3360a2db412908687d826fd1e263b82"
+  },
+  "components/motion/ScrollParallax.tsx": {
+    "mtime": 1783609846.088075,
+    "ast_hash": "d2581429070f9ccc7de068b60eca3343",
+    "semantic_hash": "d2581429070f9ccc7de068b60eca3343"
+  },
+  "components/motion/SuccessCheck.tsx": {
+    "mtime": 1783609846.088282,
+    "ast_hash": "ad0f3e086b3042c200049b272fce019a",
+    "semantic_hash": "ad0f3e086b3042c200049b272fce019a"
+  },
+  "components/motion/TiltMockBrowser.tsx": {
+    "mtime": 1783609846.0885909,
+    "ast_hash": "0580a66c1210292742c271dff440372f",
+    "semantic_hash": "0580a66c1210292742c271dff440372f"
+  },
+  "data/agentmail_inboxes.json": {
+    "mtime": 1782245751.228219,
+    "ast_hash": "a0b47f139c21454502f657287ec0105e",
+    "semantic_hash": "a0b47f139c21454502f657287ec0105e"
+  },
+  "data/conversion-stats.json": {
+    "mtime": 1783609846.0887628,
+    "ast_hash": "58ac0e0fda1845d557039a3700ba8092",
+    "semantic_hash": "58ac0e0fda1845d557039a3700ba8092"
+  },
+  "data/leads.json": {
+    "mtime": 1783963097.721815,
+    "ast_hash": "3d26a5dac42fd35325c737cb908f7b24",
+    "semantic_hash": ""
+  },
+  "data/outreach/bellas-hair-studio/email.json": {
+    "mtime": 1783609846.0902164,
+    "ast_hash": "9a43367f04075ab51d0e80c241bc7ad5",
+    "semantic_hash": "9a43367f04075ab51d0e80c241bc7ad5"
+  },
+  "data/outreach/bellas-hair-studio/sms.json": {
+    "mtime": 1783609846.0904112,
+    "ast_hash": "336970307bd860ec819dbad527891b0a",
+    "semantic_hash": "336970307bd860ec819dbad527891b0a"
+  },
+  "data/outreach/big-bites-cornwall/email.json": {
+    "mtime": 1783609846.090509,
+    "ast_hash": "39036136d7ff906838804ca6cbcf0d22",
+    "semantic_hash": "39036136d7ff906838804ca6cbcf0d22"
+  },
+  "data/outreach/big-bites-cornwall/sms.json": {
+    "mtime": 1783609846.0905728,
+    "ast_hash": "bd3f2454f539e7fd9fb7d333c287b5a2",
+    "semantic_hash": "bd3f2454f539e7fd9fb7d333c287b5a2"
+  },
+  "data/outreach/birchwood-restaurant-and-bar/email.json": {
+    "mtime": 1783609846.0906656,
+    "ast_hash": "5861cd1a22b21ec71ab26b6e1b1afdad",
+    "semantic_hash": "5861cd1a22b21ec71ab26b6e1b1afdad"
+  },
+  "data/outreach/birchwood-restaurant-and-bar/sms.json": {
+    "mtime": 1783609846.0907228,
+    "ast_hash": "9bab8366ee970d4555de3a59cc344737",
+    "semantic_hash": "9bab8366ee970d4555de3a59cc344737"
+  },
+  "data/outreach/clean-&-shine-services/email.json": {
+    "mtime": 1783609846.090818,
+    "ast_hash": "b606013c7f345fd2c470001f7ee4697c",
+    "semantic_hash": "b606013c7f345fd2c470001f7ee4697c"
+  },
+  "data/outreach/clean-&-shine-services/sms.json": {
+    "mtime": 1783609846.090871,
+    "ast_hash": "abf1e9e816de09c0111c60778f8b752d",
+    "semantic_hash": "abf1e9e816de09c0111c60778f8b752d"
+  },
+  "data/outreach/cornwall-auto-care/email.json": {
+    "mtime": 1783609846.09097,
+    "ast_hash": "008076d61c9dc6a4c233965a51ac689f",
+    "semantic_hash": "008076d61c9dc6a4c233965a51ac689f"
+  },
+  "data/outreach/cornwall-auto-care/sms.json": {
+    "mtime": 1783609846.0910273,
+    "ast_hash": "d71ed3d9fa4e820c0496c277ab818a5e",
+    "semantic_hash": "d71ed3d9fa4e820c0496c277ab818a5e"
+  },
+  "data/outreach/craftmans-cafe/email.json": {
+    "mtime": 1783609846.0911238,
+    "ast_hash": "2daf131e7436c9fd337ab013525d087d",
+    "semantic_hash": "2daf131e7436c9fd337ab013525d087d"
+  },
+  "data/outreach/manila-kitchen/email.json": {
+    "mtime": 1783609846.0912206,
+    "ast_hash": "872ea2eb624db88625d4d50cea53a1b5",
+    "semantic_hash": "872ea2eb624db88625d4d50cea53a1b5"
+  },
+  "data/outreach/manila-kitchen/sms.json": {
+    "mtime": 1783609846.0912776,
+    "ast_hash": "a191726b4f3dca4eaecbdc4ce1d2f665",
+    "semantic_hash": "a191726b4f3dca4eaecbdc4ce1d2f665"
+  },
+  "data/outreach/marios-family-restaurant/email.json": {
+    "mtime": 1783609846.0913675,
+    "ast_hash": "6577ece48afa5d67a17d0b06732c6fa8",
+    "semantic_hash": "6577ece48afa5d67a17d0b06732c6fa8"
+  },
+  "data/outreach/marios-family-restaurant/sms.json": {
+    "mtime": 1783609846.0914273,
+    "ast_hash": "0e83c70ca6ca47c6e09cf1addb761f6a",
+    "semantic_hash": "0e83c70ca6ca47c6e09cf1addb761f6a"
+  },
+  "data/outreach/ramo-sports/email.json": {
+    "mtime": 1783609846.0915864,
+    "ast_hash": "3d3f4d810886bf7a59f8ed8ee7549e5a",
+    "semantic_hash": "3d3f4d810886bf7a59f8ed8ee7549e5a"
+  },
+  "data/outreach/ramo-sports/sms.json": {
+    "mtime": 1783609846.0917113,
+    "ast_hash": "0dbb3b3da08ad284421ae5eeeb1e9c3a",
+    "semantic_hash": "0dbb3b3da08ad284421ae5eeeb1e9c3a"
+  },
+  "data/outreach/seaway-cleaning-services/email.json": {
+    "mtime": 1783609846.0918787,
+    "ast_hash": "58c34aaa9fda3cadfa3e3cd9e038a3a6",
+    "semantic_hash": "58c34aaa9fda3cadfa3e3cd9e038a3a6"
+  },
+  "data/outreach/seaway-cleaning-services/sms.json": {
+    "mtime": 1783609846.092003,
+    "ast_hash": "8f2f5dd236025a1b75ed027714ba757f",
+    "semantic_hash": "8f2f5dd236025a1b75ed027714ba757f"
+  },
+  "data/outreach/the-barber-shop-cornwall/email.json": {
+    "mtime": 1783609846.0921018,
+    "ast_hash": "fc14b4685ed073c53d9ae08e688f21c1",
+    "semantic_hash": "fc14b4685ed073c53d9ae08e688f21c1"
+  },
+  "data/outreach/the-barber-shop-cornwall/sms.json": {
+    "mtime": 1783609846.0921552,
+    "ast_hash": "27f98f71c0516cd5241c53e925c3b1a9",
+    "semantic_hash": "27f98f71c0516cd5241c53e925c3b1a9"
+  },
+  "data/outreach/the-cutting-edge-salon/email.json": {
+    "mtime": 1783609846.0922468,
+    "ast_hash": "f5fbeb83b54822068ea02a0b30b678a5",
+    "semantic_hash": "f5fbeb83b54822068ea02a0b30b678a5"
+  },
+  "data/outreach/the-cutting-edge-salon/sms.json": {
+    "mtime": 1783609846.0923002,
+    "ast_hash": "b7fc8099926a4ce838b65008ca168592",
+    "semantic_hash": "b7fc8099926a4ce838b65008ca168592"
+  },
+  "data/outreach_logs.json": {
+    "mtime": 1783609846.0924222,
+    "ast_hash": "558587b1eeb8c4ed07e423a18e61abea",
+    "semantic_hash": "558587b1eeb8c4ed07e423a18e61abea"
+  },
+  "data/prototypes.json": {
+    "mtime": 1783611296.7751708,
+    "ast_hash": "837292b89a9a7f371d4856ae6b3d28f9",
+    "semantic_hash": "837292b89a9a7f371d4856ae6b3d28f9"
+  },
+  "data/prototypes/seaway-cleaning-services/package.json": {
+    "mtime": 1782245751.2875936,
+    "ast_hash": "44cce0ed107ad82d51c7c3d8ebad9b3e",
+    "semantic_hash": "44cce0ed107ad82d51c7c3d8ebad9b3e"
+  },
+  "eslint.config.mjs": {
+    "mtime": 1782245751.2923129,
+    "ast_hash": "dfa1f5f6a7037bf39dc510f30b180002",
+    "semantic_hash": "dfa1f5f6a7037bf39dc510f30b180002"
+  },
+  "lib/auth-edge.ts": {
+    "mtime": 1782245751.2924244,
+    "ast_hash": "2eb8e9af1dbaf14637ca11e515bb40f3",
+    "semantic_hash": "2eb8e9af1dbaf14637ca11e515bb40f3"
+  },
+  "lib/auth-server.ts": {
+    "mtime": 1782245751.2924824,
+    "ast_hash": "1c46486dd7cf30b2765b23b7ace64b91",
+    "semantic_hash": "1c46486dd7cf30b2765b23b7ace64b91"
+  },
+  "lib/auth.ts": {
+    "mtime": 1782245751.2925339,
+    "ast_hash": "92132dd6056d14d807ec7d6c9a71a670",
+    "semantic_hash": "92132dd6056d14d807ec7d6c9a71a670"
+  },
+  "lib/cal-booking.ts": {
+    "mtime": 1783962422.752799,
+    "ast_hash": "8dbc993e13d41e680ae1512513a9a862",
+    "semantic_hash": ""
+  },
+  "lib/data-source.ts": {
+    "mtime": 1782245751.292664,
+    "ast_hash": "7e6e575fe726e96f95edcee5aede6623",
+    "semantic_hash": "7e6e575fe726e96f95edcee5aede6623"
+  },
+  "lib/motion/easings.ts": {
+    "mtime": 1783609846.0953774,
+    "ast_hash": "ade2bcabf2729eaf4b7ba420d79be234",
+    "semantic_hash": "ade2bcabf2729eaf4b7ba420d79be234"
+  },
+  "lib/motion/variants.ts": {
+    "mtime": 1783609846.0956082,
+    "ast_hash": "9575e8ccb4c9a5030777d8918b687541",
+    "semantic_hash": "9575e8ccb4c9a5030777d8918b687541"
+  },
+  "lib/supabase.ts": {
+    "mtime": 1783962422.7529125,
+    "ast_hash": "5a243da10831fed2f076807abe2ed9cd",
+    "semantic_hash": ""
+  },
+  "lib/sync.ts": {
+    "mtime": 1782245751.2927907,
+    "ast_hash": "788d7fe7a7f95eab77f72bb160e05b9b",
+    "semantic_hash": "788d7fe7a7f95eab77f72bb160e05b9b"
+  },
+  "middleware.ts": {
+    "mtime": 1783609846.095851,
+    "ast_hash": "c3135ecf3647bff6a8226057a3ef3388",
+    "semantic_hash": "c3135ecf3647bff6a8226057a3ef3388"
+  },
+  "next.config.ts": {
+    "mtime": 1782245751.3061059,
+    "ast_hash": "9b77af189a21a7a64e4bd7a426f64176",
+    "semantic_hash": "9b77af189a21a7a64e4bd7a426f64176"
+  },
+  "openclaw-workspace-state.json": {
+    "mtime": 1783609846.0962183,
+    "ast_hash": "8d264d5d5b4197d831d0e2c6af15f61c",
+    "semantic_hash": "8d264d5d5b4197d831d0e2c6af15f61c"
+  },
+  "package.json": {
+    "mtime": 1783962422.753151,
+    "ast_hash": "96d20ae328b269f1c4457c50fc12bb2a",
+    "semantic_hash": ""
+  },
+  "postcss.config.mjs": {
+    "mtime": 1782245751.3091362,
+    "ast_hash": "239f3ebf717465dc636818a1a619398d",
+    "semantic_hash": "239f3ebf717465dc636818a1a619398d"
+  },
+  "scripts/build-data-bundle.js": {
+    "mtime": 1782245751.3096218,
+    "ast_hash": "f8bda54ef960b8d72ec8f70c1b478105",
+    "semantic_hash": "f8bda54ef960b8d72ec8f70c1b478105"
+  },
+  "scripts/discover-leads/discover.py": {
+    "mtime": 1782245751.3097925,
+    "ast_hash": "481602a4f38df7db59b2c48a9088cda9",
+    "semantic_hash": "481602a4f38df7db59b2c48a9088cda9"
+  },
+  "scripts/discover-leads/discover_browser.py": {
+    "mtime": 1782245751.3099277,
+    "ast_hash": "e7eed3f23c2804072a9f341ba36b1a10",
+    "semantic_hash": "e7eed3f23c2804072a9f341ba36b1a10"
+  },
+  "scripts/discover-leads/discover_places.py": {
+    "mtime": 1783962422.753661,
+    "ast_hash": "65fdc8a8ba6caaa4f166b78dd792107b",
+    "semantic_hash": ""
+  },
+  "scripts/draft-emails/draft_personalized_emails.py": {
+    "mtime": 1783962422.753991,
+    "ast_hash": "bfb82dcfb6d9fbfed5cff975de18aee9",
+    "semantic_hash": ""
+  },
+  "scripts/draft-sms/draft_sms.py": {
+    "mtime": 1783962422.75435,
+    "ast_hash": "a0848828e9c781cbfd810f03813cc01a",
+    "semantic_hash": ""
+  },
+  "scripts/enrich-leads/enrich_leads.py": {
+    "mtime": 1782245751.3104455,
+    "ast_hash": "a6d7efbb997bae94e67742b02acb4c0e",
+    "semantic_hash": "a6d7efbb997bae94e67742b02acb4c0e"
+  },
+  "scripts/generate-prototype/generate.py": {
+    "mtime": 1783962422.7547274,
+    "ast_hash": "9f421772ef2d2ad275cc31c565cb6ddb",
+    "semantic_hash": ""
+  },
+  "scripts/generate-variant/generate_variant.py": {
+    "mtime": 1783962422.754916,
+    "ast_hash": "8149a75cfa6b19dd8e349415931ed195",
+    "semantic_hash": ""
+  },
+  "scripts/migrate_to_supabase.py": {
+    "mtime": 1783962422.7550356,
+    "ast_hash": "e73bce475c4ee5c511080f2025526a82",
+    "semantic_hash": ""
+  },
+  "scripts/regenerate-images/regenerate_images.py": {
+    "mtime": 1782251032.4271564,
+    "ast_hash": "8c78083a8d759d5233f5cd3a9f249d01",
+    "semantic_hash": "8c78083a8d759d5233f5cd3a9f249d01"
+  },
+  "scripts/score-leads/score.py": {
+    "mtime": 1782245751.3110042,
+    "ast_hash": "2f0c774dfe4a3356a644cf3873fd2f7e",
+    "semantic_hash": "2f0c774dfe4a3356a644cf3873fd2f7e"
+  },
+  "scripts/screenshot/capture-page.js": {
+    "mtime": 1782245751.3111079,
+    "ast_hash": "a7bbc7e2cf1fa0d271fda264bce528f6",
+    "semantic_hash": "a7bbc7e2cf1fa0d271fda264bce528f6"
+  },
+  "scripts/screenshot/capture-showcase.mjs": {
+    "mtime": 1783611129.3788345,
+    "ast_hash": "51003ee4b328ee86ffccf7e070d5b3f7",
+    "semantic_hash": "51003ee4b328ee86ffccf7e070d5b3f7"
+  },
+  "scripts/screenshot/capture.js": {
+    "mtime": 1782245751.3111722,
+    "ast_hash": "8afe4f4e95493abe9c3c43d1706bf63d",
+    "semantic_hash": "8afe4f4e95493abe9c3c43d1706bf63d"
+  },
+  "scripts/screenshot/playground.mjs": {
+    "mtime": 1783610800.667762,
+    "ast_hash": "b6190694e0b0649c35462360c15b236d",
+    "semantic_hash": "b6190694e0b0649c35462360c15b236d"
+  },
+  "scripts/screenshot/screenshot-prototype.js": {
+    "mtime": 1782251032.427787,
+    "ast_hash": "d0ea75f70dacddcba28b7ca403d97bbe",
+    "semantic_hash": "d0ea75f70dacddcba28b7ca403d97bbe"
+  },
+  "scripts/send-outreach/templates.ts": {
+    "mtime": 1783964426.6661766,
+    "ast_hash": "a309b8563bc01320d48dbac6e97fc19a",
+    "semantic_hash": ""
+  },
+  "scripts/setup-agentmail/setup_agentmail_test.py": {
+    "mtime": 1782245751.3114834,
+    "ast_hash": "a81161d87df69859ecdf01a8ba04fb19",
+    "semantic_hash": "a81161d87df69859ecdf01a8ba04fb19"
+  },
+  "scripts/showcase-score/score_showcase.py": {
+    "mtime": 1783962422.7555668,
+    "ast_hash": "9ecaab634533ead55852b9a24312e484",
+    "semantic_hash": ""
+  },
+  "scripts/supabase-schema.sql": {
+    "mtime": 1783962422.7557178,
+    "ast_hash": "7d7b1d5c93454f0615660da789133b67",
+    "semantic_hash": ""
+  },
+  "scripts/sync_to_supabase.py": {
+    "mtime": 1783962422.7561421,
+    "ast_hash": "74fb72ac61fea81340a82be31152004d",
+    "semantic_hash": ""
+  },
+  "scripts/update-conversion-stats.py": {
+    "mtime": 1782245751.3118992,
+    "ast_hash": "9cca3d85988819bb99fb8006f7948d16",
+    "semantic_hash": "9cca3d85988819bb99fb8006f7948d16"
+  },
+  "skills-lock.json": {
+    "mtime": 1783609846.0993485,
+    "ast_hash": "ba67e2bdc2899ff492a5cb70cac31348",
+    "semantic_hash": "ba67e2bdc2899ff492a5cb70cac31348"
+  },
+  "tsconfig.json": {
+    "mtime": 1782245751.3119702,
+    "ast_hash": "02fc19ad21338c2ab820a70136310db4",
+    "semantic_hash": "02fc19ad21338c2ab820a70136310db4"
+  },
+  "app/_landing/BeforeAfter.tsx": {
+    "mtime": 1783962981.797175,
+    "ast_hash": "ba8e7abe056c672992d7027db649176b",
+    "semantic_hash": ""
+  },
+  "app/_landing/LeadForm.tsx": {
+    "mtime": 1783963404.9418874,
+    "ast_hash": "d7b593c0aac349b478428b454d638e41",
+    "semantic_hash": ""
+  },
+  "app/_landing/ProductionDemo.tsx": {
+    "mtime": 1783962959.26593,
+    "ast_hash": "5fff438a6c8833be6eabb55eb078ce8f",
+    "semantic_hash": ""
+  },
+  "app/_landing/ProductionProcess.tsx": {
+    "mtime": 1783962959.2650156,
+    "ast_hash": "8a260ff31f4dc00ca3d1d09a92bead39",
+    "semantic_hash": ""
+  },
+  "app/_landing/V2Landing.tsx": {
+    "mtime": 1783963541.394543,
+    "ast_hash": "04f8a63ac43b285beb5f2e2c8607ea72",
+    "semantic_hash": ""
+  },
+  "app/_landing/content.ts": {
+    "mtime": 1783962959.2669647,
+    "ast_hash": "2fc32dbd6026123df50676046722a6f5",
+    "semantic_hash": ""
+  },
+  "app/classic/layout.tsx": {
+    "mtime": 1783962422.7486904,
+    "ast_hash": "c01b5e9f74a712fe8bbccc004b17641d",
+    "semantic_hash": ""
+  },
+  "app/classic/page.tsx": {
+    "mtime": 1783962422.7487698,
+    "ast_hash": "0fd53eaeb52d5c7e1858ec3d45e2ddc4",
+    "semantic_hash": ""
+  },
+  "app/llms.txt/route.ts": {
+    "mtime": 1783962422.7491999,
+    "ast_hash": "a7030b6c3216c757520dd4ecb45ca52a",
+    "semantic_hash": ""
+  },
+  "app/opengraph-image.tsx": {
+    "mtime": 1783962422.7492733,
+    "ast_hash": "653d83b92a262f209a8693c3e47d550b",
+    "semantic_hash": ""
+  },
+  "app/robots.ts": {
+    "mtime": 1783963456.6851246,
+    "ast_hash": "a4bd82496420c8fd5de522f8d1ecace7",
+    "semantic_hash": ""
+  },
+  "app/showcase/layout.tsx": {
+    "mtime": 1783962422.7510679,
+    "ast_hash": "94826339417594691eb349263c8df2b3",
+    "semantic_hash": ""
+  },
+  "app/sitemap.ts": {
+    "mtime": 1783963456.6849382,
+    "ast_hash": "893e334cba011e783307b5cf9582ac82",
+    "semantic_hash": ""
+  },
+  "app/v2/page.tsx": {
+    "mtime": 1783962422.75158,
+    "ast_hash": "69630ad752f81a4e34cbc03134765021",
+    "semantic_hash": ""
+  },
+  "data/showcase-source-overrides.json": {
+    "mtime": 1783962422.7524614,
+    "ast_hash": "2913203d96feab69278c747310b3462a",
+    "semantic_hash": ""
+  },
+  "scripts/sync-prototypes-to-supabase.mjs": {
+    "mtime": 1783962422.7558336,
+    "ast_hash": "8f478f8024a0083e345532e704b64311",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/20260710232500_add_prototype_industry.sql": {
+    "mtime": 1783962422.7563138,
+    "ast_hash": "9356080bb35a6e708cc10a48e3833ecd",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/20260710234500_harden_public_helper_functions.sql": {
+    "mtime": 1783962422.7565327,
+    "ast_hash": "d38d926fe337ddf8bbee28100148e4bc",
+    "semantic_hash": ""
+  },
+  ".agents/skills/color-expert/SKILL.md": {
+    "mtime": 1783609845.826878,
+    "ast_hash": "c989839691f234e60d9d8b49def8359a",
+    "semantic_hash": ""
+  },
+  ".github/workflows/showcase-integrity.yml": {
+    "mtime": 1783962422.744821,
+    "ast_hash": "9761c3199ddd19ccef2355de4e7399e1",
+    "semantic_hash": ""
+  },
+  "AGENTS.md": {
+    "mtime": 1782245751.2250967,
+    "ast_hash": "9e09241799026ac05be315a2f0b50055",
+    "semantic_hash": ""
+  },
+  "AGENT_PLAN.md": {
+    "mtime": 1783964441.6104858,
+    "ast_hash": "588601de6279f96cfe619ed36c63c386",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1782245751.2257028,
+    "ast_hash": "5c27369b226fcf2be8a6cfe52224e767",
+    "semantic_hash": ""
+  },
+  "IDENTITY.md": {
+    "mtime": 1782245751.2257826,
+    "ast_hash": "79512f221df65a1824c78a72f64e046a",
+    "semantic_hash": ""
+  },
+  "MEMORY.md": {
+    "mtime": 1783962422.7452033,
+    "ast_hash": "148234da030344e714381d0fb6a09254",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1783962422.745553,
+    "ast_hash": "fe3c0f4eeb79abd5e5eae93bbacd8ae1",
+    "semantic_hash": ""
+  },
+  "SYSTEM.md": {
+    "mtime": 1782245751.2260983,
+    "ast_hash": "6f1072784df78a89f2cc2c1c55dd28f9",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/allied-home-services/index.html": {
+    "mtime": 1783610747.1985953,
+    "ast_hash": "6afab6fdc19c09f3f3118abf43dd15c8",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/bellas-hair-studio/index.html": {
+    "mtime": 1782251032.389908,
+    "ast_hash": "77f49e8c17d4e695ef2644517a8f4c42",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/big-bites-cornwall/index.html": {
+    "mtime": 1783609846.0925362,
+    "ast_hash": "844da6760c7dda8311a43ee42baac3cc",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/birchwood-restaurant-and-bar/index.html": {
+    "mtime": 1783609846.0926473,
+    "ast_hash": "65b23b993e8c85d3eb8a717795989447",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/bright-smile-dental/index.html": {
+    "mtime": 1783610747.192777,
+    "ast_hash": "51d1c47e485d1f19e4319e6b3d98a56c",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/catalyst-online-course/index.html": {
+    "mtime": 1783610747.201913,
+    "ast_hash": "098e38c8f4e41d09d3b7962a69e8ade8",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/clean-&-shine-services/index.html": {
+    "mtime": 1782251032.390119,
+    "ast_hash": "f9e852e4add5a9b35b6b858be4d6fcf2",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/cornwall-auto-care/index.html": {
+    "mtime": 1782251032.3903706,
+    "ast_hash": "a61873fcd5de4312c3214328aa864a2f",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/craftmans-cafe/index.html": {
+    "mtime": 1782251032.390702,
+    "ast_hash": "af4607a82b6815be9cf22281306b7a73",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/flowdesk-saas/index.html": {
+    "mtime": 1783610747.1873474,
+    "ast_hash": "c20011aa86f2b5e4dcde35ce029ddf1c",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/harvest-table-restaurant/index.html": {
+    "mtime": 1783610747.1908836,
+    "ast_hash": "26d2cf0f7f0a37106d7212f9bc1e3b96",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/manila-kitchen/index.html": {
+    "mtime": 1783609846.0927703,
+    "ast_hash": "87facd506ad4a9682464f310c2f6cab8",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/marios-family-restaurant/index.html": {
+    "mtime": 1783609846.0928643,
+    "ast_hash": "0a359e00e695c5fafbf2ff9039f75ca4",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/meridian-law-firm/index.html": {
+    "mtime": 1783610747.1969008,
+    "ast_hash": "03cd725667f5c4b8912e43586438292e",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/northwind-ecommerce/index.html": {
+    "mtime": 1783610747.200283,
+    "ast_hash": "1656bb598612fc8fce1a7e72b64df2dd",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/premier-real-estate/index.html": {
+    "mtime": 1783610747.1892505,
+    "ast_hash": "14711e5def5adb5014fff5561ed6328c",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/ramo-sports/index.html": {
+    "mtime": 1782251032.3910193,
+    "ast_hash": "c4686d1349a059a53a9478e9d39881c3",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/seaway-cleaning-services/index.html": {
+    "mtime": 1782251032.391466,
+    "ast_hash": "68b2020ac1773d1cf3e0c3e5e9994c52",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/summit-fitness-gym/index.html": {
+    "mtime": 1783610747.194897,
+    "ast_hash": "e1d267fb6ca0d8e333516412e643f368",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/the-barber-shop-cornwall/index.html": {
+    "mtime": 1783609846.0929694,
+    "ast_hash": "cfe497751ab42156cc7cdf79a564213b",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/the-cutting-edge-salon/index.html": {
+    "mtime": 1782251032.3917205,
+    "ast_hash": "bfb53232fbef93e7b58647142d6bfe95",
+    "semantic_hash": ""
+  },
+  "data/prototypes/bellas-hair-studio/index.html": {
+    "mtime": 1783962422.7519991,
+    "ast_hash": "ad4f3d142c7b960f046cb76c90c39365",
+    "semantic_hash": ""
+  },
+  "data/prototypes/big-bites-cornwall/index.html": {
+    "mtime": 1783609846.09377,
+    "ast_hash": "cde56df839916ac305a9ae460cdbd221",
+    "semantic_hash": ""
+  },
+  "data/prototypes/birchwood-restaurant-and-bar/index.html": {
+    "mtime": 1783609846.0940704,
+    "ast_hash": "fbf87110ec1e1e94341995b0c1961493",
+    "semantic_hash": ""
+  },
+  "data/prototypes/clean-&-shine-services/index.html": {
+    "mtime": 1782251032.393776,
+    "ast_hash": "47eaf73b453b15ec7c4148aa6ef1bd31",
+    "semantic_hash": ""
+  },
+  "data/prototypes/cornwall-auto-care/index.html": {
+    "mtime": 1782251032.3944893,
+    "ast_hash": "d96f882c78ce38b6ff0b06a6fb560713",
+    "semantic_hash": ""
+  },
+  "data/prototypes/craftmans-cafe/index.html": {
+    "mtime": 1782245751.2556038,
+    "ast_hash": "af802f226e442b5d3551b097fac140b3",
+    "semantic_hash": ""
+  },
+  "data/prototypes/manila-kitchen/index.html": {
+    "mtime": 1783609846.0943627,
+    "ast_hash": "10708739acc36991394abcf8745489c6",
+    "semantic_hash": ""
+  },
+  "data/prototypes/marios-family-restaurant/index.html": {
+    "mtime": 1783609846.0946605,
+    "ast_hash": "abbd659c4ae2676e2c3616a52ea6205d",
+    "semantic_hash": ""
+  },
+  "data/prototypes/ramo-sports/index.html": {
+    "mtime": 1782245751.2837217,
+    "ast_hash": "5d6f9b34302e30bf1f633e4dd5c42c0f",
+    "semantic_hash": ""
+  },
+  "data/prototypes/seaway-cleaning-services/index.html": {
+    "mtime": 1783962422.752378,
+    "ast_hash": "f568cb1e1a9fdb9e30667aaf7aa636f2",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-barber-shop-cornwall/index.html": {
+    "mtime": 1783609846.0949545,
+    "ast_hash": "25b2a54e5cb508f3f8ac7ed96daa0c7f",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-cutting-edge-salon/index.html": {
+    "mtime": 1782251032.3974516,
+    "ast_hash": "9a1122b1f46d2f89f4ff0cdf8f07b462",
+    "semantic_hash": ""
+  },
+  "docs/DASHBOARD_SPEC.md": {
+    "mtime": 1782245751.2916617,
+    "ast_hash": "84e917536da876c2072b3574f7b2ef16",
+    "semantic_hash": ""
+  },
+  "docs/IMAGE_ASSET_RULES.md": {
+    "mtime": 1782245751.291722,
+    "ast_hash": "3adb92845e3072ecf3d43758d831a241",
+    "semantic_hash": ""
+  },
+  "docs/LEAD_SCORING.md": {
+    "mtime": 1782245751.2917778,
+    "ast_hash": "3eb2075b8629d207fe18f38bc8dd12a2",
+    "semantic_hash": ""
+  },
+  "docs/OUTREACH_RULES.md": {
+    "mtime": 1782245751.291852,
+    "ast_hash": "c249b511a6e2f9dbdc844224a08f8d9a",
+    "semantic_hash": ""
+  },
+  "docs/PROTOTYPE_QA.md": {
+    "mtime": 1782245751.2919369,
+    "ast_hash": "670be6d90e7033829f70dfab3254a272",
+    "semantic_hash": ""
+  },
+  "docs/PROTOTYPE_RULES.md": {
+    "mtime": 1782245751.291994,
+    "ast_hash": "a3f9265e890692c1bff3a29cc9aa66e5",
+    "semantic_hash": ""
+  },
+  "docs/ROADMAP.md": {
+    "mtime": 1782245751.2920496,
+    "ast_hash": "5bd332116a3748906b2a5b71d118ae10",
+    "semantic_hash": ""
+  },
+  "docs/SECURITY_REVIEW.md": {
+    "mtime": 1782245751.2921386,
+    "ast_hash": "45004dd7d472453e2b5b7a27c9e382e9",
+    "semantic_hash": ""
+  },
+  "docs/SHOWCASE_RULES.md": {
+    "mtime": 1782245751.2921972,
+    "ast_hash": "ad13796073c6cd05f8570677df90184c",
+    "semantic_hash": ""
+  },
+  "docs/SHOWCASE_SYNC_AND_SUPABASE_RUNBOOK.md": {
+    "mtime": 1783962422.7525682,
+    "ast_hash": "f3cc3788aaef0afac6c817d8ca76f5d6",
+    "semantic_hash": ""
+  },
+  "docs/TOOL_RESEARCH.md": {
+    "mtime": 1782245751.292258,
+    "ast_hash": "3d9fbcbe6c8191859e27de23da7aed56",
+    "semantic_hash": ""
+  },
+  "logs/agent-runs.md": {
+    "mtime": 1782245751.292893,
+    "ast_hash": "8706793fc6103bd1e97754cbd6304509",
+    "semantic_hash": ""
+  },
+  "logs/decisions.md": {
+    "mtime": 1782245751.293997,
+    "ast_hash": "f330fd3f61bbef76ee77ec23cb300ded",
+    "semantic_hash": ""
+  },
+  "scripts/send-outreach/README.md": {
+    "mtime": 1782245751.3112717,
+    "ast_hash": "501cc195dc806b0320d4a81fdf4c2378",
+    "semantic_hash": ""
+  },
+  "data/prototypes/bellas-hair-studio/images/hero.jpg": {
+    "mtime": 1782251032.39229,
+    "ast_hash": "d49197890968fa735a01b4033da3795b",
+    "semantic_hash": ""
+  },
+  "data/prototypes/bellas-hair-studio/images/section_1.jpg": {
+    "mtime": 1782251032.392458,
+    "ast_hash": "d49197890968fa735a01b4033da3795b",
+    "semantic_hash": ""
+  },
+  "data/prototypes/bellas-hair-studio/images/section_2.jpg": {
+    "mtime": 1782251032.3926196,
+    "ast_hash": "d49197890968fa735a01b4033da3795b",
+    "semantic_hash": ""
+  },
+  "data/prototypes/bellas-hair-studio/screenshot-desktop.png": {
+    "mtime": 1782245751.2296185,
+    "ast_hash": "fb104b5fd49f2bc00c5499566cb87451",
+    "semantic_hash": ""
+  },
+  "data/prototypes/bellas-hair-studio/screenshot-mobile.png": {
+    "mtime": 1782245751.2296789,
+    "ast_hash": "383676a0f406f847349b8db246f7087a",
+    "semantic_hash": ""
+  },
+  "data/prototypes/bellas-hair-studio/screenshot.png": {
+    "mtime": 1782245751.2298167,
+    "ast_hash": "46bdcda9388e2aeb35b821ca1a7157cb",
+    "semantic_hash": ""
+  },
+  "data/prototypes/big-bites-cornwall/images/hero.jpg": {
+    "mtime": 1783609846.0936007,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/big-bites-cornwall/images/section_1.jpg": {
+    "mtime": 1783609846.093655,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/big-bites-cornwall/images/section_2.jpg": {
+    "mtime": 1783609846.0937068,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/birchwood-restaurant-and-bar/images/hero.jpg": {
+    "mtime": 1783609846.0939052,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/birchwood-restaurant-and-bar/images/section_1.jpg": {
+    "mtime": 1783609846.0939572,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/birchwood-restaurant-and-bar/images/section_2.jpg": {
+    "mtime": 1783609846.0940108,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/clean-&-shine-services/images/hero.jpg": {
+    "mtime": 1782251032.3933353,
+    "ast_hash": "1f081072a48eff778cecbb6f83a80741",
+    "semantic_hash": ""
+  },
+  "data/prototypes/clean-&-shine-services/images/section_1.jpg": {
+    "mtime": 1782251032.3934743,
+    "ast_hash": "1f081072a48eff778cecbb6f83a80741",
+    "semantic_hash": ""
+  },
+  "data/prototypes/clean-&-shine-services/images/section_2.jpg": {
+    "mtime": 1782251032.393618,
+    "ast_hash": "1f081072a48eff778cecbb6f83a80741",
+    "semantic_hash": ""
+  },
+  "data/prototypes/cornwall-auto-care/images/hero.jpg": {
+    "mtime": 1782251032.3940613,
+    "ast_hash": "68adfe3f7ecb07ab540dfa28465fd9b2",
+    "semantic_hash": ""
+  },
+  "data/prototypes/cornwall-auto-care/images/section_1.jpg": {
+    "mtime": 1782251032.39421,
+    "ast_hash": "68adfe3f7ecb07ab540dfa28465fd9b2",
+    "semantic_hash": ""
+  },
+  "data/prototypes/cornwall-auto-care/images/section_2.jpg": {
+    "mtime": 1782251032.3943427,
+    "ast_hash": "68adfe3f7ecb07ab540dfa28465fd9b2",
+    "semantic_hash": ""
+  },
+  "data/prototypes/craftmans-cafe/images/hero.jpg": {
+    "mtime": 1782245751.2374353,
+    "ast_hash": "e048ef4aece4d6ce789b4c44332e3d87",
+    "semantic_hash": ""
+  },
+  "data/prototypes/craftmans-cafe/images/section_1.jpg": {
+    "mtime": 1782245751.245546,
+    "ast_hash": "68a6fc0412eb78ee90627a36061b7f9b",
+    "semantic_hash": ""
+  },
+  "data/prototypes/craftmans-cafe/images/section_2.jpg": {
+    "mtime": 1782245751.2541792,
+    "ast_hash": "2cbf614328b4b2b7c6fdea8896f06400",
+    "semantic_hash": ""
+  },
+  "data/prototypes/craftmans-cafe/screenshot.png": {
+    "mtime": 1782245751.2564263,
+    "ast_hash": "4224c822f562921c729d1ccc57923cca",
+    "semantic_hash": ""
+  },
+  "data/prototypes/manila-kitchen/images/hero.jpg": {
+    "mtime": 1783609846.0941973,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/manila-kitchen/images/section_1.jpg": {
+    "mtime": 1783609846.0942516,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/manila-kitchen/images/section_2.jpg": {
+    "mtime": 1783609846.094302,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/marios-family-restaurant/images/hero.jpg": {
+    "mtime": 1783609846.094489,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/marios-family-restaurant/images/section_1.jpg": {
+    "mtime": 1783609846.0945454,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/marios-family-restaurant/images/section_2.jpg": {
+    "mtime": 1783609846.0946004,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/ramo-sports/images/hero.jpg": {
+    "mtime": 1782245751.2656746,
+    "ast_hash": "61e128a89b52d69a69c8f150e5cd263f",
+    "semantic_hash": ""
+  },
+  "data/prototypes/ramo-sports/images/section_1.jpg": {
+    "mtime": 1782245751.2724261,
+    "ast_hash": "9d75d45f46ac286379a688834991f578",
+    "semantic_hash": ""
+  },
+  "data/prototypes/ramo-sports/images/section_2.jpg": {
+    "mtime": 1782245751.2830536,
+    "ast_hash": "b54893b3de5c8bf7c39e5cbb0751e26c",
+    "semantic_hash": ""
+  },
+  "data/prototypes/ramo-sports/screenshot.png": {
+    "mtime": 1782245751.2843828,
+    "ast_hash": "aec1c32048b2ff962923b912a39af25b",
+    "semantic_hash": ""
+  },
+  "data/prototypes/seaway-cleaning-services/images/hero.jpg": {
+    "mtime": 1782251032.3950813,
+    "ast_hash": "1f081072a48eff778cecbb6f83a80741",
+    "semantic_hash": ""
+  },
+  "data/prototypes/seaway-cleaning-services/images/section_1.jpg": {
+    "mtime": 1782251032.3952322,
+    "ast_hash": "1f081072a48eff778cecbb6f83a80741",
+    "semantic_hash": ""
+  },
+  "data/prototypes/seaway-cleaning-services/images/section_2.jpg": {
+    "mtime": 1782251032.3953767,
+    "ast_hash": "1f081072a48eff778cecbb6f83a80741",
+    "semantic_hash": ""
+  },
+  "data/prototypes/seaway-cleaning-services/screenshot-desktop.png": {
+    "mtime": 1782245751.287664,
+    "ast_hash": "fb104b5fd49f2bc00c5499566cb87451",
+    "semantic_hash": ""
+  },
+  "data/prototypes/seaway-cleaning-services/screenshot-mobile.png": {
+    "mtime": 1782245751.2877269,
+    "ast_hash": "383676a0f406f847349b8db246f7087a",
+    "semantic_hash": ""
+  },
+  "data/prototypes/seaway-cleaning-services/screenshot.png": {
+    "mtime": 1782245751.2892084,
+    "ast_hash": "1d90e782d44dfce718d604e5ce4d6274",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-barber-shop-cornwall/images/hero.jpg": {
+    "mtime": 1783609846.094792,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-barber-shop-cornwall/images/section_1.jpg": {
+    "mtime": 1783609846.0948484,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-barber-shop-cornwall/images/section_2.jpg": {
+    "mtime": 1783609846.0948997,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-cutting-edge-salon/images/hero.jpg": {
+    "mtime": 1782251032.3968973,
+    "ast_hash": "d49197890968fa735a01b4033da3795b",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-cutting-edge-salon/images/section_1.jpg": {
+    "mtime": 1782251032.397012,
+    "ast_hash": "d49197890968fa735a01b4033da3795b",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-cutting-edge-salon/images/section_2.jpg": {
+    "mtime": 1782251032.3971329,
+    "ast_hash": "d49197890968fa735a01b4033da3795b",
+    "semantic_hash": ""
+  },
+  "logs/craftmans-cafe-live-verification.png": {
+    "mtime": 1782245751.2936087,
+    "ast_hash": "4224c822f562921c729d1ccc57923cca",
+    "semantic_hash": ""
+  },
+  "logs/homepage-desktop-polished.png": {
+    "mtime": 1782245751.297103,
+    "ast_hash": "fd171784260e837bf94a57d89879e6b2",
+    "semantic_hash": ""
+  },
+  "logs/homepage-hero-thumb.png": {
+    "mtime": 1782245751.2987869,
+    "ast_hash": "a8da868f9ca599552b5bc7c97b796806",
+    "semantic_hash": ""
+  },
+  "logs/homepage-mobile-polished.png": {
+    "mtime": 1782245751.299792,
+    "ast_hash": "90bb04315a6b625ed3d8b3bee209ed3d",
+    "semantic_hash": ""
+  },
+  "logs/ramo-sports-live-verification.png": {
+    "mtime": 1782245751.3036025,
+    "ast_hash": "aec1c32048b2ff962923b912a39af25b",
+    "semantic_hash": ""
+  },
+  "public/file.svg": {
+    "mtime": 1782245751.309263,
+    "ast_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71",
+    "semantic_hash": ""
+  },
+  "public/globe.svg": {
+    "mtime": 1782245751.309323,
+    "ast_hash": "2aaafa6a49b6563925fe440891e32717",
+    "semantic_hash": ""
+  },
+  "public/next.svg": {
+    "mtime": 1782245751.309383,
+    "ast_hash": "8e061864f388b47f33a1c3780831193e",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/allied-home-services-desktop.png": {
+    "mtime": 1783610811.1309729,
+    "ast_hash": "ea99ef0e62e8c42321cb7608496e99cd",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/allied-home-services-mobile.png": {
+    "mtime": 1783610813.3557844,
+    "ast_hash": "4ba410825f7061b80bfca6c20d77d0f4",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/bellas-hair-studio-desktop.png": {
+    "mtime": 1783611232.8561027,
+    "ast_hash": "cc4a49d515109353062aa33696b66eb6",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/bellas-hair-studio-desktop.svg": {
+    "mtime": 1783962422.753283,
+    "ast_hash": "3cd553bb55acf023b092dab9ade1e12b",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/bellas-hair-studio-mobile.png": {
+    "mtime": 1783611232.859635,
+    "ast_hash": "1b9efb09bb9b3e9183217fa422e5d500",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/bright-smile-dental-desktop.png": {
+    "mtime": 1783610834.9571245,
+    "ast_hash": "3fbc8b3b9ba8bac3078ebd35ac4788f8",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/bright-smile-dental-mobile.png": {
+    "mtime": 1783610837.1337793,
+    "ast_hash": "8804ff88673ff0b2bf4e18fe7a8fb766",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/catalyst-online-course-desktop.png": {
+    "mtime": 1783610839.5718927,
+    "ast_hash": "c315c197cd28685bbd659b2cc408c509",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/catalyst-online-course-mobile.png": {
+    "mtime": 1783610841.8418658,
+    "ast_hash": "8739d6e9d6435a70c3441fe3da985fa1",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/clean-&-shine-services-desktop.png": {
+    "mtime": 1783611232.8627067,
+    "ast_hash": "2750b3aa543483314ce8312ab4badeae",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/clean-&-shine-services-mobile.png": {
+    "mtime": 1783611232.8648777,
+    "ast_hash": "e0708ead2490a9597c034f7e38aa7f6c",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/cornwall-auto-care-desktop.png": {
+    "mtime": 1783611232.8676658,
+    "ast_hash": "ffb671d79a8d9f16c126507c5f363ab9",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/cornwall-auto-care-mobile.png": {
+    "mtime": 1783611232.8713524,
+    "ast_hash": "5e55b67ed3045eaf5b2749f6eb5d6fcf",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/craftmans-cafe-desktop.png": {
+    "mtime": 1783611232.8741598,
+    "ast_hash": "fecadadc7a5b6ccd035f911256b500f8",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/craftmans-cafe-mobile.png": {
+    "mtime": 1783611232.8757567,
+    "ast_hash": "2c4e36fc77a8c8f0c0222e132e13e173",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/flowdesk-saas-desktop.png": {
+    "mtime": 1783610865.8912456,
+    "ast_hash": "e2d93b5db43bdcc91b19226912576be8",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/flowdesk-saas-mobile.png": {
+    "mtime": 1783610868.0378976,
+    "ast_hash": "5098626d1988a797b4833678e59a9107",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/harvest-table-restaurant-desktop.png": {
+    "mtime": 1783610870.2359774,
+    "ast_hash": "8ca16baf626ae43be13a0f552f3512d8",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/harvest-table-restaurant-mobile.png": {
+    "mtime": 1783610872.3715844,
+    "ast_hash": "15961baec32d270029f30a4d6f5223e0",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/meridian-law-firm-desktop.png": {
+    "mtime": 1783610886.4695842,
+    "ast_hash": "ab0e694c2ff3a1cc997e69aacd5d7e3e",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/meridian-law-firm-mobile.png": {
+    "mtime": 1783610888.6581483,
+    "ast_hash": "4efff1b9227058ba340489ef38ef4148",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/northwind-ecommerce-desktop.png": {
+    "mtime": 1783610890.9148688,
+    "ast_hash": "69200eea42ecdc91c9665af930a01360",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/northwind-ecommerce-mobile.png": {
+    "mtime": 1783610893.0960488,
+    "ast_hash": "caedfaed25ec0a4c3d4718dbaf152355",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/premier-real-estate-desktop.png": {
+    "mtime": 1783610895.3479822,
+    "ast_hash": "2f5edb2165ce2f329cea052aacc1ebe3",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/premier-real-estate-mobile.png": {
+    "mtime": 1783610897.534647,
+    "ast_hash": "477f0eb4f81b6a01e31011958ff0a5f8",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/ramo-sports-desktop.png": {
+    "mtime": 1783611232.8815126,
+    "ast_hash": "32d6e705cf4d67d28d154fe0c3a59c74",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/ramo-sports-mobile.png": {
+    "mtime": 1783611232.8855057,
+    "ast_hash": "79492b939f1185a026acdcabeead148d",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/seaway-cleaning-services-desktop.png": {
+    "mtime": 1783611232.890906,
+    "ast_hash": "dd4f6fa8aa5ab6b2f5683d811250ed78",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/seaway-cleaning-services-desktop.svg": {
+    "mtime": 1783962422.7533932,
+    "ast_hash": "e2d727384e3aff820dcdcffd2f3447d2",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/seaway-cleaning-services-mobile.png": {
+    "mtime": 1783611232.8934295,
+    "ast_hash": "b78cc8f4c35dc5b062650be5461cc682",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/summit-fitness-gym-desktop.png": {
+    "mtime": 1783610908.6507015,
+    "ast_hash": "4ed605872dba0fbaa82c5775346ce832",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/summit-fitness-gym-mobile.png": {
+    "mtime": 1783610910.8468192,
+    "ast_hash": "dae552c68533b74b90af3b9ece35c734",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/the-cutting-edge-salon-desktop.png": {
+    "mtime": 1783611232.8956547,
+    "ast_hash": "9a67563caebd88d1d3021ee15603c116",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/the-cutting-edge-salon-mobile.png": {
+    "mtime": 1783611232.8985605,
+    "ast_hash": "333c97d2b8e996fa3306165e4c0fdc33",
+    "semantic_hash": ""
+  },
+  "public/vercel.svg": {
+    "mtime": 1782245751.3094401,
+    "ast_hash": "c0af2f507b369b085b35ef4bbe3bcf1e",
+    "semantic_hash": ""
+  },
+  "public/window.svg": {
+    "mtime": 1782245751.3095076,
+    "ast_hash": "a2760511c65806022ad20adf74370ff3",
+    "semantic_hash": ""
+  },
+  "lib/site-config.ts": {
+    "mtime": 1783963456.6834552,
+    "ast_hash": "05507aaba09f8f6b9fb6147d476c38c1",
+    "semantic_hash": ""
+  }
+}
