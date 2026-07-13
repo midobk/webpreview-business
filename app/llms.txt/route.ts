@@ -1,32 +1,29 @@
 import { FAQS, PRICING } from '../_landing/content';
 
-/* GEO (generative-engine optimization): /llms.txt gives AI assistants
-   and answer engines a clean, factual summary of the business —
-   generated from the same content module the landing page renders, so
-   it can never drift from what visitors see. Spec: llmstxt.org */
-
 export const dynamic = 'force-static';
 
 const SITE = 'https://seawaysites.com';
 
 function buildLlmsTxt(): string {
   const pricing = PRICING.map(
-    (t) =>
-      `- **${t.name}** — ${t.price}${t.cadence ? ` (${t.cadence})` : ''}: ${t.blurb} Includes: ${t.features.join(', ')}.`
+    (tier) =>
+      `- **${tier.name}** — ${tier.price}${tier.cadence ? ` (${tier.cadence})` : ''}: ${tier.blurb} Includes: ${tier.features.join(', ')}.`
   ).join('\n');
 
-  const faq = FAQS.map((f) => `### ${f.q}\n\n${f.a}`).join('\n\n');
+  const faq = FAQS.map((item) => `### ${item.q}\n\n${item.a}`).join('\n\n');
 
   return `# Seaway Sites
 
-> Seaway Sites builds websites for Canadian small businesses. Prospects get a free, personalized first draft of their website within the hour — machine-drafted, reviewed by a human before it's sent — and only pay if they decide to keep it, at which point the site is refined by hand to production-ready on their own domain.
+> Seaway Sites prepares personalized website drafts and finished one-page websites for Canadian small businesses. Prospects can request one free initial draft before choosing either a managed monthly service or a one-time source-file handoff.
 
 Key facts:
 
-- Audience: Canadian small businesses (plumbers, salons, cafés, landscapers, auto shops, contractors and similar local trades)
-- Offer: free first-draft website within the hour; no credit card, no sales call
-- Process: a build agent drafts the site in minutes from the business's public listings and reviews; a human reviews every draft before it ships; production polish happens after the customer says yes
-- Data: infrastructure in Montréal and Toronto, PIPEDA-aligned
+- Audience: Canadian small businesses, including local trades and service businesses
+- Offer: one free personalized first draft; no credit card and no sales call
+- Timing: most eligible requests are delivered within the hour during service hours, subject to complete submission details and current request volume
+- Process: business research, conversion planning, website copy, visual direction, responsive preparation, local-search structure, production checks and delivery
+- Ownership: clients always own their domain, business content, branding and customer data; source files are included with the one-time ownership plan
+- Privacy: operated by a Canadian business with privacy-conscious infrastructure; current handling details are published in the privacy policy
 - Contact: hello@seawaysites.com
 - Website: ${SITE}
 
@@ -40,9 +37,9 @@ ${faq}
 
 ## Pages
 
-- [Home](${SITE}/): the main landing page with a live demo of a website draft assembling itself
-- [Showcase](${SITE}/showcase): anonymized examples of real drafts
-- [Privacy](${SITE}/privacy): PIPEDA-aligned privacy policy
+- [Home](${SITE}/): service overview, condensed production demonstration, pricing and draft-request form
+- [Showcase](${SITE}/showcase): examples of website drafts
+- [Privacy](${SITE}/privacy): current privacy and data-handling information
 `;
 }
 
