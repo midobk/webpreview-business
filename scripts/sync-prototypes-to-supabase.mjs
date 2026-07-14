@@ -241,7 +241,10 @@ async function main() {
     return;
   }
 
-  if (mode === 'sync' || (mode === 'auto' && isProductionBuild)) {
+  // `--auto` runs during every production build. A build must never overwrite
+  // live approval decisions from data/prototypes.json; explicit `--sync` is
+  // the only mode allowed to mutate Supabase.
+  if (mode === 'sync') {
     await upsertPrototypes(supabase, prototypes);
   }
 

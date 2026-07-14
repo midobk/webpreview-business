@@ -8,6 +8,7 @@ export default function AdminSetup() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [hash, setHash] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -41,6 +42,7 @@ export default function AdminSetup() {
 
     setIsLoading(true);
     setError('');
+    setSuccessMessage('');
     setHash('');
 
     try {
@@ -52,7 +54,7 @@ export default function AdminSetup() {
 
       if (response.ok) {
         const data = await response.json();
-        setHash(data.hash);
+        setSuccessMessage(data.message || 'Password saved.');
       } else {
         const data = await response.json();
         setError(data.error || 'Failed to set up admin password');
@@ -81,7 +83,7 @@ export default function AdminSetup() {
       subtitle={
         hash
           ? 'Copy this hash and add it to your Vercel environment variables.'
-          : 'Pick a strong password. We’ll hash it locally — it never leaves the browser in plain text.'
+          : 'Pick a strong password. It is sent over HTTPS and stored only as a bcrypt hash.'
       }
       footer={
         <>
@@ -323,6 +325,19 @@ export default function AdminSetup() {
               }}
             >
               {error}
+            </div>
+          )}
+
+          {successMessage && (
+            <div
+              className="rounded-lg p-3.5 text-sm"
+              style={{
+                background: 'var(--adm-success-soft)',
+                border: '1px solid rgba(16,185,129,0.30)',
+                color: 'var(--adm-success)',
+              }}
+            >
+              {successMessage}
             </div>
           )}
 

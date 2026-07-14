@@ -40,7 +40,7 @@ Phases 0-12 complete:
 - ✅ Homepage polish (gradient hero, features, testimonials, FAQ, pricing, MetaSEO)
 - ✅ `.env.example` with all 8 sections + comments
 - ✅ Seaway Sites isolated agent registered (`openclaw agents list`)
-- ✅ Production showcase sync gate: repository validation → Supabase upsert → zero-drift verification
+- ✅ Production showcase sync gate: repository validation → zero-drift verification (explicit sync required for writes)
 - ✅ Showcase metadata regression workflow and industry-specific showcase copy
 - ✅ Supabase prototype-industry migration and helper-function security hardening
 

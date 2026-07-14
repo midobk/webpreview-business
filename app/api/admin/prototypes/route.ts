@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { requireAdmin } from '@/lib/auth-server';
+import { requireAdmin, requireSameOrigin } from '@/lib/auth-server';
 import { getPrototypes, DATA_SOURCE } from '@/lib/data-source';
 import { getSupabase } from '@/lib/supabase';
 
@@ -64,10 +64,19 @@ export async function GET(request: Request) {
 export async function PATCH(request: Request) {
   const denied = requireAdmin(request);
   if (denied) return denied;
+  const originDenied = requireSameOrigin(request);
+  if (originDenied) return originDenied;
   try {
+    if (Number(request.headers.get('content-length') || 0) > 16_000) {
+      return NextResponse.json({ error: 'Request is too large.' }, { status: 413 });
+    }
     const body = await request.json();
     const { id, showcase_approved, showcase_eligible } = body;
-    if (!id || (showcase_approved === undefined && showcase_eligible === undefined)) {
+    const unknownKeys = Object.keys(body).filter((key) => !['id', 'showcase_approved', 'showcase_eligible'].includes(key));
+    if (unknownKeys.length || typeof id !== 'string' || !id.trim() || id.length > 200 ||
+      (showcase_approved !== undefined && typeof showcase_approved !== 'boolean') ||
+      (showcase_eligible !== undefined && typeof showcase_eligible !== 'boolean') ||
+      (showcase_approved === undefined && showcase_eligible === undefined)) {
       return NextResponse.json({ error: 'Prototype id and an update are required.' }, { status: 400 });
     }
 
@@ -77,7 +86,7 @@ export async function PATCH(request: Request) {
       if (current.error) return NextResponse.json({ error: current.error.message }, { status: 500 });
       if (!current.data) return NextResponse.json({ error: 'Prototype not found' }, { status: 404 });
 
-      const next = { ...current.data, ...body };
+      const next = { ...current.data, showcase_approved, showcase_eligible };
       if (showcase_approved === true && !canPublish(next)) {
         return NextResponse.json({ error: 'Prototype must be completed, eligible, anonymized, and have both preview URLs before approval.' }, { status: 409 });
       }
@@ -114,7 +123,7 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: 'Prototype not found' }, { status: 404 });
     }
 
-    const next = { ...prototypes[index], ...body };
+    const next = { ...prototypes[index], showcase_approved, showcase_eligible };
     if (showcase_approved === true && !canPublish(next)) {
       return NextResponse.json({ error: 'Prototype must be completed, eligible, anonymized, and have both preview URLs before approval.' }, { status: 409 });
     }
@@ -131,7 +140,7 @@ export async function PATCH(request: Request) {
       return NextResponse.json({
         success: false,
         message: 'Phase 1 hacky build: writes not persisted on Vercel. Set SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY for live writes.',
-      });
+      }, { status: 503 });
     }
 
     return NextResponse.json({ success: true, prototype: prototypes[index], data_source: "filesystem" });

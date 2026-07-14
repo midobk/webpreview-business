@@ -168,7 +168,9 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
         srcDoc={htmlContent}
         title={title}
         className="w-full h-full border-0"
-        sandbox="allow-scripts allow-same-origin"
+        // Keep the generated HTML in an opaque origin. Generated scripts can
+        // animate the draft, but cannot reach the parent app or its cookies.
+        sandbox="allow-scripts"
       />
       <RevisionRequest slug={slug} />
     </div>

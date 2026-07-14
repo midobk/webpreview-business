@@ -74,6 +74,20 @@ export function requireAdmin(request: Request): NextResponse | null {
   return null;
 }
 
+/** Reject cross-origin state-changing admin requests when the browser supplies Origin. */
+export function requireSameOrigin(request: Request): NextResponse | null {
+  const origin = request.headers.get('origin');
+  if (!origin) return null;
+  try {
+    if (origin !== new URL(request.url).origin) {
+      return NextResponse.json({ error: 'Cross-origin request blocked.' }, { status: 403 });
+    }
+  } catch {
+    return NextResponse.json({ error: 'Invalid request origin.' }, { status: 403 });
+  }
+  return null;
+}
+
 function isValidAdminSession(value?: string) {
   if (!value) return false;
   const [encodedPayload, signature] = value.split('.');

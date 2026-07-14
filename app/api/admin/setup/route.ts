@@ -2,14 +2,21 @@ import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { hashPassword } from '@/lib/auth';
+import { rateLimited, requestIp } from '@/lib/request-guard';
 
 // POST /api/admin/setup - Set up admin password
 export async function POST(request: Request) {
   try {
+    if (rateLimited(`admin-setup:${requestIp(request)}`, 3, 10 * 60_000)) {
+      return NextResponse.json({ error: 'Too many setup attempts. Please try again later.' }, { status: 429 });
+    }
+    if (Number(request.headers.get('content-length') || 0) > 4_000) {
+      return NextResponse.json({ error: 'Request is too large.' }, { status: 413 });
+    }
     const body = await request.json();
     const { password } = body;
 
-    if (!password) {
+    if (typeof password !== 'string' || !password || password.length > 200) {
       return NextResponse.json(
         { error: 'Password is required' },
         { status: 400 }
@@ -48,8 +55,8 @@ export async function POST(request: Request) {
     // Hash the password
     const hashedPassword = await hashPassword(password);
 
-    // On Vercel (serverless), we can't write files.
-    // Return the hash so the user can set it as an env var.
+    // On Vercel (serverless), we can't write files. Never return a password
+    // hash to an unauthenticated browser; configure PASSWORD_HASH out of band.
     // Locally (dev or `next start`), write the hash to ./.password so the
     // login flow works without a redeploy. Detect "local" by checking for
     // the Vercel env var, which is only set in their serverless runtime.
@@ -65,13 +72,16 @@ export async function POST(request: Request) {
       }
     }
 
+    if (!localFileWritten) {
+      return NextResponse.json(
+        { error: 'This deployment cannot persist setup credentials. Generate a bcrypt hash locally and set PASSWORD_HASH in the deployment environment.' },
+        { status: 503 }
+      );
+    }
+
     return NextResponse.json(
       {
-        message: localFileWritten
-          ? 'Password hashed and saved to ./.password (local dev). For Vercel, set PASSWORD_HASH env var and redeploy.'
-          : 'Password hashed successfully',
-        hash: hashedPassword,
-        instructions: 'Set this as a Vercel environment variable named PASSWORD_HASH, then redeploy.',
+        message: 'Password hashed and saved to ./.password (local dev). Set PASSWORD_HASH in your deployment environment before deploying.',
         localFileWritten,
       },
       { status: 200 }

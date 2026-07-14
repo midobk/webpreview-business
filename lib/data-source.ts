@@ -6,7 +6,8 @@
  * Phase 1 (hacky): read from build-bundle (works on Vercel's read-only fs).
  *   Used when Supabase isn't configured.
  *
- * Phase 2 (proper): read from Supabase when configured. Falls back to bundle.
+ * Phase 2 (proper): read from Supabase when configured. A configured but
+ * unavailable database fails loudly instead of serving stale bundle data.
  *   Writes (PATCH/POST) work in Phase 2.
  *
  * Writes (Phase 1): only work on local filesystem. Returns helpful error on Vercel.
@@ -38,7 +39,7 @@ async function fromSupabase<T>(table: string, fallback: T): Promise<T> {
   const { data, error } = await supabase.from(table).select("*");
   if (error) {
     console.error(`Supabase ${table} fetch error:`, error.message);
-    return fallback;
+    throw new Error(`Supabase ${table} fetch failed: ${error.message}`);
   }
   return (data as T) ?? fallback;
 }

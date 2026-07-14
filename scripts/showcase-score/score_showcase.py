@@ -271,6 +271,9 @@ def main():
         # Eligibility: score >= 70 AND no critical issues (placeholder text, no demo lock, no watermark)
         critical_issues = [i for i in issues if "lorem" in i.lower() or "TODO" in i or "watermark" in i.lower() or "demo lock" in i.lower()]
         proto["showcase_eligible"] = quality_score >= 70 and not critical_issues
+        if not proto["showcase_eligible"]:
+            # A failed re-score must not leave an old approval published.
+            proto["showcase_approved"] = False
         proto["showcase_score"] = quality_score
         proto["showcase_issues"] = issues
         proto["showcase_anonymized_html_path"] = anonymized_path
@@ -281,7 +284,7 @@ def main():
         print(f"  {proto['id']} ({lead['business_name']}): {status}")
 
     # Save updated prototypes
-    if not args.slug or len(targets) > 1:
+    if targets:
         with open(proto_path, "w") as f:
             json.dump(prototypes, f, indent=2)
         print(f"\nUpdated {proto_path}")

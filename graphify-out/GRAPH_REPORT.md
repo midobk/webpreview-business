@@ -1,16 +1,16 @@
-# Graph Report - webpreview-business  (2026-07-13)
+# Graph Report - webpreview-business  (2026-07-14)
 
 ## Corpus Check
-- 158 files · ~1,427,961 words
+- 161 files · ~1,429,688 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1023 nodes · 1298 edges · 94 communities (80 shown, 14 thin omitted)
+- 1042 nodes · 1346 edges · 101 communities (85 shown, 16 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 8 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `65ea5462`
+- Built from commit: `d91df57d`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -56,6 +56,7 @@
 - Findings
 - GridStagger.tsx
 - generate_variant.py
+- page.tsx
 - eslint.config.mjs
 - next.config.ts
 - postcss.config.mjs
@@ -95,15 +96,21 @@
 - draft_sms.py
 - ScrollParallax.tsx
 - AGENTS.md
+- variants.ts
 - agent-runs.md
 - decisions.md
 - @types/react-dom
+- ShowcaseGrid.tsx
+- ShowcaseCTA.tsx
+- TiltMockBrowser.tsx
+- 18. UX Audit + Fix Pass — 2026-06-23 (Live Verification)
+- HeaderScroll.tsx
 
 ## God Nodes (most connected - your core abstractions)
 1. `AGENT_PLAN.md — AI Website Preview Business Agent` - 26 edges
 2. `19. Follow-Up Work (Queued, Not Started)` - 22 edges
 3. `base()` - 21 edges
-4. `getSupabase()` - 16 edges
+4. `getSupabase()` - 18 edges
 5. `compilerOptions` - 16 edges
 6. `Showcase Sync and Supabase Operations Runbook` - 14 edges
 7. `Color Expert` - 13 edges
@@ -112,21 +119,21 @@
 10. `21. Weekly Planning — 2026-07-06 (Mon, Week 2)` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `GET()` --calls--> `requireAdmin()`  [EXTRACTED]
-  app/api/admin/leads/route.ts → lib/auth-server.ts
-- `GET()` --calls--> `getLeads()`  [EXTRACTED]
-  app/api/admin/leads/route.ts → lib/data-source.ts
-- `GET()` --calls--> `getOutreachLog()`  [EXTRACTED]
-  app/api/admin/leads/route.ts → lib/data-source.ts
-- `GET()` --calls--> `getPrototypes()`  [EXTRACTED]
-  app/api/admin/leads/route.ts → lib/data-source.ts
-- `PATCH()` --calls--> `requireAdmin()`  [EXTRACTED]
-  app/api/admin/leads/route.ts → lib/auth-server.ts
+- `POST()` --calls--> `createAdminSession()`  [EXTRACTED]
+  app/api/admin/login/route.ts → lib/auth-server.ts
+- `loadShowcase()` --calls--> `getLeads()`  [EXTRACTED]
+  app/showcase/page.tsx → lib/data-source.ts
+- `loadShowcase()` --calls--> `getPrototypes()`  [EXTRACTED]
+  app/showcase/page.tsx → lib/data-source.ts
+- `GET()` --calls--> `isValidAdminSessionWithSecret()`  [EXTRACTED]
+  app/api/admin/check-session/route.ts → lib/auth-server.ts
+- `GET()` --calls--> `sessionSecret()`  [EXTRACTED]
+  app/api/admin/check-session/route.ts → lib/auth-server.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (94 total, 14 thin omitted)
+## Communities (101 total, 16 thin omitted)
 
 ### Community 0 - "icons.tsx"
 Cohesion: 0.06
@@ -134,7 +141,7 @@ Nodes (50): AdminShell(), NAV, NavItem, AuthShell(), base(), IconBolt(), IconBui
 
 ### Community 1 - "page.tsx"
 Cohesion: 0.09
-Nodes (43): fsAccess(), GET(), PATCH(), canPublish(), fsAccess(), GET(), PATCH(), prototypeSlug() (+35 more)
+Nodes (45): GET(), fsAccess(), GET(), PATCH(), canPublish(), fsAccess(), GET(), PATCH() (+37 more)
 
 ### Community 2 - "compilerOptions"
 Cohesion: 0.06
@@ -174,15 +181,15 @@ Nodes (11): agentmailInboxes, conversionStats, DATA_DIR, fs, generatedAt, leads,
 
 ### Community 11 - "auth.ts"
 Cohesion: 0.25
-Nodes (9): POST(), POST(), getPasswordHash(), getPasswordHashFromFile(), hashPassword(), isPasswordSet(), isPasswordSetNode(), createAdminSession() (+1 more)
+Nodes (11): POST(), POST(), getPasswordHash(), getPasswordHashFromFile(), hashPassword(), isPasswordSet(), isPasswordSetNode(), verifyPassword() (+3 more)
 
 ### Community 12 - "discover_places.py"
 Cohesion: 0.24
 Nodes (12): collect_businesses(), filter_no_website(), get_api_key(), load_existing_leads(), main(), place_to_lead(), Text Search via Places API (New)., Paginate through search results. (+4 more)
 
 ### Community 13 - "variants.ts"
-Cohesion: 0.06
-Nodes (26): getPreviewSlug(), INDUSTRY_LABELS, Item, ShowcaseCard(), ShowcaseHero(), CornerStampProps, HeaderScrollProps, MagneticButtonProps (+18 more)
+Cohesion: 0.20
+Nodes (6): MagneticButtonProps, BlobConfig, MouseBlobsProps, springGentle, springMagnetic, springSnappy
 
 ### Community 14 - "Showcase Sync and Supabase Operations Runbook"
 Cohesion: 0.07
@@ -229,8 +236,8 @@ Cohesion: 0.36
 Nodes (7): load_existing_leads(), log_run(), main(), Load existing leads from data/leads.json, Save leads to data/leads.json, Log the discovery run to logs/agent-runs.md, save_leads()
 
 ### Community 25 - "middleware.ts"
-Cohesion: 0.39
-Nodes (6): base64UrlToBytes(), isPasswordSet(), isValidAdminSession(), checkPasswordSet(), config, middleware()
+Cohesion: 0.33
+Nodes (8): base64UrlToBytes(), isPasswordSet(), isValidAdminSession(), checkPasswordSet(), config, envSessionSecretAvailable(), proxy(), validateSessionCookie()
 
 ### Community 26 - "enrich_leads.py"
 Cohesion: 0.33
@@ -249,8 +256,8 @@ Cohesion: 0.12
 Nodes (17): 13. Progress Tracker, A. Public-site wiring (C1 + H1) — DONE, Agent Run Log, Agent Run Log (continued), B. Admin hardening (C2, C3, H4, H5, H6) — DONE, C. Admin-only content (H2) — DONE, Current Status — What Actually Works, D. Showcase polish (H3, L2, L3) — DONE (+9 more)
 
 ### Community 30 - "AGENT_PLAN.md — AI Website Preview Business Agent"
-Cohesion: 0.12
-Nodes (16): 10. Project File Structure, 13. Progress Tracker — DRIFT CORRECTION 2026-06-29 10:08 EDT, 14. Approval Checkpoints, 15. Success Metrics, 18. UX Audit + Fix Pass — 2026-06-23 (Live Verification), 1. Agent Philosophy, 22. Prototype quality contract, revision capture, and showcase operations — 2026-07-13, 8. Model Assignment (+8 more)
+Cohesion: 0.15
+Nodes (12): 10. Project File Structure, 13. Progress Tracker — DRIFT CORRECTION 2026-06-29 10:08 EDT, 14. Approval Checkpoints, 15. Success Metrics, 1. Agent Philosophy, 22. Prototype quality contract, revision capture, and showcase operations — 2026-07-13, 8. Model Assignment, AGENT_PLAN.md — AI Website Preview Business Agent (+4 more)
 
 ### Community 31 - "capture.js"
 Cohesion: 0.40
@@ -279,6 +286,10 @@ Nodes (3): load_json(), main(), score_bucket()
 ### Community 38 - "Findings"
 Cohesion: 0.13
 Nodes (14): Auth model after this PR, 🔴 CRITICAL-1: Admin API routes have no authentication check, Files changed in this PR, Findings, ℹ️ INFO-1: `.password` correctly gitignored, ℹ️ INFO-2: `.env*` correctly gitignored, ℹ️ INFO-3: No passwords, API keys, or secrets in client code, 🟢 LOW-1: Public `isPasswordSet` boolean leaks admin state (+6 more)
+
+### Community 43 - "page.tsx"
+Cohesion: 0.21
+Nodes (11): ShowcaseHero(), anonymizeTitle(), INDUSTRY_LABELS, INDUSTRY_TAGLINES, Lead, loadShowcase(), metadata, Prototype (+3 more)
 
 ### Community 52 - "Industry Templates"
 Cohesion: 0.14
@@ -404,25 +415,41 @@ Nodes (11): find_lead_for_slug(), gradient_fallback(), http_post_json(), main(),
 Cohesion: 0.50
 Nodes (3): name, private, version
 
+### Community 90 - "variants.ts"
+Cohesion: 0.25
+Nodes (7): HeaderScrollProps, cardHover, fadeUp, fadeUpSmall, heroStagger, outQuint, staggerContainer
+
+### Community 96 - "ShowcaseGrid.tsx"
+Cohesion: 0.29
+Nodes (5): getPreviewSlug(), INDUSTRY_LABELS, Item, ShowcaseCard(), gridCard
+
+### Community 98 - "TiltMockBrowser.tsx"
+Cohesion: 0.40
+Nodes (3): TiltMockBrowserProps, springTilt, mockBrowserEntrance
+
+### Community 99 - "18. UX Audit + Fix Pass — 2026-06-23 (Live Verification)"
+Cohesion: 0.50
+Nodes (4): 18. UX Audit + Fix Pass — 2026-06-23 (Live Verification), Bonus fixes included while in code, Findings (16 total, all addressed or accepted), Verification
+
 ## Knowledge Gaps
-- **477 isolated node(s):** `FormState`, `initialForm`, `Business`, `BUSINESSES`, `ease` (+472 more)
+- **479 isolated node(s):** `FormState`, `initialForm`, `Business`, `BUSINESSES`, `ease` (+474 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **14 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `AGENT_PLAN.md — AI Website Preview Business Agent` connect `AGENT_PLAN.md — AI Website Preview Business Agent` to `5. Outreach Strategy`, `3. Offer and Pricing`, `0. Project Identity`, `11. Data Model (MVP simplified)`, `17. User-Reported Issues — 2026-06-23 (Live Verification)`, `20. Weekly Planning — 2026-06-29 (Mon, Week 1)`, `4. Prototype Strategy`, `4A. Image Asset Pipeline`, `9. Enhanced Features (added to impress)`, `2. Business Scope`, `7. Architecture`, `13. Progress Tracker`, `19. Follow-Up Work (Queued, Not Started)`, `21. Weekly Planning — 2026-07-06 (Mon, Week 2)`, `12. Implementation Phases (compressed)`, `16. Tool Research Findings (Phase 0)`, `6. Lead Discovery and Scoring`?**
-  _High betweenness centrality (0.025) - this node is a cross-community bridge._
 - **Why does `SITE_URL` connect `layout.tsx` to `page.tsx`, `V2Landing.tsx`?**
-  _High betweenness centrality (0.024) - this node is a cross-community bridge._
+  _High betweenness centrality (0.023) - this node is a cross-community bridge._
+- **Why does `AGENT_PLAN.md — AI Website Preview Business Agent` connect `AGENT_PLAN.md — AI Website Preview Business Agent` to `5. Outreach Strategy`, `3. Offer and Pricing`, `0. Project Identity`, `11. Data Model (MVP simplified)`, `17. User-Reported Issues — 2026-06-23 (Live Verification)`, `18. UX Audit + Fix Pass — 2026-06-23 (Live Verification)`, `20. Weekly Planning — 2026-06-29 (Mon, Week 1)`, `4. Prototype Strategy`, `4A. Image Asset Pipeline`, `9. Enhanced Features (added to impress)`, `2. Business Scope`, `7. Architecture`, `13. Progress Tracker`, `19. Follow-Up Work (Queued, Not Started)`, `21. Weekly Planning — 2026-07-06 (Mon, Week 2)`, `12. Implementation Phases (compressed)`, `16. Tool Research Findings (Phase 0)`, `6. Lead Discovery and Scoring`?**
+  _High betweenness centrality (0.021) - this node is a cross-community bridge._
 - **Why does `ThemeScript()` connect `layout.tsx` to `icons.tsx`?**
   _High betweenness centrality (0.018) - this node is a cross-community bridge._
 - **What connects `FormState`, `initialForm`, `Business` to the rest of the system?**
-  _477 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _479 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `icons.tsx` be split into smaller, more focused modules?**
   _Cohesion score 0.05981981981981982 - nodes in this community are weakly interconnected._
 - **Should `page.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.09019607843137255 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09084556254367575 - nodes in this community are weakly interconnected._
 - **Should `compilerOptions` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._

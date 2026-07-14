@@ -31,16 +31,18 @@ node scripts/sync-prototypes-to-supabase.mjs --auto
 node scripts/build-data-bundle.js
 ```
 
-For a Vercel **production** build, the sync script:
+For a Vercel **production** build, the automatic check script:
 
 1. Loads and validates `data/prototypes.json`.
 2. Rejects duplicate IDs and incomplete showcase-visible records.
 3. Normalizes legacy timestamp values that contain both a numeric UTC offset and a trailing `Z`.
-4. Upserts all allowed prototype fields into Supabase using `id` as the conflict key.
+4. Does not write to Supabase; production builds must never overwrite live approval decisions.
 5. Reads the records back from Supabase.
 6. Compares the repository and database values for drift.
 7. Confirms that the expected number of records pass the public showcase filter.
-8. Exits non-zero and blocks deployment when any validation, upsert, drift, or count check fails.
+8. Exits non-zero and blocks deployment when any validation, drift, or count check fails.
+
+When repository metadata is intentionally changing, run `npm run sync:showcase` with production credentials first, review the result, then deploy. The explicit sync command is the only command that mutates the remote prototype records.
 
 For preview and local builds, the script validates local metadata but does not mutate production Supabase unless an explicit sync command is used.
 
@@ -236,12 +238,12 @@ The production `/showcase` route returned HTTP 200 and displayed `All (11)` with
 
 Do not repair this by merging the JSON bundle into Supabase results at runtime. That would recreate competing runtime sources and could expose records that were intentionally removed or disabled in production.
 
-### Production deployment fails during prototype upsert
+### Production deployment fails during prototype drift verification
 
 - Read the exact Supabase error in the Vercel build log.
-- Check schema/allow-list compatibility.
-- Check timestamp serialization.
-- Check value types and nullability.
+- Compare the reported field with the intended repository or dashboard state.
+- If the repository change is intentional, run `npm run sync:showcase` explicitly and review the remote update.
+- Check timestamp serialization, value types, and nullability.
 - Apply any required schema change through a tracked migration.
 - Fix the data or normalization logic rather than bypassing the deployment gate.
 

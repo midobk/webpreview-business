@@ -1,14 +1,21 @@
 import { NextResponse } from 'next/server';
 import { verifyPassword, getPasswordHash } from '@/lib/auth';
 import { createAdminSession } from '@/lib/auth-server';
+import { rateLimited, requestIp } from '@/lib/request-guard';
 
 // POST /api/admin/login - Authenticate admin user
 export async function POST(request: Request) {
   try {
+    if (rateLimited(`admin-login:${requestIp(request)}`, 10)) {
+      return NextResponse.json({ error: 'Too many attempts. Please try again shortly.' }, { status: 429 });
+    }
+    if (Number(request.headers.get('content-length') || 0) > 4_000) {
+      return NextResponse.json({ error: 'Request is too large.' }, { status: 413 });
+    }
     const body = await request.json();
     const { password } = body;
 
-    if (!password) {
+    if (typeof password !== 'string' || !password || password.length > 200) {
       return NextResponse.json(
         { error: 'Password is required' },
         { status: 400 }

@@ -1,3 +1,4 @@
+import { createHash } from 'crypto';
 import { NextResponse } from 'next/server';
 import { getLeads } from '@/lib/data-source';
 import { getSupabase } from '@/lib/supabase';
@@ -24,14 +25,14 @@ function slugMatchesLead(slug: string, leadSlug: string | null | undefined): boo
   return leadSlug === slug || leadSlug.startsWith(`${slug}-`);
 }
 
-function findLeadForSlug<T extends LeadLookup>(leads: T[], incomingSlug: string): T | null {
+function findLeadForSlug<T extends LeadLookup>(leads: T[], incomingSlug: string, email: string): T | null {
   const candidates = [incomingSlug, resolveVariantBase(incomingSlug)];
   for (const candidate of candidates) {
-    const exact = leads.find((lead) => lead.slug === candidate);
+    const exact = leads.find((lead) => lead.slug === candidate && lead.email?.trim().toLowerCase() === email);
     if (exact) return exact;
   }
   for (const candidate of candidates) {
-    const prefix = leads.find((lead) => slugMatchesLead(candidate, lead.slug));
+    const prefix = leads.find((lead) => slugMatchesLead(candidate, lead.slug) && lead.email?.trim().toLowerCase() === email);
     if (prefix) return prefix;
   }
   return null;
@@ -46,10 +47,16 @@ function limited(ip: string) {
   return false;
 }
 
-function appendNote(existing: string | null | undefined, request: string) {
+function appendNote(existing: string | null | undefined, request: string, marker: string) {
   const timestamp = new Date().toISOString();
-  const entry = `[${timestamp}] Customer requested changes: ${request}`;
+  const entry = `[${timestamp}] Customer requested changes: ${request} ${marker}`;
   return existing ? `${existing.trim()}\n\n${entry}` : entry;
+}
+
+function revisionKey(leadId: string, email: string, changeRequest: string): string {
+  return createHash('sha256')
+    .update(`${leadId}\0${email}\0${changeRequest}`)
+    .digest('hex');
 }
 
 export async function POST(request: Request) {
@@ -59,12 +66,16 @@ export async function POST(request: Request) {
   }
 
   try {
+    const contentLength = Number(request.headers.get('content-length') || 0);
+    if (contentLength > 12_000) {
+      return NextResponse.json({ error: 'Request is too large.' }, { status: 413 });
+    }
     const body = await request.json();
     const slug = typeof body.slug === 'string' ? body.slug.trim() : '';
     const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
     const changeRequest = typeof body.request === 'string' ? body.request.trim() : '';
 
-    if (!slug || slug.length > 160 || !isEmail(email) || email.length > 254) {
+    if (!slug || slug.length > 160 || /[%_\\]/.test(slug) || !isEmail(email) || email.length > 254) {
       return NextResponse.json({ error: 'Enter the email used for the draft.' }, { status: 400 });
     }
     if (!changeRequest || changeRequest.length < 10 || changeRequest.length > 4000) {
@@ -89,10 +100,9 @@ export async function POST(request: Request) {
       const exactResult = await supabase
         .from('leads')
         .select('id,slug,email,notes')
-        .in('slug', candidates)
-        .limit(1);
+        .in('slug', candidates);
       if (exactResult.error) throw exactResult.error;
-      lead = exactResult.data?.[0] ?? null;
+      lead = (exactResult.data || []).find((row) => row.email?.trim().toLowerCase() === email) ?? null;
 
       if (!lead) {
         const prefixResult = await supabase
@@ -101,27 +111,31 @@ export async function POST(request: Request) {
           .like('slug', `${baseSlug}%`);
         if (prefixResult.error) throw prefixResult.error;
         lead =
-          (prefixResult.data || []).find((row) => slugMatchesLead(baseSlug, row.slug)) ?? null;
+          (prefixResult.data || []).find((row) => slugMatchesLead(baseSlug, row.slug) && row.email?.trim().toLowerCase() === email) ?? null;
       }
     } else {
       const leads = (await getLeads()) as LeadLookup[];
-      lead = findLeadForSlug(leads, slug);
+      lead = findLeadForSlug(leads, slug, email);
     }
 
     if (!lead || !lead.email || lead.email.trim().toLowerCase() !== email) {
       return NextResponse.json({ error: 'That email does not match the draft recipient.' }, { status: 403 });
     }
 
-    const note = appendNote(lead.notes, changeRequest);
-    const revisionId = `revision-${crypto.randomUUID()}`;
+    const key = revisionKey(lead.id, email, changeRequest);
+    const marker = `[revision:${key}]`;
+    const note = lead.notes?.includes(marker)
+      ? lead.notes
+      : appendNote(lead.notes, changeRequest, marker);
+    const revisionId = `revision-${key.slice(0, 32)}`;
 
     if (supabase) {
-      const revision = await supabase.from('revision_requests').insert({
+      const revision = await supabase.from('revision_requests').upsert({
         id: revisionId,
         lead_id: lead.id,
         request: changeRequest,
         status: 'new',
-      });
+      }, { onConflict: 'id', ignoreDuplicates: true });
       if (revision.error) throw revision.error;
 
       const update = await supabase
@@ -129,6 +143,8 @@ export async function POST(request: Request) {
         .update({ status: 'revision_requested', notes: note, updated_at: new Date().toISOString() })
         .eq('id', lead.id);
       if (update.error) throw update.error;
+    } else if (process.env.NODE_ENV === 'production') {
+      return NextResponse.json({ error: 'Revision requests require Supabase in production.' }, { status: 503 });
     } else {
       const fs = await import('fs/promises');
       const path = await import('path');

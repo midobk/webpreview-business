@@ -70,11 +70,12 @@ export default function PrototypesPage() {
         previous !== undefined
           ? async () => {
               try {
-                await fetch('/api/admin/prototypes', {
+                const undoResponse = await fetch('/api/admin/prototypes', {
                   method: 'PATCH',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ id, showcase_approved: previous }),
                 });
+                if (!undoResponse.ok) throw new Error('Undo request failed');
                 setPrototypes((prev) =>
                   prev.map((p): Prototype => (p.id === id ? { ...p, showcase_approved: previous } : p))
                 );
@@ -119,7 +120,8 @@ export default function PrototypesPage() {
         )
       );
       showToast(eligible ? 'Marked ready for showcase review' : 'Moved back to review', 'success', previous !== undefined ? async () => {
-        await fetch('/api/admin/prototypes', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, showcase_eligible: previous }) });
+        const undoResponse = await fetch('/api/admin/prototypes', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, showcase_eligible: previous }) });
+        if (!undoResponse.ok) throw new Error('Undo request failed');
         setPrototypes((prev) =>
           prev.map((p): Prototype =>
             p.id === id
