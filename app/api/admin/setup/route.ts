@@ -34,23 +34,6 @@ export async function POST(request: Request) {
       );
     }
     const localPasswordPath = path.join(process.cwd(), '.password');
-    let localPasswordExists = false;
-    try {
-      await fs.access(localPasswordPath);
-      localPasswordExists = true;
-    } catch {
-      // file doesn't exist; setup is allowed
-    }
-    if (localPasswordExists) {
-      return NextResponse.json(
-        {
-          error:
-            'Admin password is already configured locally (./.password exists). ' +
-            'To rotate it, delete ./.password and restart the server, or update PASSWORD_HASH env var.',
-        },
-        { status: 400 }
-      );
-    }
 
     // Hash the password
     const hashedPassword = await hashPassword(password);
@@ -63,10 +46,32 @@ export async function POST(request: Request) {
     let localFileWritten = false;
     const isVercel = !!process.env.VERCEL;
     if (!isVercel) {
+      // Atomic exclusive create: 'wx' = O_CREAT | O_EXCL. This closes the
+      // TOCTOU race where two concurrent setup requests both pass an fs.access
+      // "file doesn't exist" check and both write, letting the loser's
+      // password silently win. With O_EXCL, only the first request can create
+      // the file; any concurrent or follow-up request gets EEXIST and is
+      // rejected as "already configured".
       try {
-        await fs.writeFile(localPasswordPath, hashedPassword + '\n', { mode: 0o600 });
+        const handle = await fs.open(localPasswordPath, 'wx', 0o600);
+        try {
+          await handle.writeFile(hashedPassword + '\n');
+        } finally {
+          await handle.close();
+        }
         localFileWritten = true;
-      } catch (e) {
+      } catch (e: unknown) {
+        const code = (e as NodeJS.ErrnoException)?.code;
+        if (code === 'EEXIST') {
+          return NextResponse.json(
+            {
+              error:
+                'Admin password is already configured locally (./.password exists). ' +
+                'To rotate it, delete ./.password and restart the server, or update PASSWORD_HASH env var.',
+            },
+            { status: 400 }
+          );
+        }
         // best-effort; non-fatal
         console.error('Failed to write .password file:', e);
       }

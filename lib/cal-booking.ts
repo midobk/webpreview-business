@@ -11,8 +11,17 @@
  * Replace CAL_HANDLE with the user's real Cal.com handle when ready.
  */
 
-export const CAL_COM_HANDLE = process.env.CAL_COM_HANDLE || "seawaysites-demo";
-export const CAL_COM_EVENT = process.env.CAL_COM_EVENT || "5min";
+// Cal.com handle/event are interpolated into https://cal.com/<handle>/<event>.
+// Restrict to a path-segment-safe charset so a misconfigured env value (e.g.
+// "../../evil.example") cannot turn the booking link into an open redirect to
+// another host.
+function calSegment(value: string, fallback: string): string {
+  const sanitized = value.toLowerCase().replace(/[^a-z0-9-]+/g, "").replace(/^-+|-+$/g, "");
+  return sanitized || fallback;
+}
+
+export const CAL_COM_HANDLE = calSegment(process.env.CAL_COM_HANDLE || "", "seawaysites-demo");
+export const CAL_COM_EVENT = calSegment(process.env.CAL_COM_EVENT || "", "5min");
 
 export const CAL_COM_SNIPPET = `
 <!-- Cal.com booking (demo-locked: link goes to "claim this website" instead) -->

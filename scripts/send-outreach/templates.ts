@@ -27,6 +27,41 @@
  * section 5 (Outreach Strategy).
  */
 
+import { createHmac } from "node:crypto";
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
+
+// Resolve the same HMAC secret used by lib/auth-server (ADMIN_SESSION_SECRET
+// -> PASSWORD_HASH -> ./.password). Kept inline so templates.ts stays
+// self-contained and runnable standalone, with no @/lib import.
+function outreachSessionSecret(): string {
+  if (process.env.ADMIN_SESSION_SECRET) return process.env.ADMIN_SESSION_SECRET;
+  if (process.env.PASSWORD_HASH) return process.env.PASSWORD_HASH;
+  try {
+    const file = path.join(process.cwd(), ".password");
+    if (existsSync(file)) {
+      const value = readFileSync(file, "utf8").trim();
+      if (value) return value;
+    }
+  } catch {
+    // unreadable; fall through
+  }
+  return "";
+}
+
+// Build a signed unsubscribe URL. /api/unsubscribe now requires an HMAC
+// signature over the slug so a leaked/guessed slug alone cannot unsubscribe a
+// lead. When no secret is configured we fall back to an unsigned URL (the
+// route will reject it), which is correct: an unconfigured deployment should
+// not be sending outreach anyway.
+function signedUnsubscribeUrl(previewBaseUrl: string, slug: string): string {
+  const encoded = encodeURIComponent(slug);
+  const secret = outreachSessionSecret();
+  if (!secret) return `${previewBaseUrl}/api/unsubscribe?lead=${encoded}`;
+  const sig = createHmac("sha256", secret).update(slug).digest("base64url");
+  return `${previewBaseUrl}/api/unsubscribe?lead=${encoded}&sig=${sig}`;
+}
+
 export type Industry =
   | "cleaning"
   | "auto_repair"
@@ -407,7 +442,7 @@ export function buildOutreach(opts: BuildOptions): BuiltEmail {
   const senderEmail = opts.senderEmail ?? DEFAULTS.senderEmail;
   const unsubscribeUrl =
     opts.unsubscribeUrl ??
-    `${previewBaseUrl}/api/unsubscribe?lead=${encodeURIComponent(opts.lead.slug)}`;
+    signedUnsubscribeUrl(previewBaseUrl, opts.lead.slug);
   const includeScreenshot = opts.includeScreenshot ?? true;
 
   const ctx: EmailContext = {

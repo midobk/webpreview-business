@@ -248,7 +248,16 @@ async function main() {
     await upsertPrototypes(supabase, prototypes);
   }
 
-  await verifyNoDrift(supabase, prototypes);
+  // Drift checks only run in explicit `--check` / `--sync` modes. In `--auto`
+  // (production prebuild) Supabase is the source of truth and the committed
+  // data/prototypes.json is a stale snapshot: admin approvals happen in
+  // Supabase and, on Vercel's read-only filesystem, cannot be written back to
+  // the JSON. Running verifyNoDrift there would compare local(stale) against
+  // remote(current) and throw on every build once any approval has happened,
+  // blocking all deploys. `--auto`'s only job is to avoid overwriting remote.
+  if (mode === 'check' || mode === 'sync') {
+    await verifyNoDrift(supabase, prototypes);
+  }
 }
 
 main().catch((error) => {

@@ -23,6 +23,15 @@ const eslintConfig = defineConfig([
     // Existing admin screens intentionally synchronize browser state from
     // fetch/storage effects; these React compiler diagnostics are not
     // actionable correctness failures for this app's client architecture.
+    // Scope the relaxation to the admin surface (UI + admin API routes + the
+    // shared data layer that reads loosely-typed Supabase/JSON records) —
+    // without a `files` filter these rules were turned off for the entire
+    // codebase, silencing real correctness issues in landing/public-api/lib.
+    files: [
+      "app/admin/**/*.{ts,tsx}",
+      "app/api/admin/**/*.{ts,tsx}",
+      "lib/data-source.ts",
+    ],
     rules: {
       "react-hooks/set-state-in-effect": "off",
       "react-hooks/purity": "off",

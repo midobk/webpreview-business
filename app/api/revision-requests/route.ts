@@ -2,8 +2,8 @@ import { createHash } from 'crypto';
 import { NextResponse } from 'next/server';
 import { getLeads } from '@/lib/data-source';
 import { getSupabase } from '@/lib/supabase';
+import { rateLimited, requestIp } from '@/lib/request-guard';
 
-const requestTimestamps = new Map<string, number[]>();
 type LeadLookup = { id: string; slug?: string; email?: string | null; notes?: string | null };
 
 function isEmail(value: unknown): value is string {
@@ -22,7 +22,13 @@ function resolveVariantBase(slug: string): string {
 
 function slugMatchesLead(slug: string, leadSlug: string | null | undefined): boolean {
   if (!leadSlug) return false;
-  return leadSlug === slug || leadSlug.startsWith(`${slug}-`);
+  // Lead slugs are stored as <business-slug>-<uuid8>. A bare startsWith would
+  // match a different business that merely shares a prefix (e.g. base "acme"
+  // matching both "acme-aaa1aaaa" and "acme-bbb2bbbb"), so the revision note
+  // could be written to the wrong lead. Require an exact match or the
+  // documented <base>-<8 hex> suffix only.
+  const escaped = slug.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`^${escaped}(-[a-f0-9]{8})?$`, 'i').test(leadSlug);
 }
 
 function findLeadForSlug<T extends LeadLookup>(leads: T[], incomingSlug: string, email: string): T | null {
@@ -38,15 +44,6 @@ function findLeadForSlug<T extends LeadLookup>(leads: T[], incomingSlug: string,
   return null;
 }
 
-function limited(ip: string) {
-  const now = Date.now();
-  const recent = (requestTimestamps.get(ip) || []).filter((time) => now - time < 60_000);
-  if (recent.length >= 5) return true;
-  recent.push(now);
-  requestTimestamps.set(ip, recent);
-  return false;
-}
-
 function appendNote(existing: string | null | undefined, request: string, marker: string) {
   const timestamp = new Date().toISOString();
   const entry = `[${timestamp}] Customer requested changes: ${request} ${marker}`;
@@ -60,8 +57,7 @@ function revisionKey(leadId: string, email: string, changeRequest: string): stri
 }
 
 export async function POST(request: Request) {
-  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
-  if (limited(ip)) {
+  if (rateLimited(`revision:${requestIp(request)}`, 5)) {
     return NextResponse.json({ error: 'Too many requests. Please try again shortly.' }, { status: 429 });
   }
 
@@ -124,9 +120,6 @@ export async function POST(request: Request) {
 
     const key = revisionKey(lead.id, email, changeRequest);
     const marker = `[revision:${key}]`;
-    const note = lead.notes?.includes(marker)
-      ? lead.notes
-      : appendNote(lead.notes, changeRequest, marker);
     const revisionId = `revision-${key.slice(0, 32)}`;
 
     if (supabase) {
@@ -138,11 +131,19 @@ export async function POST(request: Request) {
       }, { onConflict: 'id', ignoreDuplicates: true });
       if (revision.error) throw revision.error;
 
-      const update = await supabase
-        .from('leads')
-        .update({ status: 'revision_requested', notes: note, updated_at: new Date().toISOString() })
-        .eq('id', lead.id);
-      if (update.error) throw update.error;
+      // Append the note atomically via RPC. The previous read-modify-write
+      // (read notes, append in JS, write the whole string back) raced: two
+      // concurrent revision requests from the same lead clobbered each other
+      // and the losing entry was dropped. The RPC appends inside a single
+      // UPDATE (serialized by the row lock) and is idempotent on the marker,
+      // so a retry does not double-append.
+      const entry = `[${new Date().toISOString()}] Customer requested changes: ${changeRequest} ${marker}`;
+      const { error: noteError } = await supabase.rpc('append_lead_note', {
+        p_lead_id: lead.id,
+        p_marker: marker,
+        p_entry: entry,
+      });
+      if (noteError) throw noteError;
     } else if (process.env.NODE_ENV === 'production') {
       return NextResponse.json({ error: 'Revision requests require Supabase in production.' }, { status: 503 });
     } else {
@@ -153,7 +154,11 @@ export async function POST(request: Request) {
       const index = leads.findIndex((candidate) => candidate.id === lead?.id);
       if (index === -1) return NextResponse.json({ error: 'Draft not found.' }, { status: 404 });
       leads[index].status = 'revision_requested';
-      leads[index].notes = note;
+      leads[index].notes = appendNote(
+        (leads[index].notes as string | null | undefined) ?? lead?.notes,
+        changeRequest,
+        marker,
+      );
       leads[index].updated_at = new Date().toISOString();
       await fs.writeFile(leadsPath, JSON.stringify(leads, null, 2));
     }

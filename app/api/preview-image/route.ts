@@ -1,6 +1,18 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { getPrototypes } from '@/lib/data-source';
+import { isShowcaseVisible } from '@/lib/showcase-policy';
+
+// Extract the slug from a stored prototype_url / screenshot_url so we can
+// match the request slug to a prototype record. Mirrors the helper in
+// showcase-image/route.ts.
+const SLUG_FROM_URL = /(?:data\/prototypes(?:-anonymized)?|\/preview)\/([^/?#]+)/i;
+function slugFromAssetUrl(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const match = value.match(SLUG_FROM_URL);
+  return match?.[1] ? decodeURIComponent(match[1]) : null;
+}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -14,6 +26,20 @@ export async function GET(request: Request) {
   // Sanitize inputs to prevent path traversal
   if (slug.includes('..') || slug.includes('/') || file.includes('..') || file.includes('/')) {
     return NextResponse.json({ error: 'Invalid path' }, { status: 403 });
+  }
+
+  // Preview links are shareable, so a bare slug is not sufficient authorization.
+  // Only serve images for prototypes that are already public on the showcase
+  // (approved + anonymized + eligible + completed) — the same gate as
+  // /api/showcase-image. Unapproved/raw draft images are never exposed here.
+  const prototypes = await getPrototypes();
+  const isVisible = prototypes.some(
+    (prototype) =>
+      isShowcaseVisible(prototype) &&
+      [prototype.prototype_url, prototype.screenshot_url].some((url) => slugFromAssetUrl(url) === slug)
+  );
+  if (!isVisible) {
+    return NextResponse.json({ error: 'Image not available' }, { status: 404 });
   }
 
   const ext = path.extname(file).slice(1).toLowerCase();

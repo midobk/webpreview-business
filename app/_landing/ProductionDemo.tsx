@@ -108,8 +108,23 @@ const CONTENT_AT = 5;
 const PAINT_AT = 6;
 
 /** Stopwatch: counts up smoothly and lands exactly on the business's
- *  finish minute as the sequence completes; holds there while done. */
-function useStopwatch(step: number, business: Business, running: boolean) {
+ *  finish minute as the sequence completes; holds there while done.
+ *
+ *  Implemented as a component (not a hook) so the parent can remount it with
+ *  `key={business.slug}` when the business rotates — that resets the
+ *  `seconds` accumulator naturally, so the new business counts up from zero
+ *  instead of inheriting the previous business's finish time. */
+function Stopwatch({
+  step,
+  business,
+  running,
+  className,
+}: {
+  step: number;
+  business: Business;
+  running: boolean;
+  className?: string;
+}) {
   const totalSeconds = business.finishAt * 60;
   const [seconds, setSeconds] = useState(step === LAST_STEP ? totalSeconds : 0);
 
@@ -128,7 +143,12 @@ function useStopwatch(step: number, business: Business, running: boolean) {
   const whole = Math.floor(step === LAST_STEP ? totalSeconds : step === 0 ? 0 : seconds);
   const mm = String(Math.floor(whole / 60)).padStart(2, '0');
   const ss = String(whole % 60).padStart(2, '0');
-  return `${mm}:${ss}`;
+  const clock = `${mm}:${ss}`;
+  return (
+    <div className={className} aria-label={`Condensed production timeline: ${clock}`}>
+      {clock}
+    </div>
+  );
 }
 
 export default function ProductionDemo() {
@@ -168,8 +188,6 @@ export default function ProductionDemo() {
     return () => clearTimeout(timer);
   }, [inView, reduceMotion, step, businessIndex]);
 
-  const clock = useStopwatch(step, business, inView && !reduceMotion);
-
   const visibleSteps = useMemo(() => {
     const start = Math.max(0, step - 3);
     return WORK_STEPS.slice(start, step + 1).map((label, offset) => ({
@@ -192,12 +210,13 @@ export default function ProductionDemo() {
               seawaysites.com/preview/{business.slug}
             </div>
           </div>
-          <div
+          <Stopwatch
+            key={business.slug}
+            step={step}
+            business={business}
+            running={inView && !reduceMotion}
             className="v2-mono shrink-0 text-[10px] tabular-nums text-[var(--v2-lume)]"
-            aria-label={`Condensed production timeline: ${clock}`}
-          >
-            {clock}
-          </div>
+          />
         </div>
 
         <div className="grid aspect-[4/3] grid-cols-[0.9fr_1.1fr] sm:aspect-[16/10] sm:grid-cols-[0.72fr_1.28fr]">

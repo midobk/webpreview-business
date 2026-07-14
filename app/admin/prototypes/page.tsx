@@ -120,7 +120,11 @@ export default function PrototypesPage() {
         )
       );
       showToast(eligible ? 'Marked ready for showcase review' : 'Moved back to review', 'success', previous !== undefined ? async () => {
-        const undoResponse = await fetch('/api/admin/prototypes', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, showcase_eligible: previous }) });
+        // Undo must restore BOTH fields on the server, not just eligibility.
+        // The forward toggle cleared showcase_approved when eligibility was
+        // removed; restoring only showcase_eligible would leave the prototype
+        // unpublished on the server while the client renders it as Live.
+        const undoResponse = await fetch('/api/admin/prototypes', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, showcase_eligible: previous, showcase_approved: previousApproved }) });
         if (!undoResponse.ok) throw new Error('Undo request failed');
         setPrototypes((prev) =>
           prev.map((p): Prototype =>

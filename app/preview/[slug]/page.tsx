@@ -19,6 +19,9 @@ type ShowcaseSourceOverrides = Record<string, ShowcaseSourceOverride>;
 type LeadRecord = {
   slug?: string;
   business_name?: string;
+  phone?: string;
+  email?: string | null;
+  address?: string;
 };
 
 function readJsonFile<T>(filePath: string, fallback: T): T {
@@ -60,9 +63,10 @@ function resolvePrototypePath(
   if (fs.existsSync(anonymizedPath)) {
     return { filePath: anonymizedPath, requiresRuntimeAnonymization: false };
   }
-  if (fs.existsSync(sourcePath)) {
-    return { filePath: sourcePath, requiresRuntimeAnonymization: false };
-  }
+  // Do NOT fall through to the raw source HTML. Source files contain the
+  // real business name, phone, email and address; serving them without
+  // anonymization exposes lead PII at a guessable slug. Source HTML is only
+  // public via an explicit override (above), which anonymizes at render time.
   return null;
 }
 
@@ -112,6 +116,23 @@ function anonymizeSourceHtml(
       new RegExp(escapeRegExp(shortName), 'gi'),
       genericShortName
     );
+  }
+
+  // Strip the remaining PII the lead record carries. The business name alone
+  // is not enough — phone, email and address are also embedded in the source
+  // HTML (contact sections, tel:/mailto: links, footer addresses) and would
+  // leak the real business on a shareable preview link.
+  const phone = lead?.phone?.trim();
+  if (phone) {
+    anonymized = anonymized.replace(new RegExp(escapeRegExp(phone), 'gi'), '');
+  }
+  const email = lead?.email?.trim();
+  if (email) {
+    anonymized = anonymized.replace(new RegExp(escapeRegExp(email), 'gi'), '');
+  }
+  const address = lead?.address?.trim();
+  if (address) {
+    anonymized = anonymized.replace(new RegExp(escapeRegExp(address), 'gi'), '');
   }
 
   return anonymized;
@@ -182,15 +203,15 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
 }
 
 export async function generateStaticParams() {
-  // Enumerate both directories so production builds pre-render every slug
-  // referenced by the showcase. Deduplicate slugs present in both locations.
-  const dirs = [
-    path.join(process.cwd(), 'data', 'prototypes-anonymized'),
-    path.join(process.cwd(), 'data', 'prototypes'),
-  ];
+  // Pre-render only the anonymized prototypes. Enumerating data/prototypes
+  // (the raw source) would pre-render every lead's un-anonymized HTML —
+  // exposing real business PII at a guessable slug before the lead has opted
+  // in to a showcase. Raw-source slugs that are intentionally public via a
+  // showcase-source-overrides entry are rendered on demand (with runtime
+  // anonymization) and do not need to be in this list.
+  const dir = path.join(process.cwd(), 'data', 'prototypes-anonymized');
   const slugs = new Set<string>();
-  for (const dir of dirs) {
-    if (!fs.existsSync(dir)) continue;
+  if (fs.existsSync(dir)) {
     try {
       const entries = await readdir(dir, { withFileTypes: true });
       for (const entry of entries) {

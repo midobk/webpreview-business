@@ -90,6 +90,12 @@ export function requireSameOrigin(request: Request): NextResponse | null {
 
 function isValidAdminSession(value?: string) {
   if (!value) return false;
+  // Resolve the secret once. When no secret is configured (setup/misconfigured
+  // state: ADMIN_SESSION_SECRET, PASSWORD_HASH, and ./.password all absent),
+  // sessionSecret() returns '' — we must reject before computing the HMAC,
+  // otherwise a caller could forge an admin_session offline with the empty key.
+  const secret = sessionSecret();
+  if (!secret) return false;
   const [encodedPayload, signature] = value.split('.');
   if (!encodedPayload || !signature) return false;
   try {
@@ -98,7 +104,7 @@ function isValidAdminSession(value?: string) {
     const now = Math.floor(Date.now() / 1000);
     if (!Number.isFinite(issuedAt) || !Number.isFinite(expiresAt)) return false;
     if (expiresAt <= now || issuedAt > now + 60) return false;
-    const expected = createHmac('sha256', sessionSecret()).update(payload).digest('base64url');
+    const expected = createHmac('sha256', secret).update(payload).digest('base64url');
     const actualBytes = Buffer.from(signature);
     const expectedBytes = Buffer.from(expected);
     return actualBytes.length === expectedBytes.length && timingSafeEqual(actualBytes, expectedBytes);

@@ -17,6 +17,7 @@ Usage:
 import argparse
 import json
 import os
+import re
 import sys
 import time
 import urllib.request
@@ -175,10 +176,26 @@ def filter_no_website(places):
     return [p for p in places if not p.get("websiteUri")]
 
 
+def slugify_business_name(name: str) -> str:
+    """Build a filesystem- and URL-safe slug from a business display name.
+
+    The slug is used both as a URL path segment and as a filesystem directory
+    name (data/prototypes/<slug>/). It must be a single flat path segment —
+    any '/', '\\', '.', ':', or other metacharacter would either create nested
+    directories, break prototype_url.split('/') consumers, or escape the
+    prototypes root via '..'. Collapse every run of non-alphanumerics to a
+    single dash and trim, so 'A/B Plumbing & Heating' -> 'a-b-plumbing-and-heating'
+    and '../x' -> 'x'.
+    """
+    collapsed = name.lower().replace("&", "and")
+    slug = re.sub(r"[^a-z0-9]+", "-", collapsed).strip("-")
+    return slug or "untitled"
+
+
 def place_to_lead(place, industry, city, province, existing_count):
     """Convert a Google Place to Seaway Sites lead format."""
     display_name = place.get("displayName", {}).get("text", "Unknown")
-    slug = display_name.lower().replace(" ", "-").replace("'", "").replace("&", "and")
+    slug = slugify_business_name(display_name)
     return {
         "id": f"lead-{existing_count + 1:03d}",
         "business_name": display_name,

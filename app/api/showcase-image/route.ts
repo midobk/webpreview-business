@@ -20,7 +20,10 @@ import { isShowcaseVisible } from '@/lib/showcase-policy';
 //   4. fs.realpath() must also resolve under data/prototypes/ (catches
 //      symlinks that escape the allowed root).
 const SCREENSHOT_PATTERN = /^screenshot(?:-[a-z0-9-]+)?\.(?:png|jpe?g|webp)$/i;
-const PREVIEW_IMAGE_PATTERN = /^[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp|gif|svg|avif)$/i;
+// SVG is intentionally excluded: an SVG document can carry <script>/event
+// handlers and, served from our own origin with image/svg+xml, executes them
+// in-origin (stored XSS). Raster formats only.
+const PREVIEW_IMAGE_PATTERN = /^[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp|gif|avif)$/i;
 const SLUG_PATTERN = /^[a-z0-9][a-z0-9&_-]*$/i;
 
 function slugFromAssetUrl(value: unknown): string | null {
@@ -99,8 +102,6 @@ export async function GET(request: NextRequest) {
         ? 'image/jpeg'
         : ext === '.webp'
         ? 'image/webp'
-        : ext === '.svg'
-        ? 'image/svg+xml'
         : 'application/octet-stream';
 
     return new NextResponse(buffer, {

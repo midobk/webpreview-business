@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     const res = NextResponse.json({ message: 'Authentication successful' }, { status: 200 });
     res.cookies.set('admin_session', session, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: true,
       sameSite: 'strict',
       maxAge: 86400,
       path: '/',
@@ -69,7 +69,7 @@ export async function DELETE() {
   const res = NextResponse.json({ message: 'Logged out' }, { status: 200 });
   res.cookies.set('admin_session', '', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: true,
     sameSite: 'strict',
     maxAge: 0,
     path: '/',

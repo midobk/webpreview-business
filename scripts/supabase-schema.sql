@@ -51,6 +51,7 @@ CREATE INDEX IF NOT EXISTS idx_leads_city ON leads(city);
 CREATE TABLE IF NOT EXISTS prototypes (
   id TEXT PRIMARY KEY,
   lead_id TEXT REFERENCES leads(id) ON DELETE CASCADE,
+  industry TEXT,
   variant INTEGER DEFAULT 1,
   variant_name TEXT,
   prototype_url TEXT,
@@ -77,6 +78,10 @@ CREATE TABLE IF NOT EXISTS prototypes (
 CREATE INDEX IF NOT EXISTS idx_prototypes_lead ON prototypes(lead_id);
 CREATE INDEX IF NOT EXISTS idx_prototypes_status ON prototypes(generation_status);
 CREATE INDEX IF NOT EXISTS idx_prototypes_showcase ON prototypes(showcase_eligible, showcase_approved);
+-- A lead can have at most one prototype per variant number; otherwise a
+-- slug like <slug>-v1 resolves to multiple rows and the first-match wins,
+-- silently serving the wrong prototype to a customer.
+CREATE UNIQUE INDEX IF NOT EXISTS uq_prototypes_lead_variant ON prototypes(lead_id, variant);
 
 -- ============ revision_requests ============
 -- Customer feedback captured from a prototype preview. RLS stays deny-by-default;

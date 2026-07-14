@@ -3,6 +3,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabase';
+import { rateLimited, requestIp } from '@/lib/request-guard';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const URL_PATTERN = /^https?:\/\/.+\..+/i;
@@ -15,7 +16,6 @@ const LIMITS = {
 const MAX_BODY_BYTES = 20_000;
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 5;
-const requestLog = new Map<string, { count: number; resetAt: number }>();
 
 function readString(value: unknown, maxLength: number) {
   return typeof value === 'string' ? value.trim().slice(0, maxLength) : '';
@@ -36,19 +36,18 @@ export async function POST(request: Request) {
     if (contentLength > MAX_BODY_BYTES) {
       return NextResponse.json({ error: 'Request is too large.' }, { status: 413 });
     }
+    // A chunked Transfer-Encoding sends no Content-Length, so the guard above
+    // is bypassed and request.json() would read an unbounded body. Legitimate
+    // form submissions always send Content-Length; reject chunked outright.
+    if (request.headers.get('transfer-encoding')) {
+      return NextResponse.json({ error: 'Request is too large.' }, { status: 413 });
+    }
 
-    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
-    const nowMs = Date.now();
-    const current = requestLog.get(ip);
-    if (!current || current.resetAt <= nowMs) {
-      requestLog.set(ip, { count: 1, resetAt: nowMs + RATE_LIMIT_WINDOW_MS });
-    } else if (current.count >= RATE_LIMIT_MAX) {
+    if (rateLimited(`leads:${requestIp(request)}`, RATE_LIMIT_MAX, RATE_LIMIT_WINDOW_MS)) {
       return NextResponse.json(
         { error: 'Too many requests. Please try again in a minute.' },
         { status: 429, headers: { 'Retry-After': '60' } }
       );
-    } else {
-      current.count += 1;
     }
 
     const body = await request.json().catch(() => null);

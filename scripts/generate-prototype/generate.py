@@ -193,7 +193,11 @@ def validate_generated_html(body: str):
     """Fail closed when model output is empty, generic commentary, or prompt leakage."""
     if not body or not re.search(r"<(header|main|section|footer)\b", body, re.I):
         raise RuntimeError("Generated HTML did not contain the required semantic page structure")
-    leaked = re.search(r"(as an ai|here is|certainly|thinking process|prompt:|```)", body, re.I)
+    # Detect model commentary / prompt leakage. "here is" and "certainly" were
+    # removed: both occur routinely in legitimate marketing copy (e.g. a hero
+    # line "Here is a look at our recent work" or body "You can certainly count
+    # on us"), and a false positive here aborts the whole --top-scored batch.
+    leaked = re.search(r"(as an ai|thinking process|prompt:|```)", body, re.I)
     if leaked:
         raise RuntimeError(f"Generated HTML contains model/commentary text near: {leaked.group(0)!r}")
 
@@ -394,7 +398,13 @@ def main():
 
         print(f"Generating for top {len(candidates)} leads without prototypes")
         for lead in candidates:
-            generate_prototype(lead["slug"])
+            # Isolate per-lead failures so one bad generation (a transient
+            # model error, a validation false positive, a network blip) does
+            # not abort the remaining candidates in the batch.
+            try:
+                generate_prototype(lead["slug"])
+            except Exception as e:  # noqa: BLE001 - batch isolation
+                print(f"  ✗ Skipping {lead['slug']}: {e}")
     else:
         print("Specify slug or --top-scored")
         return
