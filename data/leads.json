@@ -6229,5 +6229,81 @@
     "status": "email_drafted",
     "created_at": "2026-06-23T05:38:00Z",
     "updated_at": "2026-06-24T19:29:16.509618+00:00Z"
+  },
+  {
+    "id": "lead-169",
+    "business_name": "Eastcourt Mall \u2022 Plaza REIT Cornwall",
+    "slug": "eastcourt-mall-\u2022-plaza-reit-cornwall",
+    "industry": "coffee shop",
+    "city": "Cornwall",
+    "province": "ON",
+    "country": "Canada",
+    "address": "1380 Second St E, Cornwall, ON K6J 1J1",
+    "phone": "+1 613-932-9622",
+    "email": null,
+    "email_source_url": null,
+    "website_url": null,
+    "website_status": "none",
+    "google_maps_url": "https://maps.google.com/?cid=4620991187892998235&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "social_urls": [],
+    "source_urls": [
+      "https://maps.google.com/?cid=4620991187892998235&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+    ],
+    "place_id": "ChIJDXi51QgazEwRW5CSmAAPIUA",
+    "types": [
+      "shopping_mall",
+      "point_of_interest",
+      "establishment"
+    ],
+    "description": "Local coffee shop business in Cornwall, ON.",
+    "services": [],
+    "lead_score": 0,
+    "score_reasoning": null,
+    "complexity_level": "unknown",
+    "contact_safety_status": "pending",
+    "contact_safety_reasoning": null,
+    "status": "discovered",
+    "created_at": "2026-07-14T01:35:54.492212+00:00Z",
+    "updated_at": "2026-07-14T01:35:54.492235+00:00Z"
+  },
+  {
+    "id": "lead-170",
+    "business_name": "Eastcourt Mall",
+    "slug": "eastcourt-mall",
+    "industry": "coffee shop",
+    "city": "Cornwall",
+    "province": "ON",
+    "country": "Canada",
+    "address": "1380 Second St E, Cornwall, ON K6H 2B6",
+    "phone": "",
+    "email": null,
+    "email_source_url": null,
+    "website_url": null,
+    "website_status": "none",
+    "google_maps_url": "https://maps.google.com/?cid=16214790768791061829&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA",
+    "social_urls": [],
+    "source_urls": [
+      "https://maps.google.com/?cid=16214790768791061829&g_mp=Cidnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaFRleHQQAhgEIAA"
+    ],
+    "place_id": "ChIJZ-UXuggazEwRRQUTaUuCBuE",
+    "types": [
+      "bus_stop",
+      "shopping_mall",
+      "transit_stop",
+      "transit_station",
+      "transportation_service",
+      "point_of_interest",
+      "establishment"
+    ],
+    "description": "Local coffee shop business in Cornwall, ON.",
+    "services": [],
+    "lead_score": 0,
+    "score_reasoning": null,
+    "complexity_level": "unknown",
+    "contact_safety_status": "pending",
+    "contact_safety_reasoning": null,
+    "status": "discovered",
+    "created_at": "2026-07-14T01:35:54.492254+00:00Z",
+    "updated_at": "2026-07-14T01:35:54.492258+00:00Z"
   }
 ]
