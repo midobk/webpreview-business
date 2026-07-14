@@ -5,6 +5,7 @@ import ShowcaseHero from './_components/ShowcaseHero';
 import ShowcaseCTA from './_components/ShowcaseCTA';
 import '../_landing/v2.css';
 import { SITE_URL } from '@/lib/site-config';
+import { isShowcaseVisible } from '@/lib/showcase-policy';
 
 export const metadata = {
   title: 'Showcase — Seaway Sites',
@@ -127,11 +128,7 @@ async function loadShowcase(): Promise<
   // Only show: approved + completed + showcase_eligible (passed the scoring gate)
   // The scoring gate (score_showcase.py) ensures quality + proper anonymization
   const visible = allPrototypes.filter(
-    (p) =>
-      p.showcase_approved === true &&
-      p.generation_status === 'completed' &&
-      p.showcase_eligible === true &&
-      p.anonymized === true
+    isShowcaseVisible
   );
 
   return visible.map((p) => {

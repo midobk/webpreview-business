@@ -122,14 +122,15 @@ function anonymizeSourceHtml(
  * resolve against /preview/... instead of the prototype directory. Route all
  * local prototype images through the path-constrained image endpoint.
  */
-function rewriteLocalPrototypeAssets(html: string, slug: string): string {
+function rewriteLocalPrototypeAssets(html: string, slug: string, publicShowcasePreview: boolean): string {
   const imagesDirectory = path.join(process.cwd(), 'data', 'prototypes', slug, 'images');
   if (!fs.existsSync(imagesDirectory)) return html;
 
-  const publicImageUrl = (filename: string) =>
-    `/api/showcase-image?path=${encodeURIComponent(
-      path.posix.join('data', 'prototypes', slug, 'images', filename)
-    )}`;
+  const publicImageUrl = (filename: string) => publicShowcasePreview
+    ? `/api/showcase-image?path=${encodeURIComponent(
+        path.posix.join('data', 'prototypes', slug, 'images', filename)
+      )}`
+    : `/api/preview-image?slug=${encodeURIComponent(slug)}&file=${encodeURIComponent(filename)}`;
 
   return html
     .replace(
@@ -152,12 +153,15 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
     notFound();
   }
 
+  const publicShowcasePreview = Boolean(override?.useSourcePrototype) ||
+    resolved.filePath.includes(`${path.sep}prototypes-anonymized${path.sep}`);
+
   let htmlContent = fs.readFileSync(resolved.filePath, 'utf8');
 
   if (resolved.requiresRuntimeAnonymization && override) {
     htmlContent = anonymizeSourceHtml(htmlContent, slug, override);
   }
-  htmlContent = rewriteLocalPrototypeAssets(htmlContent, slug);
+  htmlContent = rewriteLocalPrototypeAssets(htmlContent, slug, publicShowcasePreview);
 
   const titleMatch = htmlContent.match(/<title>(.*?)<\/title>/i);
   const title = titleMatch ? titleMatch[1] : `Preview for ${slug}`;
@@ -172,7 +176,7 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
         // animate the draft, but cannot reach the parent app or its cookies.
         sandbox="allow-scripts"
       />
-      <RevisionRequest slug={slug} />
+      {!publicShowcasePreview && <RevisionRequest slug={slug} />}
     </div>
   );
 }

@@ -16,6 +16,8 @@ const eslintConfig = defineConfig([
     "graphify-out/**",
     ".playwright-cli/**",
     "lib/data-bundle/bundle.ts",
+    "scripts/build-data-bundle.js",
+    "scripts/screenshot/**",
   ]),
   {
     // Existing admin screens intentionally synchronize browser state from

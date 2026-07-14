@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { requireAdmin, requireSameOrigin } from '@/lib/auth-server';
 import { getPrototypes, DATA_SOURCE } from '@/lib/data-source';
 import { getSupabase } from '@/lib/supabase';
+import { isShowcaseGenerationComplete } from '@/lib/showcase-policy';
 
 function prototypeSlug(proto: any): string {
   const url = typeof proto.prototype_url === 'string' ? proto.prototype_url : '';
@@ -12,8 +13,7 @@ function prototypeSlug(proto: any): string {
 }
 
 function canPublish(proto: any) {
-  const status = String(proto.generation_status || '').toLowerCase();
-  return ['completed', 'complete', 'generated'].includes(status) &&
+  return isShowcaseGenerationComplete(proto.generation_status) &&
     proto.showcase_eligible === true &&
     proto.anonymized === true &&
     Boolean(proto.prototype_url) &&

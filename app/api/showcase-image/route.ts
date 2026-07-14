@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { getPrototypes } from '@/lib/data-source';
+import { isShowcaseVisible } from '@/lib/showcase-policy';
 
 // GET /api/showcase-image?path=data/prototypes/<slug>/screenshot.png
 // GET /api/showcase-image?path=data/prototypes/<slug>/images/<filename>
@@ -20,6 +22,12 @@ import path from 'path';
 const SCREENSHOT_PATTERN = /^screenshot(?:-[a-z0-9-]+)?\.(?:png|jpe?g|webp)$/i;
 const PREVIEW_IMAGE_PATTERN = /^[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp|gif|svg|avif)$/i;
 const SLUG_PATTERN = /^[a-z0-9][a-z0-9&_-]*$/i;
+
+function slugFromAssetUrl(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const match = value.match(/(?:data\/prototypes(?:-anonymized)?|\/preview)\/([^/?#]+)/i);
+  return match?.[1] ? decodeURIComponent(match[1]) : null;
+}
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -69,6 +77,15 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    const prototypes = await getPrototypes();
+    const isApprovedAsset = prototypes.some((prototype) =>
+      isShowcaseVisible(prototype) &&
+      [prototype.prototype_url, prototype.screenshot_url].some((url) => slugFromAssetUrl(url) === segments[0])
+    );
+    if (!isApprovedAsset) {
+      return NextResponse.json({ error: 'Image not available' }, { status: 404 });
+    }
+
     const resolved = await fs.realpath(candidate);
     if (!resolved.startsWith(allowedRoot + path.sep)) {
       return NextResponse.json({ error: 'Invalid path' }, { status: 403 });
