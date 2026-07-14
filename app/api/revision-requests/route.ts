@@ -77,15 +77,32 @@ export async function POST(request: Request) {
     if (supabase) {
       // Lead slugs are stored as `<business-slug>-<uuid8>` in Supabase.
       // Variant previews post the directory slug (`<business-slug>-vN`),
-      // so resolve the base before querying.
+      // so resolve the base before querying. Try exact matches first
+      // (handles both the variant URL and the base slug if it was stored
+      // without a uuid suffix); only fall back to a prefix scan if needed,
+      // and never use `maybeSingle()` on a prefix query — duplicate draft
+      // requests can produce multiple leads sharing the same base slug,
+      // which would 500 the route before the email check ever runs.
       const baseSlug = resolveVariantBase(slug);
-      const result = await supabase
+      const candidates = Array.from(new Set([slug, baseSlug]));
+
+      const exactResult = await supabase
         .from('leads')
         .select('id,slug,email,notes')
-        .like('slug', `${baseSlug}%`)
-        .maybeSingle();
-      if (result.error) throw result.error;
-      lead = result.data;
+        .in('slug', candidates)
+        .limit(1);
+      if (exactResult.error) throw exactResult.error;
+      lead = exactResult.data?.[0] ?? null;
+
+      if (!lead) {
+        const prefixResult = await supabase
+          .from('leads')
+          .select('id,slug,email,notes')
+          .like('slug', `${baseSlug}%`);
+        if (prefixResult.error) throw prefixResult.error;
+        lead =
+          (prefixResult.data || []).find((row) => slugMatchesLead(baseSlug, row.slug)) ?? null;
+      }
     } else {
       const leads = (await getLeads()) as LeadLookup[];
       lead = findLeadForSlug(leads, slug);

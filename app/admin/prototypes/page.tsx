@@ -93,7 +93,9 @@ export default function PrototypesPage() {
   };
 
   const toggleEligible = async (id: string, eligible: boolean) => {
-    const previous = prototypes.find((p) => p.id === id)?.showcase_eligible;
+    const target = prototypes.find((p) => p.id === id);
+    const previous = target?.showcase_eligible;
+    const previousApproved = target?.showcase_approved ?? false;
     setUpdating(true);
     try {
       const res = await fetch('/api/admin/prototypes', {
@@ -102,10 +104,29 @@ export default function PrototypesPage() {
         body: JSON.stringify({ id, showcase_eligible: eligible }),
       });
       if (!res.ok) throw new Error('Eligibility update failed');
-      setPrototypes((prev) => prev.map((p) => p.id === id ? { ...p, showcase_eligible: eligible } : p));
+      // Mirror the server side: when a prototype is moved back out of
+      // eligibility, the API also clears `showcase_approved` so the card
+      // disappears from the public showcase. The local state has to match
+      // that, otherwise the admin card, count and undo button keep showing
+      // the prototype as live even after Supabase/local JSON unpublished it.
+      setPrototypes((prev) =>
+        prev.map((p): Prototype =>
+          p.id === id
+            ? eligible
+              ? { ...p, showcase_eligible: eligible }
+              : { ...p, showcase_eligible: eligible, showcase_approved: false }
+            : p
+        )
+      );
       showToast(eligible ? 'Marked ready for showcase review' : 'Moved back to review', 'success', previous !== undefined ? async () => {
         await fetch('/api/admin/prototypes', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, showcase_eligible: previous }) });
-        setPrototypes((prev) => prev.map((p) => p.id === id ? { ...p, showcase_eligible: previous } : p));
+        setPrototypes((prev) =>
+          prev.map((p): Prototype =>
+            p.id === id
+              ? { ...p, showcase_eligible: previous as boolean, showcase_approved: previousApproved }
+              : p
+          )
+        );
       } : undefined);
     } catch (err) {
       console.error(err);
