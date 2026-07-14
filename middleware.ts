@@ -17,6 +17,29 @@ async function checkPasswordSet(req: NextRequest): Promise<boolean> {
   }
 }
 
+function envSessionSecretAvailable(): boolean {
+  return !!(process.env.ADMIN_SESSION_SECRET || process.env.PASSWORD_HASH);
+}
+
+async function validateSessionCookie(req: NextRequest, value: string): Promise<boolean> {
+  // Fast path: secret is in the env (Vercel + .env.local). The edge
+  // validator handles HMAC verification using Web Crypto.
+  if (envSessionSecretAvailable()) {
+    return isValidAdminSession(value);
+  }
+  // Slow path: secret lives only in ./password. The edge runtime cannot
+  // read the filesystem, so delegate to the Node-runtime endpoint.
+  try {
+    const url = new URL('/api/admin/check-session', req.url);
+    const res = await fetch(url, { headers: { cookie: req.headers.get('cookie') || '' } });
+    if (!res.ok) return false;
+    const data = await res.json();
+    return !!data.isValid;
+  } catch {
+    return false;
+  }
+}
+
 export async function middleware(request: NextRequest) {
   // Skip API routes, static files
   if (request.nextUrl.pathname.startsWith('/api/') ||
@@ -46,7 +69,7 @@ export async function middleware(request: NextRequest) {
 
     // Check session cookie for protected admin pages
     const session = request.cookies.get('admin_session');
-    if (!session || !(await isValidAdminSession(session.value))) {
+    if (!session || !(await validateSessionCookie(request, session.value))) {
       // Allow the login page itself
       if (request.nextUrl.pathname === '/admin') {
         return NextResponse.next();

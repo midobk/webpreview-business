@@ -5,14 +5,44 @@
 //
 // IMPORTANT: This is server-only (uses next/server). Do not import from middleware.
 
+import { existsSync, readFileSync } from 'fs';
+import path from 'path';
 import { NextResponse } from 'next/server';
 import { createHmac, timingSafeEqual } from 'crypto';
 
 const ADMIN_COOKIE = 'admin_session';
 const SESSION_TTL_SECONDS = 60 * 60 * 24;
+const LOCAL_PASSWORD_PATH = path.join(process.cwd(), '.password');
 
-function sessionSecret() {
-  return process.env.ADMIN_SESSION_SECRET || process.env.PASSWORD_HASH || '';
+/**
+ * Resolve the HMAC secret used to sign the admin session cookie.
+ *
+ * Priority:
+ *   1. process.env.ADMIN_SESSION_SECRET (explicit, recommended)
+ *   2. process.env.PASSWORD_HASH (already loaded by the app for login)
+ *   3. The contents of the local .password file. After the setup wizard
+ *      runs, this file holds the bcrypt hash; that hash is high-entropy
+ *      enough to act as an HMAC key. Reading it here keeps the supported
+ *      file-only local-dev setup (no env vars) producing a valid session.
+ */
+export function sessionSecret(): string {
+  return (
+    process.env.ADMIN_SESSION_SECRET ||
+    process.env.PASSWORD_HASH ||
+    readLocalPasswordSecret()
+  );
+}
+
+function readLocalPasswordSecret(): string {
+  try {
+    if (existsSync(LOCAL_PASSWORD_PATH)) {
+      const value = readFileSync(LOCAL_PASSWORD_PATH, 'utf8').trim();
+      if (value) return value;
+    }
+  } catch {
+    // unreadable; fall through to empty string
+  }
+  return '';
 }
 
 export function createAdminSession(now = Math.floor(Date.now() / 1000)) {
@@ -55,6 +85,31 @@ function isValidAdminSession(value?: string) {
     if (!Number.isFinite(issuedAt) || !Number.isFinite(expiresAt)) return false;
     if (expiresAt <= now || issuedAt > now + 60) return false;
     const expected = createHmac('sha256', sessionSecret()).update(payload).digest('base64url');
+    const actualBytes = Buffer.from(signature);
+    const expectedBytes = Buffer.from(expected);
+    return actualBytes.length === expectedBytes.length && timingSafeEqual(actualBytes, expectedBytes);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Same validation as `isValidAdminSession`, but the caller supplies the
+ * secret explicitly. Used by the /api/admin/check-session route so that
+ * the middleware can validate sessions even when the secret lives only in
+ * the .password file (which the edge runtime cannot read).
+ */
+export function isValidAdminSessionWithSecret(value: string | undefined, secret: string) {
+  if (!value || !secret) return false;
+  const [encodedPayload, signature] = value.split('.');
+  if (!encodedPayload || !signature) return false;
+  try {
+    const payload = Buffer.from(encodedPayload, 'base64url').toString('utf8');
+    const [issuedAt, expiresAt] = payload.split('.').map(Number);
+    const now = Math.floor(Date.now() / 1000);
+    if (!Number.isFinite(issuedAt) || !Number.isFinite(expiresAt)) return false;
+    if (expiresAt <= now || issuedAt > now + 60) return false;
+    const expected = createHmac('sha256', secret).update(payload).digest('base64url');
     const actualBytes = Buffer.from(signature);
     const expectedBytes = Buffer.from(expected);
     return actualBytes.length === expectedBytes.length && timingSafeEqual(actualBytes, expectedBytes);

@@ -9,6 +9,34 @@ function isEmail(value: unknown): value is string {
   return typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 }
 
+// Variant previews are served from `data/prototypes/<lead-slug>-vN/index.html`,
+// so the URL slug ends in `-v<digits>`. The lead record itself only stores
+// the base slug, so strip the variant suffix before looking it up.
+const VARIANT_SLUG_PATTERN = /^(.+)-v\d+$/;
+
+function resolveVariantBase(slug: string): string {
+  const match = VARIANT_SLUG_PATTERN.exec(slug);
+  return match ? match[1] : slug;
+}
+
+function slugMatchesLead(slug: string, leadSlug: string | null | undefined): boolean {
+  if (!leadSlug) return false;
+  return leadSlug === slug || leadSlug.startsWith(`${slug}-`);
+}
+
+function findLeadForSlug<T extends LeadLookup>(leads: T[], incomingSlug: string): T | null {
+  const candidates = [incomingSlug, resolveVariantBase(incomingSlug)];
+  for (const candidate of candidates) {
+    const exact = leads.find((lead) => lead.slug === candidate);
+    if (exact) return exact;
+  }
+  for (const candidate of candidates) {
+    const prefix = leads.find((lead) => slugMatchesLead(candidate, lead.slug));
+    if (prefix) return prefix;
+  }
+  return null;
+}
+
 function limited(ip: string) {
   const now = Date.now();
   const recent = (requestTimestamps.get(ip) || []).filter((time) => now - time < 60_000);
@@ -47,16 +75,20 @@ export async function POST(request: Request) {
     let lead: LeadLookup | null = null;
 
     if (supabase) {
+      // Lead slugs are stored as `<business-slug>-<uuid8>` in Supabase.
+      // Variant previews post the directory slug (`<business-slug>-vN`),
+      // so resolve the base before querying.
+      const baseSlug = resolveVariantBase(slug);
       const result = await supabase
         .from('leads')
         .select('id,slug,email,notes')
-        .eq('slug', slug)
+        .like('slug', `${baseSlug}%`)
         .maybeSingle();
       if (result.error) throw result.error;
       lead = result.data;
     } else {
-      const leads = await getLeads();
-      lead = (leads as LeadLookup[]).find((candidate) => candidate.slug === slug) || null;
+      const leads = (await getLeads()) as LeadLookup[];
+      lead = findLeadForSlug(leads, slug);
     }
 
     if (!lead || !lead.email || lead.email.trim().toLowerCase() !== email) {
