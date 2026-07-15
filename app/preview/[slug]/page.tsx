@@ -57,16 +57,42 @@ function resolvePrototypePath(
   );
   const sourcePath = path.join(process.cwd(), 'data', 'prototypes', slug, 'index.html');
 
+  // Explicit showcase override — the slug is intentionally public via the
+  // raw source, anonymized at render time. Used for showcase rows that
+  // need to track the live source HTML.
   if (override?.useSourcePrototype && fs.existsSync(sourcePath)) {
     return { filePath: sourcePath, requiresRuntimeAnonymization: true };
   }
+
+  // The anonymized copy is the normal public surface for a prototype.
   if (fs.existsSync(anonymizedPath)) {
     return { filePath: anonymizedPath, requiresRuntimeAnonymization: false };
   }
-  // Do NOT fall through to the raw source HTML. Source files contain the
-  // real business name, phone, email and address; serving them without
-  // anonymization exposes lead PII at a guessable slug. Source HTML is only
-  // public via an explicit override (above), which anonymizes at render time.
+
+  // Fresh drafts (just generated, anonymization not yet run) only exist
+  // under `data/prototypes/<slug>/index.html`. The outreach link builder
+  // sends recipients to `/preview/${lead.slug}` immediately after
+  // generation, before the anonymized twin exists, so refusing to render
+  // here would 404 every fresh outreach link. We serve the raw source
+  // through the same runtime anonymizer the override path uses, but
+  // *only* if the lead record exists in `data/leads.json` — the
+  // anonymizer's whole job is to replace that record's PII with generic
+  // placeholders, and serving raw HTML without it would expose the
+  // lead's real business name, phone, email, and address at a guessable
+  // slug. A signed-token / access-controlled preview path is the proper
+  // long-term fix (per P2 review note); this is the safe-enough MVP
+  // fallback that keeps the outreach loop functional.
+  if (fs.existsSync(sourcePath)) {
+    const leads = readJsonFile<LeadRecord[]>(
+      path.join(process.cwd(), 'data', 'leads.json'),
+      []
+    );
+    const lead = leads.find((candidate) => candidate.slug === slug);
+    if (lead) {
+      return { filePath: sourcePath, requiresRuntimeAnonymization: true };
+    }
+  }
+
   return null;
 }
 

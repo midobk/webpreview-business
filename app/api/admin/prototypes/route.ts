@@ -86,7 +86,15 @@ export async function PATCH(request: Request) {
       if (current.error) return NextResponse.json({ error: current.error.message }, { status: 500 });
       if (!current.data) return NextResponse.json({ error: 'Prototype not found' }, { status: 404 });
 
-      const next = { ...current.data, showcase_approved, showcase_eligible };
+      // Build `next` from the current row + only the fields the caller
+      // actually provided. Spreading both `showcase_approved` and
+      // `showcase_eligible` unconditionally would clobber the
+      // pre-existing `showcase_eligible` with `undefined` on a normal
+      // approve request (which only sends `showcase_approved`), making
+      // the `canPublish(next)` check fail with 409 every time.
+      const next: Record<string, unknown> = { ...current.data };
+      if (showcase_approved !== undefined) next.showcase_approved = showcase_approved;
+      if (showcase_eligible !== undefined) next.showcase_eligible = showcase_eligible;
       if (showcase_approved === true && !canPublish(next)) {
         return NextResponse.json({ error: 'Prototype must be completed, eligible, anonymized, and have both preview URLs before approval.' }, { status: 409 });
       }
@@ -123,7 +131,11 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: 'Prototype not found' }, { status: 404 });
     }
 
-    const next = { ...prototypes[index], showcase_approved, showcase_eligible };
+    // Build `next` from the current row + only the fields the caller
+    // actually provided (same P1 fix as the Supabase branch above).
+    const next: Record<string, unknown> = { ...prototypes[index] };
+    if (showcase_approved !== undefined) next.showcase_approved = showcase_approved;
+    if (showcase_eligible !== undefined) next.showcase_eligible = showcase_eligible;
     if (showcase_approved === true && !canPublish(next)) {
       return NextResponse.json({ error: 'Prototype must be completed, eligible, anonymized, and have both preview URLs before approval.' }, { status: 409 });
     }
