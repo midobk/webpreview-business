@@ -1576,3 +1576,21 @@ The detailed quality and implementation notes are in `docs/PROTOTYPE_GENERATION_
 - Outcome: no new actionable findings. The owner confirmed the P2 from the previous Codex review is already fixed; nothing to address, no code changes, no PR comment needed.
 - No commits or pushes this tick.
 - Telegram update sent to chat 7264128352.
+
+## 25. PR10 deep-dive audit + verification — 2026-07-16 14:32 ET
+
+- 4 parallel verifier subagents audited PR #10 end-to-end on head `9e2f32a`. The auth/security subagent found a **new P1 blocker** the Codex review had missed: the empty-secret guard in `isValidAdminSession()` could be bypassed when `./password` contained a non-bcrypt non-empty string (e.g. the current dev `PLAINTEXT=1234`). Adversarial probe: forged a valid HMAC session offline using the known plaintext secret; the server accepted it. Read-modify-write redaction in `readLocalPasswordSecret()` was trusting any file content.
+- Fix landed in commit `5716c51`:
+  - `lib/auth-server.ts:readLocalPasswordSecret()` and `lib/auth.ts:getPasswordHashFromFile()` now require the file content to match `/^\$2[abxy]\$\d{2}\$[./A-Za-z0-9]{53}$/` (bcrypt hash format) before using it as an HMAC key or password hash. Symmetric guard, fail-closed on malformed content.
+  - 4× P2 fixes: `requireSameOrigin()` added to pre-auth admin login/setup POSTs (CSRF); `trg_revision_requests_updated` trigger added to `scripts/supabase-schema.sql` (schema drift); `SLUG_PATTERN` unified across revision-requests / preview-image / showcase-image; `append_lead_note` RPC now has explicit `REVOKE`/`GRANT` to service_role in both the migration and the schema mirror.
+  - 8× P3 polish: H2 subhead qualified ("Most eligible within the hour."), ShowcaseCTA "usually" → "most eligible", stale `webpreview-business.vercel.app` comment, v2.css `LiveBuild` → `ProductionDemo` (2 places), `lib/sync.ts` case-insensitive `generation_status` check, `ADMIN_OWNED_COLUMNS` actually used as a runtime guard inside `upsertMetadataOnly`, `capture.js ensureDevServer()` fast-fail, removed unused `SESSION_TTL_SECONDS` from `lib/auth-edge.ts`, 7 catch-block `e`/`err` cleanup + 1 unused `IconCheck` import removed.
+- Final verification (re-run on `5716c51`):
+  - `npx tsc --noEmit` → clean
+  - `npm run lint` → 0 errors / 0 warnings (was 9 warnings on `9e2f32a`)
+  - `npm run check:showcase-metadata` → 24 prototypes, 11 showcase-visible
+  - `npx next build` → succeeded, 25 routes
+  - Adversarial probe (forged session with `PLAINTEXT=1234`): now rejected (was accepted on `9e2f32a`)
+- Final commit: `5716c51 Address PR10 deep-dive audit: bcrypt .password guard, admin CSRF, schema drift, slug whitelist`
+- PR comment posted: https://github.com/midobk/webpreview-business/pull/10#issuecomment-4995524833
+- Remaining CI: `validate-showcase` GitHub Actions job is still red due to repo-level billing failure ("The job was not started because recent account payments have failed"). Local `check:showcase-metadata` step (the only one that runs without secrets) passes. No code change can resolve this — needs a billing action in repo settings.
+- **VERDICT: MERGE**
