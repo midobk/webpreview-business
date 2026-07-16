@@ -81,6 +81,29 @@ CREATE INDEX IF NOT EXISTS idx_prototypes_showcase ON prototypes(showcase_eligib
 -- A lead can have at most one prototype per variant number; otherwise a
 -- slug like <slug>-v1 resolves to multiple rows and the first-match wins,
 -- silently serving the wrong prototype to a customer.
+--
+-- Backfill distinct variant numbers for legacy rows that share a lead_id
+-- before creating the unique index. Seed data may have multiple prototypes
+-- per lead with variant = 1 (the default), which would violate the index.
+-- Assign 1, 2, 3, ... ordered by created_at for each lead group.
+DO $$
+BEGIN
+  WITH ranked AS (
+    SELECT id,
+           ROW_NUMBER() OVER (
+             PARTITION BY lead_id
+             ORDER BY COALESCE(variant, 1), created_at
+           ) AS new_variant
+    FROM prototypes
+    WHERE lead_id IS NOT NULL
+  )
+  UPDATE prototypes p
+  SET variant = ranked.new_variant
+  FROM ranked
+  WHERE p.id = ranked.id
+    AND COALESCE(p.variant, 1) <> ranked.new_variant;
+END $$;
+
 CREATE UNIQUE INDEX IF NOT EXISTS uq_prototypes_lead_variant ON prototypes(lead_id, variant);
 
 -- ============ revision_requests ============
