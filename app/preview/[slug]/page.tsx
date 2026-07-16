@@ -2,10 +2,12 @@ import { notFound } from 'next/navigation';
 import path from 'path';
 import fs from 'fs';
 import { readdir } from 'fs/promises';
+import { isValidDraftPreviewToken } from '@/lib/draft-preview-token';
 import { RevisionRequest } from './RevisionRequest';
 
 interface PreviewPageProps {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ token?: string | string[] }>;
 }
 
 type ShowcaseSourceOverride = {
@@ -24,6 +26,14 @@ type LeadRecord = {
   address?: string;
 };
 
+const SLUG_PATTERN = /^[a-z0-9][a-z0-9&_-]{0,159}$/i;
+
+type ResolvedPrototype = {
+  filePath: string;
+  requiresRuntimeAnonymization: boolean;
+  access: 'private' | 'showcase';
+};
+
 function readJsonFile<T>(filePath: string, fallback: T): T {
   try {
     return JSON.parse(fs.readFileSync(filePath, 'utf8')) as T;
@@ -40,14 +50,16 @@ function loadSourceOverrides(): ShowcaseSourceOverrides {
 }
 
 /**
- * Most public previews use their pre-generated anonymized HTML. A small number
- * of upgraded legacy prototypes may explicitly use the current source HTML;
- * those are anonymized at render time using their lead metadata.
+ * Customer drafts use the raw source HTML, but only when the URL carries a
+ * valid signed token for that exact slug. Public showcase previews continue to
+ * use pre-generated anonymized HTML, or an explicitly approved source override
+ * that is anonymized at render time.
  */
 function resolvePrototypePath(
   slug: string,
+  token: string | undefined,
   override?: ShowcaseSourceOverride
-): { filePath: string; requiresRuntimeAnonymization: boolean } | null {
+): ResolvedPrototype | null {
   const anonymizedPath = path.join(
     process.cwd(),
     'data',
@@ -57,40 +69,31 @@ function resolvePrototypePath(
   );
   const sourcePath = path.join(process.cwd(), 'data', 'prototypes', slug, 'index.html');
 
-  // Explicit showcase override — the slug is intentionally public via the
-  // raw source, anonymized at render time. Used for showcase rows that
-  // need to track the live source HTML.
+  // A valid private link takes precedence over an anonymized copy so the
+  // customer sees the actual draft prepared for their business and can use the
+  // revision-request control. A bare or invalid link never reaches raw HTML.
+  if (fs.existsSync(sourcePath) && isValidDraftPreviewToken(slug, token)) {
+    return {
+      filePath: sourcePath,
+      requiresRuntimeAnonymization: false,
+      access: 'private',
+    };
+  }
+
   if (override?.useSourcePrototype && fs.existsSync(sourcePath)) {
-    return { filePath: sourcePath, requiresRuntimeAnonymization: true };
+    return {
+      filePath: sourcePath,
+      requiresRuntimeAnonymization: true,
+      access: 'showcase',
+    };
   }
 
-  // The anonymized copy is the normal public surface for a prototype.
   if (fs.existsSync(anonymizedPath)) {
-    return { filePath: anonymizedPath, requiresRuntimeAnonymization: false };
-  }
-
-  // Fresh drafts (just generated, anonymization not yet run) only exist
-  // under `data/prototypes/<slug>/index.html`. The outreach link builder
-  // sends recipients to `/preview/${lead.slug}` immediately after
-  // generation, before the anonymized twin exists, so refusing to render
-  // here would 404 every fresh outreach link. We serve the raw source
-  // through the same runtime anonymizer the override path uses, but
-  // *only* if the lead record exists in `data/leads.json` — the
-  // anonymizer's whole job is to replace that record's PII with generic
-  // placeholders, and serving raw HTML without it would expose the
-  // lead's real business name, phone, email, and address at a guessable
-  // slug. A signed-token / access-controlled preview path is the proper
-  // long-term fix (per P2 review note); this is the safe-enough MVP
-  // fallback that keeps the outreach loop functional.
-  if (fs.existsSync(sourcePath)) {
-    const leads = readJsonFile<LeadRecord[]>(
-      path.join(process.cwd(), 'data', 'leads.json'),
-      []
-    );
-    const lead = leads.find((candidate) => candidate.slug === slug);
-    if (lead) {
-      return { filePath: sourcePath, requiresRuntimeAnonymization: true };
-    }
+    return {
+      filePath: anonymizedPath,
+      requiresRuntimeAnonymization: false,
+      access: 'showcase',
+    };
   }
 
   return null;
@@ -104,14 +107,14 @@ function anonymizeSourceHtml(
   html: string,
   slug: string,
   override: ShowcaseSourceOverride
-): string {
+): string | null {
   const leads = readJsonFile<LeadRecord[]>(path.join(process.cwd(), 'data', 'leads.json'), []);
   const lead = leads.find((candidate) => candidate.slug === slug);
   const businessName = lead?.business_name;
   const genericTitle = override.genericTitle || 'Local Business';
   const genericShortName = override.genericShortName || 'The Studio';
 
-  if (!businessName) return html;
+  if (!businessName) return null;
 
   const shortName = businessName
     .replace(/\s+(hair\s+studio|hair\s+salon|salon|studio)$/i, '')
@@ -167,17 +170,29 @@ function anonymizeSourceHtml(
 /**
  * Prototype HTML is embedded with srcDoc, so relative image URLs otherwise
  * resolve against /preview/... instead of the prototype directory. Route all
- * local prototype images through the path-constrained image endpoint.
+ * local prototype images through a path-constrained endpoint. Private draft
+ * assets carry the same signed token as the parent preview URL.
  */
-function rewriteLocalPrototypeAssets(html: string, slug: string, publicShowcasePreview: boolean): string {
+function rewriteLocalPrototypeAssets(
+  html: string,
+  slug: string,
+  publicShowcasePreview: boolean,
+  token?: string
+): string {
   const imagesDirectory = path.join(process.cwd(), 'data', 'prototypes', slug, 'images');
   if (!fs.existsSync(imagesDirectory)) return html;
 
-  const publicImageUrl = (filename: string) => publicShowcasePreview
-    ? `/api/showcase-image?path=${encodeURIComponent(
+  const publicImageUrl = (filename: string) => {
+    if (publicShowcasePreview) {
+      return `/api/showcase-image?path=${encodeURIComponent(
         path.posix.join('data', 'prototypes', slug, 'images', filename)
-      )}`
-    : `/api/preview-image?slug=${encodeURIComponent(slug)}&file=${encodeURIComponent(filename)}`;
+      )}`;
+    }
+
+    const params = new URLSearchParams({ slug, file: filename });
+    if (token) params.set('token', token);
+    return `/api/preview-image?${params.toString()}`;
+  };
 
   return html
     .replace(
@@ -191,24 +206,33 @@ function rewriteLocalPrototypeAssets(html: string, slug: string, publicShowcaseP
     );
 }
 
-export default async function PreviewPage({ params }: PreviewPageProps) {
-  const { slug } = await params;
+export default async function PreviewPage({ params, searchParams }: PreviewPageProps) {
+  const [{ slug }, query] = await Promise.all([params, searchParams]);
+  if (!SLUG_PATTERN.test(slug)) notFound();
+  const rawToken = query.token;
+  const token = Array.isArray(rawToken) ? rawToken[0] : rawToken;
   const override = loadSourceOverrides()[slug];
-  const resolved = resolvePrototypePath(slug, override);
+  const resolved = resolvePrototypePath(slug, token, override);
 
   if (!resolved) {
     notFound();
   }
 
-  const publicShowcasePreview = Boolean(override?.useSourcePrototype) ||
-    resolved.filePath.includes(`${path.sep}prototypes-anonymized${path.sep}`);
+  const publicShowcasePreview = resolved.access === 'showcase';
 
   let htmlContent = fs.readFileSync(resolved.filePath, 'utf8');
 
   if (resolved.requiresRuntimeAnonymization && override) {
-    htmlContent = anonymizeSourceHtml(htmlContent, slug, override);
+    const anonymized = anonymizeSourceHtml(htmlContent, slug, override);
+    if (!anonymized) notFound();
+    htmlContent = anonymized;
   }
-  htmlContent = rewriteLocalPrototypeAssets(htmlContent, slug, publicShowcasePreview);
+  htmlContent = rewriteLocalPrototypeAssets(
+    htmlContent,
+    slug,
+    publicShowcasePreview,
+    token
+  );
 
   const titleMatch = htmlContent.match(/<title>(.*?)<\/title>/i);
   const title = titleMatch ? titleMatch[1] : `Preview for ${slug}`;
@@ -219,9 +243,11 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
         srcDoc={htmlContent}
         title={title}
         className="w-full h-full border-0"
-        // Keep the generated HTML in an opaque origin. Generated scripts can
-        // animate the draft, but cannot reach the parent app or its cookies.
+        // Generated scripts can animate the draft, but cannot reach the parent
+        // app or its cookies. no-referrer also prevents a signed token in the
+        // parent URL from leaking to third-party resources inside the draft.
         sandbox="allow-scripts"
+        referrerPolicy="no-referrer"
       />
       {!publicShowcasePreview && <RevisionRequest slug={slug} />}
     </div>
@@ -229,12 +255,9 @@ export default async function PreviewPage({ params }: PreviewPageProps) {
 }
 
 export async function generateStaticParams() {
-  // Pre-render only the anonymized prototypes. Enumerating data/prototypes
-  // (the raw source) would pre-render every lead's un-anonymized HTML —
-  // exposing real business PII at a guessable slug before the lead has opted
-  // in to a showcase. Raw-source slugs that are intentionally public via a
-  // showcase-source-overrides entry are rendered on demand (with runtime
-  // anonymization) and do not need to be in this list.
+  // Pre-render only the anonymized prototypes. Raw customer drafts require a
+  // signed token and are rendered on demand, so they must never be emitted as
+  // public static pages during a build.
   const dir = path.join(process.cwd(), 'data', 'prototypes-anonymized');
   const slugs = new Set<string>();
   if (fs.existsSync(dir)) {
@@ -249,3 +272,5 @@ export async function generateStaticParams() {
   }
   return Array.from(slugs).map((slug) => ({ slug }));
 }
+
+export const dynamic = 'force-dynamic';
