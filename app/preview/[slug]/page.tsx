@@ -2,8 +2,11 @@ import { notFound } from 'next/navigation';
 import path from 'path';
 import fs from 'fs';
 import { readdir } from 'fs/promises';
+import { cookies } from 'next/headers';
 import { isValidDraftPreviewToken } from '@/lib/draft-preview-token';
 import { isShowcaseVisible } from '@/lib/showcase-policy';
+import { isValidAdminSession } from '@/lib/auth-edge';
+import { getPrototypes } from '@/lib/data-source';
 import { RevisionRequest } from './RevisionRequest';
 
 interface PreviewPageProps {
@@ -53,11 +56,10 @@ function readJsonFile<T>(filePath: string, fallback: T): T {
   }
 }
 
-function loadPrototypeRecord(slug: string): PrototypeRecord | null {
-  const prototypes = readJsonFile<PrototypeRecord[]>(
-    path.join(process.cwd(), 'data', 'prototypes.json'),
-    []
-  );
+async function loadPrototypeRecord(slug: string): Promise<PrototypeRecord | null> {
+  // Use the live data source (Supabase when configured, build-bundle fallback)
+  // so that admin approvals made after deploy are reflected here.
+  const prototypes = await getPrototypes();
   return prototypes.find((p) => {
     if (p.id === slug) return true;
     const urlSlug = slugFromAssetUrl(p.prototype_url) || slugFromAssetUrl(p.screenshot_url);
@@ -84,11 +86,11 @@ function loadSourceOverrides(): ShowcaseSourceOverrides {
  * use pre-generated anonymized HTML, or an explicitly approved source override
  * that is anonymized at render time.
  */
-function resolvePrototypePath(
+async function resolvePrototypePath(
   slug: string,
   token: string | undefined,
   override?: ShowcaseSourceOverride
-): ResolvedPrototype | null {
+): Promise<ResolvedPrototype | null> {
   const anonymizedPath = path.join(
     process.cwd(),
     'data',
@@ -98,10 +100,22 @@ function resolvePrototypePath(
   );
   const sourcePath = path.join(process.cwd(), 'data', 'prototypes', slug, 'index.html');
 
-  // A valid private link takes precedence over an anonymized copy so the
-  // customer sees the actual draft prepared for their business and can use the
-  // revision-request control. A bare or invalid link never reaches raw HTML.
+  // A valid signed private link grants access to the raw source HTML.
   if (fs.existsSync(sourcePath) && isValidDraftPreviewToken(slug, token)) {
+    return {
+      filePath: sourcePath,
+      requiresRuntimeAnonymization: false,
+      access: 'private',
+    };
+  }
+
+  // An authenticated admin session also grants private access, so the admin
+  // dashboard's bare /preview/<slug> links work for pending/review prototypes
+  // without requiring a signed token.
+  const adminCookie = await cookies();
+  const adminSession = adminCookie.get('admin_session')?.value;
+  const isAdmin = await isValidAdminSession(adminSession);
+  if (isAdmin && fs.existsSync(sourcePath)) {
     return {
       filePath: sourcePath,
       requiresRuntimeAnonymization: false,
@@ -111,9 +125,8 @@ function resolvePrototypePath(
 
   // Public showcase access requires the prototype record to pass the shared
   // showcase visibility policy (approved, eligible, anonymized, completed).
-  // File existence alone is not enough — unapproved anonymized concepts must
-  // not be reachable via guessed/direct URLs.
-  const record = loadPrototypeRecord(slug);
+  // Uses the live data source so post-deploy approvals are reflected.
+  const record = await loadPrototypeRecord(slug);
   const showcaseAuthorized = record ? isShowcaseVisible(record) : false;
 
   if (showcaseAuthorized && override?.useSourcePrototype && fs.existsSync(sourcePath)) {
@@ -248,7 +261,7 @@ export default async function PreviewPage({ params, searchParams }: PreviewPageP
   const rawToken = query.token;
   const token = Array.isArray(rawToken) ? rawToken[0] : rawToken;
   const override = loadSourceOverrides()[slug];
-  const resolved = resolvePrototypePath(slug, token, override);
+  const resolved = await resolvePrototypePath(slug, token, override);
 
   if (!resolved) {
     notFound();
