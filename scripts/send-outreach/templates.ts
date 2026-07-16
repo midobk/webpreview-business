@@ -516,7 +516,39 @@ function industryLabel(industry: string): string {
 }
 
 function previewLink(ctx: EmailContext): string {
-  return `${ctx.previewBaseUrl}/preview/${ctx.lead.slug}`;
+  const slug = prototypePreviewSlug(ctx.prototype.prototype_url) ?? ctx.lead.slug;
+  const secret = outreachSessionSecret();
+  if (!secret) {
+    throw new Error(
+      "Cannot build a private preview link without ADMIN_SESSION_SECRET, PASSWORD_HASH, or ./.password"
+    );
+  }
+
+  const payload = Buffer.from(
+    JSON.stringify({
+      v: 1,
+      slug,
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
+    })
+  ).toString("base64url");
+  const signature = createHmac("sha256", secret)
+    .update(`draft-preview:${payload}`)
+    .digest("base64url");
+  const token = `${payload}.${signature}`;
+
+  return `${ctx.previewBaseUrl}/preview/${encodeURIComponent(slug)}?token=${encodeURIComponent(token)}`;
+}
+
+function prototypePreviewSlug(prototypeUrl: string): string | null {
+  try {
+    const cleanPath = prototypeUrl.split(/[?#]/, 1)[0].replace(/\/+$/, "");
+    const segments = cleanPath.split("/").filter(Boolean);
+    if (segments.at(-1)?.toLowerCase() === "index.html") segments.pop();
+    const slug = segments.at(-1);
+    return slug ? decodeURIComponent(slug) : null;
+  } catch {
+    return null;
+  }
 }
 
 function screenshotLine(ctx: EmailContext, include: boolean): string {
