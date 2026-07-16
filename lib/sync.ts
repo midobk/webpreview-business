@@ -107,7 +107,9 @@ export async function getSyncedLeads(): Promise<Lead[]> {
 
   return leads.map((lead) => {
     const protos = prototypeByLead.get(lead.id) ?? [];
-    const completedProto = protos.find((p) => p.generation_status === 'completed');
+    const completedProto = protos.find(
+      (p) => typeof p.generation_status === 'string' && p.generation_status.toLowerCase() === 'completed'
+    );
     const lastProto = protos[protos.length - 1];
     const records = outreachByLead.get(lead.id) ?? [];
 

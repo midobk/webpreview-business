@@ -165,22 +165,22 @@ def anonymize_html(html: str, lead: dict) -> str:
 
     # Replace phone numbers
     if phone:
-        html = re.sub(re.escape(phone), "[Contact via SiteSprint]", html)
+        html = re.sub(re.escape(phone), "[Contact via Seaway Sites]", html)
 
     # Replace any other phone-like patterns
     html = re.sub(
         r"\+?1?[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}",
-        "[Contact via SiteSprint]",
+        "[Contact via Seaway Sites]",
         html,
     )
 
     # Replace email
     if email:
-        html = re.sub(re.escape(email), "[Contact via SiteSprint]", html)
+        html = re.sub(re.escape(email), "[Contact via Seaway Sites]", html)
     # Replace any other email-like patterns
     html = re.sub(
         r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}",
-        "[Contact via SiteSprint]",
+        "[Contact via Seaway Sites]",
         html,
     )
 
@@ -189,9 +189,11 @@ def anonymize_html(html: str, lead: dict) -> str:
         # Small cities — replace with generic
         html = re.sub(re.escape(city), "your area", html, flags=re.IGNORECASE)
 
-    # Add "Concept by SiteSprint" credit if not present
-    if "siteSprint" not in html.lower() and "sitesprint" not in html.lower():
-        html = html.replace("</body>", '<footer class="showcase-credit">Concept by SiteSprint</footer></body>')
+    # Add "Concept by Seaway Sites" credit if not present. Old prototypes
+    # carry the retired SiteSprint credit — count that too so neither
+    # generation gets a duplicate footer.
+    if "sitesprint" not in html.lower() and "seaway sites" not in html.lower():
+        html = html.replace("</body>", '<footer class="showcase-credit">Concept by Seaway Sites</footer></body>')
 
     # Replace tagline-style copy that mentions the real industry specifically
     html = re.sub(
@@ -269,6 +271,9 @@ def main():
         # Eligibility: score >= 70 AND no critical issues (placeholder text, no demo lock, no watermark)
         critical_issues = [i for i in issues if "lorem" in i.lower() or "TODO" in i or "watermark" in i.lower() or "demo lock" in i.lower()]
         proto["showcase_eligible"] = quality_score >= 70 and not critical_issues
+        if not proto["showcase_eligible"]:
+            # A failed re-score must not leave an old approval published.
+            proto["showcase_approved"] = False
         proto["showcase_score"] = quality_score
         proto["showcase_issues"] = issues
         proto["showcase_anonymized_html_path"] = anonymized_path
@@ -279,7 +284,7 @@ def main():
         print(f"  {proto['id']} ({lead['business_name']}): {status}")
 
     # Save updated prototypes
-    if not args.slug or len(targets) > 1:
+    if targets:
         with open(proto_path, "w") as f:
             json.dump(prototypes, f, indent=2)
         print(f"\nUpdated {proto_path}")

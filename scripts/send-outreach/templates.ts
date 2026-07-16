@@ -27,6 +27,34 @@
  * section 5 (Outreach Strategy).
  */
 
+import { createHmac } from "node:crypto";
+
+// Dedicated signing secret for outreach preview tokens and unsubscribe
+// signatures. Must be the same value in the outreach runtime and the
+// deployment (DRAFT_PREVIEW_SECRET or OUTREACH_SIGNING_SECRET alias). The
+// admin password hash is NOT used because bcrypt salts make local and
+// production hashes different even for the same password.
+function outreachSigningSecret(): string {
+  return (
+    process.env.DRAFT_PREVIEW_SECRET ||
+    process.env.OUTREACH_SIGNING_SECRET ||
+    ""
+  );
+}
+
+// Build a signed unsubscribe URL. /api/unsubscribe now requires an HMAC
+// signature over the slug so a leaked/guessed slug alone cannot unsubscribe a
+// lead. When no secret is configured we fall back to an unsigned URL (the
+// route will reject it), which is correct: an unconfigured deployment should
+// not be sending outreach anyway.
+function signedUnsubscribeUrl(previewBaseUrl: string, slug: string): string {
+  const encoded = encodeURIComponent(slug);
+  const secret = outreachSigningSecret();
+  if (!secret) return `${previewBaseUrl}/api/unsubscribe?lead=${encoded}`;
+  const sig = createHmac("sha256", secret).update(slug).digest("base64url");
+  return `${previewBaseUrl}/api/unsubscribe?lead=${encoded}&sig=${sig}`;
+}
+
 export type Industry =
   | "cleaning"
   | "auto_repair"
@@ -93,10 +121,10 @@ export interface AngleTemplate {
 export interface EmailContext {
   lead: Lead;
   prototype: Prototype;
-  previewBaseUrl: string;   // e.g. "https://webpreview-business.vercel.app"
+  previewBaseUrl: string;   // e.g. "https://seawaysites.com" (or NEXT_PUBLIC_SITE_URL fallback)
   screenshotBaseUrl?: string;
-  senderName: string;       // e.g. "Dexter from SiteSprint"
-  senderEmail: string;      // e.g. "hello@sitesprint.example"
+  senderName: string;       // e.g. "Dexter from Seaway Sites"
+  senderEmail: string;      // e.g. "hello@seawaysites.com"
   unsubscribeUrl: string;   // appended to footer
   bookingUrl?: string;      // optional Cal.com / call link
 }
@@ -388,9 +416,9 @@ export interface BuildOptions {
 }
 
 const DEFAULTS = {
-  previewBaseUrl: "https://webpreview-business.vercel.app",
-  senderName: "Dexter from SiteSprint",
-  senderEmail: "hello@sitesprint.example",
+  previewBaseUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://seawaysites.com",
+  senderName: "Dexter from Seaway Sites",
+  senderEmail: process.env.OUTREACH_SENDER_EMAIL || "hello@seawaysites.com",
 };
 
 /**
@@ -407,7 +435,7 @@ export function buildOutreach(opts: BuildOptions): BuiltEmail {
   const senderEmail = opts.senderEmail ?? DEFAULTS.senderEmail;
   const unsubscribeUrl =
     opts.unsubscribeUrl ??
-    `${previewBaseUrl}/api/unsubscribe?lead=${encodeURIComponent(opts.lead.slug)}`;
+    signedUnsubscribeUrl(previewBaseUrl, opts.lead.slug);
   const includeScreenshot = opts.includeScreenshot ?? true;
 
   const ctx: EmailContext = {
@@ -481,7 +509,39 @@ function industryLabel(industry: string): string {
 }
 
 function previewLink(ctx: EmailContext): string {
-  return `${ctx.previewBaseUrl}/preview/${ctx.lead.slug}`;
+  const slug = prototypePreviewSlug(ctx.prototype.prototype_url) ?? ctx.lead.slug;
+  const secret = outreachSigningSecret();
+  if (!secret) {
+    throw new Error(
+      "Cannot build a private preview link without DRAFT_PREVIEW_SECRET or OUTREACH_SIGNING_SECRET"
+    );
+  }
+
+  const payload = Buffer.from(
+    JSON.stringify({
+      v: 1,
+      slug,
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
+    })
+  ).toString("base64url");
+  const signature = createHmac("sha256", secret)
+    .update(`draft-preview:${payload}`)
+    .digest("base64url");
+  const token = `${payload}.${signature}`;
+
+  return `${ctx.previewBaseUrl}/preview/${encodeURIComponent(slug)}?token=${encodeURIComponent(token)}`;
+}
+
+function prototypePreviewSlug(prototypeUrl: string): string | null {
+  try {
+    const cleanPath = prototypeUrl.split(/[?#]/, 1)[0].replace(/\/+$/, "");
+    const segments = cleanPath.split("/").filter(Boolean);
+    if (segments.at(-1)?.toLowerCase() === "index.html") segments.pop();
+    const slug = segments.at(-1);
+    return slug ? decodeURIComponent(slug) : null;
+  } catch {
+    return null;
+  }
 }
 
 function screenshotLine(ctx: EmailContext, include: boolean): string {

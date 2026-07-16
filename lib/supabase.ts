@@ -1,5 +1,5 @@
 /**
- * lib/supabase.ts — Server-side Supabase client for SiteSprint.
+ * lib/supabase.ts — Server-side Supabase client for Seaway Sites.
  *
  * Phase 2 of the dashboard fix: replaces the build-bundle hack with a real
  * database. All API routes use this client (server-side only) to read/write

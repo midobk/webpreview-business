@@ -23,7 +23,8 @@
     ],
     "showcase_anonymized_html_path": "data/prototypes-anonymized/seaway-cleaning-services/index.html",
     "anonymized": true,
-    "showcase_scored_at": "2026-06-22T21:33:15.614416+00:00Z"
+    "showcase_scored_at": "2026-06-22T21:33:15.614416+00:00Z",
+    "variant": 1
   },
   {
     "id": "proto-002",
@@ -49,7 +50,8 @@
     ],
     "showcase_anonymized_html_path": "data/prototypes-anonymized/seaway-cleaning-services/index.html",
     "anonymized": true,
-    "showcase_scored_at": "2026-06-22T21:33:15.626028+00:00Z"
+    "showcase_scored_at": "2026-06-22T21:33:15.626028+00:00Z",
+    "variant": 2
   },
   {
     "id": "proto-003",
@@ -73,7 +75,8 @@
     "showcase_issues": [],
     "showcase_anonymized_html_path": "data/prototypes-anonymized/bellas-hair-studio/index.html",
     "anonymized": true,
-    "showcase_scored_at": "2026-06-22T21:33:15.631307+00:00Z"
+    "showcase_scored_at": "2026-06-22T21:33:15.631307+00:00Z",
+    "variant": 1
   },
   {
     "id": "proto-craftmans-cafe",
@@ -120,12 +123,13 @@
     "showcase_issues": [],
     "showcase_anonymized_html_path": "data/prototypes-anonymized/ramo-sports/index.html",
     "anonymized": true,
-    "showcase_scored_at": "2026-06-23T18:04:48.875472+00:00Z"
+    "showcase_scored_at": "2026-06-23T18:04:48.875472+00:00Z",
+    "variant": 1
   },
   {
     "id": "proto-seaway-cleaning-services",
     "lead_id": "lead-002",
-    "variant": 1,
+    "variant": 3,
     "prototype_url": "data/prototypes/seaway-cleaning-services/index.html",
     "screenshot_url": "/prototype-screenshots/seaway-cleaning-services-desktop.png",
     "title": "Seaway Cleaning Services — Preview",
@@ -148,7 +152,7 @@
   {
     "id": "proto-bellas-hair-studio",
     "lead_id": "lead-003",
-    "variant": 1,
+    "variant": 2,
     "prototype_url": "data/prototypes/bellas-hair-studio/index.html",
     "screenshot_url": "/prototype-screenshots/bellas-hair-studio-desktop.png",
     "title": "Bella's Hair Studio — Preview",
@@ -371,7 +375,8 @@
     "showcase_issues": [],
     "showcase_anonymized_html_path": "data/prototypes-anonymized/flowdesk-saas/index.html",
     "created_at": "2026-07-09T15:24:00Z",
-    "updated_at": "2026-07-09T15:24:00Z"
+    "updated_at": "2026-07-09T15:24:00Z",
+    "variant": 1
   },
   {
     "id": "proto-premier-real-estate",
@@ -392,7 +397,8 @@
     "showcase_issues": [],
     "showcase_anonymized_html_path": "data/prototypes-anonymized/premier-real-estate/index.html",
     "created_at": "2026-07-09T15:24:00Z",
-    "updated_at": "2026-07-09T15:24:00Z"
+    "updated_at": "2026-07-09T15:24:00Z",
+    "variant": 2
   },
   {
     "id": "proto-harvest-table-restaurant",
@@ -413,7 +419,8 @@
     "showcase_issues": [],
     "showcase_anonymized_html_path": "data/prototypes-anonymized/harvest-table-restaurant/index.html",
     "created_at": "2026-07-09T15:24:00Z",
-    "updated_at": "2026-07-09T15:24:00Z"
+    "updated_at": "2026-07-09T15:24:00Z",
+    "variant": 3
   },
   {
     "id": "proto-bright-smile-dental",
@@ -434,7 +441,8 @@
     "showcase_issues": [],
     "showcase_anonymized_html_path": "data/prototypes-anonymized/bright-smile-dental/index.html",
     "created_at": "2026-07-09T15:24:00Z",
-    "updated_at": "2026-07-09T15:24:00Z"
+    "updated_at": "2026-07-09T15:24:00Z",
+    "variant": 4
   },
   {
     "id": "proto-summit-fitness-gym",
@@ -455,7 +463,8 @@
     "showcase_issues": [],
     "showcase_anonymized_html_path": "data/prototypes-anonymized/summit-fitness-gym/index.html",
     "created_at": "2026-07-09T15:24:00Z",
-    "updated_at": "2026-07-09T15:24:00Z"
+    "updated_at": "2026-07-09T15:24:00Z",
+    "variant": 5
   },
   {
     "id": "proto-meridian-law-firm",
@@ -476,7 +485,8 @@
     "showcase_issues": [],
     "showcase_anonymized_html_path": "data/prototypes-anonymized/meridian-law-firm/index.html",
     "created_at": "2026-07-09T15:24:00Z",
-    "updated_at": "2026-07-09T15:24:00Z"
+    "updated_at": "2026-07-09T15:24:00Z",
+    "variant": 6
   },
   {
     "id": "proto-allied-home-services",
@@ -497,7 +507,8 @@
     "showcase_issues": [],
     "showcase_anonymized_html_path": "data/prototypes-anonymized/allied-home-services/index.html",
     "created_at": "2026-07-09T15:24:00Z",
-    "updated_at": "2026-07-09T15:24:00Z"
+    "updated_at": "2026-07-09T15:24:00Z",
+    "variant": 7
   },
   {
     "id": "proto-northwind-ecommerce",
@@ -518,7 +529,8 @@
     "showcase_issues": [],
     "showcase_anonymized_html_path": "data/prototypes-anonymized/northwind-ecommerce/index.html",
     "created_at": "2026-07-09T15:24:00Z",
-    "updated_at": "2026-07-09T15:24:00Z"
+    "updated_at": "2026-07-09T15:24:00Z",
+    "variant": 8
   },
   {
     "id": "proto-catalyst-online-course",
@@ -539,6 +551,7 @@
     "showcase_issues": [],
     "showcase_anonymized_html_path": "data/prototypes-anonymized/catalyst-online-course/index.html",
     "created_at": "2026-07-09T15:24:00Z",
-    "updated_at": "2026-07-09T15:24:00Z"
+    "updated_at": "2026-07-09T15:24:00Z",
+    "variant": 9
   }
 ]

@@ -35,24 +35,39 @@ const PROTOTYPE_COLUMNS = [
 
 const TIMESTAMP_COLUMNS = new Set(['showcase_scored_at', 'created_at', 'updated_at']);
 
-const COMPARED_COLUMNS = [
+// Columns that are owned by the repository / generator and should be kept in
+// sync between local JSON and Supabase. Admin-controlled approval fields are
+// excluded so that `--auto` never overwrites a live approval decision.
+const METADATA_COLUMNS = [
   'lead_id',
   'industry',
+  'variant',
+  'variant_name',
   'prototype_url',
   'screenshot_url',
   'title',
   'design_summary',
   'prototype_score',
+  'generation_model',
+  'generation_prompt',
   'generation_status',
   'watermark_enabled',
   'demo_locked',
+  'anonymized',
+  'showcase_anonymized_html_path',
+];
+
+// Columns that are admin-controlled. `--auto` must never overwrite these.
+const ADMIN_OWNED_COLUMNS = [
   'showcase_eligible',
   'showcase_approved',
   'showcase_score',
   'showcase_issues',
-  'anonymized',
-  'showcase_anonymized_html_path',
+  'showcase_scored_at',
 ];
+
+// Drift checks compare metadata columns only (not admin-owned fields).
+const COMPARED_COLUMNS = METADATA_COLUMNS;
 
 const args = new Set(process.argv.slice(2));
 const mode = args.has('--check')
@@ -178,7 +193,58 @@ async function upsertPrototypes(supabase, prototypes) {
   console.log(`✓ Synced ${rows.length} prototype records to Supabase.`);
 }
 
-async function verifyNoDrift(supabase, prototypes) {
+// Upsert only metadata columns, preserving remote admin-owned fields.
+// Used in `--auto` so newly generated prototypes appear in Supabase without
+// overwriting live approval decisions.
+async function upsertMetadataOnly(supabase, prototypes) {
+  // Defensive guard: refuse to ship an admin-owned field even if a future
+  // edit accidentally adds it to METADATA_COLUMNS. The inverse allowlist
+  // below is the primary defense; this is belt-and-suspenders.
+  const adminSet = new Set(ADMIN_OWNED_COLUMNS);
+  for (const col of METADATA_COLUMNS) {
+    if (adminSet.has(col)) {
+      throw new Error(
+        `METADATA_COLUMNS contains admin-owned column "${col}". ` +
+          'Remove it from METADATA_COLUMNS to preserve admin approval state.'
+      );
+    }
+  }
+
+  const rows = prototypes.map((row) => {
+    const filtered = { id: row.id };
+    for (const col of METADATA_COLUMNS) {
+      if (Object.hasOwn(row, col)) {
+        filtered[col] = TIMESTAMP_COLUMNS.has(col) ? normalizeTimestamp(row[col]) : row[col];
+      }
+    }
+    // Include timestamps so new records get created_at.
+    if (Object.hasOwn(row, 'created_at')) {
+      filtered.created_at = normalizeTimestamp(row.created_at);
+    }
+    return filtered;
+  });
+
+  const batchSize = 100;
+  for (let offset = 0; offset < rows.length; offset += batchSize) {
+    const batch = rows.slice(offset, offset + batchSize);
+    const { error } = await supabase.from('prototypes').upsert(batch, { onConflict: 'id' });
+    if (error) throw new Error(`Supabase metadata upsert failed: ${error.message}`);
+  }
+
+  console.log(`✓ Upserted ${rows.length} prototype metadata records (preserving admin fields).`);
+}
+
+// `checkVisibility` controls the showcase visibility count check, which
+// asserts that the set of locally-approved showcase prototypes matches the
+// remote count. This is only valid when the caller has just written the
+// admin-owned approval fields from the local snapshot (i.e. `--sync`), or is
+// explicitly asserting full parity (`--check`). `--auto` upserts metadata
+// only and deliberately preserves remote admin-owned approval state, so it
+// must pass `checkVisibility: false` — otherwise any admin approval/unpublish
+// made in Supabase since `data/prototypes.json` was last updated would fail
+// the build on a visibility mismatch even though the intended remote state
+// was preserved.
+async function verifyNoDrift(supabase, prototypes, { checkVisibility = true } = {}) {
   const ids = prototypes.map((prototype) => prototype.id);
   const selectColumns = ['id', ...COMPARED_COLUMNS].join(',');
   const { data, error } = await supabase.from('prototypes').select(selectColumns).in('id', ids);
@@ -208,24 +274,29 @@ async function verifyNoDrift(supabase, prototypes) {
     throw new Error(`Showcase Supabase drift detected:\n- ${problems.join('\n- ')}`);
   }
 
-  const visibleIds = prototypes.filter(isVisibleShowcasePrototype).map((prototype) => prototype.id);
-  const { count, error: countError } = await supabase
-    .from('prototypes')
-    .select('id', { count: 'exact', head: true })
-    .in('id', visibleIds)
-    .eq('showcase_approved', true)
-    .eq('showcase_eligible', true)
-    .eq('anonymized', true)
-    .eq('generation_status', 'completed');
+  let visibleCount = null;
+  if (checkVisibility) {
+    const visibleIds = prototypes.filter(isVisibleShowcasePrototype).map((prototype) => prototype.id);
+    const { count, error: countError } = await supabase
+      .from('prototypes')
+      .select('id', { count: 'exact', head: true })
+      .in('id', visibleIds)
+      .eq('showcase_approved', true)
+      .eq('showcase_eligible', true)
+      .eq('anonymized', true)
+      .eq('generation_status', 'completed');
 
-  if (countError) throw new Error(`Supabase showcase count check failed: ${countError.message}`);
-  if (count !== visibleIds.length) {
-    throw new Error(
-      `Showcase visibility mismatch: local has ${visibleIds.length}, Supabase has ${count ?? 0}.`
-    );
+    if (countError) throw new Error(`Supabase showcase count check failed: ${countError.message}`);
+    if (count !== visibleIds.length) {
+      throw new Error(
+        `Showcase visibility mismatch: local has ${visibleIds.length}, Supabase has ${count ?? 0}.`
+      );
+    }
+    visibleCount = visibleIds.length;
   }
 
-  console.log(`✓ No Supabase drift: ${prototypes.length} records match; ${visibleIds.length} are showcase-visible.`);
+  const visibilityNote = checkVisibility ? `; ${visibleCount} are showcase-visible` : ' (visibility check skipped: remote admin-owned)';
+  console.log(`✓ No Supabase drift: ${prototypes.length} records match${visibilityNote}.`);
 }
 
 async function main() {
@@ -241,11 +312,34 @@ async function main() {
     return;
   }
 
-  if (mode === 'sync' || (mode === 'auto' && isProductionBuild)) {
+  if (mode === 'sync') {
+    // Full sync: upsert all columns including admin-owned fields, then verify
+    // full parity (including visibility) against the just-written remote state.
     await upsertPrototypes(supabase, prototypes);
-  }
+    await verifyNoDrift(supabase, prototypes);
+  } else if (mode === 'check') {
+    // Drift check only: no writes. Asserts full parity including visibility.
+    await verifyNoDrift(supabase, prototypes);
+  } else if (mode === 'auto') {
+    // `--auto` runs from `prebuild` on every build — production AND Vercel
+    // preview builds (and any local build that happens to have production
+    // Supabase env vars). Only the production build may write to Supabase;
+    // preview/local builds are read-only so they never upsert metadata into
+    // the live table.
+    if (!isProductionBuild) {
+      console.log('ℹ Non-production build: Supabase metadata sync skipped (preview/local builds are read-only).');
+      return;
+    }
 
-  await verifyNoDrift(supabase, prototypes);
+    // Production prebuild: upsert metadata only (preserve admin-owned fields),
+    // then verify metadata drift only. The visibility/count check is skipped
+    // (`checkVisibility: false`) because admin approval state lives in
+    // Supabase and is deliberately not overwritten from the local JSON
+    // snapshot — asserting local == remote approval counts would fail every
+    // build after any admin approval or unpublish made since the snapshot.
+    await upsertMetadataOnly(supabase, prototypes);
+    await verifyNoDrift(supabase, prototypes, { checkVisibility: false });
+  }
 }
 
 main().catch((error) => {

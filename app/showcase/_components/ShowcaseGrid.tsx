@@ -42,29 +42,6 @@ const INDUSTRY_LABELS: Record<string, string> = {
   default: 'Other',
 };
 
-// Warmer industry chips — pulled toward the warm-print palette.
-const INDUSTRY_COLORS: Record<string, string> = {
-  cleaning: 'bg-[#E6F1ED] text-paint',
-  salon: 'bg-[#FBE7DC] text-[#9B3D1A]',
-  auto_repair: 'bg-[#F4E4C9] text-[#7A4A0F]',
-  restaurant: 'bg-[#F7DCC8] text-[#9B3D1A]',
-  contractor: 'bg-[#DDE8D6] text-paint',
-  barber: 'bg-[#E4E0F0] text-[#3B2E66]',
-  landscaper: 'bg-[#E1EED7] text-[#2F5A1F]',
-  tutor: 'bg-[#EFE4F4] text-[#5B2A66]',
-  retail: 'bg-[#F8E1E1] text-[#7A2A2A]',
-  // New playground prototypes — warm-print palette, distinct from neighbors.
-  saas: 'bg-[#E0E4F0] text-[#2C3E70]',
-  real_estate: 'bg-[#F4E5D4] text-[#7A4F2C]',
-  dental_clinic: 'bg-[#D9EEEA] text-[#1F5C55]',
-  fitness_gym: 'bg-[#E5EDD8] text-[#3D5A1F]',
-  law_firm: 'bg-[#DCE3EE] text-[#1A2A50]',
-  home_services: 'bg-[#E0E8F5] text-[#0E3A7A]',
-  ecommerce_product: 'bg-[#F8E0DC] text-[#9B3A2A]',
-  online_course: 'bg-[#ECE0F2] text-[#5A2A7A]',
-  default: 'bg-mist text-steel',
-};
-
 export default function ShowcaseGrid({ items }: { items: Item[] }) {
   const [selected, setSelected] = useState<string>('all');
 
@@ -86,8 +63,8 @@ export default function ShowcaseGrid({ items }: { items: Item[] }) {
     <div>
       {/* Filter chips */}
       {industries.length > 1 && (
-        <div className="mb-8 flex flex-wrap items-center gap-2">
-          <span className="text-sm font-medium text-steel mr-1">Filter:</span>
+        <div className="mb-10 flex flex-wrap items-center gap-2">
+          <span className="v2-mono mr-2 text-[10px] text-[var(--v2-cream-faint)]">filter</span>
           <LayoutGroup id="showcase-filter">
             <FilterChip
               active={selected === 'all'}
@@ -120,7 +97,7 @@ export default function ShowcaseGrid({ items }: { items: Item[] }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="text-center py-16 text-slate-500"
+            className="py-16 text-center text-[var(--v2-cream-faint)]"
           >
             No prototypes match this filter yet.
           </motion.div>
@@ -131,7 +108,7 @@ export default function ShowcaseGrid({ items }: { items: Item[] }) {
             animate="visible"
             exit="exit"
             variants={gridCard}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
             <AnimatePresence mode="popLayout">
               {filtered.map((item) => (
@@ -158,9 +135,8 @@ function ShowcaseCard({ item }: { item: Item }) {
       : `/api/showcase-image?path=${encodeURIComponent(item.screenshotUrl)}`
     : null;
 
-  const industryColor =
-    INDUSTRY_COLORS[item.industry] || INDUSTRY_COLORS.default;
   const reduce = useReducedMotion();
+  const previewSlug = item.prototypeUrl ? getPreviewSlug(item.prototypeUrl) : null;
 
   return (
     <motion.article
@@ -171,55 +147,64 @@ function ShowcaseCard({ item }: { item: Item }) {
       variants={gridCard}
       whileHover={reduce ? undefined : { y: -4 }}
       transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-      className="group bg-paper rounded-2xl border border-paint/10 overflow-hidden shadow-sm"
+      className="v2-card group overflow-hidden"
     >
-      <div className="aspect-[4/3] bg-gradient-to-br from-mist to-mist/70 relative overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden border-b border-[var(--v2-line)] bg-[var(--v2-ink-2)]">
         {screenshotSrc ? (
           <motion.img
             src={screenshotSrc}
             alt={`${item.anonymizedTitle} — screenshot preview`}
-            className="w-full h-full object-cover object-top"
-            whileHover={reduce ? undefined : { scale: 1.05 }}
+            className="h-full w-full object-cover object-top"
+            loading="lazy"
+            decoding="async"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+            whileHover={reduce ? undefined : { scale: 1.04 }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-steel/60">
-            <span className="text-5xl">🖼️</span>
+          <div className="v2-mono flex h-full w-full items-center justify-center text-[10px] text-[var(--v2-cream-faint)]">
+            screenshot pending
           </div>
         )}
+        {/* Draft stamp — same language as the LiveBuild "draft 01 · ready" */}
+        <div className="absolute left-3 top-3 -rotate-3">
+          <span className="v2-mono inline-block rounded border-2 border-[var(--v2-lume)] bg-[rgba(10,12,15,0.55)] px-2 py-0.5 text-[9px] text-[var(--v2-lume)] backdrop-blur-sm">
+            demo draft
+          </span>
+        </div>
         {item.prototypeScore !== null && (
-          <div className="absolute top-3 right-3 bg-paper/95 backdrop-blur px-2.5 py-1 rounded-full text-xs font-semibold text-ink">
+          <div className="v2-mono absolute right-3 top-3 rounded-full border border-[var(--v2-line-strong)] bg-[rgba(10,12,15,0.7)] px-2.5 py-1 text-[9px] text-[var(--v2-cream)] backdrop-blur-sm">
             ★ {item.prototypeScore}
           </div>
         )}
-        <div className="absolute top-3 left-3 bg-ink/85 backdrop-blur px-2.5 py-1 rounded-full text-xs font-semibold text-paper uppercase tracking-wide">
-          Demo
-        </div>
-        {/* Industry badge on the card */}
         <div className="absolute bottom-3 left-3">
-          <span
-            className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold capitalize ${industryColor}`}
-          >
+          <span className="v2-mono inline-block rounded-full border border-[var(--v2-line-strong)] bg-[rgba(10,12,15,0.75)] px-2.5 py-1 text-[9px] text-[var(--v2-cream)] backdrop-blur-sm">
             {INDUSTRY_LABELS[item.industry] || item.industry.replace('_', ' ')}
           </span>
         </div>
       </div>
       <div className="p-6">
-        <h3 className="text-lg font-medium text-ink mb-2">{item.anonymizedTitle}</h3>
-        <p className="text-sm text-steel mb-4 leading-relaxed">{item.tagline}</p>
-        <div className="flex items-center justify-end text-xs text-steel/70">
-          {item.prototypeUrl && (
-            <a
-              href={`/preview/${encodeURIComponent(item.prototypeUrl.split('/').slice(-2, -1)[0] || '')}`}
-              className="text-paint font-medium hover:text-signal transition-colors"
-            >
-              View concept →
-            </a>
-          )}
-        </div>
+        <h3 className="v2-serif mb-2 text-lg font-medium">{item.anonymizedTitle}</h3>
+        <p className="mb-5 text-sm leading-relaxed text-[var(--v2-cream-dim)]">{item.tagline}</p>
+        {previewSlug && (
+          <a
+            href={`/preview/${previewSlug}`}
+            className="v2-mono text-[10px] text-[var(--v2-lume)] transition-colors hover:text-[#dcff79]"
+          >
+            view concept →
+          </a>
+        )}
       </div>
     </motion.article>
   );
+}
+
+function getPreviewSlug(prototypeUrl: string) {
+  const cleanPath = prototypeUrl.split(/[?#]/, 1)[0].replace(/\/+$/, '');
+  const segments = cleanPath.split('/').filter(Boolean);
+  if (segments.at(-1)?.toLowerCase() === 'index.html') segments.pop();
+  const slug = segments.at(-1);
+  return slug ? encodeURIComponent(slug) : null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -239,18 +224,18 @@ function FilterChip({
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className="relative px-3 py-1.5 rounded-full text-sm font-medium border border-transparent"
+      className="relative rounded-full border border-[var(--v2-line)] px-3.5 py-1.5 text-sm"
     >
       {active && (
         <motion.span
           layoutId="showcase-pill"
-          className="absolute inset-0 rounded-full bg-ink border border-ink"
+          className="absolute inset-0 rounded-full bg-[var(--v2-lume)]"
           transition={{ type: 'spring', stiffness: 380, damping: 32 }}
         />
       )}
       <span
         className={`relative z-10 transition-colors ${
-          active ? 'text-paper' : 'text-steel'
+          active ? 'font-semibold text-[#0c0f08]' : 'text-[var(--v2-cream-dim)]'
         }`}
       >
         {children}

@@ -51,9 +51,13 @@ This is a **full unauthenticated read/write of the entire lead pipeline**.
 **Risk:** PII exposure (emails), lead pipeline integrity, public showcase integrity.
 
 **Fix (applied):**
-- New helper `lib/auth-server.ts` exports `requireAdmin()` which verifies the `admin_session` cookie matches the bcrypt-verified login state and returns a 401 JSON response if not.
+- New helper `lib/auth-server.ts` exports `requireAdmin()` which verifies a signed, expiring `admin_session` cookie and returns a 401 JSON response if not.
 - Applied `requireAdmin()` to every method on `app/api/admin/leads/route.ts` and `app/api/admin/prototypes/route.ts`.
 - Routes now reject unauthenticated requests with HTTP 401.
+
+**Session hardening:**
+
+The previous literal `admin_session=authenticated` value was forgeable. The current session is an HMAC-signed timestamp payload using `ADMIN_SESSION_SECRET` (or the server-only password hash as a fallback), with a 24-hour expiry. Set `ADMIN_SESSION_SECRET` in production and rotate it when needed.
 
 **Verification:**
 ```bash

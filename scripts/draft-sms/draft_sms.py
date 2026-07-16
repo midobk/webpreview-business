@@ -81,12 +81,12 @@ def main():
         if owner_name:
             msg = (
                 f"Hi {owner_name}, I sent a website preview for {business_name} "
-                f"to your email a few days ago. Want me to resend? — Mehdi, SiteSprint"
+                f"to your email a few days ago. Want me to resend? — Mehdi, Seaway Sites"
             )
         else:
             msg = (
                 f"Hi, I sent a website preview for {business_name} "
-                f"to your email a few days ago. Want me to resend? — Mehdi, SiteSprint"
+                f"to your email a few days ago. Want me to resend? — Mehdi, Seaway Sites"
             )
 
         # Truncate to 160 chars (SMS standard)

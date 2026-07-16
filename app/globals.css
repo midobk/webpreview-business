@@ -36,7 +36,7 @@
 
   /* Warm-print palette — "Canadian trades / print shop" identity.
      Distinct from the cool indigo SaaS tokens above; this is the
-     SiteSprint signature that page.tsx references via bg-paper,
+     Seaway Sites signature that page.tsx references via bg-paper,
      text-paint, bg-signal, etc. */
   /* Hybrid identity — warm "Workshop" foundation + "Heritage" oxblood action.
      Reference tokens (raw colour). Temperature unified to warm: the old cool
@@ -153,7 +153,7 @@ body {
 }
 
 /* Warm-print brand gradient — spruce → clay. Replaces the legacy
-   indigo→violet→pink brand-gradient anywhere the SiteSprint mark appears. */
+   indigo→violet→pink brand-gradient anywhere the Seaway Sites mark appears. */
 .bg-warm-gradient {
   background-image: linear-gradient(135deg, var(--paint) 0%, var(--signal) 100%);
 }
@@ -247,7 +247,7 @@ body {
 }
 
 /* Pricing featured card — warm gradient border (spruce → clay),
-   matching the SiteSprint palette instead of the indigo SaaS default. */
+   matching the Seaway Sites palette instead of the indigo SaaS default. */
 .pricing-featured {
   position: relative;
   background: linear-gradient(180deg, var(--ink) 0%, #0A0E1B 100%);

@@ -3,6 +3,8 @@
 > **Created 2026-06-22 after Craftmans Cafe incident.**
 > A prototype with leaked AI prompt text and 1×1 pixel fake images was pushed to GitHub and deployed to Vercel. This must never happen again.
 
+The creative standard for new work lives in [`PROTOTYPE_GENERATION_PLAYBOOK.md`](./PROTOTYPE_GENERATION_PLAYBOOK.md). Read it before starting generation; this file remains the release gate.
+
 ---
 
 ## The Incident
@@ -86,6 +88,8 @@
 - ❌ Never push HTML that contains AI model reasoning/thinking text
 - ❌ Never skip the screenshot step
 - ❌ Never mark `generation_status: "completed"` without visual verification
+- ❌ Never mark `showcase_eligible` or `showcase_approved` until an operator has reviewed both screenshots
+- ❌ Never silently fall back to a placeholder image or generic page when a generation dependency fails
 - ❌ Never push to GitHub without running all QA checks above
 
 ---

@@ -1,0 +1,602 @@
+/* ============================================================
+   /v2 — "The Drafting Table" landing page
+   ============================================================
+   A self-contained night-studio identity: graphite ink canvas,
+   warm cream type, phosphor-lume accent, blueprint grid, film
+   grain. Every class is prefixed `v2-` (page shell) or `v2lb-`
+   (ProductionDemo hero demo) so nothing leaks into the classic
+   homepage or admin styles that share globals.css.
+   ============================================================ */
+
+.v2-root {
+  /* Canvas */
+  --v2-ink: #0a0c0f;
+  --v2-ink-2: #0e1116;
+  --v2-panel: #12161d;
+  --v2-panel-2: #171c25;
+
+  /* Hairlines */
+  --v2-line: rgba(239, 234, 224, 0.09);
+  --v2-line-strong: rgba(239, 234, 224, 0.18);
+
+  /* Type */
+  --v2-cream: #efeae0;
+  --v2-cream-dim: rgba(239, 234, 224, 0.64);
+  /* 58% keeps small labels readable against the ink canvas. */
+  --v2-cream-faint: rgba(239, 234, 224, 0.58);
+
+  /* Accents — phosphor lume (primary) + brand clay (sparing) */
+  --v2-lume: #cdf463;
+  --v2-lume-deep: #a8d43e;
+  --v2-clay: #e9692e;
+
+  background: var(--v2-ink);
+  color: var(--v2-cream);
+  color-scheme: dark;
+}
+
+.v2-root ::selection {
+  background: var(--v2-lume);
+  color: var(--v2-ink);
+}
+
+.v2-root :focus-visible {
+  outline: 2px solid var(--v2-lume);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Smooth anchor scrolling only while the v2 page is mounted. */
+html:has(.v2-root) {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html:has(.v2-root) {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- Atmosphere ---------- */
+
+/* Blueprint grid — a coarse 72px grid over a fine 18px one. */
+.v2-blueprint {
+  background-image:
+    linear-gradient(to right, rgba(239, 234, 224, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(239, 234, 224, 0.045) 1px, transparent 1px),
+    linear-gradient(to right, rgba(239, 234, 224, 0.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(239, 234, 224, 0.022) 1px, transparent 1px);
+  background-size:
+    72px 72px,
+    72px 72px,
+    18px 18px,
+    18px 18px;
+  /* Fade the grid toward the middle so text stays quiet. */
+  -webkit-mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, black 0%, transparent 72%);
+  mask-image: radial-gradient(ellipse 120% 90% at 50% 0%, black 0%, transparent 72%);
+}
+
+/* Film grain — pure SVG turbulence, no network request. */
+.v2-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.3;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.14 0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>");
+  background-size: 240px 240px;
+}
+
+/* Lume glow pools behind the hero. */
+.v2-glow {
+  background:
+    radial-gradient(560px 380px at 78% 18%, rgba(205, 244, 99, 0.1), transparent 68%),
+    radial-gradient(700px 460px at 12% 82%, rgba(233, 105, 46, 0.07), transparent 70%);
+}
+
+/* ---------- Type helpers ---------- */
+
+.v2-serif {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-variation-settings: "opsz" 72;
+  letter-spacing: -0.015em;
+}
+
+.v2-mono {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Display sizes — fluid */
+.v2-display {
+  font-size: clamp(2.9rem, 8.2vw, 7.25rem);
+  line-height: 0.98;
+  font-weight: 560;
+}
+
+.v2-h2 {
+  font-size: clamp(2rem, 4.6vw, 3.75rem);
+  line-height: 1.04;
+  font-weight: 540;
+}
+
+/* ---------- Buttons ---------- */
+
+.v2-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.7rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  transition:
+    background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.v2-btn-primary {
+  background: var(--v2-lume);
+  color: #0c0f08;
+  box-shadow: 0 0 0 0 rgba(205, 244, 99, 0);
+}
+.v2-btn-primary:hover {
+  background: #dcff79;
+  box-shadow: 0 8px 40px -8px rgba(205, 244, 99, 0.45);
+}
+
+.v2-btn-ghost {
+  border: 1px solid var(--v2-line-strong);
+  color: var(--v2-cream);
+  background: transparent;
+}
+.v2-btn-ghost:hover {
+  border-color: var(--v2-cream-faint);
+  background: rgba(239, 234, 224, 0.05);
+}
+
+.v2-menu-button {
+  display: inline-flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--v2-line-strong);
+  border-radius: 0.75rem;
+  color: var(--v2-cream);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.v2-menu-button:hover {
+  background: rgba(239, 234, 224, 0.06);
+}
+
+.v2-skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  transform: translateY(-180%);
+  border-radius: 999px;
+  background: var(--v2-lume);
+  color: var(--v2-ink);
+  padding: 0.7rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: transform 160ms ease;
+}
+.v2-skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* ---------- Header ---------- */
+
+.v2-header {
+  border-bottom: 1px solid transparent;
+  transition:
+    background-color 240ms ease,
+    border-color 240ms ease,
+    backdrop-filter 240ms ease;
+}
+.v2-header.is-scrolled {
+  background: color-mix(in oklab, var(--v2-ink) 82%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom-color: var(--v2-line);
+}
+
+/* ---------- Marquee ---------- */
+
+@keyframes v2-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.v2-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: v2-marquee 36s linear infinite;
+}
+.v2-marquee:hover .v2-marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-marquee-track {
+    animation: none;
+  }
+}
+
+/* ---------- Cards / panels ---------- */
+
+.v2-card {
+  background: linear-gradient(180deg, var(--v2-panel) 0%, var(--v2-ink-2) 100%);
+  border: 1px solid var(--v2-line);
+  border-radius: 20px;
+  transition:
+    transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v2-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--v2-line-strong);
+  box-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.8);
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-card,
+  .v2-card:hover {
+    transform: none;
+  }
+}
+
+/* Featured pricing card — lume edge + soft halo. */
+.v2-card-featured {
+  border-color: color-mix(in oklab, var(--v2-lume) 45%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--v2-lume) 25%, transparent),
+    0 20px 70px -30px rgba(205, 244, 99, 0.35);
+}
+.v2-card-featured:hover {
+  border-color: color-mix(in oklab, var(--v2-lume) 65%, transparent);
+}
+
+/* ---------- FAQ ---------- */
+
+.v2-faq details {
+  border-bottom: 1px solid var(--v2-line);
+}
+.v2-faq summary {
+  list-style: none;
+  cursor: pointer;
+}
+.v2-faq summary::-webkit-details-marker {
+  display: none;
+}
+.v2-faq .v2-faq-icon {
+  transition: transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v2-faq details[open] .v2-faq-icon {
+  transform: rotate(45deg);
+}
+
+/* ---------- Form ---------- */
+
+.v2-input {
+  width: 100%;
+  background: rgba(239, 234, 224, 0.045);
+  border: 1px solid var(--v2-line);
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  color: var(--v2-cream);
+  font-size: 0.95rem;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+.v2-input::placeholder {
+  color: var(--v2-cream-faint);
+}
+.v2-input:focus {
+  outline: none;
+  border-color: var(--v2-lume);
+  box-shadow: 0 0 0 3px rgba(205, 244, 99, 0.16);
+  background: rgba(239, 234, 224, 0.07);
+}
+.v2-input[aria-invalid='true'] {
+  border-color: #e0604a;
+  box-shadow: 0 0 0 3px rgba(224, 96, 74, 0.14);
+}
+
+/* ---------- Before / After slider ---------- */
+
+.v2-ba {
+  /* pan-y: vertical swipes keep scrolling the page; horizontal drags
+     move the divider (the browser cancels our pointer stream when it
+     takes the gesture for scrolling). */
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: ew-resize;
+}
+/* Keyboard/AT control layer — pointer input is handled by the frame's
+   pointer-capture drag, so this must not swallow clicks or touches. */
+.v2-ba-range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  margin: 0;
+  z-index: 30;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.v2-ba-divider {
+  box-shadow:
+    0 0 0 1px rgba(10, 12, 15, 0.35),
+    0 0 24px rgba(205, 244, 99, 0.5);
+}
+
+/* The range input is transparent, so keyboard focus is made visible on
+   the handle instead of the (invisible) native outline. */
+.v2-ba-range:focus-visible ~ .v2-ba-divider .v2-ba-handle {
+  box-shadow:
+    0 0 0 3px var(--v2-ink),
+    0 0 0 6px var(--v2-lume),
+    0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* =============================================================
+   ProductionDemo — the hero demo that walks through the workflow
+   =============================================================
+   Stage attributes on .v2lb-site (set from React state):
+     data-wire     skeleton boxes drawn
+     data-content  real copy crossfades in
+     data-paint    brand palette + light theme floods
+   CSS custom props --acc / --accd carry the per-business brand.
+   ============================================================= */
+
+.v2lb-frame {
+  background: linear-gradient(180deg, rgba(239, 234, 224, 0.055), rgba(239, 234, 224, 0.02));
+  border: 1px solid var(--v2-line-strong);
+  border-radius: 18px;
+  box-shadow:
+    0 40px 120px -32px rgba(0, 0, 0, 0.85),
+    0 0 80px -30px rgba(205, 244, 99, 0.28);
+  backdrop-filter: blur(6px);
+}
+
+.v2lb-view {
+  background: var(--v2-ink-2);
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 17px 17px;
+}
+
+/* --- Skeleton layer (wireframe) --- */
+.v2lb-skel {
+  position: absolute;
+  inset: 0;
+  padding: 7% 7.5%;
+  opacity: 0;
+  transition: opacity 480ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.v2lb-site[data-wire] .v2lb-skel {
+  opacity: 1;
+}
+.v2lb-site[data-content] .v2lb-skel {
+  opacity: 0;
+}
+.v2lb-box {
+  border: 1px dashed rgba(239, 234, 224, 0.32);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  /* Draw-in: each box scales open with a stagger. */
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v2lb-site[data-wire] .v2lb-box {
+  transform: scaleX(1);
+}
+.v2lb-box::after {
+  /* faint scanline shimmer inside each wire box */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(205, 244, 99, 0.09) 50%, transparent 70%);
+  background-size: 220% 100%;
+  animation: v2lb-shimmer 1.6s linear infinite;
+}
+@keyframes v2lb-shimmer {
+  from { background-position: 130% 0; }
+  to   { background-position: -130% 0; }
+}
+
+/* --- Real site layer --- */
+.v2lb-real {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: opacity 560ms cubic-bezier(0.16, 1, 0.3, 1);
+  /* Neutral (unpainted) theme */
+  --site-bg: #171b22;
+  --site-fg: #e6e1d6;
+  --site-fg-dim: rgba(230, 225, 214, 0.6);
+  --site-head-bg: #10141a;
+  --site-head-fg: #e6e1d6;
+  --site-card: rgba(239, 234, 224, 0.05);
+  --site-card-line: rgba(239, 234, 224, 0.12);
+  --site-cta-bg: rgba(239, 234, 224, 0.16);
+  --site-cta-fg: #e6e1d6;
+  --site-acc: rgba(230, 225, 214, 0.55);
+  background: var(--site-bg);
+  color: var(--site-fg);
+}
+.v2lb-site[data-content] .v2lb-real {
+  opacity: 1;
+}
+/* Painted: light SMB site with the brand's palette. */
+.v2lb-site[data-paint] .v2lb-real {
+  --site-bg: #faf8f3;
+  --site-fg: #1c1a16;
+  --site-fg-dim: rgba(28, 26, 22, 0.62);
+  --site-head-bg: var(--accd);
+  --site-head-fg: #f6f3ec;
+  --site-card: #ffffff;
+  --site-card-line: rgba(28, 26, 22, 0.1);
+  --site-cta-bg: var(--acc);
+  --site-cta-fg: #ffffff;
+  --site-acc: var(--acc);
+}
+.v2lb-real,
+.v2lb-real * {
+  transition:
+    background-color 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Content pop-in stagger */
+.v2lb-pop {
+  opacity: 0;
+  transform: translateY(7px);
+  transition:
+    opacity 460ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 460ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v2lb-site[data-content] .v2lb-pop {
+  opacity: 1;
+  transform: translateY(0);
+}
+.v2lb-site[data-content] .v2lb-pop:nth-of-type(1) { transition-delay: 0ms; }
+.v2lb-site[data-content] .v2lb-pop:nth-of-type(2) { transition-delay: 90ms; }
+.v2lb-site[data-content] .v2lb-pop:nth-of-type(3) { transition-delay: 180ms; }
+.v2lb-site[data-content] .v2lb-pop:nth-of-type(4) { transition-delay: 270ms; }
+
+/* Paint sweep — a diagonal light wipe when the palette lands. */
+.v2lb-sweep {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.5) 50%, transparent 62%);
+  transform: translateX(-120%);
+  opacity: 0;
+}
+.v2lb-site[data-paint] .v2lb-sweep {
+  animation: v2lb-sweep 900ms cubic-bezier(0.4, 0, 0.2, 1) 1 both;
+}
+@keyframes v2lb-sweep {
+  0%   { transform: translateX(-120%); opacity: 1; }
+  100% { transform: translateX(120%);  opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2lb-box,
+  .v2lb-site[data-wire] .v2lb-box {
+    transform: none;
+    transition: none;
+  }
+  .v2lb-box::after {
+    animation: none;
+  }
+  .v2lb-pop,
+  .v2lb-site[data-content] .v2lb-pop {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .v2lb-skel,
+  .v2lb-real {
+    transition: opacity 300ms ease;
+  }
+  .v2lb-site[data-paint] .v2lb-sweep {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* Caret for the console line */
+@keyframes v2-caret {
+  0%, 45% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.v2-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 2px;
+  background: var(--v2-lume);
+  vertical-align: text-bottom;
+  animation: v2-caret 1.1s steps(1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-caret {
+    animation: none;
+  }
+}
+
+/* Ping rings for the local-SEO bento cell */
+@keyframes v2-ping {
+  0%   { transform: scale(0.5); opacity: 0.9; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+.v2-ping {
+  animation: v2-ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.v2-ping.v2-ping-late {
+  animation-delay: 1.1s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-ping {
+    animation: none;
+    opacity: 0.25;
+    transform: scale(1.4);
+  }
+}
+
+/* Phone mock tilt in the bento grid */
+.v2-phone {
+  transform: rotate(8deg) translateY(10px);
+  transition: transform 480ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.v2-bento-cell:hover .v2-phone {
+  transform: rotate(0deg) translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-phone,
+  .v2-bento-cell:hover .v2-phone {
+    transform: none;
+  }
+}
+
+/* ---------- The "before" site (deliberately 2009) ---------- */
+.v2-before {
+  font-family: "Times New Roman", Times, serif;
+  background: #d6d2c8;
+  color: #1a1a1a;
+}
+/* Decorative "link" in the mock — plain text so it never enters the
+   tab order (the whole before-layer is aria-hidden set dressing). */
+.v2-before .v2-before-link {
+  color: #0000cc;
+  text-decoration: underline;
+}
+.v2-before .v2-before-btn {
+  background: linear-gradient(#fdfdfd, #c9c9c9);
+  border: 2px outset #e8e8e8;
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 11px;
+  padding: 3px 10px;
+  color: #1a1a1a;
+}

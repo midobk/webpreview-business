@@ -4,41 +4,29 @@ import MagneticButton from "@/components/motion/MagneticButton";
 import Reveal from "@/components/motion/Reveal";
 
 /**
- * Bottom dark CTA on the showcase page. Uses Reveal for the entrance and
- * MagneticButton for the primary CTA so the page feels consistent with the
- * homepage's motion language.
- *
- * Warm-print visual identity: bg-ink (spruce-near-black), Fraunces
- * display h2, single oxblood action accent on the CTA.
+ * Bottom CTA on the showcase page — night-studio identity matching the
+ * landing page's closing section: glow pool, mono kicker, Fraunces
+ * headline, lume magnetic button.
  */
 export default function ShowcaseCTA() {
   return (
-    <section className="py-20 bg-ink text-white relative overflow-hidden">
-      {/* Subtle warm noise overlay — quieter than the request-form section */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 noise-overlay pointer-events-none opacity-40"
-      />
-      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section className="relative overflow-hidden border-t border-[var(--v2-line)] py-20 sm:py-28">
+      <div className="v2-glow absolute inset-0 rotate-180" aria-hidden="true" />
+      <div className="relative mx-auto max-w-3xl px-5 text-center sm:px-8">
         <Reveal>
-          <h2
-            className="text-3xl md:text-5xl font-medium mb-4"
-            style={{
-              fontFamily: "var(--font-fraunces)",
-              fontVariationSettings: '"opsz" 96',
-            }}
-          >
-            Want a website like this for your business?
+          <div className="v2-mono mb-5 text-[10px] text-[var(--v2-cream-faint)]">
+            your turn
+          </div>
+          <h2 className="v2-serif mb-4 text-3xl font-medium md:text-5xl">
+            Want one with{" "}
+            <em className="font-light">your name on it?</em>
           </h2>
-          <p className="text-lg text-white/70 mb-8">
-            Tell us about your business and we&rsquo;ll generate an unofficial preview concept for
-            you to review.
+          <p className="mb-9 text-lg leading-relaxed text-[var(--v2-cream-dim)]">
+            Tell us about your business — one free personalized first draft,
+            most eligible within the hour during service hours.
           </p>
-          <MagneticButton
-            href="/#request-preview"
-            className="bg-action text-white px-8 py-4 rounded-full font-medium text-lg shadow-lg shadow-action/30 hover:bg-action-deep transition-colors"
-          >
-            Request My Preview →
+          <MagneticButton href="/#preview" className="v2-btn v2-btn-primary !px-8 !py-4 text-lg">
+            Request my free draft →
           </MagneticButton>
         </Reveal>
       </div>

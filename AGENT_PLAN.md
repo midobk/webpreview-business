@@ -994,23 +994,17 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 
 ### A. Persistence: move leads from `data/leads.json` to Supabase
 
-**Why:** The homepage form POST to `/api/leads` now writes to local filesystem, which works on the dev machine but fails on Vercel (read-only runtime). The build-time `lib/data-bundle/bundle.ts` freezes data at deploy time, so admin changes don't propagate to production without a redeploy.
+**Current state:** The Supabase project is active, the canonical schema already exists, Vercel has been configured with the project URL and service key, and PR10's `/api/leads` route has been verified locally against Supabase. Local development falls back to `data/leads.json` only when the service key is absent.
 
-**What needs to happen:**
-1. User creates a Supabase project (any tier with RLS)
-2. Run `scripts/supabase-schema.sql` against the project
-3. Set `NEXT_PUBLIC_SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` on Vercel
-4. Run `scripts/migrate_to_supabase.py` for one-time JSON → Postgres copy
-5. `lib/data-source.ts` already prefers Supabase when env vars are present — should "just work"
-6. Verify: PATCH a lead's status on the dashboard, refresh `/showcase` on Vercel, see change appear
+**Remaining verification:** Redeploy PR10, submit a controlled live request, verify the canonical row in Supabase, and confirm dashboard/showcase reads use the live project. The project already contains the existing lead set, so a one-time JSON migration is not currently required.
 
-**Blocked on:** Supabase credentials.
+**Blocked on:** next Vercel deployment and smoke test.
 
 **Related to:** C1 from §17 (showcase approve → visibility) is solved by this.
 
 ### B. Email: wire AgentMail so the "check your inbox" promise is real
 
-**Why:** The form's success message tells users to check their email, but no mailer is currently wired. Users will think the system is broken when nothing arrives.
+**Why:** The form records the requested email and explains that the draft will be sent there, but no mailer is currently wired. Users will think the system is broken when nothing arrives.
 
 **What needs to happen:**
 1. Activate the `sitesprint-test@agentmail.to` inbox (already created, see `scripts/setup-agentmail/setup_agentmail_test.py`)
@@ -1033,7 +1027,11 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 3. For real protection: Turnstile is ~5 minutes of work and free
 4. Apply to `/api/leads` (and consider `/api/admin/login` while at it — login endpoint has no brute-force protection)
 
-**Blocked on:** none — can be done any time. Recommended before exposing the form on production traffic.
+**Current state:** Basic request-size limits, honeypot protection, and a five-per-minute in-memory per-IP limit are now implemented in `app/api/leads/route.ts`. The in-memory limiter is only a burst guard on a single serverless instance.
+
+**Deferred follow-up:** Move rate limiting to a distributed store or add Cloudflare Turnstile before meaningful public traffic. Apply equivalent brute-force protection to `/api/admin/login`.
+
+**Blocked on:** none. Recommended before scaling production traffic.
 
 ### D. Screenshot pipeline for new prototypes (carried over from §17 C3)
 
@@ -1129,6 +1127,34 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 4. Verify a new lead appears in `data/leads.json` and that Supabase sync fires.
 
 **Blocked on:** user decision on option (a) vs (b) vs (c).
+
+### K. Draft fulfillment pipeline (deferred after PR10)
+
+**Status:** OPEN — intake is durable, fulfillment is not yet automated.
+
+**Why:** PR10 now stores public draft requests in Supabase and returns a truthful confirmation, but the request does not yet enqueue prototype generation, notify the owner, or deliver a completed preview link to the customer. The landing page should not promise an inbox delivery path until this workflow is connected end to end.
+
+**What needs to happen:**
+1. Create an idempotent generation job/queue keyed by the lead ID.
+2. Trigger the existing prototype-generation workflow after a successful lead insert.
+3. Add owner notification and retry/failure logging.
+4. Send the customer a confirmation email, then a preview-link email when `generation_status` becomes `completed`.
+5. Add an end-to-end test covering lead insert → generation → delivery, with cleanup for test records.
+
+**Blocked on:** choosing the production queue/worker and email provider configuration.
+
+### L. PR10 production launch verification (deferred)
+
+**Status:** OPEN — run after the next Vercel deployment.
+
+**What needs to happen:**
+1. Redeploy the PR10 head with `NEXT_PUBLIC_SITE_URL`, Supabase URL, and server-only Supabase key configured in Vercel.
+2. Submit and clean up a controlled live smoke-test request; verify the canonical lead shape in Supabase.
+3. Verify `/`, `/showcase`, `/privacy`, `/sitemap.xml`, `/robots.txt`, and `/opengraph-image` from the live domain.
+4. Confirm no outreach email uses the retired Vercel host.
+5. Replace the illustrative testimonials, review counts, phone numbers, and demo evidence with verified, consented proof before public launch.
+
+**Blocked on:** next deployment and approved real-world proof assets.
 
 ---
 
@@ -1528,4 +1554,62 @@ Length = 11 chars. The literal `…` is a display ellipsis, not a valid API key 
 ### Screenshots / artifacts
 
 - None this session. Build issue prevented `npm run dev` verification, so no UI changes to verify.
+## 22. Prototype quality contract, revision capture, and showcase operations — 2026-07-13
 
+This is the active handoff for the next prototype-generation agent after PR10 merges.
+
+- **Required reading:** `docs/PROTOTYPE_GENERATION_PLAYBOOK.md`, `docs/PROTOTYPE_QA.md`, `docs/PROTOTYPE_RULES.md`, `docs/SHOWCASE_RULES.md`, plus the `premium-saas-design` and `frontend-skill` skills.
+- **Creative bar:** inspect the best approved prototypes before generating; define a visual thesis and page job; build a complete industry-specific landing page with real-looking imagery, restrained motion, accessible copy, and a deliberate mobile composition. Do not copy a template or invent business facts.
+- **Release bar:** generation stays pending review until clean HTML, valid assets, desktop/mobile browser screenshots, technical checks, and human visual review all pass. No 1×1 placeholders, leaked model text, fake proof, or silent fallback is allowed.
+- **Customer loop:** the preview now exposes a `Request changes` action. A submitted request is tied to the lead, appended to the lead history, and moves the lead to `revision_requested` so it is treated as a hot lead instead of disappearing from the funnel.
+- **Admin loop:** `/admin/prototypes` is the operational surface for search, review state, showcase eligibility, and showcase approval. Keep these states distinct: generated, reviewed/eligible, and approved/live.
+- **Google Places:** the local key was tested on 2026-07-13 and Google returned `403 PERMISSION_DENIED` for Places Text Search. Do not spend credits or run discovery until the user enables Places API (New), billing, and the required key restrictions in Google Cloud.
+- **Next steps still queued:** email the customer’s change-request confirmation, add a structured revision-request table/history if lead notes become insufficient, and finish the production live smoke test after the PR10 deployment.
+
+The detailed quality and implementation notes are in `docs/PROTOTYPE_GENERATION_PLAYBOOK.md` and the revision/admin changes in this PR.
+
+## 23. PR10 review-watcher cron — 2026-07-16 10:53 ET
+
+- Codex posted a new review on PR #10 (review id 4714882921, state COMMENTED, against commit `8423f4e`) with 3× P2 findings:
+  1. P2 — backfill `variant` before adding `uq_prototypes_lead_variant` (data collision on migration).
+  2. P2 — add `industry` to the migration whitelist (`PROTOTYPE_COLUMNS`).
+  3. P2 — `/api/preview-image` needs to accept an authenticated admin session so dashboard `/preview/<slug>` links render local hero/service images.
+- All three were already addressed by commit `79b8bad` ("Address PR10 Codex review: backfill variants, whitelist industry, allow admin assets"), which was pushed to `claude/landing-page-design-ixddwp` at 2026-07-16 14:54:09 UTC — the head of the PR at the time of this cron tick.
+- Verification on the working tree:
+  - `data/prototypes.json` — distinct `variant` per `lead_id` (lead-002 → 1/2/3, lead-003 → 1/2, lead-ramo-sports → 1, all orphan showcase prototypes have unique variants). 0 collisions across all 24 prototypes.
+  - `scripts/migrate_to_supabase.py` line 42 — `"industry"` is in `PROTOTYPE_COLUMNS`.
+  - `app/api/preview-image/route.ts` — third unlock path via `isValidAdminSession(session)` from `@/lib/auth-edge` when no signed draft token is present. Public showcase gating unchanged.
+- Action taken: posted "Already addressed on the current head (commit 79b8bad)" replies to all three Codex review comments (review-thread reply ids 3596522749, 3596522751, 3596522753). No code changes were needed.
+- No new commits or pushes this tick. Branch `claude/landing-page-design-ixddwp` is up to date with `origin`.
+- Telegram update sent to chat 7264128352 (message id 867).
+
+## 24. PR10 review-watcher cron — 2026-07-16 11:03 ET
+
+- Checked PR #10 for new Codex review feedback. Latest review id is `4714976808` (vs previous `4714416043` → new).
+- Reviewer: `midobk` (PR owner), state `COMMENTED`, against original commit `8423f4e` (P2 reply thread).
+- Review body: empty (replies are carried on individual review comments).
+- Single comment: review-thread reply on `app/api/preview-image/route.ts` (id `3596522751`, replying to the P2 admin-preview-authorization thread). Reply text:
+  > "Already addressed on the current head (commit 79b8bad). `app/api/preview-image/route.ts` now treats an authenticated `admin_session` cookie (verified via `isValidAdminSession` from `@/lib/auth-edge`) as a third unlock path when no signed draft token is present, so dashboard `/preview/<slug>` links render their local hero/service images instead of 404-ing. Public showcase gating is unchanged."
+- Verification on the working tree:
+  - `git fetch origin claude/landing-page-design-ixddwp` → head is `012aab1` (docs commit) sitting on top of `79b8bad` ("Address PR10 Codex review: backfill variants, whitelist industry, allow admin assets"), which contains the admin-session unlock path.
+- Outcome: no new actionable findings. The owner confirmed the P2 from the previous Codex review is already fixed; nothing to address, no code changes, no PR comment needed.
+- No commits or pushes this tick.
+- Telegram update sent to chat 7264128352.
+
+## 25. PR10 deep-dive audit + verification — 2026-07-16 14:32 ET
+
+- 4 parallel verifier subagents audited PR #10 end-to-end on head `9e2f32a`. The auth/security subagent found a **new P1 blocker** the Codex review had missed: the empty-secret guard in `isValidAdminSession()` could be bypassed when `./password` contained a non-bcrypt non-empty string (e.g. the current dev `PLAINTEXT=1234`). Adversarial probe: forged a valid HMAC session offline using the known plaintext secret; the server accepted it. Read-modify-write redaction in `readLocalPasswordSecret()` was trusting any file content.
+- Fix landed in commit `5716c51`:
+  - `lib/auth-server.ts:readLocalPasswordSecret()` and `lib/auth.ts:getPasswordHashFromFile()` now require the file content to match `/^\$2[abxy]\$\d{2}\$[./A-Za-z0-9]{53}$/` (bcrypt hash format) before using it as an HMAC key or password hash. Symmetric guard, fail-closed on malformed content.
+  - 4× P2 fixes: `requireSameOrigin()` added to pre-auth admin login/setup POSTs (CSRF); `trg_revision_requests_updated` trigger added to `scripts/supabase-schema.sql` (schema drift); `SLUG_PATTERN` unified across revision-requests / preview-image / showcase-image; `append_lead_note` RPC now has explicit `REVOKE`/`GRANT` to service_role in both the migration and the schema mirror.
+  - 8× P3 polish: H2 subhead qualified ("Most eligible within the hour."), ShowcaseCTA "usually" → "most eligible", stale `webpreview-business.vercel.app` comment, v2.css `LiveBuild` → `ProductionDemo` (2 places), `lib/sync.ts` case-insensitive `generation_status` check, `ADMIN_OWNED_COLUMNS` actually used as a runtime guard inside `upsertMetadataOnly`, `capture.js ensureDevServer()` fast-fail, removed unused `SESSION_TTL_SECONDS` from `lib/auth-edge.ts`, 7 catch-block `e`/`err` cleanup + 1 unused `IconCheck` import removed.
+- Final verification (re-run on `5716c51`):
+  - `npx tsc --noEmit` → clean
+  - `npm run lint` → 0 errors / 0 warnings (was 9 warnings on `9e2f32a`)
+  - `npm run check:showcase-metadata` → 24 prototypes, 11 showcase-visible
+  - `npx next build` → succeeded, 25 routes
+  - Adversarial probe (forged session with `PLAINTEXT=1234`): now rejected (was accepted on `9e2f32a`)
+- Final commit: `5716c51 Address PR10 deep-dive audit: bcrypt .password guard, admin CSRF, schema drift, slug whitelist`
+- PR comment posted: https://github.com/midobk/webpreview-business/pull/10#issuecomment-4995524833
+- Remaining CI: `validate-showcase` GitHub Actions job is still red due to repo-level billing failure ("The job was not started because recent account payments have failed"). Local `check:showcase-metadata` step (the only one that runs without secrets) passes. No code change can resolve this — needs a billing action in repo settings.
+- **VERDICT: MERGE**

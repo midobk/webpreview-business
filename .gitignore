@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+.supabase-credentials.txt
 !.env.example
 
 # openclaw workspace-setup state + generic templates (project keeps its own IDENTITY.md / SYSTEM.md / AGENT_PLAN.md)

@@ -17,6 +17,7 @@ const STATUS_MAP: Record<string, StatusEntry> = {
   ready_for_prototype: { label: 'Ready for prototype', tone: 'purple' },
   prototype_generated: { label: 'Prototype ready', tone: 'indigo' },
   contacted: { label: 'Contacted', tone: 'amber' },
+  revision_requested: { label: 'Hot · revision requested', tone: 'red' },
   replied: { label: 'Replied', tone: 'cyan' },
   email_drafted: { label: 'Email drafted', tone: 'amber' },
   won: { label: 'Won', tone: 'green' },

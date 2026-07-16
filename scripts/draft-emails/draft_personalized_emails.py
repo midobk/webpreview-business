@@ -100,7 +100,7 @@ The email must:
 - Mention I made a 1-page website preview concept for them
 - NOT include any pricing
 - End with a soft CTA: "Want to see it?" or "Should I send the link?"
-- Have a subject line that's specific (not generic "Hi from SiteSprint")
+- Have a subject line that's specific (not generic "Hi from Seaway Sites")
 - Sound human, not salesy
 - No emojis, no exclamation points
 

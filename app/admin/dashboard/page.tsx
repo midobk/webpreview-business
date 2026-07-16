@@ -130,7 +130,7 @@ export default function AdminDashboard() {
   const handleLogout = async () => {
     try {
       await fetch('/api/admin/login', { method: 'DELETE' });
-    } catch (e) {
+    } catch {
       /* ignore */
     }
     router.push('/admin');
@@ -157,6 +157,7 @@ export default function AdminDashboard() {
   );
 
   const readyCount = leads.filter((l) => getLeadStatus(l) === 'ready_for_prototype').length;
+  const hotCount = leads.filter((l) => getLeadStatus(l) === 'revision_requested').length;
   const wonCount = leads.filter((l) => getLeadStatus(l) === 'won').length;
   const avgScore = leads.length
     ? Math.round(leads.reduce((s, l) => s + getLeadScore(l), 0) / leads.length)
@@ -196,7 +197,7 @@ export default function AdminDashboard() {
         title="Leads"
         breadcrumb={
           <>
-            <span>SiteSprint</span>
+            <span>Seaway Sites</span>
             <span>/</span>
             <span style={{ color: 'var(--adm-text-primary)' }}>Console</span>
           </>
@@ -216,7 +217,7 @@ export default function AdminDashboard() {
         }
       >
         {/* KPI strip */}
-        <section className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <section className="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
           <StatCard
             label="Total leads"
             value={leads.length}
@@ -237,6 +238,13 @@ export default function AdminDashboard() {
             hint="High-intent next up"
             icon={<IconBolt size={18} />}
             accent="pink"
+          />
+          <StatCard
+            label="Hot revision requests"
+            value={hotCount}
+            hint="Customer re-engaged"
+            icon={<IconBolt size={18} />}
+            accent="amber"
           />
           <StatCard
             label="Avg lead score"

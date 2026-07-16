@@ -14,7 +14,7 @@ export default function PrototypesPage() {
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
   const [search, setSearch] = useState('');
-  const [protoFilter, setProtoFilter] = useState<'all' | 'showcase'>('all');
+  const [protoFilter, setProtoFilter] = useState<'all' | 'needs_review' | 'eligible' | 'showcase'>('all');
   const [toast, setToast] = useState<Toast | null>(null);
   const router = useRouter();
 
@@ -70,11 +70,12 @@ export default function PrototypesPage() {
         previous !== undefined
           ? async () => {
               try {
-                await fetch('/api/admin/prototypes', {
+                const undoResponse = await fetch('/api/admin/prototypes', {
                   method: 'PATCH',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ id, showcase_approved: previous }),
                 });
+                if (!undoResponse.ok) throw new Error('Undo request failed');
                 setPrototypes((prev) =>
                   prev.map((p): Prototype => (p.id === id ? { ...p, showcase_approved: previous } : p))
                 );
@@ -92,17 +93,69 @@ export default function PrototypesPage() {
     }
   };
 
+  const toggleEligible = async (id: string, eligible: boolean) => {
+    const target = prototypes.find((p) => p.id === id);
+    const previous = target?.showcase_eligible;
+    const previousApproved = target?.showcase_approved ?? false;
+    setUpdating(true);
+    try {
+      const res = await fetch('/api/admin/prototypes', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, showcase_eligible: eligible }),
+      });
+      if (!res.ok) throw new Error('Eligibility update failed');
+      // Mirror the server side: when a prototype is moved back out of
+      // eligibility, the API also clears `showcase_approved` so the card
+      // disappears from the public showcase. The local state has to match
+      // that, otherwise the admin card, count and undo button keep showing
+      // the prototype as live even after Supabase/local JSON unpublished it.
+      setPrototypes((prev) =>
+        prev.map((p): Prototype =>
+          p.id === id
+            ? eligible
+              ? { ...p, showcase_eligible: eligible }
+              : { ...p, showcase_eligible: eligible, showcase_approved: false }
+            : p
+        )
+      );
+      showToast(eligible ? 'Marked ready for showcase review' : 'Moved back to review', 'success', previous !== undefined ? async () => {
+        // Undo must restore BOTH fields on the server, not just eligibility.
+        // The forward toggle cleared showcase_approved when eligibility was
+        // removed; restoring only showcase_eligible would leave the prototype
+        // unpublished on the server while the client renders it as Live.
+        const undoResponse = await fetch('/api/admin/prototypes', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, showcase_eligible: previous, showcase_approved: previousApproved }) });
+        if (!undoResponse.ok) throw new Error('Undo request failed');
+        setPrototypes((prev) =>
+          prev.map((p): Prototype =>
+            p.id === id
+              ? { ...p, showcase_eligible: previous as boolean, showcase_approved: previousApproved }
+              : p
+          )
+        );
+      } : undefined);
+    } catch (err) {
+      console.error(err);
+      showToast('Eligibility update failed — please try again', 'error');
+    } finally {
+      setUpdating(false);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await fetch('/api/admin/login', { method: 'DELETE' });
-    } catch (e) {
+    } catch {
       /* ignore */
     }
     router.push('/admin');
   };
 
   const filteredPrototypes = useMemo(() => {
-    let list = protoFilter === 'showcase' ? prototypes.filter((p) => p.showcase_approved) : prototypes;
+    let list = prototypes;
+    if (protoFilter === 'needs_review') list = list.filter((p) => !p.showcase_eligible && !p.showcase_approved);
+    if (protoFilter === 'eligible') list = list.filter((p) => p.showcase_eligible && !p.showcase_approved);
+    if (protoFilter === 'showcase') list = list.filter((p) => p.showcase_approved);
     if (!search.trim()) return list;
     const q = search.toLowerCase();
     return list.filter((p) => {
@@ -157,7 +210,7 @@ export default function PrototypesPage() {
         title="Prototypes"
         breadcrumb={
           <>
-            <span>SiteSprint</span>
+            <span>Seaway Sites</span>
             <span>/</span>
             <span style={{ color: 'var(--adm-text-primary)' }}>Prototypes</span>
           </>
@@ -337,7 +390,7 @@ export default function PrototypesPage() {
                 border: '1px solid var(--adm-border)',
               }}
             >
-              {(['all', 'showcase'] as const).map((f) => (
+              {(['all', 'needs_review', 'eligible', 'showcase'] as const).map((f) => (
                 <button
                   key={f}
                   onClick={() => setProtoFilter(f)}
@@ -349,7 +402,7 @@ export default function PrototypesPage() {
                     boxShadow: protoFilter === f ? 'var(--adm-shadow-sm)' : 'none',
                   }}
                 >
-                  {f}
+                  {f.replace('_', ' ')}
                 </button>
               ))}
             </div>
@@ -364,6 +417,7 @@ export default function PrototypesPage() {
                     proto={proto}
                     lead={leads.find((l) => l.id === proto.lead_id)}
                     onToggleShowcase={toggleShowcase}
+                    onToggleEligible={toggleEligible}
                     updating={updating}
                   />
                 ))}
@@ -381,6 +435,10 @@ export default function PrototypesPage() {
                     ? 'No prototypes match your search.'
                     : protoFilter === 'showcase'
                     ? 'No prototypes approved for showcase yet.'
+                    : protoFilter === 'eligible'
+                    ? 'No prototypes are waiting for showcase approval.'
+                    : protoFilter === 'needs_review'
+                    ? 'No prototypes need review.'
                     : 'No prototypes generated yet.'}
                 </p>
               </div>

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Plus_Jakarta_Sans, Fraunces } from "next/font/google
 import Providers from "./providers";
 import "./globals.css";
 import { ThemeScript } from "./admin/_components/ThemeScript";
+import { SITE_URL } from '@/lib/site-config';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,10 +22,6 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-// Fraunces — variable serif with optical sizing. Used for the display
-// headlines and italic emphasis ("PROOF · DRAFT 01", "before you pay a
-// dollar") that anchor the warm-print visual identity. Body copy stays
-// Geist; the serif is a deliberate signature, not a default.
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
@@ -33,14 +30,14 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "SiteSprint — Beautiful websites for Canadian small business",
+  title: "Seaway Sites — Beautiful websites for Canadian small businesses",
   description:
-    "Generate a complete, on-brand website preview for your business in 90 seconds. Built for Canadian small businesses. No credit card. No sales call.",
-  metadataBase: new URL("https://webpreview-business.vercel.app"),
+    "Request a free, personalized first draft of your website. Most eligible requests are delivered within the hour during service hours. No credit card and no sales call.",
+  metadataBase: new URL(SITE_URL),
   openGraph: {
-    title: "SiteSprint — See your new website before you pay a dollar.",
+    title: "Seaway Sites — See your new website before you pay a dollar.",
     description:
-      "Fast website previews for Canadian small businesses. Free preview, no credit card, no commitment.",
+      "Personalized website drafts and managed websites for Canadian small businesses.",
     type: "website",
   },
 };
@@ -60,9 +57,6 @@ export default function RootLayout({
         className="min-h-full flex flex-col bg-[var(--bg-page)] text-[var(--text-primary)]"
         suppressHydrationWarning
       >
-        {/* ThemeScript sets the admin light/dark class before paint (no FOUC);
-            Providers (MotionConfig reducedMotion="user") then wraps the tree in
-            a client boundary so this layout stays a Server Component. */}
         <ThemeScript />
         <Providers>{children}</Providers>
       </body>

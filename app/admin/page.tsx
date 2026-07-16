@@ -53,7 +53,7 @@ export default function AdminLogin() {
         return;
       }
       setError(data.error || 'Invalid password');
-    } catch (err) {
+    } catch {
       setError('Network error — check your connection and try again.');
     } finally {
       setIsLoading(false);

@@ -2,14 +2,30 @@ const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 
+const BASE_URL = process.env.CAPTURE_BASE_URL || 'http://localhost:3000';
+
+async function ensureDevServer() {
+  try {
+    const res = await fetch(BASE_URL + '/', { signal: AbortSignal.timeout(2000) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  } catch (err) {
+    throw new Error(
+      `Dev server not reachable at ${BASE_URL} (${err.message}). ` +
+        'Start it with `npm run dev` (or set CAPTURE_BASE_URL) before running this script.'
+    );
+  }
+}
+
 async function captureScreenshots() {
+  await ensureDevServer();
+
   const browser = await chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
 
   // Get all prototype directories
   const prototypesDir = path.join(process.cwd(), 'data', 'prototypes');
-  const prototypeDirs = fs.readdirSync(prototypesDir).filter(dir => 
+  const prototypeDirs = fs.readdirSync(prototypesDir).filter(dir =>
     fs.statSync(path.join(prototypesDir, dir)).isDirectory()
   );
 
@@ -17,7 +33,7 @@ async function captureScreenshots() {
     console.log(`Capturing screenshots for ${slug}...`);
     
     // Construct the local URL for the preview
-    const url = `http://localhost:3000/preview/${slug}`;
+    const url = `${BASE_URL}/preview/${slug}`;
     
     try {
       // Navigate to the preview page

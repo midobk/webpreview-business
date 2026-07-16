@@ -25,7 +25,7 @@ type NavItem = {
 const NAV: NavItem[] = [
   { href: '/admin/dashboard', label: 'Leads', icon: <IconLeads size={16} /> },
   { href: '/admin/prototypes', label: 'Prototypes', icon: <IconPrototypes size={16} /> },
-  { href: '/showcase', label: 'Showcase', icon: <IconShowcase size={16} /> },
+  { href: '/admin/prototypes', label: 'Showcase review', icon: <IconShowcase size={16} /> },
   { href: '/admin/dashboard#settings', label: 'Settings', icon: <IconSettings size={16} />, soon: true },
 ];
 
@@ -131,7 +131,7 @@ function Sidebar({
         </div>
         <div className="leading-tight">
           <p className="text-sm font-semibold" style={{ color: 'var(--adm-text-primary)' }}>
-            SiteSprint
+            Seaway Sites
           </p>
           <p className="text-[11px]" style={{ color: 'var(--adm-text-muted)' }}>
             Admin Console
@@ -176,7 +176,8 @@ function Sidebar({
         {NAV.map((item) => {
           const active =
             pathname === item.href ||
-            (item.href === '/admin/dashboard' && pathname.startsWith('/admin/dashboard'));
+            (item.href === '/admin/dashboard' && pathname.startsWith('/admin/dashboard')) ||
+            (item.href.startsWith('/admin/prototypes') && pathname.startsWith('/admin/prototypes'));
           return (
             <Link
               key={item.href}

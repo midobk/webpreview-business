@@ -1,13 +1,26 @@
 import { NextResponse } from 'next/server';
 import { verifyPassword, getPasswordHash } from '@/lib/auth';
+import { createAdminSession, requireSameOrigin } from '@/lib/auth-server';
+import { rateLimited, requestIp } from '@/lib/request-guard';
 
 // POST /api/admin/login - Authenticate admin user
 export async function POST(request: Request) {
   try {
+    // Reject cross-origin login attempts to prevent an attacker's site from
+    // silently authenticating a victim against the operator's account and
+    // creating a session in the victim's browser pointing at the attacker.
+    const originDenied = requireSameOrigin(request);
+    if (originDenied) return originDenied;
+    if (rateLimited(`admin-login:${requestIp(request)}`, 10)) {
+      return NextResponse.json({ error: 'Too many attempts. Please try again shortly.' }, { status: 429 });
+    }
+    if (Number(request.headers.get('content-length') || 0) > 4_000) {
+      return NextResponse.json({ error: 'Request is too large.' }, { status: 413 });
+    }
     const body = await request.json();
     const { password } = body;
 
-    if (!password) {
+    if (typeof password !== 'string' || !password || password.length > 200) {
       return NextResponse.json(
         { error: 'Password is required' },
         { status: 400 }
@@ -32,9 +45,14 @@ export async function POST(request: Request) {
       );
     }
 
-    // Set a simple session cookie (24h expiry)
+    const session = createAdminSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Admin session secret is not configured.' }, { status: 500 });
+    }
+
+    // Set a signed session cookie (24h expiry)
     const res = NextResponse.json({ message: 'Authentication successful' }, { status: 200 });
-    res.cookies.set('admin_session', 'authenticated', {
+    res.cookies.set('admin_session', session, {
       httpOnly: true,
       secure: true,
       sameSite: 'strict',

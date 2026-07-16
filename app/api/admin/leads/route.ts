@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { requireAdmin } from '@/lib/auth-server';
+import { requireAdmin, requireSameOrigin } from '@/lib/auth-server';
 import {
   getLeads,
   getPrototypes,
@@ -81,9 +81,21 @@ export async function GET(request: Request) {
 export async function PATCH(request: Request) {
   const denied = requireAdmin(request);
   if (denied) return denied;
+  const originDenied = requireSameOrigin(request);
+  if (originDenied) return originDenied;
   try {
+    if (Number(request.headers.get('content-length') || 0) > 16_000) {
+      return NextResponse.json({ error: 'Request is too large.' }, { status: 413 });
+    }
     const body = await request.json();
     const { id, status, notes } = body;
+    const unknownKeys = Object.keys(body).filter((key) => !['id', 'status', 'notes'].includes(key));
+    if (unknownKeys.length || typeof id !== 'string' || !id.trim() || id.length > 200 ||
+      (status !== undefined && (typeof status !== 'string' || status.length > 80)) ||
+      (notes !== undefined && (typeof notes !== 'string' || notes.length > 20_000)) ||
+      (status === undefined && notes === undefined)) {
+      return NextResponse.json({ error: 'Lead id and a valid update are required.' }, { status: 400 });
+    }
 
     const supabase = getSupabase();
     if (supabase) {
@@ -123,11 +135,11 @@ export async function PATCH(request: Request) {
 
     try {
       await fs.writeFile(leadsPath, JSON.stringify(leads, null, 2));
-    } catch (e) {
+    } catch {
       return NextResponse.json({
         success: false,
         message: 'Phase 1 hacky build: writes not persisted on Vercel. Set SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY for live writes.',
-      });
+      }, { status: 503 });
     }
 
     return NextResponse.json({ success: true, lead: leads[leadIndex], data_source: "filesystem" });

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Google Places API (New) lead discovery for SiteSprint.
+Google Places API (New) lead discovery for Seaway Sites.
 
 Uses the Places API (New) Text Search + Place Details endpoints to find
 local businesses without websites in a given city/region.
@@ -17,6 +17,7 @@ Usage:
 import argparse
 import json
 import os
+import re
 import sys
 import time
 import urllib.request
@@ -171,14 +172,30 @@ def collect_businesses(api_key, query, region="ca", max_pages=3):
 
 
 def filter_no_website(places):
-    """Keep only places without a website — prime SiteSprint leads."""
+    """Keep only places without a website — prime Seaway Sites leads."""
     return [p for p in places if not p.get("websiteUri")]
 
 
+def slugify_business_name(name: str) -> str:
+    """Build a filesystem- and URL-safe slug from a business display name.
+
+    The slug is used both as a URL path segment and as a filesystem directory
+    name (data/prototypes/<slug>/). It must be a single flat path segment —
+    any '/', '\\', '.', ':', or other metacharacter would either create nested
+    directories, break prototype_url.split('/') consumers, or escape the
+    prototypes root via '..'. Collapse every run of non-alphanumerics to a
+    single dash and trim, so 'A/B Plumbing & Heating' -> 'a-b-plumbing-and-heating'
+    and '../x' -> 'x'.
+    """
+    collapsed = name.lower().replace("&", "and")
+    slug = re.sub(r"[^a-z0-9]+", "-", collapsed).strip("-")
+    return slug or "untitled"
+
+
 def place_to_lead(place, industry, city, province, existing_count):
-    """Convert a Google Place to SiteSprint lead format."""
+    """Convert a Google Place to Seaway Sites lead format."""
     display_name = place.get("displayName", {}).get("text", "Unknown")
-    slug = display_name.lower().replace(" ", "-").replace("'", "").replace("&", "and")
+    slug = slugify_business_name(display_name)
     return {
         "id": f"lead-{existing_count + 1:03d}",
         "business_name": display_name,

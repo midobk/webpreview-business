@@ -1,4 +1,4 @@
--- Supabase schema for SiteSprint
+-- Supabase schema for Seaway Sites
 -- Run this in the Supabase SQL editor or via supabase-cli
 --
 -- This replaces the JSON-file data layer. Phase 2 of the dashboard fix.
@@ -51,6 +51,7 @@ CREATE INDEX IF NOT EXISTS idx_leads_city ON leads(city);
 CREATE TABLE IF NOT EXISTS prototypes (
   id TEXT PRIMARY KEY,
   lead_id TEXT REFERENCES leads(id) ON DELETE CASCADE,
+  industry TEXT,
   variant INTEGER DEFAULT 1,
   variant_name TEXT,
   prototype_url TEXT,
@@ -77,6 +78,48 @@ CREATE TABLE IF NOT EXISTS prototypes (
 CREATE INDEX IF NOT EXISTS idx_prototypes_lead ON prototypes(lead_id);
 CREATE INDEX IF NOT EXISTS idx_prototypes_status ON prototypes(generation_status);
 CREATE INDEX IF NOT EXISTS idx_prototypes_showcase ON prototypes(showcase_eligible, showcase_approved);
+-- A lead can have at most one prototype per variant number; otherwise a
+-- slug like <slug>-v1 resolves to multiple rows and the first-match wins,
+-- silently serving the wrong prototype to a customer.
+--
+-- Backfill distinct variant numbers for legacy rows that share a lead_id
+-- before creating the unique index. Seed data may have multiple prototypes
+-- per lead with variant = 1 (the default), which would violate the index.
+-- Assign 1, 2, 3, ... ordered by created_at for each lead group.
+DO $$
+BEGIN
+  WITH ranked AS (
+    SELECT id,
+           ROW_NUMBER() OVER (
+             PARTITION BY lead_id
+             ORDER BY COALESCE(variant, 1), created_at
+           ) AS new_variant
+    FROM prototypes
+    WHERE lead_id IS NOT NULL
+  )
+  UPDATE prototypes p
+  SET variant = ranked.new_variant
+  FROM ranked
+  WHERE p.id = ranked.id
+    AND COALESCE(p.variant, 1) <> ranked.new_variant;
+END $$;
+
+CREATE UNIQUE INDEX IF NOT EXISTS uq_prototypes_lead_variant ON prototypes(lead_id, variant);
+
+-- ============ revision_requests ============
+-- Customer feedback captured from a prototype preview. RLS stays deny-by-default;
+-- the server-side service-role route is the only writer/reader.
+CREATE TABLE IF NOT EXISTS revision_requests (
+  id TEXT PRIMARY KEY,
+  lead_id TEXT NOT NULL REFERENCES leads(id) ON DELETE CASCADE,
+  request TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'new',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_revision_requests_lead ON revision_requests(lead_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_revision_requests_status ON revision_requests(status, created_at DESC);
 
 -- ============ outreach_logs ============
 -- Each row is one outreach attempt (email or SMS), tracked through the lifecycle
@@ -145,6 +188,57 @@ CREATE TABLE IF NOT EXISTS agentmail_inboxes (
 
 ALTER TABLE leads ENABLE ROW LEVEL SECURITY;
 ALTER TABLE prototypes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE revision_requests ENABLE ROW LEVEL SECURITY;
+
+-- ============ append_lead_note RPC ============
+-- Atomic append of a revision-request note to leads.notes.
+--
+-- /api/revision-requests used to read leads.notes, append the new entry in
+-- JS, then write the whole string back — a read-modify-write race where two
+-- concurrent revision requests clobber each other and the losing entry is
+-- dropped from leads.notes. This function appends inside a single UPDATE
+-- (serialized by the row lock), so concurrent appends both survive. It is
+-- also idempotent: a retry carrying the same marker does not double-append.
+--
+-- SECURITY INVOKER runs with the caller's role; the route calls this with
+-- the service role, which bypasses RLS — the same privilege it already uses
+-- for the direct update, so no escalation.
+--
+-- This was previously only in supabase/migrations/20260714120000_add_append_lead_note.sql.
+-- Users who run this schema file in a fresh Supabase project's SQL editor
+-- would have revision_requests accepted but every submission would 500 with
+-- "function append_lead_note does not exist". Inline the definition here so
+-- a single schema run is sufficient.
+create or replace function public.append_lead_note(
+  p_lead_id text,
+  p_marker text,
+  p_entry text
+) returns void
+language plpgsql
+security invoker
+set search_path = public
+as $$
+begin
+  update public.leads
+    set notes = case
+                  when notes is null or btrim(notes) = '' then p_entry
+                  else btrim(notes) || E'\n\n' || p_entry
+                end,
+        status = 'revision_requested',
+        updated_at = now()
+  where id = p_lead_id
+    and (notes is null or position(p_marker in notes) = 0);
+end;
+$$;
+
+-- Explicit grants, matching the pattern in
+-- supabase/migrations/20260710234500_harden_public_helper_functions.sql.
+-- The function is SECURITY INVOKER, so anon/authenticated callers would
+-- otherwise be silently denied when the implicit PUBLIC grant is revoked
+-- elsewhere. Service role bypasses RLS and is the only expected caller.
+revoke all on function public.append_lead_note(text, text, text) from public;
+grant execute on function public.append_lead_note(text, text, text) to service_role;
+
 ALTER TABLE outreach_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE conversion_stats ENABLE ROW LEVEL SECURITY;
 ALTER TABLE agentmail_inboxes ENABLE ROW LEVEL SECURITY;
@@ -169,4 +263,13 @@ CREATE TRIGGER trg_prototypes_updated BEFORE UPDATE ON prototypes
   FOR EACH ROW EXECUTE FUNCTION touch_updated_at();
 
 CREATE TRIGGER trg_inboxes_updated BEFORE UPDATE ON agentmail_inboxes
+  FOR EACH ROW EXECUTE FUNCTION touch_updated_at();
+
+-- Keep revision_requests.updated_at honest on every UPDATE. The migration
+-- 20260713120000_add_revision_requests.sql defines this trigger; mirror it
+-- here so a fresh Supabase project that runs only this schema file still
+-- gets the auto-bump behavior (admin "last updated" ordering, audit
+-- timestamps, etc.). Without the trigger, updated_at would stay pinned to
+-- the created_at value forever.
+CREATE TRIGGER trg_revision_requests_updated BEFORE UPDATE ON revision_requests
   FOR EACH ROW EXECUTE FUNCTION touch_updated_at();
