@@ -39,7 +39,7 @@ SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 
 # Schema column whitelist — fields in JSON that aren't here get dropped
 PROTOTYPE_COLUMNS = {
-    "id", "lead_id", "variant", "variant_name", "prototype_url", "screenshot_url",
+    "id", "lead_id", "industry", "variant", "variant_name", "prototype_url", "screenshot_url",
     "title", "design_summary", "prototype_score", "generation_model", "generation_prompt",
     "generation_status", "watermark_enabled", "demo_locked", "showcase_eligible",
     "showcase_approved", "showcase_score", "showcase_issues", "anonymized",

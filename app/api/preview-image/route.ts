@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { cookies } from 'next/headers';
 import { getPrototypes } from '@/lib/data-source';
 import { isValidDraftPreviewToken } from '@/lib/draft-preview-token';
 import { isShowcaseVisible } from '@/lib/showcase-policy';
+import { isValidAdminSession } from '@/lib/auth-edge';
 
 const SLUG_PATTERN = /^[a-z0-9][a-z0-9&_-]*$/i;
 const FILE_PATTERN = /^[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp)$/i;
@@ -33,11 +35,20 @@ export async function GET(request: Request) {
 
   // Customer draft assets require the signed token carried by the parent
   // /preview/<slug> URL. Public showcase assets remain available only when the
-  // prototype passes the same visibility policy as /showcase.
+  // prototype passes the same visibility policy as /showcase. An authenticated
+  // admin session also unlocks the asset, so dashboard links that open
+  // /preview/<slug> without a token still render their local hero/service
+  // images instead of 404-ing on every ./images/... reference.
   const privateAuthorized = isValidDraftPreviewToken(slug, token);
+  let adminAuthorized = false;
+  if (!privateAuthorized) {
+    const adminCookie = await cookies();
+    const session = adminCookie.get('admin_session')?.value;
+    adminAuthorized = await isValidAdminSession(session);
+  }
   let publicAuthorized = false;
 
-  if (!privateAuthorized) {
+  if (!privateAuthorized && !adminAuthorized) {
     const prototypes = await getPrototypes();
     publicAuthorized = prototypes.some(
       (prototype) =>
@@ -48,7 +59,7 @@ export async function GET(request: Request) {
     );
   }
 
-  if (!privateAuthorized && !publicAuthorized) {
+  if (!privateAuthorized && !adminAuthorized && !publicAuthorized) {
     return NextResponse.json({ error: 'Image not available' }, { status: 404 });
   }
 
@@ -90,7 +101,9 @@ export async function GET(request: Request) {
         'X-Content-Type-Options': 'nosniff',
         'Cache-Control': privateAuthorized
           ? 'private, no-store'
-          : 'public, max-age=3600, s-maxage=86400, immutable',
+          : adminAuthorized
+            ? 'private, no-store'
+            : 'public, max-age=3600, s-maxage=86400, immutable',
       },
     });
   } catch {
