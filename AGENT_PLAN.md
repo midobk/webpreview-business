@@ -1563,3 +1563,16 @@ The detailed quality and implementation notes are in `docs/PROTOTYPE_GENERATION_
 - Action taken: posted "Already addressed on the current head (commit 79b8bad)" replies to all three Codex review comments (review-thread reply ids 3596522749, 3596522751, 3596522753). No code changes were needed.
 - No new commits or pushes this tick. Branch `claude/landing-page-design-ixddwp` is up to date with `origin`.
 - Telegram update sent to chat 7264128352 (message id 867).
+
+## 24. PR10 review-watcher cron — 2026-07-16 11:03 ET
+
+- Checked PR #10 for new Codex review feedback. Latest review id is `4714976808` (vs previous `4714416043` → new).
+- Reviewer: `midobk` (PR owner), state `COMMENTED`, against original commit `8423f4e` (P2 reply thread).
+- Review body: empty (replies are carried on individual review comments).
+- Single comment: review-thread reply on `app/api/preview-image/route.ts` (id `3596522751`, replying to the P2 admin-preview-authorization thread). Reply text:
+  > "Already addressed on the current head (commit 79b8bad). `app/api/preview-image/route.ts` now treats an authenticated `admin_session` cookie (verified via `isValidAdminSession` from `@/lib/auth-edge`) as a third unlock path when no signed draft token is present, so dashboard `/preview/<slug>` links render their local hero/service images instead of 404-ing. Public showcase gating is unchanged."
+- Verification on the working tree:
+  - `git fetch origin claude/landing-page-design-ixddwp` → head is `012aab1` (docs commit) sitting on top of `79b8bad` ("Address PR10 Codex review: backfill variants, whitelist industry, allow admin assets"), which contains the admin-session unlock path.
+- Outcome: no new actionable findings. The owner confirmed the P2 from the previous Codex review is already fixed; nothing to address, no code changes, no PR comment needed.
+- No commits or pushes this tick.
+- Telegram update sent to chat 7264128352.
