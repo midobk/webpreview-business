@@ -230,6 +230,15 @@ begin
     and (notes is null or position(p_marker in notes) = 0);
 end;
 $$;
+
+-- Explicit grants, matching the pattern in
+-- supabase/migrations/20260710234500_harden_public_helper_functions.sql.
+-- The function is SECURITY INVOKER, so anon/authenticated callers would
+-- otherwise be silently denied when the implicit PUBLIC grant is revoked
+-- elsewhere. Service role bypasses RLS and is the only expected caller.
+revoke all on function public.append_lead_note(text, text, text) from public;
+grant execute on function public.append_lead_note(text, text, text) to service_role;
+
 ALTER TABLE outreach_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE conversion_stats ENABLE ROW LEVEL SECURITY;
 ALTER TABLE agentmail_inboxes ENABLE ROW LEVEL SECURITY;
@@ -254,4 +263,13 @@ CREATE TRIGGER trg_prototypes_updated BEFORE UPDATE ON prototypes
   FOR EACH ROW EXECUTE FUNCTION touch_updated_at();
 
 CREATE TRIGGER trg_inboxes_updated BEFORE UPDATE ON agentmail_inboxes
+  FOR EACH ROW EXECUTE FUNCTION touch_updated_at();
+
+-- Keep revision_requests.updated_at honest on every UPDATE. The migration
+-- 20260713120000_add_revision_requests.sql defines this trigger; mirror it
+-- here so a fresh Supabase project that runs only this schema file still
+-- gets the auto-bump behavior (admin "last updated" ordering, audit
+-- timestamps, etc.). Without the trigger, updated_at would stay pinned to
+-- the created_at value forever.
+CREATE TRIGGER trg_revision_requests_updated BEFORE UPDATE ON revision_requests
   FOR EACH ROW EXECUTE FUNCTION touch_updated_at();

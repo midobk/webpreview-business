@@ -4,7 +4,7 @@
    A self-contained night-studio identity: graphite ink canvas,
    warm cream type, phosphor-lume accent, blueprint grid, film
    grain. Every class is prefixed `v2-` (page shell) or `v2lb-`
-   (LiveBuild hero demo) so nothing leaks into the classic
+   (ProductionDemo hero demo) so nothing leaks into the classic
    homepage or admin styles that share globals.css.
    ============================================================ */
 
@@ -350,7 +350,7 @@ html:has(.v2-root) {
 }
 
 /* =============================================================
-   LiveBuild — the hero demo that assembles a website on screen
+   ProductionDemo — the hero demo that walks through the workflow
    =============================================================
    Stage attributes on .v2lb-site (set from React state):
      data-wire     skeleton boxes drawn

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { StatusBadge } from './StatusBadge';
-import { IconClose, IconExternal, IconCheck } from './icons';
+import { IconClose, IconExternal } from './icons';
 import type { Lead } from './types';
 
 export function LeadDetailDrawer({

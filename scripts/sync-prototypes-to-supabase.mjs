@@ -197,6 +197,19 @@ async function upsertPrototypes(supabase, prototypes) {
 // Used in `--auto` so newly generated prototypes appear in Supabase without
 // overwriting live approval decisions.
 async function upsertMetadataOnly(supabase, prototypes) {
+  // Defensive guard: refuse to ship an admin-owned field even if a future
+  // edit accidentally adds it to METADATA_COLUMNS. The inverse allowlist
+  // below is the primary defense; this is belt-and-suspenders.
+  const adminSet = new Set(ADMIN_OWNED_COLUMNS);
+  for (const col of METADATA_COLUMNS) {
+    if (adminSet.has(col)) {
+      throw new Error(
+        `METADATA_COLUMNS contains admin-owned column "${col}". ` +
+          'Remove it from METADATA_COLUMNS to preserve admin approval state.'
+      );
+    }
+  }
+
   const rows = prototypes.map((row) => {
     const filtered = { id: row.id };
     for (const col of METADATA_COLUMNS) {

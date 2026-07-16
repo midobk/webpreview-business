@@ -469,7 +469,7 @@ export default function V2Landing() {
               <h2 className="v2-serif v2-h2 mt-5">
                 From details to direction.
                 <br />
-                <em className="font-light">Within the hour.</em>
+                <em className="font-light">Most eligible within the hour.</em>
               </h2>
               <p className="mt-5 max-w-md text-[15px] leading-relaxed text-[var(--v2-cream-dim)] sm:text-base">
                 The speed comes from a carefully built production workflow: research, page

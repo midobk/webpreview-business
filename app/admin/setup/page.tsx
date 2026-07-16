@@ -59,7 +59,7 @@ export default function AdminSetup() {
         const data = await response.json();
         setError(data.error || 'Failed to set up admin password');
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);

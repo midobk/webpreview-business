@@ -23,7 +23,7 @@ export default function ShowcaseCTA() {
           </h2>
           <p className="mb-9 text-lg leading-relaxed text-[var(--v2-cream-dim)]">
             Tell us about your business — one free personalized first draft,
-            usually within the hour during service hours.
+            most eligible within the hour during service hours.
           </p>
           <MagneticButton href="/#preview" className="v2-btn v2-btn-primary !px-8 !py-4 text-lg">
             Request my free draft →

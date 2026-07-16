@@ -135,7 +135,7 @@ export async function PATCH(request: Request) {
 
     try {
       await fs.writeFile(leadsPath, JSON.stringify(leads, null, 2));
-    } catch (e) {
+    } catch {
       return NextResponse.json({
         success: false,
         message: 'Phase 1 hacky build: writes not persisted on Vercel. Set SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY for live writes.',

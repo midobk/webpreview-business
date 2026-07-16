@@ -33,11 +33,21 @@ export function sessionSecret(): string {
   );
 }
 
+// Bcrypt hashes look like `$2a$NN$…`, `$2b$NN$…`, `$2x$NN$…`, `$2y$NN$…`,
+// where NN is the cost factor and the rest is a 53-char base64-ish payload.
+// We require the file to be a real bcrypt hash before we use it as an HMAC
+// key, so a misconfigured dev environment that wrote `PLAINTEXT=1234` (or any
+// non-bcrypt placeholder) cannot be used to forge admin sessions in the
+// unlikely event the env-var secret is removed while the file lingers on
+// disk. Combined with the empty-secret guard in isValidAdminSession, this
+// makes the .password fallback fail-closed.
+const BCRYPT_HASH_PATTERN = /^\$2[abxy]\$\d{2}\$[./A-Za-z0-9]{53}$/;
+
 function readLocalPasswordSecret(): string {
   try {
     if (existsSync(LOCAL_PASSWORD_PATH)) {
       const value = readFileSync(LOCAL_PASSWORD_PATH, 'utf8').trim();
-      if (value) return value;
+      if (BCRYPT_HASH_PATTERN.test(value)) return value;
     }
   } catch {
     // unreadable; fall through to empty string

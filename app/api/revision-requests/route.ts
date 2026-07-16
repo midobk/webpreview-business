@@ -17,6 +17,13 @@ function isEmail(value: unknown): value is string {
 // the base slug, so strip the variant suffix before looking it up.
 const VARIANT_SLUG_PATTERN = /^(.+)-v\d+$/;
 
+// Slug whitelist shared with /api/preview-image and /api/showcase-image.
+// Keeping the allowlists identical means a slug that the preview route
+// accepts cannot be silently rejected by the revision endpoint, and the
+// LIKE-wildcard guard (`%`, `_`, `\`) is enforced as a side-effect of the
+// strict charset.
+const SLUG_PATTERN = /^[a-z0-9][a-z0-9&_-]{0,159}$/i;
+
 function resolveVariantBase(slug: string): string {
   const match = VARIANT_SLUG_PATTERN.exec(slug);
   return match ? match[1] : slug;
@@ -73,7 +80,7 @@ export async function POST(request: Request) {
     const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
     const changeRequest = typeof body.request === 'string' ? body.request.trim() : '';
 
-    if (!slug || slug.length > 160 || /[%_\\]/.test(slug) || !isEmail(email) || email.length > 254) {
+    if (!slug || !SLUG_PATTERN.test(slug) || !isEmail(email) || email.length > 254) {
       return NextResponse.json({ error: 'Enter the email used for the draft.' }, { status: 400 });
     }
     if (!changeRequest || changeRequest.length < 10 || changeRequest.length > 4000) {

@@ -1,11 +1,16 @@
 import { NextResponse } from 'next/server';
 import { verifyPassword, getPasswordHash } from '@/lib/auth';
-import { createAdminSession } from '@/lib/auth-server';
+import { createAdminSession, requireSameOrigin } from '@/lib/auth-server';
 import { rateLimited, requestIp } from '@/lib/request-guard';
 
 // POST /api/admin/login - Authenticate admin user
 export async function POST(request: Request) {
   try {
+    // Reject cross-origin login attempts to prevent an attacker's site from
+    // silently authenticating a victim against the operator's account and
+    // creating a session in the victim's browser pointing at the attacker.
+    const originDenied = requireSameOrigin(request);
+    if (originDenied) return originDenied;
     if (rateLimited(`admin-login:${requestIp(request)}`, 10)) {
       return NextResponse.json({ error: 'Too many attempts. Please try again shortly.' }, { status: 429 });
     }

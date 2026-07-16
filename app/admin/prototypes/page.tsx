@@ -145,7 +145,7 @@ export default function PrototypesPage() {
   const handleLogout = async () => {
     try {
       await fetch('/api/admin/login', { method: 'DELETE' });
-    } catch (e) {
+    } catch {
       /* ignore */
     }
     router.push('/admin');

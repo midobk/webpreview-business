@@ -31,3 +31,11 @@ begin
     and (notes is null or position(p_marker in notes) = 0);
 end;
 $$;
+
+-- Explicit grants, matching the pattern in
+-- supabase/migrations/20260710234500_harden_public_helper_functions.sql.
+-- The function is SECURITY INVOKER, so anon/authenticated callers would
+-- otherwise be silently denied when the implicit PUBLIC grant is revoked
+-- elsewhere. Service role bypasses RLS and is the only expected caller.
+revoke all on function public.append_lead_note(text, text, text) from public;
+grant execute on function public.append_lead_note(text, text, text) to service_role;

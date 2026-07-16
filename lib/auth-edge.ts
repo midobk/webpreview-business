@@ -12,7 +12,11 @@ export function getPasswordHashFromEnv(): string | null {
   return null;
 }
 
-const SESSION_TTL_SECONDS = 60 * 60 * 24;
+// Note: SESSION_TTL_SECONDS is defined in lib/auth-server.ts (Node) and
+// kept in sync with the edge runtime's cookie expiry. The edge variant
+// doesn't read it directly because the cookie's max-age is set at mint
+// time in the Node runtime; the validator only needs to honour the
+// payload's own `expiresAt` claim.
 
 function base64UrlToBytes(value: string): Uint8Array<ArrayBuffer> {
   const padded = value.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice((value.length + 3) % 4);

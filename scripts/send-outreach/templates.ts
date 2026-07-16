@@ -121,7 +121,7 @@ export interface AngleTemplate {
 export interface EmailContext {
   lead: Lead;
   prototype: Prototype;
-  previewBaseUrl: string;   // e.g. "https://webpreview-business.vercel.app"
+  previewBaseUrl: string;   // e.g. "https://seawaysites.com" (or NEXT_PUBLIC_SITE_URL fallback)
   screenshotBaseUrl?: string;
   senderName: string;       // e.g. "Dexter from Seaway Sites"
   senderEmail: string;      // e.g. "hello@seawaysites.com"

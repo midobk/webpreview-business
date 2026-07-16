@@ -2,11 +2,18 @@ import { NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { hashPassword } from '@/lib/auth';
+import { requireSameOrigin } from '@/lib/auth-server';
 import { rateLimited, requestIp } from '@/lib/request-guard';
 
 // POST /api/admin/setup - Set up admin password
 export async function POST(request: Request) {
   try {
+    // Reject cross-origin setup attempts to prevent a CSRF that overwrites
+    // the operator's local ./password file. The file doesn't exist on Vercel
+    // (writes are 503), but a successful overwrite on a local dev server
+    // would lock the operator out.
+    const originDenied = requireSameOrigin(request);
+    if (originDenied) return originDenied;
     if (rateLimited(`admin-setup:${requestIp(request)}`, 3, 10 * 60_000)) {
       return NextResponse.json({ error: 'Too many setup attempts. Please try again later.' }, { status: 429 });
     }
