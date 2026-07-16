@@ -1,10 +1,7 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
-import { existsSync, readFileSync } from 'node:fs';
-import path from 'node:path';
 
 const TOKEN_VERSION = 1;
 const DEFAULT_TTL_SECONDS = 60 * 60 * 24 * 30;
-const LOCAL_PASSWORD_PATH = path.join(process.cwd(), '.password');
 
 type DraftPreviewPayload = {
   v: number;
@@ -12,20 +9,20 @@ type DraftPreviewPayload = {
   exp: number;
 };
 
+/**
+ * Dedicated signing secret for draft preview tokens and outreach unsubscribe
+ * signatures. This MUST be set as DRAFT_PREVIEW_SECRET (or OUTREACH_SIGNING_SECRET
+ * as alias) in both the outreach runtime and the deployment so that tokens
+ * minted locally are valid on Vercel and vice-versa. The admin password hash
+ * is NOT used because bcrypt salts make local and production hashes different
+ * even for the same password, which would invalidate every signed link.
+ */
 function previewSecret(): string {
-  if (process.env.ADMIN_SESSION_SECRET) return process.env.ADMIN_SESSION_SECRET;
-  if (process.env.PASSWORD_HASH) return process.env.PASSWORD_HASH;
-
-  try {
-    if (existsSync(LOCAL_PASSWORD_PATH)) {
-      const value = readFileSync(LOCAL_PASSWORD_PATH, 'utf8').trim();
-      if (value) return value;
-    }
-  } catch {
-    // Unreadable local password file; fail closed below.
-  }
-
-  return '';
+  return (
+    process.env.DRAFT_PREVIEW_SECRET ||
+    process.env.OUTREACH_SIGNING_SECRET ||
+    ''
+  );
 }
 
 export function createDraftPreviewToken(

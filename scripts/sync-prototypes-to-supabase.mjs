@@ -35,24 +35,39 @@ const PROTOTYPE_COLUMNS = [
 
 const TIMESTAMP_COLUMNS = new Set(['showcase_scored_at', 'created_at', 'updated_at']);
 
-const COMPARED_COLUMNS = [
+// Columns that are owned by the repository / generator and should be kept in
+// sync between local JSON and Supabase. Admin-controlled approval fields are
+// excluded so that `--auto` never overwrites a live approval decision.
+const METADATA_COLUMNS = [
   'lead_id',
   'industry',
+  'variant',
+  'variant_name',
   'prototype_url',
   'screenshot_url',
   'title',
   'design_summary',
   'prototype_score',
+  'generation_model',
+  'generation_prompt',
   'generation_status',
   'watermark_enabled',
   'demo_locked',
+  'anonymized',
+  'showcase_anonymized_html_path',
+];
+
+// Columns that are admin-controlled. `--auto` must never overwrite these.
+const ADMIN_OWNED_COLUMNS = [
   'showcase_eligible',
   'showcase_approved',
   'showcase_score',
   'showcase_issues',
-  'anonymized',
-  'showcase_anonymized_html_path',
+  'showcase_scored_at',
 ];
+
+// Drift checks compare metadata columns only (not admin-owned fields).
+const COMPARED_COLUMNS = METADATA_COLUMNS;
 
 const args = new Set(process.argv.slice(2));
 const mode = args.has('--check')
@@ -178,6 +193,34 @@ async function upsertPrototypes(supabase, prototypes) {
   console.log(`✓ Synced ${rows.length} prototype records to Supabase.`);
 }
 
+// Upsert only metadata columns, preserving remote admin-owned fields.
+// Used in `--auto` so newly generated prototypes appear in Supabase without
+// overwriting live approval decisions.
+async function upsertMetadataOnly(supabase, prototypes) {
+  const rows = prototypes.map((row) => {
+    const filtered = { id: row.id };
+    for (const col of METADATA_COLUMNS) {
+      if (Object.hasOwn(row, col)) {
+        filtered[col] = TIMESTAMP_COLUMNS.has(col) ? normalizeTimestamp(row[col]) : row[col];
+      }
+    }
+    // Include timestamps so new records get created_at.
+    if (Object.hasOwn(row, 'created_at')) {
+      filtered.created_at = normalizeTimestamp(row.created_at);
+    }
+    return filtered;
+  });
+
+  const batchSize = 100;
+  for (let offset = 0; offset < rows.length; offset += batchSize) {
+    const batch = rows.slice(offset, offset + batchSize);
+    const { error } = await supabase.from('prototypes').upsert(batch, { onConflict: 'id' });
+    if (error) throw new Error(`Supabase metadata upsert failed: ${error.message}`);
+  }
+
+  console.log(`✓ Upserted ${rows.length} prototype metadata records (preserving admin fields).`);
+}
+
 async function verifyNoDrift(supabase, prototypes) {
   const ids = prototypes.map((prototype) => prototype.id);
   const selectColumns = ['id', ...COMPARED_COLUMNS].join(',');
@@ -241,21 +284,18 @@ async function main() {
     return;
   }
 
-  // `--auto` runs during every production build. A build must never overwrite
-  // live approval decisions from data/prototypes.json; explicit `--sync` is
-  // the only mode allowed to mutate Supabase.
   if (mode === 'sync') {
+    // Full sync: upsert all columns including admin-owned fields.
     await upsertPrototypes(supabase, prototypes);
-  }
-
-  // Drift checks only run in explicit `--check` / `--sync` modes. In `--auto`
-  // (production prebuild) Supabase is the source of truth and the committed
-  // data/prototypes.json is a stale snapshot: admin approvals happen in
-  // Supabase and, on Vercel's read-only filesystem, cannot be written back to
-  // the JSON. Running verifyNoDrift there would compare local(stale) against
-  // remote(current) and throw on every build once any approval has happened,
-  // blocking all deploys. `--auto`'s only job is to avoid overwriting remote.
-  if (mode === 'check' || mode === 'sync') {
+    await verifyNoDrift(supabase, prototypes);
+  } else if (mode === 'check') {
+    // Drift check only: no writes.
+    await verifyNoDrift(supabase, prototypes);
+  } else if (mode === 'auto') {
+    // Production prebuild: upsert metadata only (preserve admin fields),
+    // then verify no metadata drift. This ensures newly generated prototypes
+    // appear in Supabase while never overwriting live approval decisions.
+    await upsertMetadataOnly(supabase, prototypes);
     await verifyNoDrift(supabase, prototypes);
   }
 }

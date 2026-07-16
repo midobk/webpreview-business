@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { readdir } from 'fs/promises';
 import { isValidDraftPreviewToken } from '@/lib/draft-preview-token';
+import { isShowcaseVisible } from '@/lib/showcase-policy';
 import { RevisionRequest } from './RevisionRequest';
 
 interface PreviewPageProps {
@@ -28,6 +29,16 @@ type LeadRecord = {
 
 const SLUG_PATTERN = /^[a-z0-9][a-z0-9&_-]{0,159}$/i;
 
+type PrototypeRecord = {
+  id?: string;
+  prototype_url?: string;
+  screenshot_url?: string;
+  generation_status?: string;
+  showcase_approved?: boolean;
+  showcase_eligible?: boolean;
+  anonymized?: boolean;
+};
+
 type ResolvedPrototype = {
   filePath: string;
   requiresRuntimeAnonymization: boolean;
@@ -40,6 +51,24 @@ function readJsonFile<T>(filePath: string, fallback: T): T {
   } catch {
     return fallback;
   }
+}
+
+function loadPrototypeRecord(slug: string): PrototypeRecord | null {
+  const prototypes = readJsonFile<PrototypeRecord[]>(
+    path.join(process.cwd(), 'data', 'prototypes.json'),
+    []
+  );
+  return prototypes.find((p) => {
+    if (p.id === slug) return true;
+    const urlSlug = slugFromAssetUrl(p.prototype_url) || slugFromAssetUrl(p.screenshot_url);
+    return urlSlug === slug;
+  }) || null;
+}
+
+function slugFromAssetUrl(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const match = value.match(/(?:data\/prototypes(?:-anonymized)?|\/preview)\/([^/?#]+)/i);
+  return match?.[1] ? decodeURIComponent(match[1]) : null;
 }
 
 function loadSourceOverrides(): ShowcaseSourceOverrides {
@@ -80,7 +109,14 @@ function resolvePrototypePath(
     };
   }
 
-  if (override?.useSourcePrototype && fs.existsSync(sourcePath)) {
+  // Public showcase access requires the prototype record to pass the shared
+  // showcase visibility policy (approved, eligible, anonymized, completed).
+  // File existence alone is not enough — unapproved anonymized concepts must
+  // not be reachable via guessed/direct URLs.
+  const record = loadPrototypeRecord(slug);
+  const showcaseAuthorized = record ? isShowcaseVisible(record) : false;
+
+  if (showcaseAuthorized && override?.useSourcePrototype && fs.existsSync(sourcePath)) {
     return {
       filePath: sourcePath,
       requiresRuntimeAnonymization: true,
@@ -88,7 +124,7 @@ function resolvePrototypePath(
     };
   }
 
-  if (fs.existsSync(anonymizedPath)) {
+  if (showcaseAuthorized && fs.existsSync(anonymizedPath)) {
     return {
       filePath: anonymizedPath,
       requiresRuntimeAnonymization: false,

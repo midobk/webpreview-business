@@ -28,25 +28,18 @@
  */
 
 import { createHmac } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
-import path from "node:path";
 
-// Resolve the same HMAC secret used by lib/auth-server (ADMIN_SESSION_SECRET
-// -> PASSWORD_HASH -> ./.password). Kept inline so templates.ts stays
-// self-contained and runnable standalone, with no @/lib import.
-function outreachSessionSecret(): string {
-  if (process.env.ADMIN_SESSION_SECRET) return process.env.ADMIN_SESSION_SECRET;
-  if (process.env.PASSWORD_HASH) return process.env.PASSWORD_HASH;
-  try {
-    const file = path.join(process.cwd(), ".password");
-    if (existsSync(file)) {
-      const value = readFileSync(file, "utf8").trim();
-      if (value) return value;
-    }
-  } catch {
-    // unreadable; fall through
-  }
-  return "";
+// Dedicated signing secret for outreach preview tokens and unsubscribe
+// signatures. Must be the same value in the outreach runtime and the
+// deployment (DRAFT_PREVIEW_SECRET or OUTREACH_SIGNING_SECRET alias). The
+// admin password hash is NOT used because bcrypt salts make local and
+// production hashes different even for the same password.
+function outreachSigningSecret(): string {
+  return (
+    process.env.DRAFT_PREVIEW_SECRET ||
+    process.env.OUTREACH_SIGNING_SECRET ||
+    ""
+  );
 }
 
 // Build a signed unsubscribe URL. /api/unsubscribe now requires an HMAC
@@ -56,7 +49,7 @@ function outreachSessionSecret(): string {
 // not be sending outreach anyway.
 function signedUnsubscribeUrl(previewBaseUrl: string, slug: string): string {
   const encoded = encodeURIComponent(slug);
-  const secret = outreachSessionSecret();
+  const secret = outreachSigningSecret();
   if (!secret) return `${previewBaseUrl}/api/unsubscribe?lead=${encoded}`;
   const sig = createHmac("sha256", secret).update(slug).digest("base64url");
   return `${previewBaseUrl}/api/unsubscribe?lead=${encoded}&sig=${sig}`;
@@ -517,10 +510,10 @@ function industryLabel(industry: string): string {
 
 function previewLink(ctx: EmailContext): string {
   const slug = prototypePreviewSlug(ctx.prototype.prototype_url) ?? ctx.lead.slug;
-  const secret = outreachSessionSecret();
+  const secret = outreachSigningSecret();
   if (!secret) {
     throw new Error(
-      "Cannot build a private preview link without ADMIN_SESSION_SECRET, PASSWORD_HASH, or ./.password"
+      "Cannot build a private preview link without DRAFT_PREVIEW_SECRET or OUTREACH_SIGNING_SECRET"
     );
   }
 
