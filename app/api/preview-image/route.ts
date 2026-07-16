@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 import { getPrototypes } from '@/lib/data-source';
 import { isValidDraftPreviewToken } from '@/lib/draft-preview-token';
 import { isShowcaseVisible } from '@/lib/showcase-policy';
-import { isValidAdminSession } from '@/lib/auth-edge';
+import { isValidAdminSession } from '@/lib/auth-server';
 
 const SLUG_PATTERN = /^[a-z0-9][a-z0-9&_-]*$/i;
 const FILE_PATTERN = /^[a-z0-9][a-z0-9._-]*\.(?:png|jpe?g|webp)$/i;
@@ -38,13 +38,16 @@ export async function GET(request: Request) {
   // prototype passes the same visibility policy as /showcase. An authenticated
   // admin session also unlocks the asset, so dashboard links that open
   // /preview/<slug> without a token still render their local hero/service
-  // images instead of 404-ing on every ./images/... reference.
+  // images instead of 404-ing on every ./images/... reference. This route
+  // runs in the Node runtime, so use the .password-aware validator — the
+  // edge variant only reads env secrets and rejects sessions in the
+  // file-only local setup.
   const privateAuthorized = isValidDraftPreviewToken(slug, token);
   let adminAuthorized = false;
   if (!privateAuthorized) {
     const adminCookie = await cookies();
     const session = adminCookie.get('admin_session')?.value;
-    adminAuthorized = await isValidAdminSession(session);
+    adminAuthorized = isValidAdminSession(session);
   }
   let publicAuthorized = false;
 

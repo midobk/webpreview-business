@@ -5,7 +5,7 @@ import { readdir } from 'fs/promises';
 import { cookies } from 'next/headers';
 import { isValidDraftPreviewToken } from '@/lib/draft-preview-token';
 import { isShowcaseVisible } from '@/lib/showcase-policy';
-import { isValidAdminSession } from '@/lib/auth-edge';
+import { isValidAdminSession } from '@/lib/auth-server';
 import { getPrototypes } from '@/lib/data-source';
 import { RevisionRequest } from './RevisionRequest';
 
@@ -111,10 +111,12 @@ async function resolvePrototypePath(
 
   // An authenticated admin session also grants private access, so the admin
   // dashboard's bare /preview/<slug> links work for pending/review prototypes
-  // without requiring a signed token.
+  // without requiring a signed token. This page runs in the Node runtime, so
+  // use the .password-aware validator — the edge variant only reads env
+  // secrets and rejects sessions in the file-only local setup.
   const adminCookie = await cookies();
   const adminSession = adminCookie.get('admin_session')?.value;
-  const isAdmin = await isValidAdminSession(adminSession);
+  const isAdmin = isValidAdminSession(adminSession);
   if (isAdmin && fs.existsSync(sourcePath)) {
     return {
       filePath: sourcePath,
@@ -298,7 +300,7 @@ export default async function PreviewPage({ params, searchParams }: PreviewPageP
         sandbox="allow-scripts"
         referrerPolicy="no-referrer"
       />
-      {!publicShowcasePreview && <RevisionRequest slug={slug} />}
+      {!publicShowcasePreview && <RevisionRequest slug={slug} token={token} />}
     </div>
   );
 }

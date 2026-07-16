@@ -3,6 +3,8 @@ import { NextResponse } from 'next/server';
 import { getLeads } from '@/lib/data-source';
 import { getSupabase } from '@/lib/supabase';
 import { rateLimited, requestIp } from '@/lib/request-guard';
+import { isValidDraftPreviewToken } from '@/lib/draft-preview-token';
+import { requireAdmin } from '@/lib/auth-server';
 
 type LeadLookup = { id: string; slug?: string; email?: string | null; notes?: string | null };
 
@@ -76,6 +78,20 @@ export async function POST(request: Request) {
     }
     if (!changeRequest || changeRequest.length < 10 || changeRequest.length > 4000) {
       return NextResponse.json({ error: 'Tell us what you would like changed (10–4000 characters).' }, { status: 400 });
+    }
+
+    // This state-changing route must prove possession of the private draft
+    // link, not just knowledge of slug + email: lead emails are public
+    // outreach targets and slugs are derivable from the business name, so
+    // email alone would let anyone append revision notes to a lead. Accept
+    // the signed preview token the /preview page passes through, or an
+    // authenticated admin session (dashboard previews carry no token).
+    const token = typeof body.token === 'string' ? body.token : undefined;
+    if (!isValidDraftPreviewToken(slug, token) && requireAdmin(request) !== null) {
+      return NextResponse.json(
+        { error: 'This preview link is no longer valid. Please use the link from your email.' },
+        { status: 403 }
+      );
     }
 
     const supabase = getSupabase();

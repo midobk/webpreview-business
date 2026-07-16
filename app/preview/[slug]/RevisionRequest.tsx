@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from 'react';
 
-export function RevisionRequest({ slug }: { slug: string }) {
+export function RevisionRequest({ slug, token }: { slug: string; token?: string }) {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState('');
   const [request, setRequest] = useState('');
@@ -17,7 +17,7 @@ export function RevisionRequest({ slug }: { slug: string }) {
       const response = await fetch('/api/revision-requests', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug, email, request }),
+        body: JSON.stringify({ slug, email, request, ...(token ? { token } : {}) }),
       });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Please try again.');

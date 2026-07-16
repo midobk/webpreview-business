@@ -35,6 +35,19 @@ Before any email is built, the lead + prototype must pass `contactSafetyGate(lea
 
 A failed gate does NOT throw — it returns `{ ok: false, failed: [...] }` so the caller can log the decision.
 
+## Required environment
+
+`DRAFT_PREVIEW_SECRET` (alias: `OUTREACH_SIGNING_SECRET`) must be set before
+building any email. Every private preview link and unsubscribe URL is
+HMAC-signed with it, and `buildOutreach()` throws when it is missing. Set the
+**same value** in the deployed site's environment (Vercel project settings) —
+tokens signed here are verified there, so mismatched secrets make every link
+in a sent email invalid. Generate one with:
+
+```sh
+node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
+```
+
 ## Quick usage
 
 ```ts

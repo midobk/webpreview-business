@@ -88,7 +88,13 @@ export function requireSameOrigin(request: Request): NextResponse | null {
   return null;
 }
 
-function isValidAdminSession(value?: string) {
+/**
+ * Node-runtime admin session check. Unlike lib/auth-edge's variant, this
+ * resolves the secret through sessionSecret(), so it also works in the
+ * supported file-only local setup where the secret lives in ./.password
+ * and no env vars are set.
+ */
+export function isValidAdminSession(value?: string) {
   if (!value) return false;
   // Resolve the secret once. When no secret is configured (setup/misconfigured
   // state: ADMIN_SESSION_SECRET, PASSWORD_HASH, and ./.password all absent),
