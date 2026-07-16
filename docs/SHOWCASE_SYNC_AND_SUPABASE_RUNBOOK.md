@@ -1,6 +1,6 @@
 # Showcase Sync and Supabase Operations Runbook
 
-**Last updated:** 2026-07-10  
+**Last updated:** 2026-07-16  
 **Status:** Production implementation complete  
 **Related pull requests:** #4 and #5  
 **Production deployment verified:** commit `3072f8c332b4dd33c10ff844e02b6758b419a431`
@@ -31,20 +31,21 @@ node scripts/sync-prototypes-to-supabase.mjs --auto
 node scripts/build-data-bundle.js
 ```
 
-For a Vercel **production** build, the automatic check script:
+For a Vercel **production** build (`VERCEL_ENV=production`), the automatic check script:
 
 1. Loads and validates `data/prototypes.json`.
 2. Rejects duplicate IDs and incomplete showcase-visible records.
 3. Normalizes legacy timestamp values that contain both a numeric UTC offset and a trailing `Z`.
-4. Does not write to Supabase; production builds must never overwrite live approval decisions.
-5. Reads the records back from Supabase.
-6. Compares the repository and database values for drift.
-7. Confirms that the expected number of records pass the public showcase filter.
-8. Exits non-zero and blocks deployment when any validation, drift, or count check fails.
+4. **Upserts prototype metadata into Supabase, preserving admin-owned approval fields.** Only metadata columns (identity, generation, assets, display, protection) are written; `showcase_eligible`, `showcase_approved`, `showcase_score`, `showcase_issues`, and `showcase_scored_at` are never overwritten, so live approval decisions made in Supabase are preserved.
+5. Reads the metadata columns back from Supabase.
+6. Compares repository and database **metadata** values for drift. Admin-owned approval fields are excluded from the comparison because they are deliberately remote-owned.
+7. Exits non-zero and blocks deployment when validation or metadata drift fails.
 
-When repository metadata is intentionally changing, run `npm run sync:showcase` with production credentials first, review the result, then deploy. The explicit sync command is the only command that mutates the remote prototype records.
+The showcase visibility count check is intentionally **not** run in `--auto`. Admin approval state in Supabase is the source of truth and is deliberately not overwritten from the local snapshot, so asserting that local approval counts equal remote counts would fail every build after any admin approval or unpublish made since `data/prototypes.json` was last updated.
 
-For preview and local builds, the script validates local metadata but does not mutate production Supabase unless an explicit sync command is used.
+When repository metadata is intentionally changing, run `npm run sync:showcase` with production credentials first, review the result, then deploy. `--sync` is the only mode that upserts all columns (including admin-owned approval fields) and runs the full showcase visibility count check.
+
+For **preview and local builds** (`VERCEL_ENV` is not `production`), the script validates local metadata and is explicitly **read-only**: it never upserts into the live Supabase table, even when production Supabase credentials are present in the environment. Only an explicit `--sync` (write + full verify) or `--check` (read-only full verify, including the visibility count) command operates against remote state.
 
 ## Commands
 
@@ -262,6 +263,10 @@ Treat drift as a real deployment blocker. Determine whether the repository or th
 - Update this runbook whenever the source-of-truth model, visibility rules, environment variables, migration behavior, or operational commands change.
 
 ## Change history
+
+### 2026-07-16
+
+- `--auto` is now gated by `VERCEL_ENV`: production builds upsert prototype **metadata only** (preserving admin-owned approval fields) and verify metadata drift only; the showcase visibility count check is skipped in `--auto` because remote approval state is deliberately preserved. Preview and local builds are read-only and never upsert into live Supabase, even when credentials are present. `--sync`/`--check` behavior is unchanged. Runbook "Production deployment flow" updated to match.
 
 ### 2026-07-10
 
