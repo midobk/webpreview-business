@@ -1548,3 +1548,18 @@ This is the active handoff for the next prototype-generation agent after PR10 me
 - **Next steps still queued:** email the customer’s change-request confirmation, add a structured revision-request table/history if lead notes become insufficient, and finish the production live smoke test after the PR10 deployment.
 
 The detailed quality and implementation notes are in `docs/PROTOTYPE_GENERATION_PLAYBOOK.md` and the revision/admin changes in this PR.
+
+## 23. PR10 review-watcher cron — 2026-07-16 10:53 ET
+
+- Codex posted a new review on PR #10 (review id 4714882921, state COMMENTED, against commit `8423f4e`) with 3× P2 findings:
+  1. P2 — backfill `variant` before adding `uq_prototypes_lead_variant` (data collision on migration).
+  2. P2 — add `industry` to the migration whitelist (`PROTOTYPE_COLUMNS`).
+  3. P2 — `/api/preview-image` needs to accept an authenticated admin session so dashboard `/preview/<slug>` links render local hero/service images.
+- All three were already addressed by commit `79b8bad` ("Address PR10 Codex review: backfill variants, whitelist industry, allow admin assets"), which was pushed to `claude/landing-page-design-ixddwp` at 2026-07-16 14:54:09 UTC — the head of the PR at the time of this cron tick.
+- Verification on the working tree:
+  - `data/prototypes.json` — distinct `variant` per `lead_id` (lead-002 → 1/2/3, lead-003 → 1/2, lead-ramo-sports → 1, all orphan showcase prototypes have unique variants). 0 collisions across all 24 prototypes.
+  - `scripts/migrate_to_supabase.py` line 42 — `"industry"` is in `PROTOTYPE_COLUMNS`.
+  - `app/api/preview-image/route.ts` — third unlock path via `isValidAdminSession(session)` from `@/lib/auth-edge` when no signed draft token is present. Public showcase gating unchanged.
+- Action taken: posted "Already addressed on the current head (commit 79b8bad)" replies to all three Codex review comments (review-thread reply ids 3596522749, 3596522751, 3596522753). No code changes were needed.
+- No new commits or pushes this tick. Branch `claude/landing-page-design-ixddwp` is up to date with `origin`.
+- Telegram update sent to chat 7264128352 (message id 867).
