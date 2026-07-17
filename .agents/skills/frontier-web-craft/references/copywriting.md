@@ -79,6 +79,14 @@ A pull-quote in display type can carry the best sentence.
   as trustworthy; invented social proof reads as fake even when the visitor can't check it —
   and is an automatic reject in most client pipelines.
 - Prices: real or absent. An honest menu without prices beats a fictional one with them.
+- **Quotation marks are claims.** Putting a line in « » or " " with a name under it asserts
+  that person said those words. Write the best sentence yourself and let the page own it —
+  set it as a pull-quote in display type *without* quote marks or attribution — unless the
+  brief supplies an actual quote. A fabricated founder line is a fabricated testimonial.
+- At the gate you'll walk the **facts ledger**: every digit and every attribution on the page
+  traced back to the fact sheet. Write copy expecting that audit — a plausible invented
+  specific ("+2000 références") will be deleted there anyway, so spend the words on specifics
+  the brief can back.
 
 ## Microcopy
 

@@ -58,6 +58,12 @@ prices, certifications, guarantees. Missing proof is written around (see
 `references/copywriting.md` § Proof), not fabricated. You may invent *texture* (which system
 font, what the hero depicts); you may never invent *facts*.
 
+The fact sheet doubles as the **facts ledger**: at the gate you will verify that every digit,
+every quotation mark, and every attribution on the finished page traces back to it. So write
+down now which numbers and lines the brief actually supplies — plausible specifics invented
+during the build ("+2000 items in stock", a punchy line put in the owner's mouth) are the
+hardest fabrications to catch later, because they sound exactly like the real thing.
+
 If the brief leaves a field genuinely open (e.g., no audience stated), decide a specific answer
 and write it in the fact sheet — a wrong-but-specific choice produces a better page than a
 hedge. Never leave a placeholder.
@@ -140,8 +146,9 @@ Read `references/quality-gate.md`. Three tiers, in order:
    single-file mode). Fix every FAIL; justify every WARN in one line or fix it.
 2. **Render scan** — screenshot or open at 390px and 1440px; run the ten-point visual checklist.
 3. **Judgment, made mechanical** — score the 8-dimension rubric (0–5 each; pass is **≥ 32/40
-   with no dimension below 3**), run the genericism interrogation, and do one Chanel pass
-   (remove one decorative element).
+   with no dimension below 3**), run the genericism interrogation, run the **facts ledger**
+   (every digit, quote mark, and attribution on the page traces to the fact sheet, or it goes),
+   and do one Chanel pass (remove one decorative element).
 
 The page being rendered and pretty is not the finish line; the gate passing is. When a check
 fails, apply the matching fix from the gate's fix table and re-run the whole gate — fixes have

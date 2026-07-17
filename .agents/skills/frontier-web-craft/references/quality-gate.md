@@ -122,6 +122,27 @@ Three questions, answered honestly:
    tokens verbatim (or documented re-hue)? Type treatment as specified? Signature present?
    Motion character respected? Any drift, fix toward the direction, not away.
 
+### The facts ledger
+
+The checker prints an `AUDIT` block: every number it finds in the visible text, and every
+quoted line with an attribution. Walk that list against the fact sheet, item by item:
+
+- **Every digit traces to the brief** — counts, years, sizes, prices, hours, phone. A number
+  the brief never supplied gets deleted, however plausible ("+2000 items", "over 500 clients").
+  Derived numbers are fine only when derived from page content itself (you list six services,
+  you may say six).
+- **Quotation marks are claims.** A line in « » or " " with a name after it asserts that person
+  said those words. If the brief didn't supply the quote, remove the quote marks and the
+  attribution and let the page own the sentence — the writing keeps its force without the
+  fabricated witness.
+- **Contact digits get format-checked**: right digit count and prefix for the country, same
+  value everywhere it appears (including `tel:`/`mailto:` hrefs). If the brief supplies no
+  phone number there is no phone number on the page.
+
+This pass exists because invented specifics are the failure mode that survives every other
+check: they're fluent, they're plausible, and they're the one thing that can genuinely damage
+the client. When in doubt, the number goes.
+
 ### The Chanel pass
 
 Last step, always: remove one decorative element — the least load-bearing rule, orb, badge, or
@@ -146,4 +167,5 @@ without it, it was noise, and look for a second one.
 | Sections blur together | Alternate background tokens; add the section-head pattern (eyebrow + h2 + lede) uniformly |
 | Looks "AI-generated" | Usual culprits, in order: emoji icons, centered-everything, accent overuse, uniform card grids, banned-phrase copy. Fix all five |
 | No proof and it shows | Process-proof section (01/02/03), real hours/areas — never invent testimonials |
+| A number or quote can't be traced to the brief | Delete it (or strip the quote marks and attribution and keep the sentence as the page's own voice) — never "verify later" |
 | Gate keeps failing on re-runs | Stop patching; rebuild the failing section from its recipe in page-anatomy.md — recipes are cheaper than archaeology |

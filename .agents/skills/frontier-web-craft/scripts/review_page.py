@@ -208,6 +208,24 @@ def main():
         if int(m2.group(1)) > 600:
             report("WARN", "fixed-width", f"width:{m2.group(1)}px (css line ~{line_of(css, m2.start())}) — overflow risk at 390px")
 
+    # --- facts audit (informational — feed the Tier-3 facts ledger) ----------
+    numbers = []
+    for m2 in re.finditer(r"\+?\d[\d\s.,:/hH×x–—-]{0,16}\d|\b\d{4}\b|\b\d+\b", text):
+        v = re.sub(r"\s+", " ", m2.group(0)).strip(" .,-–—")
+        if len(v) > 1 or v.isdigit():
+            numbers.append(v)
+    seen, uniq = set(), []
+    for v in numbers:
+        if v not in seen:
+            seen.add(v)
+            uniq.append(v)
+    if uniq:
+        print("AUDIT [facts-ledger] numbers in visible text — verify each against the brief, delete any it can't back:")
+        print("      " + " | ".join(uniq[:30]) + (" …" if len(uniq) > 30 else ""))
+    quotes = re.findall(r"[«\"“][^»\"”]{10,200}[»\"”]\s*[—–-]?\s*[A-ZÀ-Ý][^\n]{2,60}", text)
+    for q in quotes[:5]:
+        print(f"AUDIT [facts-ledger] attributed quote — real, or strip the quote marks + attribution: {q[:100].strip()}…")
+
     # --- report --------------------------------------------------------------
     fails = [r for r in results if r[0] == "FAIL"]
     warns = [r for r in results if r[0] == "WARN"]
