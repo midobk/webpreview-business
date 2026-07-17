@@ -27,7 +27,16 @@ contains "welcome," "quality," "premium," or the business's category said generi
 5. **Outcome with an edge** (numbers only if real): "Winter-ready in one visit."
 6. **The quiet statement** (Porcelain/Midnight registers): "the room to yourself."
 
-Draft three candidates, keep the one with the most specific noun.
+Draft three candidates, keep the one with the most specific noun. When producing several
+sites in one batch, rotate formulas — the fragment pair is the strongest and becomes a tic
+fastest; if the last site opened with one, this site doesn't.
+
+**The "how did they know?" detail.** Every page carries at least one line only an insider
+could write — the tell that someone has actually stood in the place: "the door is the one
+with the eucalyptus wreath", "la cabine est au fond à gauche", "sell out by Sunday, usually
+before the espresso machine cools". Derive it from the brief's concrete facts (place, hours,
+layout, rhythm of the week); invent texture, never claims. One is enough — it does more
+convincing than any adjective on the page.
 
 ## Ledes
 

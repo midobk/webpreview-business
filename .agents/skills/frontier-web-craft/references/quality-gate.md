@@ -118,6 +118,11 @@ Three questions, answered honestly:
 2. **Swap the industry.** Would this design work unchanged for a dentist / a bakery / a SaaS?
    If yes, the direction isn't being executed, only its colors are. Rebuild the signature
    moment.
+2b. **The insider test.** Find the page's "how did they know?" line — the detail only someone
+   who has stood in the place could write. If there isn't one, the copy is describing a
+   category, not a business; mine the fact sheet for one. And if this page is part of a set,
+   diff it against its siblings: shared direction + hero archetype + nav pattern with another
+   site in the batch fails (see page-anatomy.md § Generating a set).
 3. **Direction fidelity.** Open `design-directions.md` at your chosen direction and diff:
    tokens verbatim (or documented re-hue)? Type treatment as specified? Signature present?
    Motion character respected? Any drift, fix toward the direction, not away.
@@ -168,4 +173,6 @@ without it, it was noise, and look for a second one.
 | Looks "AI-generated" | Usual culprits, in order: emoji icons, centered-everything, accent overuse, uniform card grids, banned-phrase copy. Fix all five |
 | No proof and it shows | Process-proof section (01/02/03), real hours/areas — never invent testimonials |
 | A number or quote can't be traced to the brief | Delete it (or strip the quote marks and attribution and keep the sentence as the page's own voice) — never "verify later" |
+| Handsome but doesn't feel *expensive* | Shift the display to the expressive stack (Didot/Baskerville-class, italic on the accent words), push the display clamp a size up, and give the page a conceit that names its labels |
+| Batch sites look like siblings | Apply the set rules: change nav pattern, hero archetype, conceit, and headline formula on the offender — palette alone is not differentiation |
 | Gate keeps failing on re-runs | Stop patching; rebuild the failing section from its recipe in page-anatomy.md — recipes are cheaper than archaeology |

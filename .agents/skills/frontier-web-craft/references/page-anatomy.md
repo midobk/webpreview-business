@@ -80,6 +80,14 @@ testimonial. With no real imagery available, design honestly without it: typogra
 graphic panels that read as graphics, no photo-implying captions. Ask for real photos in the
 handoff instead; even phone snapshots beat a painted stand-in.
 
+**Line-art illustration — the honest imagery that always works.** Single-weight stroke SVG
+drawings of the business's objects (the coffee bag, a stem, the drafting square, a cleat),
+drawn inline at 1.5–2px stroke in `--ink` or the accent, deliberately simple — 10–25 paths,
+not clip-art realism. Frame one as the direction's device (label card, plate, polaroid tag)
+and it carries a hero or feature panel with total honesty. This is the highest-craft
+replacement for missing photography; a page that pairs one good line-art set with strong type
+routinely outsells a page with mediocre stock photos.
+
 **Icons.** Inline SVG only, one grid (24px viewBox), consistent stroke width (1.5–2),
 `stroke="currentColor"` so they inherit token colors. Three sizes max (15/18/24). Never emoji,
 never icon fonts.
@@ -112,16 +120,34 @@ mid-page (Fieldstone's number strip, Midnight Counter's menu, Ledger's table…)
 gets the boldness budget; its neighbors stay quiet. Two showpiece sections next to each other
 cancel each other out.
 
+**The conceit — give the page a world, not just a look.** The strongest sell-on-sight pages
+have an organizing metaphor drawn from the business's own paper artifacts, and let it name
+things site-wide: the roaster's *log sheet* (eyebrows become "BATCH 12 · WASHED"), the
+florist's *coolroom tag*, the contractor's *job ticket*, the architect's *plate numbering*
+("PL. 04"), the bar's *printed menu card*, the shop's *daily board*. Choose one conceit in the
+design plan and let every label, eyebrow, and index number speak its vocabulary — that
+consistency is what makes a page feel commissioned rather than assembled. Two limits: the
+conceit must be honest (no ® symbols, no "EST. 2018", no "VOL. XI" implying eleven real years
+— stylistic numbering must be transparently stylistic or derived from real facts), and it
+stays in the labels — body copy still talks like a person.
+
 **The signature carries content the page hasn't said yet.** Restating the headline inside a
 fancier container is decoration wearing the signature's clothes — the reader gets nothing new
 at the page's boldest moment. Give it information: the menu, the process, the week's arrivals,
 the service areas, the one stat that matters. If you can delete the signature section without
 losing a fact, it isn't a signature yet.
 
-**Sticky nav recipe.** `position: sticky; top: 0; z-index: 50;` translucent page-background
-(`rgba` of paper at ~.92) + `backdrop-filter: blur(18px)` + 1px bottom `--line`. Left: brand
-mark + name (+ small tagline in caps). Right: 3–5 anchor links + one primary CTA. Nav link
-hover: underline grows from left (`::after` transitioning `right: 100% → 0`).
+**Nav — pick one of three patterns** (a batch of sites must not all use the first):
+
+- *Standard*: sticky, translucent page-background (`rgba` of paper at ~.92) +
+  `backdrop-filter: blur(18px)` + 1px bottom `--line`. Left: brand mark + name (+ small caps
+  tagline). Right: 3–5 anchor links + one primary CTA. Link hover: underline grows from left
+  (`::after` transitioning `right: 100% → 0`).
+- *Masthead*: department-store style, for editorial directions (Heritage Wine, Market Fresh,
+  Porcelain) — announcement line on top, brand set large and centered like a wordmark, nav row
+  beneath between hairlines. Stately; costs vertical space, so the hero clamp shrinks a step.
+- *Minimal*: brand left, single primary CTA right, nothing else — for one-job pages and
+  Porcelain. The anchor links move to the footer.
 
 **Ticker recipe** (optional, one per page): a `width: max-content` flex track, content
 duplicated once, `@keyframes ticker { to { transform: translateX(-50%); } }` at 22–30s linear
@@ -246,3 +272,23 @@ The reveal recipe (required pattern for scroll reveals — not optional garnish)
 stagger siblings ~80ms); elements default to visible when JS is absent, and everything is
 instant under `prefers-reduced-motion`. The hero load sequence is the same idea on page load:
 eyebrow → headline lines → lede → CTAs, staggered 60–90ms.
+
+## Generating a set — anti-convergence rules
+
+When one session (or one pipeline) produces multiple sites, each page competes with its
+siblings: a prospect who visits two of your demos and sees the same skeleton twice stops
+believing either was made for them. Sameness that is invisible in one page is glaring in
+twelve. So vary deliberately across the set, and track it:
+
+- **No two sites share** direction + hero archetype + nav pattern. With nine directions, three
+  archetypes, and three navs, a large batch never needs a repeat of the full combination.
+- **Same direction twice?** Diverge everything the adaptation rules allow: re-hue toward each
+  brand, different conceit, different hero archetype, different signature configuration —
+  siblings in palette must be strangers in structure.
+- **Headline formulas rotate.** The fragment pair ("Wood fire. Slow dough.") is the strongest
+  formula and therefore the first to become a tic — cap it at roughly a third of any set and
+  pull the others from the full list in copywriting.md.
+- **Section-head alignment varies**: left-aligned is the default; use the centered variant and
+  the split two-column head (eyebrow+h2 left, lede right) on some sites.
+- Keep a one-line ledger per site (direction / archetype / nav / conceit / headline formula)
+  and check a new site against it before building.

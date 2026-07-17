@@ -58,6 +58,11 @@ prices, certifications, guarantees. Missing proof is written around (see
 `references/copywriting.md` § Proof), not fabricated. You may invent *texture* (which system
 font, what the hero depicts); you may never invent *facts*.
 
+Honesty extends to the interface itself: no fake commerce shells (a "Basket · 0" that opens
+nothing, a "Sign in" with no account system), no ® or ™ the business doesn't hold, no
+"EST. 2018" the brief didn't supply. Every control the page shows either works or is
+explicitly labeled a demo.
+
 The fact sheet doubles as the **facts ledger**: at the gate you will verify that every digit,
 every quotation mark, and every attribution on the finished page traces back to it. So write
 down now which numbers and lines the brief actually supplies — plausible specifics invented
@@ -83,13 +88,23 @@ selection table. Then:
   scaffolding for tokens and structure.
 - Never blend two directions. Coherence beats novelty.
 
+Then pick the **page conceit** — the organizing metaphor from the business's own paper world
+(the roast log, the job ticket, the coolroom tag, the plate numbering; menu and rules in
+`references/page-anatomy.md` § The conceit) that will name the page's labels and eyebrows.
+And consider the **expressive display stack** (`references/design-directions.md`
+§ Expressive display stacks): on a page that must sell on sight, the platform's dramatic
+faces — Didot, Baskerville, Optima, with graceful fallbacks — are usually worth the swap.
+
 Close the step by writing the **visual thesis**, one sentence:
 
 > "When a [specific audience member] lands, this page should feel like [a specific real-world
 > place or object], and the first thing they notice is [the signature element]."
 
 If you cannot fill in the blanks with something specific to this business, return to the fact
-sheet — you don't know the subject well enough to design for it yet.
+sheet — you don't know the subject well enough to design for it yet. The design plan is now
+four lines: direction · conceit · signature · thesis. When generating **several sites in one
+batch**, also read `references/page-anatomy.md` § Generating a set — pages that are fine alone
+can be damningly similar side by side.
 
 ## Step 2 — Write the copy deck before any layout
 

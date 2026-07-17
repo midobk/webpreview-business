@@ -23,7 +23,8 @@ depicts, writing copy in the direction's voice.
 8. [Ledger](#7-ledger) — industrial matter-of-fact
 9. [Tidewater](#8-tidewater) — soft coastal trust
 10. [Matchday](#9-matchday) — kinetic poster energy
-11. [Adaptation rules](#adaptation)
+11. [Expressive display stacks](#expressive-type) — the second gear
+12. [Adaptation rules](#adaptation)
 
 <a name="selection"></a>
 ## Selection table
@@ -582,6 +583,32 @@ disciplines stocked, the real match-day hours), cutting across the page's middle
 a sash. It moves (marquee or reveal) unless reduced-motion says otherwise.
 
 ---
+
+<a name="expressive-type"></a>
+## Expressive display stacks — the second gear
+
+The conservative stacks above are the safe floor. A landing page that has to *sell on sight*
+usually deserves the expressive tier: lead the display stack with the platform's dramatic
+faces and let it degrade gracefully — a Mac/iPhone visitor (most local-business traffic) gets
+the drama, Windows falls back to the direction's serif/sans without breaking the design.
+
+| Register | Expressive stack (lead faces → fallback) |
+|---|---|
+| High-contrast editorial (Heritage Wine, Midnight Counter) | `Didot, "Bodoni 72", "Playfair Display", Georgia, serif` |
+| Bookish warmth (Market Fresh, Heritage Wine alt) | `"Iowan Old Style", Baskerville, Palatino, Georgia, serif` |
+| Quiet luxury (Porcelain) | `Optima, "Avenir Next", "Gill Sans", "Helvetica Neue", sans-serif` |
+| Geometric punch (Blueprint, Ledger) | `Futura, "Avenir Next", "Century Gothic", system-ui, sans-serif` |
+| Condensed impact (Fieldstone, Matchday) | `"Avenir Next Condensed", "Arial Narrow", Bahnschrift, sans-serif` |
+
+Rules of the tier: **italic is the drama lever** — a Didot or Baskerville italic on the accent
+words is the single cheapest "expensive" move; use the huge end of the scale (sell-page display
+clamps run to 120–150px) with line-height ≤ 1.0; and set `font-weight` explicitly per face
+(Didot at 400 is the look — never fake-bold it). Check the rendered fallback once: the page
+must still compose when the lead face is missing.
+
+Where the pipeline allows it, one **embedded** WOFF2 display subset (base64 `@font-face`,
+budget ~60KB, `font-display: swap`) buys Fraunces/Playfair-grade drama in a still
+self-contained file — an option, never a requirement, and never a CDN link.
 
 <a name="adaptation"></a>
 ## Adaptation rules
