@@ -290,5 +290,8 @@ twelve. So vary deliberately across the set, and track it:
   pull the others from the full list in copywriting.md.
 - **Section-head alignment varies**: left-aligned is the default; use the centered variant and
   the split two-column head (eyebrow+h2 left, lede right) on some sites.
+- **The announcement ribbon is not a uniform.** It appears on at most half the set — it needs
+  something true to announce, and twelve sites all opening with a ribbon is its own template
+  tell. The others open straight into the nav.
 - Keep a one-line ledger per site (direction / archetype / nav / conceit / headline formula)
   and check a new site against it before building.
