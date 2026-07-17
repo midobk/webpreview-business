@@ -1559,7 +1559,7 @@ Length = 11 chars. The literal `…` is a display ellipsis, not a valid API key 
 
 This is the active handoff for the next prototype-generation agent after PR10 merges.
 
-- **Required reading:** `docs/PROTOTYPE_GENERATION_PLAYBOOK.md`, `docs/PROTOTYPE_QA.md`, `docs/PROTOTYPE_RULES.md`, `docs/SHOWCASE_RULES.md`, plus the `premium-saas-design` and `frontend-skill` skills.
+- **Required reading:** `docs/PROTOTYPE_GENERATION_PLAYBOOK.md`, `docs/PROTOTYPE_QA.md`, `docs/PROTOTYPE_RULES.md`, `docs/SHOWCASE_RULES.md`, plus the vendored `.agents/skills/premium-saas-design`, `.agents/skills/frontend-design`, and `.agents/skills/color-expert` skills.
 - **Creative bar:** inspect the best approved prototypes before generating; define a visual thesis and page job; build a complete industry-specific landing page with real-looking imagery, restrained motion, accessible copy, and a deliberate mobile composition. Do not copy a template or invent business facts.
 - **Release bar:** generation stays pending review until clean HTML, valid assets, desktop/mobile browser screenshots, technical checks, and human visual review all pass. No 1×1 placeholders, leaked model text, fake proof, or silent fallback is allowed.
 - **Customer loop:** the preview now exposes a `Request changes` action. A submitted request is tied to the lead, appended to the lead history, and moves the lead to `revision_requested` so it is treated as a hot lead instead of disappearing from the funnel.
