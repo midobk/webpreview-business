@@ -9,8 +9,11 @@ Before generating anything, read:
 - `docs/PROTOTYPE_QA.md`
 - `docs/PROTOTYPE_RULES.md`
 - `docs/SHOWCASE_RULES.md`
-- `/Users/mehdibakkalimaassom/.codex/skills/premium-saas-design/SKILL.md`
-- `/Users/mehdibakkalimaassom/.codex/skills/frontend-skill/SKILL.md`
+- `.agents/skills/premium-web-design/SKILL.md` — visual thesis, composition, type/color/token systems, showcase-grade craft
+- `.agents/skills/frontend-craft/SKILL.md` — self-contained HTML/CSS, responsive, accessibility, the pre-push cleanliness gate
+- `.agents/skills/color-expert/SKILL.md` — palette/ramp construction and contrast when building the per-brand token system
+
+These skills are vendored into the repo so every agent — local, container, or CI — has them; do not rely on machine-specific skill paths.
 
 Use the strongest approved prototypes as visual references for craft, not as templates to copy. Inspect their hierarchy, spacing, typography, imagery, responsive behavior, and conversion path before choosing a direction.
 
