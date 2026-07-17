@@ -74,6 +74,12 @@ background: linear-gradient(180deg, transparent 54%, rgba(24,21,19,.45)),
 Frame device from the direction (arch, border, duotone). Specific `alt` on content images;
 `alt=""` on decorative.
 
+**Never simulate a photograph.** A CSS-gradient panel captioned as if it showed something real
+("the blue door on the corner") is fabricated evidence — the visual twin of an invented
+testimonial. With no real imagery available, design honestly without it: typographic hero,
+graphic panels that read as graphics, no photo-implying captions. Ask for real photos in the
+handoff instead; even phone snapshots beat a painted stand-in.
+
 **Icons.** Inline SVG only, one grid (24px viewBox), consistent stroke width (1.5–2),
 `stroke="currentColor"` so they inherit token colors. Three sizes max (15/18/24). Never emoji,
 never icon fonts.
@@ -119,7 +125,11 @@ Pause it under `prefers-reduced-motion`.
 <a name="heroes"></a>
 ## Hero archetypes
 
-Pick the archetype the assets can honestly support:
+Pick the archetype the assets can honestly support. Whichever you pick, one rule is
+non-negotiable: **the hero contains the page job's primary CTA** (usually with its ghost
+secondary), and the first viewport — check ~1440×900 and ~390×844 — shows headline, lede, and
+that CTA together. If the display type pushes them below the fold, shrink the clamp or cut a
+headline line; the words lose gracefully to the job.
 
 ### A — Editorial split (default when there's one strong image)
 
@@ -140,9 +150,10 @@ transparent over the image if it gains a solid background on scroll — otherwis
 
 ### C — Typographic (when imagery is weak or absent)
 
-No hero image. Display type at `clamp(72px, 12vw, 160px)`, 2–3 stacked lines, mixing solid and
-outlined text (`-webkit-text-stroke`), rules or a ticker between; small metadata row (place,
-year, offer) in caps under it. **If the available imagery is mediocre, choose C — a bad photo
+No hero image. Display type at `clamp(64px, 11vw, 128px)` — capped, because at four stacked
+lines the max sizes eat the whole first screen — 2–3 stacked lines mixing solid and outlined
+text (`-webkit-text-stroke`), rules or a ticker between; then the lede, the CTA pair, and a
+small metadata row (place, year, offer) in caps, all inside the first viewport. **If the available imagery is mediocre, choose C — a bad photo
 costs more trust than no photo.** Images can still appear later in the page at small,
 controlled sizes.
 
@@ -202,7 +213,8 @@ Mobile-first: write base styles for ~390px, layer desktop with
   may need a `<br>` strategy or shorter wording, not a smaller font.
 - Nav on mobile: brand + primary CTA visible; 3–5 anchor links can inline-wrap under the brand
   or collapse into a native `<details>` menu — don't build a JS hamburger for a one-pager.
-- Proof strips wrap (`flex-wrap`), min-width per item.
+- Proof strips wrap (`flex-wrap`), min-width per item. Three-up stat/proof grids collapse
+  below ~480px — three boxes at 110px each read as clutter, not confidence.
 - Tap targets ≥ 44px; gaps ≥ 12px between adjacent tappables.
 - Kill horizontal scroll: no fixed widths above ~360px on non-media elements; any wide element
   (table, code) scrolls inside its own `overflow-x: auto` wrapper.

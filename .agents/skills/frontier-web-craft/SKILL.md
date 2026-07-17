@@ -102,9 +102,15 @@ quality floor (reset, token slot, utilities, focus states, reduced-motion).
 
 The hard rules, always active (the checker enforces most of them):
 
-- Every color comes from a `:root` token. **Zero hex values outside `:root`.**
+- Every color comes from a `:root` token. **Zero hex values outside `:root`** — and any
+  translucent tint you reach for more than twice (an `rgba()` of paper or ink) becomes a token
+  too (`--bone-70`), or the shades drift apart one hand-mix at a time.
 - Exactly one display face + one text face (+ optional mono for data). Weights are chosen,
-  not defaulted.
+  not defaulted. Take the direction's font stacks **verbatim and in order** — the first family
+  is the intended cut; reordering it away quietly changes every heading.
+- The hero carries the page job's **primary CTA**, and the first viewport (desktop and phone)
+  shows headline, lede, and that CTA together. A hero that fills the whole first screen with
+  type alone postpones the very job the page exists to do.
 - All spacing from one scale; section padding from one clamp. No ad-hoc margins.
 - One shadow token. One radius scale. The accent color appears at most ~6 times per viewport —
   scarcity is what makes it read as intentional.

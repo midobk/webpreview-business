@@ -521,3 +521,12 @@ neighborhood."
 5. **When two directions both fit, pick the one whose signature the business can honestly
    fill.** Ledger needs real numbers; Midnight Counter needs a real menu; Tidewater needs real
    service areas. The signature that would require inventing facts is the wrong signature.
+6. **Type stacks are part of the direction — copy them verbatim, in order.** The first family
+   carries the intended cut: Fieldstone's display is condensed because "Avenir Next Condensed"
+   comes first; put a regular-width family ahead of it and every heading silently un-condenses.
+   `font-stretch` does not rescue a stack whose first family has no condensed cut.
+7. **An accent-colored background changes the contrast math.** Light paper/bone text on a
+   mid-value accent (`--accent`) usually passes only at display sizes; body-size and caption
+   text on an accent wash goes in `--ink` or sits on the `--accent-deep` variant instead.
+   Re-check 4.5:1 whenever text lands on anything that isn't the direction's paper or dark
+   surface.

@@ -28,6 +28,7 @@ and exits non-zero on any FAIL.
 | meta description present | WARN | share/SEO hygiene |
 | exactly one `h1` | FAIL | hierarchy |
 | hex colors outside `:root` | FAIL | token discipline is what keeps 300 decisions coherent |
+| same rgb triple hand-mixed ≥3× in `rgba()` outside `:root` | WARN | untokenized tints drift apart one mix at a time — promote to alpha tokens |
 | > 3 font families | FAIL | two faces + optional mono, remember |
 | banned phrases (see copywriting.md) / lorem / TODO / placeholder | FAIL | generic-copy tell |
 | emoji in visible text | FAIL | emoji-as-icons is the #1 cheap-page tell |
@@ -52,21 +53,29 @@ Open or screenshot the page at **390×844** and **1440×900** (both, always — 
 only seen at desktop width are broken on phones by default). Walk this list top to bottom:
 
 1. No horizontal scrollbar at 390px; nothing clipped at either width.
-2. Hero headline: no orphaned single word on its own line; text over imagery legible
+2. **First-viewport test:** headline, lede, and the primary CTA are all visible without
+   scrolling, at both widths. A type-only hero taller than the screen fails here — shrink the
+   clamp or cut a line.
+3. Hero headline: no orphaned single word on its own line; text over imagery legible
    (the scrim is doing its job).
-3. Every image loads, has a deliberate crop (no beheaded portraits, no accidental centering),
-   and sits in the direction's palette.
-4. Spacing rhythm: consistent gaps between sections; nothing cramped against a section edge;
+4. Every image loads, has a deliberate crop (no beheaded portraits, no accidental centering),
+   and sits in the direction's palette. No CSS-gradient panel is pretending to be a
+   photograph.
+5. Spacing rhythm: consistent gaps between sections; nothing cramped against a section edge;
    nothing floating in unexplained emptiness.
-5. Adjacent sections have distinct backgrounds; the one inversion section is present and lands
-   mid-page.
-6. Buttons and links: hover states work; focus ring visible when tabbing; tap targets
+6. Adjacent sections have distinct backgrounds; the one inversion section is present and lands
+   mid-page. On any accent-washed section, body-size text still passes 4.5:1 — light paper on
+   `--accent` usually doesn't; use `--ink` text or the `--accent-deep` surface.
+7. Buttons and links: hover states work; focus ring visible when tabbing; tap targets
    comfortable at 390px.
-7. The signature element is present, prominent, and the single most memorable thing on the page.
-8. The accent color: count its appearances in one viewport — more than ~6 means it has stopped
+8. The signature element is present, prominent, and the single most memorable thing on the page.
+9. The accent color: count its appearances in one viewport — more than ~6 means it has stopped
    reading as intentional.
-9. Footer is finished (no dead icons, no placeholder links).
-10. Read every word on the page once, out loud in your head, as the business owner — anything
+10. Footer is finished (no dead icons, no placeholder links).
+11. Contact facts match the brief character for character — phone, address, hours, years. A
+    phone number with the wrong digit count or prefix for its country is a hallucination tell;
+    so is a founding year or owner name the brief never supplied.
+12. Read every word on the page once, out loud in your head, as the business owner — anything
     you'd be embarrassed to say to a customer gets rewritten.
 
 <a name="tier3"></a>

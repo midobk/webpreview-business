@@ -137,6 +137,15 @@ def main():
             report("FAIL", "hex-outside-root",
                    f"{len(stray)} hex color(s) outside :root — every color must be a token: {sample}")
 
+    triples = {}
+    for m2 in re.finditer(r"rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)", strip_root_blocks(css)):
+        key = ",".join(m2.groups())
+        triples[key] = triples.get(key, 0) + 1
+    for key, n in sorted(triples.items(), key=lambda kv: -kv[1]):
+        if n >= 3:
+            report("WARN", "untokenized-tint",
+                   f"rgb({key}) hand-mixed {n}x outside :root — define alpha tokens (e.g. --bone-70) instead")
+
     families = set()
     for decl in re.findall(r"font-family\s*:\s*([^;}{]+)", css, re.I):
         first = decl.split(",")[0].strip().strip("'\"").lower()
