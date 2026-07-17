@@ -28,6 +28,7 @@ and exits non-zero on any FAIL.
 | meta description present | WARN | share/SEO hygiene |
 | exactly one `h1` | FAIL | hierarchy |
 | hex colors outside `:root` | FAIL | token discipline is what keeps 300 decisions coherent |
+| `skeleton-sentinel` marker still in the file | FAIL | the starter's unshippable palette/device stubs were never replaced with choices |
 | same rgb triple hand-mixed ≥3× in `rgba()` outside `:root` | WARN | untokenized tints drift apart one mix at a time — promote to alpha tokens |
 | > 3 font families | FAIL | two faces + optional mono, remember |
 | banned phrases (see copywriting.md) / lorem / TODO / placeholder | FAIL | generic-copy tell |
@@ -175,4 +176,5 @@ without it, it was noise, and look for a second one.
 | A number or quote can't be traced to the brief | Delete it (or strip the quote marks and attribution and keep the sentence as the page's own voice) — never "verify later" |
 | Handsome but doesn't feel *expensive* | Shift the display to the expressive stack (Didot/Baskerville-class, italic on the accent words), push the display clamp a size up, and give the page a conceit that names its labels |
 | Batch sites look like siblings | Apply the set rules: change nav pattern, hero archetype, conceit, and headline formula on the offender — palette alone is not differentiation |
+| Visible devices identical across sites (same eyebrow dash, same caps-pill button) | Those are inherited skeleton/anatomy defaults, not choices — re-pick each from the device menu per site |
 | Gate keeps failing on re-runs | Stop patching; rebuild the failing section from its recipe in page-anatomy.md — recipes are cheaper than archaeology |

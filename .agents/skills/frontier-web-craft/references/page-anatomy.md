@@ -44,8 +44,8 @@ run: paper → white → paper-deep → **dark inversion** → paper → dark fo
 full inversion (dark section on a light page; light on a dark page), placed in the middle
 third — it's the page's chorus. Dark directions invert this logic.
 
-**Section head pattern.** Every section opens with the same three-part head, which is what
-makes a page feel designed by one hand:
+**Section head pattern.** Every section on a page opens with the same three-part head —
+within one page that consistency is what reads as one designer's hand:
 
 ```html
 <div class="section-head">
@@ -55,8 +55,25 @@ makes a page feel designed by one hand:
 </div>
 ```
 
-Eyebrow = category label with a leading rule (`.eyebrow::before` 32px × 1px in accent).
-`<em>` in the h2 = 1–3 words in the direction's accent treatment. Lede optional.
+But the *treatment* of each part is a per-site choice from the device menu below — the same
+head pattern styled the same way across different sites is a template tell.
+
+**Device menu.** These are the visible atoms that make sites recognizable; choose each one
+per site (guided by the direction), never inherit it:
+
+- *Eyebrow*: leading rule (32px dash) · boxed tag (1px border chip) · index number ("01 —") ·
+  plain wide-tracked caps · dot marker · conceit vocabulary ("BATCH 12", "PL. 04").
+- *Heading accent* (1–3 words in the h2): italic in accent color · solid accent color ·
+  hand-underline (thick offset `text-decoration` or an SVG stroke) · outlined text
+  (`-webkit-text-stroke`) · highlighter block behind the word.
+- *Button shape*: pill (radius 999) · square/blunt (direction radius) · underline-link CTA
+  (no box at all — Porcelain, editorial) · stamped border (2px, no fill until hover).
+  Button case: tracked caps *or* sentence case at 14–15px — the caps-pill is one option,
+  not the default.
+- *Section-head alignment*: left · centered · split two-column (eyebrow+h2 left, lede right).
+
+One combination per site, used everywhere on that site. Two sites from the same batch should
+never share the full combination.
 
 **Buttons.** One `.btn` base (min-height 46–48px, inline-flex, caps 12px 700–800, tracked,
 radius per direction) with `-primary` (accent bg, accent-tinted shadow) and `-ghost` (1px line

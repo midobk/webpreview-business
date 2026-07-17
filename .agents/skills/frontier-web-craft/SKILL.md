@@ -87,6 +87,11 @@ selection table. Then:
 - If the brief itself specifies an aesthetic, the brief wins — use the nearest direction as
   scaffolding for tokens and structure.
 - Never blend two directions. Coherence beats novelty.
+- **Reruns take the road not taken.** The selection table's two columns are both legitimate
+  answers, and every direction multiplies by archetype × nav × conceit × device combination —
+  the space is large on purpose. When regenerating for the same business, or asked for another
+  concept, switch at least two of those axes instead of reproducing the first design. The
+  procedure is deterministic about *quality*, never about *which* good page you get.
 
 Then pick the **page conceit** — the organizing metaphor from the business's own paper world
 (the roast log, the job ticket, the coolroom tag, the plate numbering; menu and rules in
@@ -118,8 +123,13 @@ get embedded in markup where they're expensive to change.
 ## Step 3 — Build on the skeleton
 
 Read `references/page-anatomy.md` for the global rules, the section recipes, and the three hero
-archetypes. Start from `assets/skeleton.html` rather than a blank file — it already carries the
-quality floor (reset, token slot, utilities, focus states, reduced-motion).
+archetypes. Start from `assets/skeleton.html` rather than a blank file — but understand what it
+is: **a floor, not a look**. It carries only the invisible quality floor (reset, token slot,
+spacing mechanics, focus states, reduced-motion). Its palette is deliberately unshippable gray
+and its visible devices (eyebrow, button, section head) are empty stubs — every one of them
+gets a treatment chosen from the anatomy's device menu for *this* site. If anything visible on
+the finished page could have come from the skeleton or from a sibling site unchanged, that's an
+unmade decision, and the checker fails any page still carrying the skeleton's sentinel marker.
 
 The hard rules, always active (the checker enforces most of them):
 

@@ -125,6 +125,9 @@ def main():
         report("FAIL", "h1", f"expected exactly one <h1>, found {len(h1s)}")
 
     # --- token discipline ---------------------------------------------------
+    if re.search(r"skeleton-sentinel", markup, re.I):
+        report("FAIL", "skeleton-shipped",
+               "skeleton-sentinel marker still present — the starter palette/devices were never replaced with chosen ones")
     if ":root" not in css:
         report("FAIL", "tokens", "no :root token block in CSS")
     else:
