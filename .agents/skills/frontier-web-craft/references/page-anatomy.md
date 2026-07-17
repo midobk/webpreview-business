@@ -112,6 +112,12 @@ mid-page (Fieldstone's number strip, Midnight Counter's menu, Ledger's table…)
 gets the boldness budget; its neighbors stay quiet. Two showpiece sections next to each other
 cancel each other out.
 
+**The signature carries content the page hasn't said yet.** Restating the headline inside a
+fancier container is decoration wearing the signature's clothes — the reader gets nothing new
+at the page's boldest moment. Give it information: the menu, the process, the week's arrivals,
+the service areas, the one stat that matters. If you can delete the signature section without
+losing a fact, it isn't a signature yet.
+
 **Sticky nav recipe.** `position: sticky; top: 0; z-index: 50;` translucent page-background
 (`rgba` of paper at ~.92) + `backdrop-filter: blur(18px)` + 1px bottom `--line`. Left: brand
 mark + name (+ small tagline in caps). Right: 3–5 anchor links + one primary CTA. Nav link
@@ -221,14 +227,22 @@ Mobile-first: write base styles for ~390px, layer desktop with
 - Verify at **390×844 and 1440×900** before calling the page done.
 
 <a name="motion"></a>
-## Motion budget
+## Motion budget — a floor and a ceiling
 
-Motion is a budget, not a garnish: choose **either** a page-load hero sequence **or**
-scroll-reveals on section heads — not both, plus at most one ambient element (ticker, slow orb
-drift). Use the direction's stated character (Fieldstone: none; Porcelain: slow fades).
-Durations 150–600ms per direction; one easing curve site-wide. Hover states everywhere
-interactive, subtle (translate/underline/shadow — no spins, no bounces).
+The direction's stated motion set is **mandatory, like its tokens** — the most common failure
+here is not excess but omission: a cautious build ships hover transitions only, drops the
+direction's ticker or reveals, and the page reads embalmed. Build exactly what the direction
+names.
 
-Scroll reveals without a framework: an `IntersectionObserver` adding `.in` (opacity 0→1,
-translateY 14px→0, transition 500–600ms) with elements defaulting to visible when JS is absent,
-and everything instant under `prefers-reduced-motion`.
+The ceiling: beyond the direction's set, choose **either** a page-load hero sequence **or**
+scroll-reveals on section heads — not both — plus at most one ambient element (ticker, slow
+orb drift). Every direction that isn't deliberately still (Fieldstone, Ledger are; the rest
+aren't) gets **one orchestrated moment** — the hero sequence or the reveals — not zero.
+Durations 150–600ms per direction; one easing curve site-wide. Hover states on everything
+interactive, subtle (translate/underline/shadow/inversion — no spins, no bounces).
+
+The reveal recipe (required pattern for scroll reveals — not optional garnish): an
+`IntersectionObserver` adds `.in` (opacity 0→1, translateY 14px→0, transition 500–600ms,
+stagger siblings ~80ms); elements default to visible when JS is absent, and everything is
+instant under `prefers-reduced-motion`. The hero load sequence is the same idea on page load:
+eyebrow → headline lines → lede → CTAs, staggered 60–90ms.

@@ -1,13 +1,13 @@
 # Design directions
 
-Eight complete art directions. Each is a coherent world: tokens, type, shape, texture, motion,
+Nine complete art directions. Each is a coherent world: tokens, type, shape, texture, motion,
 voice, and one mandatory signature element. Pick one with the selection table, take its tokens
 verbatim, and stay inside it — a page that commits fully to one modest direction beats a page
 that samples three ambitious ones.
 
 **Why a menu:** inventing a distinctive direction from scratch is the single hardest part of
 design, and the place where output regresses to the generic default. Selection is reliable;
-origination is not. These eight cover the aesthetic territory of most real briefs. The craft
+origination is not. These nine cover the aesthetic territory of most real briefs. The craft
 you still supply is *fit* — re-huing toward the brand's real colors, choosing what the imagery
 depicts, writing copy in the direction's voice.
 
@@ -22,7 +22,8 @@ depicts, writing copy in the direction's voice.
 7. [Market Fresh](#6-market-fresh) — daytime appetite
 8. [Ledger](#7-ledger) — industrial matter-of-fact
 9. [Tidewater](#8-tidewater) — soft coastal trust
-10. [Adaptation rules](#adaptation)
+10. [Matchday](#9-matchday) — kinetic poster energy
+11. [Adaptation rules](#adaptation)
 
 <a name="selection"></a>
 ## Selection table
@@ -32,23 +33,32 @@ depicts, writing copy in the direction's voice.
 | Restaurant / bar (evening, premium) | Midnight Counter | Heritage Wine |
 | Café / bakery / diner / daytime food | Market Fresh | Heritage Wine |
 | Salon / spa / beauty | Heritage Wine | Porcelain |
-| Barber shop | Midnight Counter | Fieldstone |
+| Barber shop | Midnight Counter | Matchday |
 | Contractor / roofing / landscaping / auto | Fieldstone | Ledger |
 | Cleaning / home services | Tidewater | Fieldstone |
 | Clinic / dental / wellness / yoga | Porcelain | Tidewater |
 | SaaS / software / IT / engineering | Blueprint | Ledger |
 | Logistics / manufacturing / wholesale / B2B | Ledger | Blueprint |
 | Boutique retail / florist / jeweler | Heritage Wine | Market Fresh |
-| Gym / sports / athletics | Fieldstone | Ledger |
+| Sports retail / sneakers / streetwear | Matchday | Ledger |
+| Gym / martial arts / dance / athletics | Matchday | Fieldstone |
+| Venue / events / festival / e-sports | Matchday | Midnight Counter |
+| Fast-casual / food truck / late-night counter | Market Fresh | Matchday |
 | Insurance / accounting / legal (local) | Tidewater | Blueprint |
 | Community org / nonprofit | Tidewater | Market Fresh |
 
 **Tiebreakers**, in order:
-1. *Evening or daytime business?* Evening → the dark direction of the pair.
-2. *Premium or value positioning?* Premium → the more restrained direction (Porcelain,
+1. *Does the business sell energy?* Speed, sweat, crowds, youth, the event, the drop — if the
+   brand's core promise is kinetic, route to **Matchday regardless of category**: a bakery
+   hyping a weekend drop, a barber with street energy, a product launch. Conversely, never
+   Matchday when the trust cue is calm (medical, legal, luxury-quiet) — energy reads as noise
+   there. This is a register question, not an industry question; the table's industry rows are
+   only the default answer to it.
+2. *Evening or daytime business?* Evening → the dark direction of the pair.
+3. *Premium or value positioning?* Premium → the more restrained direction (Porcelain,
    Heritage Wine, Midnight Counter). Value → the sturdier one (Fieldstone, Ledger, Market Fresh).
-3. *Heritage or modern self-image?* Heritage → serif-led (Heritage Wine, Midnight Counter).
-   Modern → sans/mono-led (Blueprint, Ledger, Porcelain).
+4. *Heritage or modern self-image?* Heritage → serif-led (Heritage Wine, Midnight Counter).
+   Modern → sans/mono-led (Blueprint, Ledger, Porcelain, Matchday).
 
 If the brief names an aesthetic ("make it feel like a 1950s diner"), the brief wins — use the
 nearest direction as the scaffolding and bend it.
@@ -504,6 +514,75 @@ neighborhood."
 
 ---
 
+<a name="9-matchday"></a>
+## 9. Matchday
+
+*Kickoff in ten minutes. The page leans forward.*
+
+**Use for:** any brief whose promise is **energy** — sports retail, gyms, martial arts, dance
+studios, sneaker/streetwear shops, venues, festivals, e-sports, product drops and launch pages,
+late-night counters, a barber with street energy. This is a register, not an industry: the
+question is "does this brand sell motion?", and any category can answer yes.
+**Avoid for:** medical, legal, finance, luxury-quiet — anywhere the trust cue is calm.
+**Voice:** present tense, second person, short. "Dimanche, tu joues." Urgency only from real
+facts (real hours, real dates, real drops) — a fake countdown is an invented claim.
+
+### Tokens
+
+```css
+:root {
+  --court: #f4f2ec;        /* chalk-white page background */
+  --panel: #ffffff;        /* cards */
+  --navy: #14204a;         /* kit navy — dark sections, big type */
+  --navy-deep: #0c1430;    /* footer, deepest inversion */
+  --ink: #131a33;          /* primary text */
+  --muted: #59607a;        /* secondary text */
+  --accent: #d81f2a;       /* signal red — display sizes, buttons, chevrons */
+  --accent-deep: #a8141e;  /* small accent text, hover */
+  --line: rgba(19, 26, 51, 0.15);
+  --shadow: 0 22px 55px rgba(12, 20, 48, 0.16);
+  --radius: 8px;
+}
+```
+
+Contrast: `--accent` on `--court` sits right at the AA line — display sizes only; small accent
+text uses `--accent-deep` (6.7:1). White on `--accent` passes for buttons; everything on
+`--navy` is easy. Re-hue toward the club's real colors freely — kit colors are exactly the
+brand colors this direction wants.
+
+### Type
+
+Display: `"Avenir Next Condensed", "Arial Narrow", "Helvetica Neue", sans-serif` at 700–800,
+**italic, uppercase** — the forward lean is the speed cue. Tight leading, letter-spacing 0.
+Numerals: `ui-monospace, "SF Mono", Menlo, Consolas, monospace` with tabular figures — the
+scoreboard voice for stats, hours, prices. Body: system sans. Webfont upgrade: Archivo
+Expanded or Barlow Condensed italic.
+
+### Shape & texture
+
+Diagonal geometry everywhere the palette allows: chevron pattern strips built from
+`repeating-linear-gradient(45deg, var(--accent) 0 12px, transparent 12px 28px)`, section
+edges cut at an angle (a skewed divider or `clip-path` polygon — one device, reused),
+oversized numerals or the brand mark cropped and bleeding off the dark section's edge.
+Imagery duotoned toward `--navy` with a red glow accent so photos join the kit. Badge/pill
+chips for disciplines, sizes, dates.
+
+### Motion (this direction's floor is high — ship all of it)
+
+A fast marquee ticker (18–24s) of real items — disciplines, brands, this week's drop. A hero
+load sequence: headline lines slide up staggered ~70ms. Scroll reveals on cards, staggered.
+Hover: instant inversion (court↔navy or accent fill) with a 2px translate — snappy, never
+floaty. All of it dies under `prefers-reduced-motion`.
+
+### Signature (mandatory)
+
+**The diagonal band**: a full-width angled strip — chevron-patterned or navy with outlined
+mono numerals — carrying content the page hasn't said yet (this week's arrivals, the
+disciplines stocked, the real match-day hours), cutting across the page's middle third like
+a sash. It moves (marquee or reveal) unless reduced-motion says otherwise.
+
+---
+
 <a name="adaptation"></a>
 ## Adaptation rules
 
@@ -525,7 +604,12 @@ neighborhood."
    carries the intended cut: Fieldstone's display is condensed because "Avenir Next Condensed"
    comes first; put a regular-width family ahead of it and every heading silently un-condenses.
    `font-stretch` does not rescue a stack whose first family has no condensed cut.
-7. **An accent-colored background changes the contrast math.** Light paper/bone text on a
+7. **The motion character is part of the direction — a floor, not just a ceiling.** Shipping
+   Heritage Wine without its ticker, or Matchday without its marquee and staggered reveals, is
+   the same drift as swapping the palette. Equally, adding motion to a still direction
+   (Fieldstone, Ledger) breaks it — their stillness is the choice. Build exactly the motion
+   the direction names.
+8. **An accent-colored background changes the contrast math.** Light paper/bone text on a
    mid-value accent (`--accent`) usually passes only at display sizes; body-size and caption
    text on an accent wash goes in `--ink` or sits on the `--accent-deep` variant instead.
    Re-check 4.5:1 whenever text lands on anything that isn't the direction's paper or dark

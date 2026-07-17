@@ -68,14 +68,20 @@ only seen at desktop width are broken on phones by default). Walk this list top 
    `--accent` usually doesn't; use `--ink` text or the `--accent-deep` surface.
 7. Buttons and links: hover states work; focus ring visible when tabbing; tap targets
    comfortable at 390px.
-8. The signature element is present, prominent, and the single most memorable thing on the page.
-9. The accent color: count its appearances in one viewport — more than ~6 means it has stopped
-   reading as intentional.
-10. Footer is finished (no dead icons, no placeholder links).
-11. Contact facts match the brief character for character — phone, address, hours, years. A
+8. The direction's stated motion set is actually present (its ticker, reveals, fades — check
+   the direction's Motion block), plus one orchestrated moment unless the direction is
+   deliberately still. Hover-transitions-only on a moving direction is an omission, not
+   restraint.
+9. The signature element is present, prominent, the single most memorable thing on the page —
+   and it carries content stated nowhere else. A restated headline in a fancy container fails
+   this check.
+10. The accent color: count its appearances in one viewport — more than ~6 means it has
+    stopped reading as intentional.
+11. Footer is finished (no dead icons, no placeholder links).
+12. Contact facts match the brief character for character — phone, address, hours, years. A
     phone number with the wrong digit count or prefix for its country is a hallucination tell;
     so is a founding year or owner name the brief never supplied.
-12. Read every word on the page once, out loud in your head, as the business owner — anything
+13. Read every word on the page once, out loud in your head, as the business owner — anything
     you'd be embarrassed to say to a customer gets rewritten.
 
 <a name="tier3"></a>
@@ -128,6 +134,8 @@ without it, it was noise, and look for a second one.
 | Symptom | Fix |
 |---|---|
 | Page feels flat / lifeless | Add the one dark-inversion section; give the signature moment full width; vary section density (one dense, one airy) |
+| Page feels static / embalmed | Ship the direction's stated motion set (its ticker, reveals, fades) plus one orchestrated moment — hover transitions alone are an omission on any direction that isn't deliberately still |
+| Signature moment says nothing new | Give it content stated nowhere else — the menu, the arrivals, the process, the one stat; a restated headline in a fancier container is decoration |
 | Page feels cluttered | Chanel pass ×2; merge service cards to 3–4; enforce the accent budget |
 | Feels like a template | Re-run the genericism interrogation fixes: concrete nouns in, signature rebuilt around the actual offer |
 | Hero is weak | Wrong archetype — if the image is mediocre switch to C (typographic); if strong, commit to B with a real scrim |

@@ -3,7 +3,7 @@ name: frontier-web-craft
 description: >-
   Build complete, distinctive, client-ready websites — landing pages, business one-pagers,
   marketing sites, demo previews — at frontier-model quality on any model. Turns design taste
-  into procedure: a menu of eight complete art directions with paste-ready design tokens,
+  into procedure: a menu of nine complete art directions with paste-ready design tokens,
   per-section build recipes, copywriting formulas, and a mechanical review gate with a runnable
   checker script. Use whenever asked to build, redesign, restyle, or improve any website,
   landing page, homepage, or demo — especially a "quick", "simple", or "basic" one; routine
@@ -64,7 +64,7 @@ hedge. Never leave a placeholder.
 
 ## Step 1 — Choose a direction; do not invent one
 
-Read `references/design-directions.md` and pick ONE of the eight named directions using its
+Read `references/design-directions.md` and pick ONE of the nine named directions using its
 selection table. Then:
 
 - Take the direction's token block **verbatim** as your `:root`. You may re-hue tokens toward
@@ -111,6 +111,9 @@ The hard rules, always active (the checker enforces most of them):
 - The hero carries the page job's **primary CTA**, and the first viewport (desktop and phone)
   shows headline, lede, and that CTA together. A hero that fills the whole first screen with
   type alone postpones the very job the page exists to do.
+- The direction's stated **motion set ships** — dropping its ticker or reveals is the same
+  drift as swapping its palette. Unless the direction is deliberately still, the page gets one
+  orchestrated moment (hero load sequence or scroll reveals), not zero.
 - All spacing from one scale; section padding from one clamp. No ad-hoc margins.
 - One shadow token. One radius scale. The accent color appears at most ~6 times per viewport —
   scarcity is what makes it read as intentional.
