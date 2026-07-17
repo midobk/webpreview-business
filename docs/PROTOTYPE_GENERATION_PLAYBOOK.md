@@ -11,6 +11,7 @@ Before generating anything, read:
 - `docs/SHOWCASE_RULES.md`
 - `/Users/mehdibakkalimaassom/.codex/skills/premium-saas-design/SKILL.md`
 - `/Users/mehdibakkalimaassom/.codex/skills/frontend-skill/SKILL.md`
+- `.agents/skills/frontier-web-craft/SKILL.md` — the procedural build system: pick an art direction from its menu (paste-ready tokens), copy-first workflow, section recipes, and the mechanical gate (`scripts/review_page.py`). Follow this skill's process end to end; on any conflict, the repo docs above win.
 
 Use the strongest approved prototypes as visual references for craft, not as templates to copy. Inspect their hierarchy, spacing, typography, imagery, responsive behavior, and conversion path before choosing a direction.
 
