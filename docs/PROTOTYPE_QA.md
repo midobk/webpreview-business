@@ -65,7 +65,7 @@ The creative standard for new work lives in [`PROTOTYPE_GENERATION_PLAYBOOK.md`]
 
 ## Prototype Generation Workflow (step by step)
 
-1. **Read relevant skills first** — consult the vendored `.agents/skills/premium-web-design/SKILL.md` (art direction, type/color/token systems, showcase-grade craft), `.agents/skills/frontend-craft/SKILL.md` (self-contained HTML/CSS, responsive, accessibility), and `.agents/skills/color-expert/SKILL.md` (palette/contrast) before writing any HTML/CSS
+1. **Read relevant skills first** — consult the vendored `.agents/skills/premium-saas-design/SKILL.md` (the define→build→review→refine framework, art direction, showcase-grade craft), `.agents/skills/frontend-design/SKILL.md` (distinctive art direction + the self-contained HTML/CSS build contract, responsive, accessibility), and `.agents/skills/color-expert/SKILL.md` (palette/contrast) before writing any HTML/CSS — each of the first two ends with a "Seaway Sites application" section that pins the repo-specific rules
 2. **Generate HTML with MiniMax M3** (not by writing it manually) — pass the lead info + industry context + business branding details so the output feels personalized
 3. **Clean the HTML** — strip any model reasoning, thinking blocks, or leaked prompts
 4. **Apply target business branding** — add the actual business name, address, phone, and a color theme/aesthetic that fits the industry. The prototype should look like THEIRS, not a generic template

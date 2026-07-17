@@ -159,7 +159,7 @@ section.content p {{ font-size: 18px; line-height: 1.6; color: #444; }}
             "design_summary": f"Variant {variant_num}: {template['description'] if hasattr(template, 'description') else template['name']} — {template['layout']}, {template['color_scheme']}",
             "prototype_score": None,
             "generation_model": "ollama/minimax-m3:cloud",
-            "generation_prompt": f"Use docs/PROTOTYPE_GENERATION_PLAYBOOK.md and the vendored .agents/skills/premium-web-design + .agents/skills/frontend-craft skills. Variant {variant_num}: {template['name']} design system",
+            "generation_prompt": f"Use docs/PROTOTYPE_GENERATION_PLAYBOOK.md and the vendored .agents/skills/premium-saas-design + .agents/skills/frontend-design skills. Variant {variant_num}: {template['name']} design system",
             "generation_status": "pending_review",
             "watermark_enabled": True,
             "demo_locked": True,

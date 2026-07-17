@@ -9,8 +9,8 @@ Before generating anything, read:
 - `docs/PROTOTYPE_QA.md`
 - `docs/PROTOTYPE_RULES.md`
 - `docs/SHOWCASE_RULES.md`
-- `.agents/skills/premium-web-design/SKILL.md` — visual thesis, composition, type/color/token systems, showcase-grade craft
-- `.agents/skills/frontend-craft/SKILL.md` — self-contained HTML/CSS, responsive, accessibility, the pre-push cleanliness gate
+- `.agents/skills/premium-saas-design/SKILL.md` — the define→build→review→refine framework, visual thesis, composition, showcase-grade craft (repo-specific application at the end)
+- `.agents/skills/frontend-design/SKILL.md` — distinctive art direction + the self-contained HTML/CSS build contract, responsive, accessibility, and the pre-push cleanliness gate (repo-specific application at the end)
 - `.agents/skills/color-expert/SKILL.md` — palette/ramp construction and contrast when building the per-brand token system
 
 These skills are vendored into the repo so every agent — local, container, or CI — has them; do not rely on machine-specific skill paths.
