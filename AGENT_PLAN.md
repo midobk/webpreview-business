@@ -634,11 +634,11 @@ Checklist:
 - **Image generation** — OpenAI gpt-image-1-mini verified working (2026-06-22 14:09)
 - **Telnyx** — from `+18253953636`, voice-call plugin enabled. Not yet wired to SMS drafts.
 - **AgentMail** — inbox script ready (`sitesprint-test@agentmail.to`), no API key provisioned yet.
-- **Vercel deploy** — live at https://webpreview-business.vercel.app
+- **Vercel deploy** — live at https://seawaysites.com (domain verified, redirects from webpreview-business.vercel.app)
 - **Local dev** — running on http://localhost:3000, password `1234` (per user — local only, Vercel unchanged).
 
 ### Deployment
-- **URL:** https://webpreview-business.vercel.app
+- **URL:** https://seawaysites.com
 - **Vercel project:** webpreview-business (under midobk)
 - **Env vars set on Vercel:** PASSWORD_HASH (by user)
 - **Env vars needed on Vercel:** AGENTMAIL_API_KEY (when inbox activated), GOOGLE_PLACES_API_KEY (already in .env.local)
@@ -1396,7 +1396,7 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 - **Leads:** 168 in `data/leads.json` (167 Cornwall, 1 Tangier). Website status: 161 none / 1 ugly / 5 unknown / 1 no_website. **By status:** 23 ready_for_prototype, 3 email_drafted, 122 flag_for_review, 19 pending_review, 1 ignore.
 - **Prototypes:** 10 records in `data/prototypes.json` (9 completed, 1 pending — and `data/prototypes/` shows 7 anonymized dirs, so 10-records-but-only-7-unique is the known data-quality issue §19-I #1).
 - **Outreach:** 6 logs in `data/outreach_logs.json` — 3 email drafts + 3 SMS drafts. **All `status: drafted`. Zero sent. Zero replies. Zero conversions.** That's the real conversion funnel.
-- **Live site:** `https://webpreview-business.vercel.app` returns HTTP 200. Unchanged since last audit (PR #1 + PR #2 merged 2026-06-25; PR #3 still open).
+- **Live site:** `https://seawaysites.com` returns HTTP 200. Unchanged since last audit (PR #1 + PR #2 merged 2026-06-25; PR #3 still open).
 - **Env:** `.env.local` has `GOOGLE_PLACES_API_KEY=AIzaSy…Xezg`, Supabase URL/service key, and PASSWORD_HASH. **No `AGENTMAIL_API_KEY`** (AgentMail inbox stub `sitesprint-test@agentmail.to` is created but not activated).
 
 ### CRON DRIFT — the live scheduler disagrees with §13
@@ -1476,7 +1476,7 @@ Agent acts autonomously for routine safe actions. Ask for approval when:
 - **Prototypes:** 15 (14 completed, 1 pending). +5 since 2026-06-29.
 - **Outreach:** 23 entries (12 email + 11 SMS, all `drafted`, **zero sent**). +17 since 2026-06-29 (the 2026-07-01 "Weekly email drafting cycle" commit `52934e6` did 9 email + 8 SMS).
 - **Cron scheduler:** still 1 job live (`sitesprint-weekly-planning`, this job). §19-I still open. No new crons created this week.
-- **Live site:** `webpreview-business.vercel.app` HTTP 200 (unchanged).
+- **Live site:** `seawaysites.com` HTTP 200 (unchanged).
 
 ### 🚨 NEW FINDING — `GOOGLE_PLACES_API_KEY` is a placeholder, not a real key
 

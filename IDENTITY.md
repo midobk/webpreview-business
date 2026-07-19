@@ -22,7 +22,7 @@
 | Layer | Choice |
 |-------|--------|
 | Framework | Next.js (App Router) on Vercel |
-| Live site | https://webpreview-business.vercel.app |
+| Live site | https://seawaysites.com |
 | Prototype model | MiniMax M3 (`ollama/minimax-m3:cloud`) |
 | Scaffolding/code model | GLM 5.2 (`ollama/glm-5.2:cloud`) |
 | Cheap classification | DeepSeek V4 Flash |

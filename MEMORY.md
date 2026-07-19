@@ -165,5 +165,5 @@ User flagged 4 issues. All verified against actual repo state. None were previou
 | Google Places API | ❌ Needs billing account |
 | Domain registration | ❌ Not yet done |
 | Telnyx SMS | ❌ Needs API key in env |
-| Vercel deploy | ✅ Live at webpreview-business.vercel.app |
+| Vercel deploy | ✅ Live at seawaysites.com |
 | GitHub repo | ✅ midobk/webpreview-business |
