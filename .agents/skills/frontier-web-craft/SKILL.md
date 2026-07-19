@@ -4,8 +4,9 @@ description: >-
   Build complete, distinctive, client-ready websites — landing pages, business one-pagers,
   marketing sites, demo previews — at frontier-model quality on any model. Turns design taste
   into procedure: a menu of nine complete art directions with paste-ready design tokens,
-  per-section build recipes, copywriting formulas, and a mechanical review gate with a runnable
-  checker script. Use whenever asked to build, redesign, restyle, or improve any website,
+  per-section build recipes, copywriting formulas, and a mechanical review gate with two
+  runnable scripts (static checker + headless render verification). Use whenever asked to
+  build, redesign, restyle, or improve any website,
   landing page, homepage, or demo — especially a "quick", "simple", or "basic" one; routine
   requests are exactly where generic output happens.
 ---
@@ -106,10 +107,29 @@ Close the step by writing the **visual thesis**, one sentence:
 > place or object], and the first thing they notice is [the signature element]."
 
 If you cannot fill in the blanks with something specific to this business, return to the fact
-sheet — you don't know the subject well enough to design for it yet. The design plan is now
-four lines: direction · conceit · signature · thesis. When generating **several sites in one
-batch**, also read `references/page-anatomy.md` § Generating a set — pages that are fine alone
-can be damningly similar side by side.
+sheet — you don't know the subject well enough to design for it yet. The design plan is one
+line per axis of the choice stack (below), plus the thesis. When generating **several sites in
+one batch**, also read `references/page-anatomy.md` § Generating a set — pages that are fine
+alone can be damningly similar side by side.
+
+### The choice stack
+
+Originality is not invented here; it is *assembled* — one deliberate pick per axis, recorded
+in the design plan. Two runs that collide on more than a couple of axes are the same design.
+
+| Axis | Options | Menu |
+|---|---|---|
+| Direction | 9 named worlds | design-directions.md § selection table |
+| Type tier | conservative · expressive · embedded subset | design-directions.md § expressive stacks |
+| Conceit | the business's paper world | page-anatomy.md § the conceit |
+| Hero archetype | A split · B full-bleed · C typographic | page-anatomy.md § heroes |
+| Nav | standard · masthead · minimal | page-anatomy.md § nav |
+| Devices | eyebrow ×6 · heading accent ×5 · button ×4 · head alignment ×3 | page-anatomy.md § device menu |
+| Headline formula | 6 shapes | copywriting.md § headline formulas |
+| Signature scale | quiet mid-page moment ↔ the page's centerpiece | direction's signature spec |
+
+That's tens of thousands of coherent combinations before copy and imagery even start —
+sameness is always a failure to choose, never a shortage of options.
 
 ## Step 2 — Write the copy deck before any layout
 
@@ -169,7 +189,9 @@ Read `references/quality-gate.md`. Three tiers, in order:
 
 1. **Mechanical** — run `python3 scripts/review_page.py <file>` (add `--self-contained` for
    single-file mode). Fix every FAIL; justify every WARN in one line or fix it.
-2. **Render scan** — screenshot or open at 390px and 1440px; run the ten-point visual checklist.
+2. **Render scan** — run `python3 scripts/render_check.py <file>` (headless-Chromium geometry
+   checks + screenshots at both widths; degrades to manual instructions without Playwright),
+   then walk the visual checklist over the screenshots it saves.
 3. **Judgment, made mechanical** — score the 8-dimension rubric (0–5 each; pass is **≥ 32/40
    with no dimension below 3**), run the genericism interrogation, run the **facts ledger**
    (every digit, quote mark, and attribution on the page traces to the fact sheet, or it goes),

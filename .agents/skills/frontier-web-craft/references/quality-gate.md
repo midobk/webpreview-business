@@ -50,8 +50,21 @@ literal enough to do by hand.
 <a name="tier2"></a>
 ## Tier 2 — Render scan
 
-Open or screenshot the page at **390×844** and **1440×900** (both, always — pages that were
-only seen at desktop width are broken on phones by default). Walk this list top to bottom:
+Run the render gate first — it mechanizes the geometry half of this tier and takes the
+screenshots for the eye half:
+
+```bash
+python3 scripts/render_check.py path/to/index.html
+```
+
+It loads the page in headless Chromium at both widths and FAILs on horizontal scroll,
+untransformed elements past the viewport edge, a first viewport with no CTA, and an
+invisible h1 — the defect classes that static analysis cannot see (exit 2 with instructions
+if Playwright isn't installed; `pip install playwright && playwright install chromium`).
+Screenshots land in `.shots/`.
+
+Then **look at the screenshots** at **390×844** and **1440×900** (both, always — pages seen
+only at desktop width are broken on phones by default) and walk this list top to bottom:
 
 1. No horizontal scrollbar at 390px; nothing clipped at either width.
 2. **First-viewport test:** headline, lede, and the primary CTA are all visible without

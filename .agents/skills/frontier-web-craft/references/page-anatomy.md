@@ -97,6 +97,18 @@ testimonial. With no real imagery available, design honestly without it: typogra
 graphic panels that read as graphics, no photo-implying captions. Ask for real photos in the
 handoff instead; even phone snapshots beat a painted stand-in.
 
+**When the pipeline generates or supplies imagery, art-direct the brief.** A generated image
+is only as good as its prompt, and a cheap prompt ("professional photo of a mechanic shop")
+produces the stock-photo look that reads as template. Write each image brief from the design
+plan: **subject** = one fact-sheet noun in its real setting ("a torque wrench on a steel
+bench, service bay behind"); **light and mood** = the direction's world (Midnight Counter:
+low warm tungsten; Porcelain: diffuse morning); **palette** = name the direction's two
+dominant token colors so the image lands in the system; **composition** = where the focal
+point sits, leaving copy space per the hero archetype; **exclusions** = no text, no logos,
+no watermarks, no faces unless the brief supplies real people. One brief per image, distinct
+subjects across the page, one consistent grade. Then verify every generated file is a real
+image (>5KB, opens) — a broken generated image fails harder than no image.
+
 **Line-art illustration — the honest imagery that always works.** Single-weight stroke SVG
 drawings of the business's objects (the coffee bag, a stem, the drafting square, a cleat),
 drawn inline at 1.5–2px stroke in `--ink` or the accent, deliberately simple — 10–25 paths,
