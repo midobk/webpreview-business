@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Captain George's Fish & Chips Cornwall — Demo Preview</title>
+  <meta name="description" content="Unofficial preview concept for Captain George's Fish & Chips Cornwall — restaurant in Cornwall.">
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    *,*::before,*::after { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; color: #1a1a1a; }
+    a { color: inherit; }
+    img { max-width: 100%; height: auto; }
+    .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+  </style>
+</head>
+<body>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #1a2b3c; line-height: 1.6; }
+  
+  /* Header Banner */
+  .demo-banner {
+    background: repeating-linear-gradient(45deg, #ff6b35, #ff6b35 10px, #e85a25 10px, #e85a25 20px);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Hero */
+  .hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(rgba(15, 30, 50, 0.65), rgba(15, 30, 50, 0.65)), url('./images/hero.jpg') center/cover no-repeat;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .hero-content { max-width: 800px; }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-shadow: 2px 4px 12px rgba(0,0,0,0.4);
+    letter-spacing: -1px;
+  }
+  .hero .tagline {
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+    margin-bottom: 35px;
+    opacity: 0.95;
+    font-weight: 300;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: #ff6b35;
+    color: white;
+    padding: 16px 36px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+  }
+  .cta-btn:hover {
+    background: #e85a25;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(255, 107, 53, 0.5);
+  }
+  
+  /* Sections common */
+  section { padding: 80px 20px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-title {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    margin-bottom: 15px;
+    color: #1a2b3c;
+    font-weight: 700;
+  }
+  .section-subtitle {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 50px;
+    color: #5a6c7d;
+    font-size: 1.05rem;
+  }
+  
+  /* Services */
+  .services { background: #f7f9fb; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+  }
+  .service-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  }
+  .service-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  .service-card .card-body { padding: 24px; }
+  .service-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #1a2b3c;
+  }
+  .service-card p { color: #5a6c7d; font-size: 0.95rem; }
+  
+  /* About */
+  .about { background: white; }
+  .about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #3a4a5c;
+    line-height: 1.8;
+  }
+  
+  /* Book Call */
+  .book-call {
+    background: linear-gradient(135deg, #1a2b3c 0%, #2c4865 100%);
+    color: white;
+    text-align: center;
+  }
+  .book-call h2 { color: white; }
+  .book-call .section-subtitle { color: rgba(255,255,255,0.85); }
+  .cal-embed {
+    background: white;
+    border-radius: 16px;
+    max-width: 900px;
+    margin: 40px auto 0;
+    padding: 30px;
+    color: #1a2b3c;
+    min-height: 400px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  }
+  .cal-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 350px;
+    border: 2px dashed #c5d2e0;
+    border-radius: 12px;
+    color: #5a6c7d;
+  }
+  .cal-placeholder p { margin: 10px 0; }
+  
+  /* Footer */
+  footer {
+    background: #0f1e32;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 768px) {
+    section { padding: 60px 20px; }
+    .hero { min-height: 70vh; }
+  }
+</style>
+
+<div class="demo-banner">Demo Preview — Claim this website to make it live</div>
+
+<header>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Captain George's Fish &amp; Chips Cornwall</h1>
+      <p class="tagline">Cornwall's favorite spot for fresh, golden, hand-battered fish &amp; chips — made the traditional way.</p>
+      <button class="cta-btn" onclick="alert('Claim this website to unlock the live version'); return false;">Claim this website to unlock</button>
+    </div>
+  </section>
+</header>
+
+<section class="services">
+  <div class="container">
+    <h2 class="section-title">Our Menu Favorites</h2>
+    <p class="section-subtitle">Freshly prepared daily with locally sourced ingredients and our signature crispy batter.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <img src="./images/section_1.jpg" alt="Classic Fish & Chips" />
+        <div class="card-body">
+          <h3>Classic Fish &amp; Chips</h3>
+          <p>Hand-battered Atlantic cod with golden fries and our house-made tartar sauce.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="./images/section_2.jpg" alt="Seafood Platter" />
+        <div class="card-body">
+          <h3>Seafood Platter</h3>
+          <p>A generous mix of fish, shrimp, scallops, and clams — perfect for sharing.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="./images/section_1.jpg" alt="Chicken & Chips" />
+        <div class="card-body">
+          <h3>Chicken &amp; Chips</h3>
+          <p>Tender chicken pieces in our signature crispy batter with seasoned fries.</p>
+        </div>
+      </div>
+      <div class="service-card">
+        <img src="./images/section_2.jpg" alt="Family Meals" />
+        <div class="card-body">
+          <h3>Family Meals</h3>
+          <p>Complete bundles for 4 or more — bring the whole crew for a Cornwall tradition.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="container">
+    <h2 class="section-title">About Captain George's</h2>
+    <div class="about-content">
+      <p>Located in the heart of Cornwall, Ontario, Captain George's Fish &amp; Chips has been serving up the freshest, crispiest fish and chips in the region. We're a proud local restaurant dedicated to bringing families and friends together over great food. Every piece of fish is hand-battered using our family recipe, cooked to golden perfection, and served with a smile. Whether you're dining in, taking out, or feeding the whole family, we're your neighborhood spot for a true Cornwall tradition.</p>
+    </div>
+  </div>
+</section>
+
+<section class="book-call">
+  <div class="container">
+    <h2 class="section-title">Want to chat?</h2>
+    <p class="section-subtitle">Let's talk about how we can bring Captain George's online and grow your Cornwall restaurant.</p>
+    <div class="cal-embed">
+      <div class="cal-placeholder">
+        <p><strong>Cal.com Booking Widget</strong></p>
+        <p>📅 5-minute discovery call</p>
+        <button class="cta-btn" onclick="alert('Claim this website to unlock the live version'); return false;">Book a 5-min call</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Concept by SiteSprint · Demo Preview</p>
+</footer>
+<div style="position:fixed;bottom:20px;right:20px;background:rgba(255,255,255,0.95);padding:8px 16px;border-radius:4px;font-size:12px;color:#666;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+  SiteSprint Preview · Captain George's Fish & Chips Cornwall
+</div>
+</body>
+</html>
