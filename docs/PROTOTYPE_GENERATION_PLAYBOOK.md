@@ -12,6 +12,7 @@ Before generating anything, read:
 - `.agents/skills/premium-saas-design/SKILL.md` — the define→build→review→refine framework, visual thesis, composition, showcase-grade craft (repo-specific application at the end)
 - `.agents/skills/frontend-design/SKILL.md` — distinctive art direction + the self-contained HTML/CSS build contract, responsive, accessibility, and the pre-push cleanliness gate (repo-specific application at the end)
 - `.agents/skills/color-expert/SKILL.md` — palette/ramp construction and contrast when building the per-brand token system
+- `.agents/skills/frontier-web-craft/SKILL.md` — the procedural build system: pick an art direction from its menu (paste-ready tokens), copy-first workflow, section recipes, and the mechanical gate (`scripts/review_page.py`). Follow this skill's process end to end; on any conflict, the repo docs above win.
 
 These skills are vendored into the repo so every agent — local, container, or CI — has them; do not rely on machine-specific skill paths.
 
