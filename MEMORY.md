@@ -74,19 +74,16 @@ This applies to ALL future prototype generation, no exceptions.
 - Timezone: America/New_York (EDT)
 - **ALWAYS pull from remote before starting work, and push updates to remote when done** (confirmed by Mehdi 2026-07-19)
 - **ALWAYS use MiniMax M3 for prototype HTML generation** (not just write it myself)
-- **ALWAYS use relevant installed skills** (frontend, nextjs-expert, react, typescript-mastery, ia-tailwind-css) as reference for prototype code
 - **ALWAYS add target business branding** to prototypes (name, address, phone, logo treatment, color theming) so it feels like theirs, not a generic template
 
 ## Skills to Use for Prototypes
 
-When generating a prototype, always consult:
-- `frontend` skill for landing page patterns, typography, color systems, mobile-first, accessibility
-- `nextjs-expert` if building Next.js components
-- `react` for React component patterns
-- `typescripts-mastery` for TypeScript
-- `ia-tailwind-css` if using Tailwind
+When generating a prototype, always consult the **vendored in-repo skills** (not the installed OpenClaw skills):
+- `.agents/skills/premium-saas-design/SKILL.md` — the define→build→review→refine framework, visual thesis, composition, showcase-grade craft (ends with a "Seaway Sites application" section)
+- `.agents/skills/frontend-design/SKILL.md` — distinctive art direction, self-contained HTML/CSS build contract, responsive, accessibility, pre-push cleanliness gate (ends with a "Seaway Sites application" section)
+- `.agents/skills/color-expert/SKILL.md` — palette/ramp construction and contrast for per-brand token systems
 
-Read the relevant skill's SKILL.md before writing prototype code. Apply its rules (mobile-first, dramatic typography, 70-20-10 colors, one memorable element, etc.).
+Read the relevant skill's SKILL.md before writing prototype code. Apply its rules. These are vendored into the repo so every agent — local, container, or CI — has them; do not rely on machine-specific skill paths.
 
 ---
 
