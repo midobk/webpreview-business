@@ -82,6 +82,7 @@ When generating a prototype, always consult the **vendored in-repo skills** (not
 - `.agents/skills/premium-saas-design/SKILL.md` — the define→build→review→refine framework, visual thesis, composition, showcase-grade craft (ends with a "Seaway Sites application" section)
 - `.agents/skills/frontend-design/SKILL.md` — distinctive art direction, self-contained HTML/CSS build contract, responsive, accessibility, pre-push cleanliness gate (ends with a "Seaway Sites application" section)
 - `.agents/skills/color-expert/SKILL.md` — palette/ramp construction and contrast for per-brand token systems
+- `.agents/skills/frontier-web-craft/SKILL.md` — procedural build system: 8 art directions with paste-ready tokens, copy-first workflow, section recipes, mechanical quality gate (`scripts/review_page.py`). Follow end-to-end; on conflict, repo docs win. (Added via PR #12, merged 2026-07-19.)
 
 Read the relevant skill's SKILL.md before writing prototype code. Apply its rules. These are vendored into the repo so every agent — local, container, or CI — has them; do not rely on machine-specific skill paths.
 
