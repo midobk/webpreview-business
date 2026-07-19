@@ -6,6 +6,27 @@
 
 ## Critical Lessons
 
+### 2026-07-19 — Supabase is the source of truth, NOT local JSON files
+**Source:** Direct Supabase API query 2026-07-19 02:36 EDT
+
+The 7/16 daily audit reported 1460 leads / 29 prototypes / 28 outreach entries. The 7/17 audit
+"corrected" these back to 170/24/23, calling the 7/16 numbers "phantom" — because it checked
+local `data/leads.json` / `data/prototypes.json` / `data/outreach_logs.json` and found stale counts.
+
+**The 7/17 revert was WRONG.** Supabase (the actual source of truth since the data-source
+migration) has: 1419 leads, 29 prototypes (28 completed, 1 pending), 28 outreach entries
+(17 email + 11 SMS). The 7/16 audit was correct.
+
+The local JSON files are NOT the source of truth — they're a local-dev fallback. The app reads
+from Supabase when configured (and it IS configured: `ecugwkjpaoqrfheujzbs.supabase.co`).
+
+**Rules now enforced:**
+- ALWAYS check Supabase for lead/prototype/outreach counts — never trust local JSON files
+- NEVER call Supabase numbers "phantom" just because local JSON files disagree
+- The daily maintenance cron must query Supabase, not read `data/*.json`
+- `lib/data-source.ts` falls back to bundle/local JSON only when Supabase is unconfigured
+- `git reset --hard origin/main` was run 2026-07-19 to discard the bad revert commit (2da1b78)
+
 ### 2026-06-22 — Prototype Quality Incident (Craftmans Cafe)
 **Source:** docs/PROTOTYPE_QA.md
 
@@ -51,6 +72,7 @@ This applies to ALL future prototype generation, no exceptions.
 - Mehdi will investigate with the main agent why the Craftmans Cafe prototype was broken
 - Communication via Telegram
 - Timezone: America/New_York (EDT)
+- **ALWAYS pull from remote before starting work, and push updates to remote when done** (confirmed by Mehdi 2026-07-19)
 - **ALWAYS use MiniMax M3 for prototype HTML generation** (not just write it myself)
 - **ALWAYS use relevant installed skills** (frontend, nextjs-expert, react, typescript-mastery, ia-tailwind-css) as reference for prototype code
 - **ALWAYS add target business branding** to prototypes (name, address, phone, logo treatment, color theming) so it feels like theirs, not a generic template
