@@ -125,23 +125,15 @@ User flagged 4 issues. All verified against actual repo state. None were previou
   - Add a `screenshot-prototype.js` step that uses Playwright directly on the local HTML file (file:// URL — no server needed), OR
   - Wire `capture.js` into the prototype-generation cron as a second step
 
-### C4. Pricing — $49 only, no first-payment tier (BUG)
-- **Reported:** "Why am I seeing only the $49 with no 1st payment of (200-300$)??"
-- **Truth:** `app/page.tsx` lines 115-156 define `pricingTiers`:
-  - **Preview** — Free
-  - **Managed** — `$49` per month (featured)
-  - **One-time** — `$599` (no setup fee mentioned anywhere)
-- **Compared to AGENT_PLAN.md §3 ("Packages"):**
-  - Managed Starter: $299–399 CAD **+ $49/mo** (one-time setup fee + recurring)
-  - Standard: $500 one-time
-  - Full Handoff: $700–900 one-time
-- **The pricing page in `app/page.tsx` does NOT match AGENT_PLAN.md.** The plan clearly says $299–399 first payment + $49/mo, but the homepage only shows $49/mo with no setup fee and a $599 one-time alternative.
-- **Why wasn't this applied?** Because `app/page.tsx` was last polished by the 2026-06-22 07:35 EDT cron run (GLM 5.2), and that pass rewrote the marketing page based on different assumptions than what's in AGENT_PLAN.md. The two docs diverged silently.
-- **Fix needed:** Update `pricingTiers` in `app/page.tsx` to match AGENT_PLAN.md §3:
-  - Managed Starter: $299–$399 CAD setup + $49/mo (recommended)
-  - Standard: $500 one-time
-  - Full Handoff: $700–$900 one-time
-  - Plus keep Preview = Free (lead gen)
+### C4. Pricing — $49 only, no first-payment tier (RE-OPENED 2026-07-20)
+- **Originally reported (2026-06-23):** "Why am I seeing only the $49 with no 1st payment of (200-300$)??"
+- **Original truth (2026-06-23):** `app/page.tsx` lines 115-156 defined `pricingTiers`: Preview=Free, Managed=$49/mo (featured), One-time=$599.
+- **Current truth (2026-07-20):** Per MEMORY.md 7/12 note, the night-studio landing now serves `/` (components in `app/_landing/`). The current `app/_landing/content.ts` PRICING array shows: **Free Draft**=Free, **Managed Website**=$399 setup + **$69/mo** (early-client pricing, featured), **Own Your Website**=$899 paid once.
+- **Compared to AGENT_PLAN.md §3 ("Packages"):** Managed Starter: $299–399 CAD + $49/mo; Standard: $500 one-time; Full Handoff: $700–900 one-time.
+- **The pricing in `app/_landing/content.ts` does NOT match §3.** Three numbers have drifted: (a) one-time setup $299–399 → $399, (b) monthly $49 → $69 with new "early-client pricing" framing, (c) full-handoff $700–900 → $899. This is a **user-visible inconsistency on the live site**.
+- **Re-opened in AGENT_PLAN.md as J.3** (discovered 2026-07-20 by the daily plan-maintenance cron).
+- **Fix needed (user decision required):** Either (a) restore §3 numbers verbatim in `app/_landing/content.ts`, or (b) adopt the new landing numbers and update §3 to match. Until resolved, **PR #4 (`claude/landing-page-design-ixddwp`) is blocked** because its review checklist says "confirm pricing still matches §3" — which it currently does not.
+- **Why wasn't this applied originally?** Because `app/page.tsx` was last polished by the 2026-06-22 07:35 EDT cron run (GLM 5.2), and that pass rewrote the marketing page based on different assumptions than what's in AGENT_PLAN.md. The two docs diverged silently. The 7/12 landing swap moved the pricing into `app/_landing/content.ts` and the numbers drifted further.
 
 ---
 
