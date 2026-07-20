@@ -52,7 +52,7 @@ const jsonLd = {
       '@id': `${SITE_URL}/#business`,
       name: 'Seaway Sites',
       url: SITE_URL,
-      email: 'hello@seawaysites.com',
+      email: 'mehdi@seawaysites.com',
       description:
         'Personalized website drafts and managed one-page websites for Canadian small businesses.',
       areaServed: { '@type': 'Country', name: 'Canada' },

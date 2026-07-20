@@ -124,7 +124,7 @@ export interface EmailContext {
   previewBaseUrl: string;   // e.g. "https://seawaysites.com" (or NEXT_PUBLIC_SITE_URL fallback)
   screenshotBaseUrl?: string;
   senderName: string;       // e.g. "Dexter from Seaway Sites"
-  senderEmail: string;      // e.g. "hello@seawaysites.com"
+  senderEmail: string;      // e.g. "mehdi@seawaysites.com"
   unsubscribeUrl: string;   // appended to footer
   bookingUrl?: string;      // optional Cal.com / call link
 }
@@ -418,7 +418,7 @@ export interface BuildOptions {
 const DEFAULTS = {
   previewBaseUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://seawaysites.com",
   senderName: "Dexter from Seaway Sites",
-  senderEmail: process.env.OUTREACH_SENDER_EMAIL || "hello@seawaysites.com",
+  senderEmail: process.env.OUTREACH_SENDER_EMAIL || "mehdi@seawaysites.com",
 };
 
 /**

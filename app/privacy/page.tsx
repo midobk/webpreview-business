@@ -113,8 +113,8 @@ export default function PrivacyPage() {
             You may ask us to provide, correct or delete information associated with your request,
             subject to any information we must retain for legal, security or operational reasons.
             Email{' '}
-            <a href="mailto:hello@seawaysites.com" className="text-paint underline hover:text-signal">
-              hello@seawaysites.com
+            <a href="mailto:mehdi@seawaysites.com" className="text-paint underline hover:text-signal">
+              mehdi@seawaysites.com
             </a>{' '}
             with enough detail for us to identify the request.
           </p>
@@ -131,8 +131,8 @@ export default function PrivacyPage() {
         <Section title="Contact">
           <p>
             Questions or privacy requests can be sent to{' '}
-            <a href="mailto:hello@seawaysites.com" className="text-paint underline hover:text-signal">
-              hello@seawaysites.com
+            <a href="mailto:mehdi@seawaysites.com" className="text-paint underline hover:text-signal">
+              mehdi@seawaysites.com
             </a>
             .
           </p>

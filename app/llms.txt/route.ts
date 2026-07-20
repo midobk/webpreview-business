@@ -24,7 +24,7 @@ Key facts:
 - Process: business research, conversion planning, website copy, visual direction, responsive preparation, local-search structure, production checks and delivery
 - Ownership: clients always own their domain, business content, branding and customer data; source files are included with the one-time ownership plan
 - Privacy: operated by a Canadian business with privacy-conscious infrastructure; current handling details are published in the privacy policy
-- Contact: hello@seawaysites.com
+- Contact: mehdi@seawaysites.com
 - Website: ${SITE}
 
 ## Pricing (CAD)
