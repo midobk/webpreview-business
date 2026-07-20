@@ -1,22 +1,28 @@
+// Screenshot the prototype at desktop and mobile widths
 import { chromium } from 'playwright';
-const url = process.argv[2];
-const out = process.argv[3];
-const w = parseInt(process.argv[4]||'1440',10);
-const h = parseInt(process.argv[5]||'900',10);
-const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
-const ctx = await browser.newContext({ viewport: { width: w, height: h } });
-const page = await ctx.newPage();
-const errors = [];
-page.on('pageerror', e => errors.push('pageerror: '+e.message));
-page.on('console', m => { if(m.type()==='error') errors.push('console: '+m.text()); });
-const resp = await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
-await page.waitForTimeout(800);
-await page.screenshot({ path: out, fullPage: true });
-const imgs = await page.$$eval('img', els => els.map(e => ({src:e.getAttribute('src'), w:e.naturalWidth, h:e.naturalHeight})));
-const overflow = await page.evaluate(() => ({
-  scrollW: document.documentElement.scrollWidth,
-  clientW: document.documentElement.clientWidth,
-  bodyOverflow: getComputedStyle(document.body).overflow
-}));
-console.log(JSON.stringify({status:resp?.status(), imgs, overflow, errors}, null, 2));
+import path from 'path';
+import fs from 'fs';
+
+const HTML_PATH = process.argv[2] || 'data/prototypes/quilles-nativit-bowling-ad6e7e78/index.html';
+const OUT_DIR = process.argv[3] || 'prototype-screenshots';
+const SLUG = process.argv[4] || 'quilles-nativit-bowling-ad6e7e78';
+
+const browser = await chromium.launch();
+const url = 'file://' + path.resolve(HTML_PATH);
+
+const ctxD = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+const pageD = await ctxD.newPage();
+await pageD.goto(url, { waitUntil: 'networkidle' });
+await pageD.waitForTimeout(500);
+fs.mkdirSync(OUT_DIR, { recursive: true });
+await pageD.screenshot({ path: path.join(OUT_DIR, `${SLUG}-desktop.png`), fullPage: true });
+console.log(`Wrote ${SLUG}-desktop.png`);
+
+const ctxM = await browser.newContext({ viewport: { width: 390, height: 844 } });
+const pageM = await ctxM.newPage();
+await pageM.goto(url, { waitUntil: 'networkidle' });
+await pageM.waitForTimeout(500);
+await pageM.screenshot({ path: path.join(OUT_DIR, `${SLUG}-mobile.png`), fullPage: true });
+console.log(`Wrote ${SLUG}-mobile.png`);
+
 await browser.close();
