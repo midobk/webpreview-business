@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POSH NOSH Pastry Confectionery — Demo Preview</title>
+<meta name="description" content="Unofficial preview concept for POSH NOSH Pastry Confectionery — small-batch pastry in Cornwall, Ontario.">
+<meta name="robots" content="noindex,nofollow">
+<style>
+:root{
+  --flour:#faf5ec;
+  --crate:#f0e6d4;
+  --board:#27302a;
+  --board-deep:#1d2520;
+  --ink:#232620;
+  --muted:#6a6d60;
+  --accent:#b3402f;
+  --accent-deep:#8c2f22;
+  --line:rgba(35,38,32,.15);
+  --line-strong:rgba(35,38,32,.32);
+  --shadow:0 18px 46px rgba(35,38,32,.14);
+  --radius:14px;
+  --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  background:var(--flour);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.7;
+  -webkit-text-size-adjust:100%;
+  overflow-x:hidden;
+  text-rendering:optimizeLegibility;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+ul,ol{list-style:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+
+/* Demo banner */
+.demo-banner{
+  background:var(--crate);
+  color:var(--accent);
+  text-align:center;
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:14px;
+  padding:10px 16px;
+  border-bottom:1px solid var(--line);
+  letter-spacing:.01em;
+}
+.demo-banner strong{font-style:normal;font-weight:700}
+
+/* Corner watermark */
+.watermark{
+  position:fixed;
+  bottom:14px;
+  right:14px;
+  background:var(--board);
+  color:var(--flour);
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  padding:7px 12px;
+  border-radius:999px;
+  z-index:5;
+  box-shadow:0 6px 18px rgba(0,0,0,.18);
+  pointer-events:none;
+}
+
+/* Top nav */
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 20px;
+  border-bottom:1px solid var(--line);
+  background:var(--flour);
+  position:sticky;
+  top:0;
+  z-index:4;
+}
+.brand{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:18px;
+  letter-spacing:-.01em;
+  color:var(--ink);
+}
+.brand em{
+  font-style:italic;
+  color:var(--accent);
+  font-weight:400;
+}
+.nav-links{
+  display:none;
+  gap:26px;
+  font-size:13px;
+  letter-spacing:.04em;
+}
+.nav-links a{color:var(--ink);position:relative;padding:4px 0}
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-2px;
+  height:1px;
+  background:var(--accent);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .25s ease;
+}
+.nav-links a:hover::after{transform:scaleX(1)}
+@media (min-width:768px){
+  .nav{padding:20px 32px}
+  .nav-links{display:flex}
+  .brand{font-size:20px}
+}
+
+/* Hero */
+.hero{
+  padding:48px 20px 56px;
+  max-width:1180px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:36px;
+  align-items:center;
+}
+.eyebrow{
+  display:inline-block;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--accent-deep);
+  margin-bottom:18px;
+}
+h1{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:clamp(36px,8.4vw,72px);
+  line-height:1.02;
+  letter-spacing:-.02em;
+  color:var(--ink);
+  margin-bottom:18px;
+}
+h1 em{
+  font-style:italic;
+  color:var(--accent);
+  font-weight:400;
+}
+.lede{
+  font-size:18px;
+  line-height:1.55;
+  color:var(--ink);
+  max-width:36ch;
+  margin-bottom:28px;
+}
+.lede em{color:var(--accent-deep);font-style:italic}
+.cta-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:center;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:14px 22px;
+  border-radius:var(--radius);
+  font-size:14px;
+  letter-spacing:.04em;
+  font-weight:600;
+  min-height:46px;
+  border:1px solid transparent;
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+}
+.btn-primary{
+  background:var(--accent);
+  color:var(--flour);
+  box-shadow:0 6px 16px rgba(179,64,47,.28);
+}
+.btn-primary:hover{
+  background:var(--accent-deep);
+  transform:translateY(-2px);
+  box-shadow:0 10px 22px rgba(179,64,47,.34);
+}
+.btn-ghost{
+  background:transparent;
+  color:var(--ink);
+  border-color:var(--line-strong);
+}
+.btn-ghost:hover{
+  background:var(--crate);
+  transform:translateY(-2px);
+}
+.btn .arrow{font-family:var(--mono);font-size:12px;line-height:1}
+
+/* Hero image with ticket chip */
+.hero-image-wrap{
+  position:relative;
+  border-radius:var(--radius);
+  overflow:visible;
+}
+.hero-image{
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  aspect-ratio:3/2;
+  object-fit:cover;
+  width:100%;
+  background:var(--crate);
+}
+.ticket{
+  position:absolute;
+  right:-8px;
+  bottom:-18px;
+  background:var(--flour);
+  color:var(--accent-deep);
+  border:1px dashed var(--line-strong);
+  border-radius:8px;
+  padding:8px 12px;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  transform:rotate(3deg);
+  box-shadow:0 8px 18px rgba(35,38,32,.14);
+}
+.ticket::before{
+  content:"";
+  position:absolute;
+  left:-6px;
+  top:50%;
+  width:10px;
+  height:10px;
+  background:var(--flour);
+  border:1px dashed var(--line-strong);
+  border-radius:50%;
+  transform:translateY(-50%);
+}
+
+@media (min-width:900px){
+  .hero{
+    grid-template-columns:1.05fr 1fr;
+    padding:72px 32px 80px;
+    gap:56px;
+  }
+  .ticket{right:-14px;bottom:-22px}
+}
+
+/* Section base */
+.section{
+  padding:64px 20px;
+  max-width:1180px;
+  margin:0 auto;
+}
+.section.alt{background:var(--crate);max-width:none}
+.section.alt > .inner{max-width:1180px;margin:0 auto}
+.eyebrow-row{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:14px;
+}
+.eyebrow-row .dash{
+  display:inline-block;
+  width:28px;
+  height:1px;
+  background:var(--accent);
+}
+h2{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:clamp(28px,5.2vw,44px);
+  line-height:1.1;
+  letter-spacing:-.015em;
+  color:var(--ink);
+  margin-bottom:14px;
+}
+h2 em{font-style:italic;color:var(--accent);font-weight:400}
+.section-lede{
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.65;
+  max-width:58ch;
+  margin-bottom:36px;
+}
+
+/* About split */
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:28px;
+  align-items:start;
+}
+.about-image{
+  border-radius:var(--radius);
+  aspect-ratio:1/1;
+  object-fit:cover;
+  width:100%;
+  box-shadow:var(--shadow);
+  background:var(--crate);
+}
+.about-text p{
+  color:var(--ink);
+  font-size:16px;
+  line-height:1.75;
+  margin-bottom:16px;
+  max-width:48ch;
+}
+.about-stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:24px;
+}
+.stat{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--flour);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:8px 14px;
+  font-size:12px;
+  letter-spacing:.04em;
+  color:var(--ink);
+}
+.stat .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--accent);
+}
+@media (min-width:900px){
+  .about-grid{grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
+}
+
+/* Chalkboard signature */
+.board-wrap{
+  position:relative;
+  background:var(--board);
+  color:var(--flour);
+  border-radius:18px;
+  padding:36px 24px 40px;
+  box-shadow:0 30px 60px rgba(35,38,32,.32);
+  border:1px dashed rgba(242,232,218,.26);
+  margin-top:8px;
+}
+.board-wrap::before{
+  content:"";
+  position:absolute;
+  top:14px;left:14px;
+  width:10px;height:10px;
+  border:1.5px solid rgba(242,232,218,.55);
+  border-radius:50%;
+  background:transparent;
+}
+.board-wrap::after{
+  content:"";
+  position:absolute;
+  top:14px;right:14px;
+  width:10px;height:10px;
+  background:rgba(242,232,218,.85);
+  border-radius:50%;
+  box-shadow:0 0 0 4px rgba(242,232,218,.18);
+}
+.board-title{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:400;
+  font-size:18px;
+  letter-spacing:.02em;
+  text-align:center;
+  margin-bottom:6px;
+  color:rgba(242,232,218,.78);
+}
+.board-date{
+  text-align:center;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:rgba(242,232,218,.55);
+  margin-bottom:24px;
+}
+.board-rule{
+  height:1px;
+  background:rgba(242,232,218,.22);
+  margin:0 auto 22px;
+  width:64px;
+}
+.board-list{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  max-width:560px;
+  margin:0 auto;
+}
+.board-row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:baseline;
+  gap:14px;
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:clamp(18px,3.2vw,22px);
+  letter-spacing:.005em;
+  color:var(--flour);
+  padding-bottom:10px;
+  border-bottom:1px dotted rgba(242,232,218,.22);
+}
+.board-row:last-child{border-bottom:0}
+.board-row .item em{font-style:italic;color:var(--accent);font-weight:400}
+.board-row .note{
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:rgba(242,232,218,.7);
+  white-space:nowrap;
+}
+.board-foot{
+  margin-top:22px;
+  text-align:center;
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:13px;
+  color:rgba(242,232,218,.6);
+}
+@media (min-width:768px){
+  .board-wrap{padding:48px 40px 52px}
+  .board-title{font-size:20px}
+}
+
+/* Process */
+.process{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:18px;
+  margin-top:8px;
+}
+.step{
+  background:var(--flour);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:22px 20px 24px;
+  position:relative;
+  box-shadow:0 6px 18px rgba(35,38,32,.06);
+}
+.step .num{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:34px;
+  line-height:1;
+  color:var(--accent);
+  margin-bottom:8px;
+  letter-spacing:-.02em;
+}
+.step h3{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:18px;
+  margin-bottom:6px;
+  color:var(--ink);
+}
+.step p{
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.6;
+}
+@media (min-width:768px){
+  .process{grid-template-columns:repeat(3,1fr);gap:22px}
+}
+
+/* Custom orders */
+.custom-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:28px;
+  align-items:start;
+}
+.custom-card{
+  background:var(--flour);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:26px;
+  box-shadow:var(--shadow);
+}
+.custom-card h3{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:22px;
+  margin-bottom:10px;
+  color:var(--ink);
+}
+.custom-card p{
+  color:var(--muted);
+  margin-bottom:18px;
+  line-height:1.65;
+}
+.custom-card ul{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-bottom:22px;
+}
+.custom-card li{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:14px;
+  color:var(--ink);
+}
+.custom-card li svg{flex-shrink:0;margin-top:4px}
+.custom-image{
+  border-radius:var(--radius);
+  aspect-ratio:1/1;
+  object-fit:cover;
+  width:100%;
+  box-shadow:var(--shadow);
+  background:var(--crate);
+}
+@media (min-width:900px){
+  .custom-grid{grid-template-columns:1.15fr 1fr;gap:48px;align-items:center}
+}
+
+/* Visit */
+.visit{
+  text-align:center;
+  background:var(--crate);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.visit .section{padding:64px 20px}
+.visit h2{color:var(--ink)}
+.area-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  margin:8px 0 22px;
+}
+.area-chip{
+  background:var(--flour);
+  border:1px solid var(--line-strong);
+  border-radius:999px;
+  padding:8px 16px;
+  font-size:13px;
+  color:var(--ink);
+  letter-spacing:.02em;
+}
+.address{
+  display:inline-block;
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:15px;
+  color:var(--muted);
+  margin-top:10px;
+}
+
+/* Footer */
+footer.foot{
+  background:var(--board);
+  color:var(--flour);
+  padding:40px 20px 28px;
+  text-align:center;
+}
+.foot .brand-foot{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:22px;
+  margin-bottom:6px;
+}
+.foot .brand-foot em{font-style:italic;color:var(--accent);font-weight:400}
+.foot .tag{
+  font-family:var(--serif);
+  font-style:italic;
+  color:rgba(242,232,218,.7);
+  font-size:14px;
+  margin-bottom:18px;
+}
+.foot .demo-line{
+  display:inline-block;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:rgba(242,232,218,.55);
+  padding:6px 12px;
+  border:1px dashed rgba(242,232,218,.3);
+  border-radius:999px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    transition-duration:.001ms !important;
+    animation-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="demo-banner"><strong>Demo Preview</strong> — Claim this website to make it live</div>
+
+<header class="nav">
+  <a class="brand" href="#top">Posh <em>Nosh</em></a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#about">The bakery</a>
+    <a href="#board">Today's board</a>
+    <a href="#visit">Pre-order</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div>
+    <span class="eyebrow">Pastry · Confectionery · Cornwall</span>
+    <h1>Small-batch pastry, made <em>by hand</em> in Cornwall.</h1>
+    <p class="lede">French-method macarons, layered cakes, and the kind of buttery thing you save for <em>the walk home</em>.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#board" onclick="event.preventDefault();alert('This is a demo preview. Claim this website to make it live — hello@seawaysites.com');return false;">See today's batches <span class="arrow">→</span></a>
+      <a class="btn btn-ghost" href="#custom" onclick="event.preventDefault();alert('This is a demo preview. Claim this website to make it live — hello@seawaysites.com');return false;">Pre-order for pickup</a>
+    </div>
+  </div>
+  <div class="hero-image-wrap">
+    <img class="hero-image" src="./images/hero.jpg" alt="A small-batch macaron tower on linen with a folded paper tag tied in kitchen string.">
+    <span class="ticket">Batch 014 · Today</span>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="about-grid">
+    <img class="about-image" src="./images/macarons.jpg" alt="An assortment of pastel French macarons — pistachio, raspberry, lemon, chocolate — on a cream marble surface.">
+    <div class="about-text">
+      <div class="eyebrow-row"><span class="dash"></span><span class="eyebrow" style="margin-bottom:0">The bakery</span></div>
+      <h2>A short, careful <em>list of things</em>.</h2>
+      <p>We've been filling pastry boxes for Cornwall with French-method macarons, layered celebration cakes, and a short, changing list of croissants and morning buns.</p>
+      <p>Everything is mixed, piped, and finished in our small kitchen — never frozen, never mass-produced, and always tagged with the date it was baked.</p>
+      <div class="about-stats">
+        <span class="stat"><span class="dot"></span> Small batch</span>
+        <span class="stat"><span class="dot"></span> Hand-finished</span>
+        <span class="stat"><span class="dot"></span> Cornwall, ON</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="board">
+  <div class="inner">
+    <div class="eyebrow-row"><span class="dash"></span><span class="eyebrow" style="margin-bottom:0">Today's board</span></div>
+    <h2 style="text-align:center;max-width:none">What's in the window <em>this week</em>.</h2>
+    <p class="section-lede" style="text-align:center;margin-left:auto;margin-right:auto">A small list, written fresh each morning. When a batch sells out, it's gone — the next one starts the day after.</p>
+
+    <div class="board-wrap" role="region" aria-label="Today's pastry board">
+      <div class="board-title">~ on the board today ~</div>
+      <div class="board-date">This week's batches · Cornwall kitchen</div>
+      <div class="board-rule"></div>
+      <div class="board-list">
+        <div class="board-row"><span class="item">French <em>macarons</em></span><span class="note">by the half-dozen</span></div>
+        <div class="board-row"><span class="item">Almond <em>croissants</em></span><span class="note">Sat mornings</span></div>
+        <div class="board-row"><span class="item">Lemon &amp; blueberry <em>layer cake</em></span><span class="note">6" round</span></div>
+        <div class="board-row"><span class="item">Dark chocolate <em>tart</em></span><span class="note">single serve</span></div>
+        <div class="board-row"><span class="item">Brown butter <em>shortbread</em></span><span class="note">by the tin</span></div>
+      </div>
+      <div class="board-foot">— pre-order for pickup, or walk in &amp; ask what's left —</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="eyebrow-row"><span class="dash"></span><span class="eyebrow" style="margin-bottom:0">How it works</span></div>
+  <h2>Three steps, <em>one warm box</em>.</h2>
+  <p class="section-lede">A short process — pick what you want, choose a pickup window, and come by. No checkout, no accounts.</p>
+  <div class="process">
+    <div class="step">
+      <div class="num">01</div>
+      <h3>Pick your batch</h3>
+      <p>Choose from this week's board, or send a quick message about a custom box.</p>
+    </div>
+    <div class="step">
+      <div class="num">02</div>
+      <h3>Choose a pickup window</h3>
+      <p>Pick a morning or afternoon window. We confirm by text within a day.</p>
+    </div>
+    <div class="step">
+      <div class="num">03</div>
+      <h3>Collect, warm, or unwrap</h3>
+      <p>Come by the kitchen door, or have it boxed for gifting. Always baked the day of.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="custom">
+  <div class="inner">
+  <div class="custom-grid">
+    <div class="custom-card">
+      <div class="eyebrow-row"><span class="dash"></span><span class="eyebrow" style="margin-bottom:0">Custom orders</span></div>
+      <h2 style="font-size:clamp(26px,4.4vw,36px);margin-bottom:14px">Cakes, gift boxes, <em>wedding favours</em>.</h2>
+      <p>Celebration cakes, gift boxes, and small-batch favours for weddings and showers. Tell us the date, the count, and any allergies — we'll write back with a quote within a day.</p>
+      <ul>
+        <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Layer cakes, 6" and 8", in rotating flavours</li>
+        <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Macaron gift boxes, ribbon-tied</li>
+        <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Wedding &amp; shower favours, individually wrapped</li>
+        <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Allergen-friendly options on request</li>
+      </ul>
+      <a class="btn btn-primary" href="#visit" onclick="event.preventDefault();alert('This is a demo preview. Claim this website to make it live — hello@seawaysites.com');return false;">Start a custom order <span class="arrow">→</span></a>
+    </div>
+    <img class="custom-image" src="./images/cake.jpg" alt="A slice of lemon blueberry layer cake on a small ceramic plate with a linen napkin.">
+  </div>
+  </div>
+</section>
+
+<section class="section visit" id="visit">
+  <div class="eyebrow-row" style="justify-content:center"><span class="dash"></span><span class="eyebrow" style="margin-bottom:0">Visit</span></div>
+  <h2 style="text-align:center;max-width:none">Find us in <em>Cornwall</em>.</h2>
+  <p class="section-lede" style="text-align:center;margin-left:auto;margin-right:auto">Pickup at the kitchen door. Pre-order is the surest way to get what you want.</p>
+  <div class="area-chips">
+    <span class="area-chip">Cornwall</span>
+    <span class="area-chip">Long Sault</span>
+    <span class="area-chip">Ingleside</span>
+  </div>
+  <div class="address">[Address on file — call to confirm this week's hours]</div>
+  <div style="margin-top:24px">
+    <a class="btn btn-primary" href="#" onclick="event.preventDefault();alert('This is a demo preview. Claim this website to make it live — hello@seawaysites.com');return false;">Send a pre-order note <span class="arrow">→</span></a>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="brand-foot">Posh <em>Nosh</em></div>
+  <div class="tag">Pastry, by hand, in Cornwall, Ontario.</div>
+  <div class="demo-line">Demo Preview · Claim this website to make it live</div>
+</footer>
+
+<div class="watermark" aria-hidden="true">Posh Nosh Preview</div>
+
+</body>
+</html>
