@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Meridian Auto Works — Demo Preview</title>
+<meta name="description" content="Sample website concept for a local auto repair shop — diagnostics, brakes, seasonal tires. Anonymized Seaway Sites demo." />
+<meta name="robots" content="noindex,nofollow" />
+<!-- design plan · direction: Blueprint · hero: A split · nav: standard · conceit: inspection sheet · eyebrow: mono figure labels · accent: solid word · buttons: square -->
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+button, input, select { font: inherit; }
+a { color: inherit; text-decoration: none; }
+
+:root {
+  --paper: #f6f7f4;
+  --panel: #ffffff;
+  --grid: rgba(39, 73, 200, 0.07);
+  --ink: #182031;
+  --muted: #5b6472;
+  --accent: #2749c8;
+  --accent-deep: #1c3697;
+  --line: rgba(24, 32, 49, 0.14);
+  --shadow: 0 18px 44px rgba(24, 32, 49, 0.10);
+  --radius: 4px;
+  --ink-06: rgba(24, 32, 49, 0.06);
+  --paper-92: rgba(246, 247, 244, 0.92);
+  --white: #ffffff;
+  --inv-blue: #8fa3ee;
+  --inv-dim: rgba(246, 247, 244, 0.72);
+  --inv-line: rgba(246, 247, 244, 0.16);
+  --inv-faint: rgba(246, 247, 244, 0.5);
+  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 40px; --s5: 64px; --s6: 96px;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+}
+.display { font-family: system-ui, "Helvetica Neue", sans-serif; font-weight: 700; letter-spacing: -0.03em; line-height: 1.02; }
+.mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
+h1, h2, h3, p, figure, figcaption { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+.container { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
+.section { padding-block: clamp(64px, 9vw, 110px); }
+
+.fig {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent);
+}
+.section-head { max-width: 720px; margin-bottom: var(--s5); }
+.section-head h2 { margin-top: var(--s2); font-size: clamp(32px, 4.5vw, 56px); }
+.section-head h2 em { font-style: normal; color: var(--accent); }
+.section-head .lede { margin-top: var(--s2); color: var(--muted); max-width: 560px; }
+
+.btn {
+  border: 0; cursor: pointer;
+  min-height: 48px; padding: 0 26px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  border-radius: var(--radius);
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  transition: background 0.15s linear, color 0.15s linear, border-color 0.15s linear;
+}
+.btn-primary { background: var(--accent); color: var(--white); }
+.btn-primary:hover { background: var(--accent-deep); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: var(--paper); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+  }
+}
+
+/* demo lock */
+.demo-ribbon {
+  min-height: 38px; padding: 9px 20px;
+  background: var(--ink); color: rgba(255,255,255,0.85);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  text-align: center;
+}
+.demo-ribbon b { color: var(--white); font-weight: 700; }
+.watermark {
+  position: fixed; left: 14px; bottom: 14px; z-index: 60;
+  padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--paper-92); color: var(--muted);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; letter-spacing: 0.08em;
+  pointer-events: none;
+}
+
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--paper-92);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+.brand { display: flex; align-items: center; gap: 11px; }
+.brand-mark { width: 34px; height: 34px; border: 1.5px solid var(--ink); border-radius: var(--radius); display: grid; place-items: center; color: var(--accent); }
+.brand-mark svg { width: 20px; height: 20px; }
+.brand-name { font-weight: 700; letter-spacing: -0.01em; font-size: 17px; }
+.brand-sub { display: block; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+.nav-links { display: none; gap: 28px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.nav-links a { position: relative; padding: 6px 0; }
+.nav-links a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 2px; background: var(--accent); transition: right 0.15s linear; }
+.nav-links a:hover::after { right: 0; }
+.nav-cta { display: none; }
+@media (min-width: 880px) { .nav-links { display: flex; } .nav-cta { display: inline-flex; } }
+
+/* hero — archetype A on grid paper */
+.hero {
+  position: relative;
+  border-bottom: 1px solid var(--line);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  padding-block: clamp(56px, 8vw, 100px);
+}
+.hero-grid { display: grid; grid-template-columns: 1fr; gap: var(--s5); align-items: center; }
+@media (min-width: 980px) { .hero-grid { grid-template-columns: 0.95fr 1.05fr; } }
+.hero h1 { font-size: clamp(40px, 5.6vw, 72px); max-width: 13ch; margin-top: var(--s3); }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero-lede { margin-top: var(--s3); max-width: 520px; color: var(--muted); font-size: 18px; line-height: 1.65; }
+.hero-ctas { margin-top: var(--s4); display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-meta {
+  margin-top: var(--s4); padding-top: var(--s3); border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 10px var(--s4);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
+}
+.hero-meta b { color: var(--ink); font-weight: 700; }
+
+/* the annotated drawing */
+.sheet {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(20px, 3vw, 34px);
+  position: relative;
+}
+.sheet-head { display: flex; justify-content: space-between; gap: var(--s2); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 16px; }
+.sheet-head .live { color: var(--accent); }
+.sheet svg.car { width: 100%; height: auto; color: var(--ink); }
+.sheet-notes { margin-top: 14px; display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+@media (min-width: 640px) { .sheet-notes { grid-template-columns: repeat(3, 1fr); } }
+.sheet-note { background: var(--panel); padding: 12px 12px 10px; }
+.sheet-note .k { display: block; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.sheet-note .v { display: block; font-size: 13px; font-weight: 600; margin-top: 4px; }
+
+/* services */
+.services { background: var(--panel); border-bottom: 1px solid var(--line); }
+.svc-grid { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+@media (min-width: 760px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
+.svc { background: var(--paper); padding: var(--s4); transition: background 0.15s linear; }
+.svc:hover { background: var(--panel); }
+.svc .fig { margin-bottom: var(--s2); }
+.svc h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+.svc p { margin-top: 8px; color: var(--muted); font-size: 15px; line-height: 1.6; }
+.svc .spec { margin-top: 14px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; color: var(--ink); letter-spacing: 0.04em; }
+.svc .spec b { color: var(--accent); font-weight: 700; }
+
+/* process — inversion */
+.process { background: var(--ink); color: var(--paper); }
+.process .fig { color: var(--inv-blue); }
+.process .section-head h2 { color: var(--white); }
+.process .section-head h2 em { color: var(--inv-blue); }
+.process .section-head .lede { color: var(--inv-dim); }
+.steps { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--inv-line); border: 1px solid var(--inv-line); }
+@media (min-width: 760px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+.step { background: var(--ink); padding: var(--s4); }
+.step .n { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; color: var(--inv-blue); letter-spacing: 0.1em; }
+.step h3 { margin-top: 10px; font-size: 20px; color: var(--white); }
+.step p { margin-top: 8px; font-size: 14.5px; line-height: 1.6; color: var(--inv-dim); }
+
+/* hours + area */
+.info-grid { display: grid; grid-template-columns: 1fr; gap: var(--s5); }
+@media (min-width: 880px) { .info-grid { grid-template-columns: 1.1fr 0.9fr; gap: var(--s6); } }
+.hours-table { border-top: 1px solid var(--line); }
+.hrow { display: flex; justify-content: space-between; gap: var(--s2); padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.hrow .d { font-weight: 600; }
+.hrow .t { font-family: ui-monospace, "SF Mono", Menlo, monospace; color: var(--muted); }
+.area-card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--s4); box-shadow: var(--shadow); }
+.area-card h3 { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.area-card p { margin-top: var(--s2); color: var(--muted); font-size: 15px; }
+.crosshair { position: relative; margin-top: var(--s3); height: 150px; border: 1px solid var(--line); background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px); background-size: 24px 24px; }
+.crosshair::before, .crosshair::after { content: ""; position: absolute; background: var(--accent); }
+.crosshair::before { left: 50%; top: 50%; width: 34px; height: 2px; transform: translate(-50%, -50%); }
+.crosshair::after { left: 50%; top: 50%; width: 2px; height: 34px; transform: translate(-50%, -50%); }
+.crosshair span { position: absolute; left: 10px; bottom: 8px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+/* cta band */
+.cta-band { background: var(--panel); border-top: 1px solid var(--line); }
+.cta-inner { display: grid; grid-template-columns: 1fr; gap: var(--s4); align-items: center; }
+@media (min-width: 880px) { .cta-inner { grid-template-columns: 1.3fr 0.7fr; } }
+.cta-inner h2 { font-size: clamp(32px, 4.5vw, 54px); }
+.cta-inner h2 em { font-style: normal; color: var(--accent); }
+.cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (min-width: 880px) { .cta-actions { justify-content: flex-end; } }
+
+.foot { background: var(--ink); color: var(--inv-dim); padding-block: var(--s5) var(--s4); font-size: 14px; }
+.foot-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s3); }
+.foot b { color: var(--white); }
+.foot .mono { font-size: 10px; letter-spacing: 0.08em; color: var(--inv-faint); }
+
+/* claim modal */
+.claim-modal { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(24,32,49,0.55); }
+.claim-modal.open { display: flex; }
+.modal-card { width: min(500px, 100%); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 36px; text-align: center; box-shadow: 0 40px 120px rgba(0,0,0,0.4); }
+.modal-card h3 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+.modal-card p { margin: 12px auto 22px; max-width: 380px; color: var(--muted); font-size: 14.5px; }
+.modal-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+body.modal-open { overflow: hidden; }
+
+.reveal { opacity: 1; transform: none; }
+.js-on .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.js-on .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<div class="demo-ribbon">Demo preview · <b>claim this website to make it live</b> · Seaway Sites sample concept</div>
+<div class="watermark" aria-hidden="true">MERIDIAN AUTO WORKS · PREVIEW</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand" aria-label="Meridian Auto Works, home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v4M12 16.5v4M3.5 12h4M16.5 12h4"/><circle cx="12" cy="12" r="2.4"/></svg>
+      </span>
+      <span><span class="brand-name">Meridian Auto Works</span><span class="brand-sub">Cornwall · Ontario</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#services">Services</a>
+      <a href="#process">The process</a>
+      <a href="#visit">Hours</a>
+    </nav>
+    <button class="btn btn-primary nav-cta" onclick="openClaimModal()">Book an inspection</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="h1">
+    <div class="container hero-grid">
+      <div>
+        <p class="fig">FIG. 01 — THE SHOP · SERVICE BAY, CORNWALL</p>
+        <h1 id="h1" class="display">We measure <em>before</em> we wrench.</h1>
+        <p class="hero-lede">
+          Diagnostics, brakes, and seasonal tires for daily drivers. Every job starts on the
+          inspection sheet and ends with the torque printout in your hand.
+        </p>
+        <div class="hero-ctas">
+          <button class="btn btn-primary" onclick="openClaimModal()">Book an inspection</button>
+          <button class="btn btn-ghost" onclick="openClaimModal()">See the services</button>
+        </div>
+        <div class="hero-meta" role="list">
+          <span role="listitem"><b>2</b> bays</span>
+          <span role="listitem"><b>Mon–Fri</b> 8–5</span>
+          <span role="listitem"><b>Written</b> estimates</span>
+        </div>
+      </div>
+
+      <figure class="sheet reveal" aria-label="Inspection sheet diagram — sample vehicle section drawing">
+        <div class="sheet-head"><span>INSPECTION SHEET · A-A</span><span class="live">SCALE NTS</span></div>
+        <svg class="car" viewBox="0 0 560 250" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <!-- body -->
+          <path d="M60 170 L95 168 C120 128 160 108 215 106 L330 106 C385 108 425 130 455 165 L500 170 L500 190 L60 190 Z"/>
+          <path d="M150 130 C190 118 220 114 250 114 L250 152 L140 152 Z M265 114 L330 114 C355 116 378 128 396 148 L265 150 Z" stroke-width="1.2"/>
+          <!-- wheels -->
+          <circle cx="150" cy="190" r="30"/><circle cx="150" cy="190" r="12"/>
+          <circle cx="410" cy="190" r="30"/><circle cx="410" cy="190" r="12"/>
+          <!-- dimension line: wheelbase -->
+          <path d="M150 236 L410 236" stroke="#2749c8"/>
+          <path d="M150 230 L150 242 M410 230 L410 242" stroke="#2749c8"/>
+          <!-- dimension line: height -->
+          <path d="M528 106 L528 190" stroke="#2749c8"/>
+          <path d="M522 106 L534 106 M522 190 L534 190" stroke="#2749c8"/>
+          <!-- callouts -->
+          <circle cx="150" cy="152" r="3" fill="#2749c8" stroke="none"/>
+          <path d="M150 152 L120 84 L84 84" stroke="#2749c8" stroke-width="1"/>
+          <circle cx="410" cy="160" r="3" fill="#2749c8" stroke="none"/>
+          <path d="M410 160 L448 66 L484 66" stroke="#2749c8" stroke-width="1"/>
+          <circle cx="286" cy="190" r="3" fill="#2749c8" stroke="none"/>
+          <path d="M286 190 L286 62 L318 62" stroke="#2749c8" stroke-width="1"/>
+        </svg>
+        <figcaption class="sheet-notes">
+          <div class="sheet-note"><span class="k">01 · Brakes</span><span class="v">Pads · rotors · fluid</span></div>
+          <div class="sheet-note"><span class="k">02 · Diagnostics</span><span class="v">OBD-II scan · report</span></div>
+          <div class="sheet-note"><span class="k">03 · Tires</span><span class="v">Seasonal swap · storage</span></div>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section services" id="services" aria-labelledby="svc-h">
+    <div class="container">
+      <div class="section-head">
+        <p class="fig">FIG. 02 — SERVICES</p>
+        <h2 id="svc-h" class="display">Four things, done <em>to spec.</em></h2>
+        <p class="lede">A short list on purpose. What we take on, we finish the way the manual says.</p>
+      </div>
+      <div class="svc-grid">
+        <article class="svc reveal">
+          <p class="fig">SVC-01</p>
+          <h3>Brakes</h3>
+          <p>Pads, rotors, calipers, and fluid — measured, replaced, and bedded in before the keys come back.</p>
+          <p class="spec"><b>OUTPUT</b> · torque printout with every job</p>
+        </article>
+        <article class="svc reveal">
+          <p class="fig">SVC-02</p>
+          <h3>Diagnostics</h3>
+          <p>Check-engine lights read, live data logged, and the fault explained in plain words before any part is ordered.</p>
+          <p class="spec"><b>OUTPUT</b> · written finding, no jargon</p>
+        </article>
+        <article class="svc reveal">
+          <p class="fig">SVC-03</p>
+          <h3>Seasonal tires</h3>
+          <p>Mount, balance, and swap — winters on before the first freeze, and the other set stored on the rack.</p>
+          <p class="spec"><b>OUTPUT</b> · retorque reminder card</p>
+        </article>
+        <article class="svc reveal">
+          <p class="fig">SVC-04</p>
+          <h3>Oil &amp; inspection</h3>
+          <p>Oil service with the same 40-point sheet every visit, so small problems get caught while they're still small.</p>
+          <p class="spec"><b>OUTPUT</b> · the completed sheet, initialed</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section process" id="process" aria-labelledby="proc-h">
+    <div class="container">
+      <div class="section-head">
+        <p class="fig">FIG. 03 — THE PROCESS</p>
+        <h2 id="proc-h" class="display">Estimate first. <em>Always.</em></h2>
+        <p class="lede">No surprise line items. The price you approve is the price on the invoice.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><p class="n">STEP 01</p><h3>Drop off</h3><p>Book a bay, leave the keys, tell us what it's doing. Morning drop-offs are back on the road same day for most jobs.</p></div>
+        <div class="step reveal"><p class="n">STEP 02</p><h3>Approve in writing</h3><p>We send the finding and the estimate before touching a part. You approve it — or we put the car back together, no charge for looking.</p></div>
+        <div class="step reveal"><p class="n">STEP 03</p><h3>Drive out</h3><p>Work done to spec, old parts in the trunk if you want them, and the inspection sheet in the glovebox.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="visit" aria-labelledby="visit-h">
+    <div class="container info-grid">
+      <div>
+        <div class="section-head" style="margin-bottom: var(--s4);">
+          <p class="fig">FIG. 04 — HOURS</p>
+          <h2 id="visit-h" class="display">Open the hours <em>you commute.</em></h2>
+        </div>
+        <div class="hours-table">
+          <div class="hrow"><span class="d">Monday – Friday</span><span class="t">8:00 – 17:00</span></div>
+          <div class="hrow"><span class="d">Saturday</span><span class="t">By appointment</span></div>
+          <div class="hrow"><span class="d">Sunday</span><span class="t">Closed</span></div>
+        </div>
+      </div>
+      <aside class="area-card reveal" aria-label="Service area">
+        <h3>Service area</h3>
+        <p>Cornwall and the surrounding county — drop-offs from Long Sault, Ingleside, and St. Andrews are common. Early bay times go first.</p>
+        <div class="crosshair" role="img" aria-label="Stylized map placeholder with crosshair marker"><span>GRID REF · CORNWALL ON</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section cta-band" aria-labelledby="cta-h">
+    <div class="container cta-inner">
+      <h2 id="cta-h" class="display">Hear a noise? <em>Bring it in.</em></h2>
+      <div class="cta-actions">
+        <button class="btn btn-primary" onclick="openClaimModal()">Book an inspection</button>
+        <button class="btn btn-ghost" onclick="openClaimModal()">Ask a question</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="container foot-grid">
+    <div><b>Meridian Auto Works</b><br />Cornwall, Ontario</div>
+    <div>Mon–Fri 8–5 · Sat by appointment</div>
+    <div class="mono">SAMPLE CONCEPT · SEAWAY SITES DEMO · DETAILS ILLUSTRATIVE</div>
+  </div>
+</footer>
+
+<div class="claim-modal" id="claim-modal" role="dialog" aria-modal="true" aria-labelledby="claim-title" onclick="closeOnBackdrop(event)">
+  <div class="modal-card">
+    <h3 id="claim-title">This is a design preview.</h3>
+    <p>Booking, calls, and forms switch on when the business claims this website. Like the concept? Seaway Sites will make it live for the real shop.</p>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="closeClaimModal()">Got it</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.documentElement.classList.add('js-on');
+var modal = document.getElementById('claim-modal');
+function openClaimModal() { modal.classList.add('open'); document.body.classList.add('modal-open'); }
+function closeClaimModal() { modal.classList.remove('open'); document.body.classList.remove('modal-open'); }
+function closeOnBackdrop(e) { if (e.target === modal) closeClaimModal(); }
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeClaimModal(); });
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en, i) {
+      if (en.isIntersecting) { setTimeout(function () { en.target.classList.add('in'); }, (i % 4) * 80); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+</body>
+</html>

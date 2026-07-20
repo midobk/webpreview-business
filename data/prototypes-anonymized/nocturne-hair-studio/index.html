@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nocturne Hair Studio — Demo Preview</title>
+<meta name="description" content="Sample website concept for a local hair salon — cuts, colour, and evening appointments. Anonymized Seaway Sites demo." />
+<meta name="robots" content="noindex,nofollow" />
+<!-- design plan · direction: Midnight Counter · hero: C typographic · nav: minimal · conceit: appointment book · eyebrow: plain tracked caps · accent: italic amber em · buttons: stamped border -->
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+button, input, select { font: inherit; }
+a { color: inherit; text-decoration: none; }
+
+:root {
+  --char: #171310;
+  --char-lift: #211b17;
+  --cream: #f2e8da;
+  --cream-dim: rgba(242, 232, 218, 0.66);
+  --cream-faint: rgba(242, 232, 218, 0.4);
+  --accent: #d9a441;
+  --accent-deep: #b3822a;
+  --brass: rgba(217, 164, 65, 0.34);
+  --line: rgba(242, 232, 218, 0.14);
+  --shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  --radius: 10px;
+  --char-92: rgba(23, 19, 16, 0.92);
+  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 40px; --s5: 64px; --s6: 96px;
+}
+
+body {
+  background: var(--char);
+  color: var(--cream);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16.5px;
+  line-height: 1.7;
+}
+.display {
+  font-family: Didot, "Bodoni 72", Georgia, "Iowan Old Style", serif;
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+}
+h1, h2, h3, p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+.container { width: min(1080px, calc(100% - 48px)); margin-inline: auto; }
+.section { padding-block: clamp(72px, 10vw, 130px); }
+
+.eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); }
+.section-head { max-width: 660px; margin-bottom: var(--s5); }
+.section-head h2 { margin-top: var(--s2); font-size: clamp(32px, 4.6vw, 56px); color: var(--cream); }
+.section-head h2 em { color: var(--accent); }
+.section-head .lede { margin-top: var(--s2); color: var(--cream-dim); max-width: 520px; font-size: 16px; }
+
+.btn {
+  cursor: pointer;
+  min-height: 48px; padding: 0 26px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  background: transparent; color: var(--cream);
+  border: 2px solid var(--brass); border-radius: var(--radius);
+  font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+}
+.btn:hover { background: var(--accent); border-color: var(--accent); color: var(--char); }
+.btn-solid { background: var(--accent); border-color: var(--accent); color: var(--char); }
+.btn-solid:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: var(--char); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+  }
+}
+
+.demo-ribbon {
+  min-height: 38px; padding: 9px 20px;
+  background: var(--accent); color: var(--char);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; text-align: center;
+}
+.watermark {
+  position: fixed; left: 14px; bottom: 14px; z-index: 60;
+  padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--char-92); color: var(--cream-faint);
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  pointer-events: none;
+}
+
+/* minimal nav */
+.nav { position: sticky; top: 0; z-index: 50; background: var(--char-92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.nav-inner { min-height: 70px; display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+.brand { font-family: Didot, "Bodoni 72", Georgia, serif; font-size: 21px; letter-spacing: 0.01em; }
+.brand i { color: var(--accent); font-style: italic; }
+.brand small { display: block; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cream-faint); margin-top: 3px; }
+
+/* hero — typographic */
+.hero { position: relative; overflow: hidden; padding-block: clamp(64px, 9vw, 110px) clamp(48px, 7vw, 90px); border-bottom: 1px solid var(--line); }
+.hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 28% 18%, rgba(217, 164, 65, 0.13), transparent 58%);
+}
+.hero-inner { position: relative; }
+.hero h1 { font-size: clamp(52px, 9.5vw, 118px); max-width: 11ch; color: var(--cream); }
+.hero h1 em { color: var(--accent); }
+.hero-rule { width: 64px; height: 1px; background: var(--brass); margin: var(--s4) 0; }
+.hero-lede { max-width: 480px; color: var(--cream-dim); font-size: 17px; }
+.hero-ctas { margin-top: var(--s4); display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-meta { margin-top: var(--s5); display: flex; flex-wrap: wrap; gap: 8px var(--s4); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--cream-faint); }
+.hero-meta b { color: var(--cream); font-weight: 600; }
+
+/* the book — appointment-book signature */
+.book { background: var(--char-lift); border-bottom: 1px solid var(--line); }
+.book-card {
+  max-width: 720px; margin-inline: auto;
+  border: 1px solid var(--brass); border-radius: var(--radius);
+  padding: clamp(28px, 5vw, 56px);
+  background: var(--char);
+  box-shadow: var(--shadow);
+}
+.book-head { text-align: center; margin-bottom: var(--s4); }
+.book-head .eyebrow { letter-spacing: 0.3em; }
+.book-head h2 { margin-top: 10px; font-size: clamp(30px, 4vw, 44px); }
+.book-head p { margin-top: 8px; color: var(--cream-faint); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
+.book-group { margin-top: var(--s4); }
+.book-group:first-of-type { margin-top: 0; }
+.book-group h3 { font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: var(--s2); }
+.line-item { display: flex; align-items: baseline; gap: 10px; padding: 9px 0; }
+.line-item .name { font-family: Didot, "Bodoni 72", Georgia, serif; font-size: 19px; color: var(--cream); }
+.line-item .dots { flex: 1; border-bottom: 1px dotted var(--brass); transform: translateY(-4px); }
+.line-item .price { font-variant-numeric: tabular-nums; font-size: 13px; letter-spacing: 0.1em; color: var(--accent); }
+.line-item .note { display: block; font-size: 12.5px; color: var(--cream-faint); margin-top: 2px; }
+.book-foot { margin-top: var(--s4); padding-top: var(--s3); border-top: 1px solid var(--line); text-align: center; color: var(--cream-faint); font-size: 13px; }
+
+/* evening ritual */
+.ritual-grid { display: grid; grid-template-columns: 1fr; gap: var(--s5); }
+@media (min-width: 880px) { .ritual-grid { grid-template-columns: repeat(3, 1fr); gap: var(--s4); } }
+.rit { border-top: 1px solid var(--brass); padding-top: var(--s3); }
+.rit .n { font-family: Didot, "Bodoni 72", Georgia, serif; font-style: italic; color: var(--accent); font-size: 15px; }
+.rit h3 { margin-top: 8px; font-family: Didot, "Bodoni 72", Georgia, serif; font-weight: 400; font-size: 23px; }
+.rit p { margin-top: 8px; color: var(--cream-dim); font-size: 14.5px; line-height: 1.65; }
+
+/* about */
+.about { background: var(--char-lift); border-block: 1px solid var(--line); }
+.about-grid { display: grid; grid-template-columns: 1fr; gap: var(--s4); }
+@media (min-width: 880px) { .about-grid { grid-template-columns: 1.2fr 0.8fr; gap: var(--s6); align-items: center; } }
+.about-text p { color: var(--cream-dim); margin-bottom: var(--s3); max-width: 54ch; }
+.about-text p:last-child { margin-bottom: 0; }
+.about-pull {
+  font-family: Didot, "Bodoni 72", Georgia, serif; font-style: italic;
+  font-size: clamp(24px, 3vw, 34px); line-height: 1.25; color: var(--cream);
+  border-left: 1px solid var(--brass); padding-left: var(--s3);
+}
+.about-pull em { color: var(--accent); }
+
+/* hours */
+.hours-wrap { display: grid; grid-template-columns: 1fr; gap: var(--s5); }
+@media (min-width: 880px) { .hours-wrap { grid-template-columns: 1fr 1fr; gap: var(--s6); } }
+.hrow { display: flex; justify-content: space-between; gap: var(--s2); padding: 11px 0; border-bottom: 1px dotted var(--brass); font-size: 15px; }
+.hrow .d { color: var(--cream); }
+.hrow .t { color: var(--cream-dim); font-variant-numeric: tabular-nums; }
+.hrow.late .t { color: var(--accent); }
+.visit-note { color: var(--cream-dim); font-size: 15px; max-width: 44ch; }
+.visit-note b { color: var(--cream); font-weight: 600; }
+
+/* cta */
+.cta { text-align: center; }
+.cta h2 { font-size: clamp(36px, 5.5vw, 64px); max-width: 16ch; margin-inline: auto; }
+.cta h2 em { color: var(--accent); }
+.cta .hero-ctas { justify-content: center; }
+
+.foot { border-top: 1px solid var(--line); padding-block: var(--s4); font-size: 13px; color: var(--cream-faint); }
+.foot-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s3); }
+.foot b { color: var(--cream); font-weight: 600; }
+.foot .fine { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; }
+
+.claim-modal { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,0.6); }
+.claim-modal.open { display: flex; }
+.modal-card { width: min(480px, 100%); background: var(--char-lift); border: 1px solid var(--brass); border-radius: var(--radius); padding: 38px; text-align: center; box-shadow: var(--shadow); }
+.modal-card h3 { font-family: Didot, "Bodoni 72", Georgia, serif; font-weight: 400; font-size: 28px; color: var(--cream); }
+.modal-card p { margin: 12px auto 22px; max-width: 360px; color: var(--cream-dim); font-size: 14px; }
+body.modal-open { overflow: hidden; }
+
+.reveal { opacity: 1; transform: none; }
+.js-on .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.js-on .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<div class="demo-ribbon">Demo preview · claim this website to make it live · Seaway Sites sample concept</div>
+<div class="watermark" aria-hidden="true">Nocturne Studio · Preview</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand" aria-label="Nocturne Hair Studio, home">Nocturne <i>Hair Studio</i><small>Downtown Cornwall</small></a>
+    <button class="btn btn-solid" onclick="openClaimModal()">Book a chair</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="h1">
+    <div class="container hero-inner">
+      <p class="eyebrow">Cuts · Colour · Evenings</p>
+      <h1 class="display" id="h1" style="margin-top: 18px;">the last <em>appointment</em> of the day.</h1>
+      <div class="hero-rule" aria-hidden="true"></div>
+      <p class="hero-lede">
+        A small salon that keeps the late chairs open — cut, colour, and a blowout after work,
+        with the good mirror by the window and nobody rushing you out.
+      </p>
+      <div class="hero-ctas">
+        <button class="btn btn-solid" onclick="openClaimModal()">Book a chair</button>
+        <button class="btn" onclick="openClaimModal()">See the book</button>
+      </div>
+      <div class="hero-meta" role="list">
+        <span role="listitem"><b>Tue–Sat</b></span>
+        <span role="listitem">Late chairs <b>Thu &amp; Fri</b></span>
+        <span role="listitem"><b>Three</b> stylists</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section book" id="book" aria-labelledby="book-h">
+    <div class="container">
+      <div class="book-card reveal">
+        <div class="book-head">
+          <p class="eyebrow">The appointment book</p>
+          <h2 class="display" id="book-h">This week's pages</h2>
+          <p>Sample services · demo pricing shown on the live site</p>
+        </div>
+        <div class="book-group">
+          <h3>Cut &amp; finish</h3>
+          <div class="line-item"><span class="name">The signature cut</span><span class="dots" aria-hidden="true"></span><span class="price">45 MIN</span></div>
+          <div class="line-item"><span class="name">Wash, cut &amp; blowout</span><span class="dots" aria-hidden="true"></span><span class="price">75 MIN</span></div>
+          <div class="line-item"><span class="name">Fringe between visits</span><span class="dots" aria-hidden="true"></span><span class="price">15 MIN</span></div>
+        </div>
+        <div class="book-group">
+          <h3>Colour</h3>
+          <div class="line-item"><span class="name">Gloss &amp; tone</span><span class="dots" aria-hidden="true"></span><span class="price">60 MIN</span></div>
+          <div class="line-item"><span class="name">Balayage, full<span class="note">Includes toner and the quiet hour under the lamp.</span></span><span class="dots" aria-hidden="true"></span><span class="price">3 HRS</span></div>
+          <div class="line-item"><span class="name">Root retouch</span><span class="dots" aria-hidden="true"></span><span class="price">90 MIN</span></div>
+        </div>
+        <div class="book-foot">Consultations are always free and always honest — if your hair needs a different plan, we say so.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="ritual" aria-labelledby="rit-h">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">The visit</p>
+        <h2 class="display" id="rit-h">Unhurried, <em>on purpose.</em></h2>
+      </div>
+      <div class="ritual-grid">
+        <div class="rit reveal"><p class="n">i.</p><h3>The consult</h3><p>Ten minutes before any water runs — photos welcome, honesty guaranteed, and the plan agreed before the gown goes on.</p></div>
+        <div class="rit reveal"><p class="n">ii.</p><h3>The chair</h3><p>One client per stylist, start to finish. Your colour isn't processing while somebody else gets a cut.</p></div>
+        <div class="rit reveal"><p class="n">iii.</p><h3>The finish</h3><p>Styled the way you'll actually wear it, with the products named so you can do it again at home — or not, and come back Friday.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section about" aria-labelledby="about-h">
+    <div class="container about-grid">
+      <div class="about-text">
+        <p class="eyebrow" style="margin-bottom: 18px;">The room</p>
+        <h2 class="display" id="about-h" style="font-size: clamp(30px, 4.2vw, 50px); margin-bottom: 22px;">Three chairs, <em>low light,</em> good records on.</h2>
+        <p>Nocturne is a three-chair studio downtown — brick wall, warm lamps, and the kind of playlist you ask about. Evenings are the house specialty: the last appointments start at seven, so a workday doesn't cost you your hair.</p>
+        <p>Walk-ins get honest answers about the wait. Regulars get their stylist's book a season ahead.</p>
+      </div>
+      <p class="about-pull reveal">The good mirror is the one <em>by the window.</em></p>
+    </div>
+  </section>
+
+  <section class="section" id="hours" aria-labelledby="hours-h">
+    <div class="container hours-wrap">
+      <div>
+        <div class="section-head" style="margin-bottom: var(--s4);">
+          <p class="eyebrow">Hours</p>
+          <h2 class="display" id="hours-h">Late where <em>it counts.</em></h2>
+        </div>
+        <div class="hrow"><span class="d">Tuesday – Wednesday</span><span class="t">10:00 – 18:00</span></div>
+        <div class="hrow late"><span class="d">Thursday – Friday</span><span class="t">10:00 – 21:00</span></div>
+        <div class="hrow"><span class="d">Saturday</span><span class="t">9:00 – 16:00</span></div>
+        <div class="hrow"><span class="d">Sunday – Monday</span><span class="t">Closed</span></div>
+      </div>
+      <div>
+        <div class="section-head" style="margin-bottom: var(--s4);">
+          <p class="eyebrow">Finding us</p>
+          <h2 class="display" style="font-size: clamp(28px, 3.6vw, 42px);">Downtown, <em>up the stairs.</em></h2>
+        </div>
+        <p class="visit-note">
+          Second floor, downtown Cornwall — the doorway between the café and the bookshop,
+          <b>the one with the brass number.</b> Street parking is easy after six, which is
+          exactly when the late chairs start.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta" aria-labelledby="cta-h">
+    <div class="container">
+      <p class="eyebrow">This week</p>
+      <h2 class="display" id="cta-h" style="margin-top: 16px;">Thursday's late chairs <em>go first.</em></h2>
+      <div class="hero-ctas" style="margin-top: 34px;">
+        <button class="btn btn-solid" onclick="openClaimModal()">Book a chair</button>
+        <button class="btn" onclick="openClaimModal()">Ask about colour</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="container foot-grid">
+    <div><b>Nocturne Hair Studio</b> · Downtown Cornwall, Ontario</div>
+    <div>Tue–Sat · Late chairs Thu &amp; Fri</div>
+    <div class="fine">Sample concept · Seaway Sites demo · details illustrative</div>
+  </div>
+</footer>
+
+<div class="claim-modal" id="claim-modal" role="dialog" aria-modal="true" aria-labelledby="claim-title" onclick="closeOnBackdrop(event)">
+  <div class="modal-card">
+    <h3 id="claim-title">This is a design preview.</h3>
+    <p>Booking turns on when the salon claims this website. Like the concept? Seaway Sites will make it live for the real studio.</p>
+    <div><button class="btn btn-solid" onclick="closeClaimModal()">Got it</button></div>
+  </div>
+</div>
+
+<script>
+document.documentElement.classList.add('js-on');
+var modal = document.getElementById('claim-modal');
+function openClaimModal() { modal.classList.add('open'); document.body.classList.add('modal-open'); }
+function closeClaimModal() { modal.classList.remove('open'); document.body.classList.remove('modal-open'); }
+function closeOnBackdrop(e) { if (e.target === modal) closeClaimModal(); }
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeClaimModal(); });
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en, i) {
+      if (en.isIntersecting) { setTimeout(function () { en.target.classList.add('in'); }, (i % 3) * 90); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+})();
+</script>
+
+</body>
+</html>
