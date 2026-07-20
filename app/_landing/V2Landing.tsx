@@ -778,7 +778,7 @@ export default function V2Landing() {
             <span className="v2-mono text-[9px] text-[var(--v2-cream-faint)]">this page is our own preview</span>
           </div>
           <nav className="flex items-center gap-6 text-sm text-[var(--v2-cream-dim)]" aria-label="Footer">
-            <a href="mailto:hello@seawaysites.com" className="transition-colors hover:text-[var(--v2-cream)]">Contact</a>
+            <a href="mailto:mehdi@seawaysites.com" className="transition-colors hover:text-[var(--v2-cream)]">Contact</a>
             <a href="/showcase" className="transition-colors hover:text-[var(--v2-cream)]">Showcase</a>
             <a href="/privacy" className="transition-colors hover:text-[var(--v2-cream)]">Privacy</a>
           </nav>

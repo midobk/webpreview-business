@@ -6,6 +6,27 @@
 
 ## Critical Lessons
 
+### 2026-07-19 — Supabase is the source of truth, NOT local JSON files
+**Source:** Direct Supabase API query 2026-07-19 02:36 EDT
+
+The 7/16 daily audit reported 1460 leads / 29 prototypes / 28 outreach entries. The 7/17 audit
+"corrected" these back to 170/24/23, calling the 7/16 numbers "phantom" — because it checked
+local `data/leads.json` / `data/prototypes.json` / `data/outreach_logs.json` and found stale counts.
+
+**The 7/17 revert was WRONG.** Supabase (the actual source of truth since the data-source
+migration) has: 1419 leads, 29 prototypes (28 completed, 1 pending), 28 outreach entries
+(17 email + 11 SMS). The 7/16 audit was correct.
+
+The local JSON files are NOT the source of truth — they're a local-dev fallback. The app reads
+from Supabase when configured (and it IS configured: `ecugwkjpaoqrfheujzbs.supabase.co`).
+
+**Rules now enforced:**
+- ALWAYS check Supabase for lead/prototype/outreach counts — never trust local JSON files
+- NEVER call Supabase numbers "phantom" just because local JSON files disagree
+- The daily maintenance cron must query Supabase, not read `data/*.json`
+- `lib/data-source.ts` falls back to bundle/local JSON only when Supabase is unconfigured
+- `git reset --hard origin/main` was run 2026-07-19 to discard the bad revert commit (2da1b78)
+
 ### 2026-06-22 — Prototype Quality Incident (Craftmans Cafe)
 **Source:** docs/PROTOTYPE_QA.md
 
@@ -51,20 +72,19 @@ This applies to ALL future prototype generation, no exceptions.
 - Mehdi will investigate with the main agent why the Craftmans Cafe prototype was broken
 - Communication via Telegram
 - Timezone: America/New_York (EDT)
+- **ALWAYS pull from remote before starting work, and push updates to remote when done** (confirmed by Mehdi 2026-07-19)
 - **ALWAYS use MiniMax M3 for prototype HTML generation** (not just write it myself)
-- **ALWAYS use relevant installed skills** (frontend, nextjs-expert, react, typescript-mastery, ia-tailwind-css) as reference for prototype code
 - **ALWAYS add target business branding** to prototypes (name, address, phone, logo treatment, color theming) so it feels like theirs, not a generic template
 
 ## Skills to Use for Prototypes
 
-When generating a prototype, always consult:
-- `frontend` skill for landing page patterns, typography, color systems, mobile-first, accessibility
-- `nextjs-expert` if building Next.js components
-- `react` for React component patterns
-- `typescripts-mastery` for TypeScript
-- `ia-tailwind-css` if using Tailwind
+When generating a prototype, always consult the **vendored in-repo skills** (not the installed OpenClaw skills):
+- `.agents/skills/premium-saas-design/SKILL.md` — the define→build→review→refine framework, visual thesis, composition, showcase-grade craft (ends with a "Seaway Sites application" section)
+- `.agents/skills/frontend-design/SKILL.md` — distinctive art direction, self-contained HTML/CSS build contract, responsive, accessibility, pre-push cleanliness gate (ends with a "Seaway Sites application" section)
+- `.agents/skills/color-expert/SKILL.md` — palette/ramp construction and contrast for per-brand token systems
+- `.agents/skills/frontier-web-craft/SKILL.md` — procedural build system: 8 art directions with paste-ready tokens, copy-first workflow, section recipes, mechanical quality gate (`scripts/review_page.py`). Follow end-to-end; on conflict, repo docs win. (Added via PR #12, merged 2026-07-19.)
 
-Read the relevant skill's SKILL.md before writing prototype code. Apply its rules (mobile-first, dramatic typography, 70-20-10 colors, one memorable element, etc.).
+Read the relevant skill's SKILL.md before writing prototype code. Apply its rules. These are vendored into the repo so every agent — local, container, or CI — has them; do not rely on machine-specific skill paths.
 
 ---
 
@@ -105,23 +125,15 @@ User flagged 4 issues. All verified against actual repo state. None were previou
   - Add a `screenshot-prototype.js` step that uses Playwright directly on the local HTML file (file:// URL — no server needed), OR
   - Wire `capture.js` into the prototype-generation cron as a second step
 
-### C4. Pricing — $49 only, no first-payment tier (BUG)
-- **Reported:** "Why am I seeing only the $49 with no 1st payment of (200-300$)??"
-- **Truth:** `app/page.tsx` lines 115-156 define `pricingTiers`:
-  - **Preview** — Free
-  - **Managed** — `$49` per month (featured)
-  - **One-time** — `$599` (no setup fee mentioned anywhere)
-- **Compared to AGENT_PLAN.md §3 ("Packages"):**
-  - Managed Starter: $299–399 CAD **+ $49/mo** (one-time setup fee + recurring)
-  - Standard: $500 one-time
-  - Full Handoff: $700–900 one-time
-- **The pricing page in `app/page.tsx` does NOT match AGENT_PLAN.md.** The plan clearly says $299–399 first payment + $49/mo, but the homepage only shows $49/mo with no setup fee and a $599 one-time alternative.
-- **Why wasn't this applied?** Because `app/page.tsx` was last polished by the 2026-06-22 07:35 EDT cron run (GLM 5.2), and that pass rewrote the marketing page based on different assumptions than what's in AGENT_PLAN.md. The two docs diverged silently.
-- **Fix needed:** Update `pricingTiers` in `app/page.tsx` to match AGENT_PLAN.md §3:
-  - Managed Starter: $299–$399 CAD setup + $49/mo (recommended)
-  - Standard: $500 one-time
-  - Full Handoff: $700–$900 one-time
-  - Plus keep Preview = Free (lead gen)
+### C4. Pricing — $49 only, no first-payment tier (RE-OPENED 2026-07-20)
+- **Originally reported (2026-06-23):** "Why am I seeing only the $49 with no 1st payment of (200-300$)??"
+- **Original truth (2026-06-23):** `app/page.tsx` lines 115-156 defined `pricingTiers`: Preview=Free, Managed=$49/mo (featured), One-time=$599.
+- **Current truth (2026-07-20):** Per MEMORY.md 7/12 note, the night-studio landing now serves `/` (components in `app/_landing/`). The current `app/_landing/content.ts` PRICING array shows: **Free Draft**=Free, **Managed Website**=$399 setup + **$69/mo** (early-client pricing, featured), **Own Your Website**=$899 paid once.
+- **Compared to AGENT_PLAN.md §3 ("Packages"):** Managed Starter: $299–399 CAD + $49/mo; Standard: $500 one-time; Full Handoff: $700–900 one-time.
+- **The pricing in `app/_landing/content.ts` does NOT match §3.** Three numbers have drifted: (a) one-time setup $299–399 → $399, (b) monthly $49 → $69 with new "early-client pricing" framing, (c) full-handoff $700–900 → $899. This is a **user-visible inconsistency on the live site**.
+- **Re-opened in AGENT_PLAN.md as J.3** (discovered 2026-07-20 by the daily plan-maintenance cron).
+- **Fix needed (user decision required):** Either (a) restore §3 numbers verbatim in `app/_landing/content.ts`, or (b) adopt the new landing numbers and update §3 to match. Until resolved, **PR #4 (`claude/landing-page-design-ixddwp`) is blocked** because its review checklist says "confirm pricing still matches §3" — which it currently does not.
+- **Why wasn't this applied originally?** Because `app/page.tsx` was last polished by the 2026-06-22 07:35 EDT cron run (GLM 5.2), and that pass rewrote the marketing page based on different assumptions than what's in AGENT_PLAN.md. The two docs diverged silently. The 7/12 landing swap moved the pricing into `app/_landing/content.ts` and the numbers drifted further.
 
 ---
 
@@ -145,5 +157,5 @@ User flagged 4 issues. All verified against actual repo state. None were previou
 | Google Places API | ❌ Needs billing account |
 | Domain registration | ❌ Not yet done |
 | Telnyx SMS | ❌ Needs API key in env |
-| Vercel deploy | ✅ Live at webpreview-business.vercel.app |
+| Vercel deploy | ✅ Live at seawaysites.com |
 | GitHub repo | ✅ midobk/webpreview-business |

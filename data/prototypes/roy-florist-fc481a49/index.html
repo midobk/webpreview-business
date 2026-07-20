@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roy Florist — Demo Preview</title>
+  <meta name="description" content="Demo preview for Roy Florist — hand-tied bouquets, wedding florals, sympathy and event arrangements.">
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    :root {
+      --paper: #f7f2ec;
+      --paper-deep: #eee4da;
+      --white: #fffdfb;
+      --ink: #181513;
+      --espresso: #2b211d;
+      --accent: #743c48;
+      --accent-deep: #572832;
+      --rose: #c89083;
+      --gold: #b9935f;
+      --muted: #675a53;
+      --line: rgba(24, 21, 19, 0.14);
+      --shadow: 0 28px 80px rgba(43, 33, 29, 0.15);
+      --radius-s: 12px;
+      --radius-m: 20px;
+      --radius-arch: 190px 190px 24px 24px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    button, input, select { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+
+    .container { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
+
+    /* Type */
+    .display, h1, h2, h3 {
+      font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+      font-weight: 400;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      margin: 0;
+    }
+    h1 { font-size: clamp(44px, 6vw, 88px); }
+    h2 { font-size: clamp(34px, 4.5vw, 60px); }
+    h3 { font-size: clamp(20px, 2.4vw, 24px); letter-spacing: -0.02em; }
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-deep);
+      margin: 0 0 16px;
+    }
+    .lede {
+      font-size: clamp(17px, 1.6vw, 19px);
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 60ch;
+      margin: 16px 0 0;
+    }
+    em { color: var(--accent); font-style: italic; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 24px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 250ms ease, box-shadow 250ms ease, background 250ms ease;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      box-shadow: 0 10px 24px rgba(116, 60, 72, 0.28);
+    }
+    .btn-primary:hover { transform: translateY(-2px); background: var(--accent-deep); box-shadow: 0 16px 32px rgba(116, 60, 72, 0.35); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--line);
+    }
+    .btn-ghost:hover { background: var(--white); border-color: var(--ink); }
+    .btn-dark {
+      background: var(--paper);
+      color: var(--espresso);
+    }
+    .btn-dark:hover { background: var(--white); }
+
+    /* Section rhythm */
+    section { padding-block: clamp(64px, 9vw, 120px); position: relative; }
+    .section-head { margin-bottom: 48px; }
+    .section-head .lede { margin-top: 16px; }
+
+    /* Demo banner */
+    .demo-banner {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--espresso);
+      color: var(--paper);
+      text-align: center;
+      padding: 10px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .demo-banner span { color: var(--rose); }
+
+    /* Nav */
+    nav.site {
+      position: sticky;
+      top: 36px;
+      z-index: 50;
+      background: rgba(247, 242, 236, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .wordmark {
+      font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .wordmark em { color: var(--accent); font-style: italic; }
+    .nav-links {
+      display: none;
+      gap: 32px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      position: relative;
+      cursor: pointer;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: -6px;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 250ms ease;
+    }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta { display: inline-flex; }
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+    }
+
+    /* Hero */
+    .hero { padding-top: clamp(80px, 12vw, 140px); padding-bottom: 0; }
+    .hero-grid {
+      display: grid;
+      gap: 48px;
+      grid-template-columns: 1fr;
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      .hero-grid { grid-template-columns: 1.05fr 1fr; gap: 72px; }
+    }
+    .hero-copy { position: relative; }
+    .ghost-monogram {
+      position: absolute;
+      top: -40px;
+      left: -12px;
+      font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+      font-style: italic;
+      font-size: clamp(180px, 22vw, 320px);
+      color: var(--accent);
+      opacity: 0.13;
+      pointer-events: none;
+      line-height: 0.8;
+      z-index: 0;
+    }
+    .hero-copy > * { position: relative; z-index: 1; }
+    .hero h1 { margin-top: 8px; }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .hero-portrait {
+      position: relative;
+      isolation: isolate;
+    }
+    .arch-frame {
+      position: relative;
+      border-radius: var(--radius-arch);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      aspect-ratio: 4 / 5;
+      background: var(--paper-deep);
+    }
+    .arch-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+    }
+    .arch-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 54%, rgba(24,21,19,0.45));
+      pointer-events: none;
+    }
+    .polaroid {
+      position: absolute;
+      bottom: -28px;
+      left: -24px;
+      width: 38%;
+      aspect-ratio: 1 / 1;
+      background: var(--white);
+      padding: 8px 8px 28px;
+      box-shadow: var(--shadow);
+      transform: rotate(-3deg);
+      border-radius: 4px;
+      display: none;
+    }
+    .polaroid img { width: 100%; height: calc(100% - 20px); object-fit: cover; object-position: center; border-radius: 2px; }
+    @media (min-width: 1024px) { .polaroid { display: block; } }
+
+    /* Services */
+    .services { background: var(--paper-deep); }
+    .services-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px) { .services-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .services-grid { grid-template-columns: repeat(4, 1fr); } }
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-m);
+      padding: 32px 28px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .service-card .num {
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+    }
+    .service-card h3 { color: var(--ink); }
+    .service-card p { color: var(--muted); margin: 0; font-size: 15px; line-height: 1.6; }
+
+    /* Featured work */
+    .featured-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) { .featured-grid { grid-template-columns: 1fr 1fr; gap: 32px; } }
+    .featured {
+      position: relative;
+      border-radius: var(--radius-m);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      aspect-ratio: 4 / 3;
+      background: var(--paper-deep);
+    }
+    .featured img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .featured .caption {
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      color: var(--paper);
+      font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+      font-size: clamp(22px, 2.4vw, 28px);
+      letter-spacing: -0.02em;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.35);
+    }
+    .featured::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(24,21,19,0.55));
+      pointer-events: none;
+    }
+
+    /* Process (dark inversion) */
+    .process {
+      background: var(--espresso);
+      color: var(--paper);
+    }
+    .process .eyebrow { color: var(--rose); }
+    .process h2 { color: var(--paper); }
+    .process .lede { color: rgba(247, 242, 236, 0.7); }
+    .steps {
+      display: grid;
+      gap: 0;
+      grid-template-columns: 1fr;
+      border-top: 3px solid var(--paper);
+    }
+    @media (min-width: 768px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+    .step {
+      padding: 32px 0 24px;
+      border-bottom: 1px solid rgba(247, 242, 236, 0.18);
+    }
+    @media (min-width: 768px) { .step { border-bottom: none; border-right: 1px solid rgba(247, 242, 236, 0.18); padding: 32px 28px 24px 0; } .step:last-child { border-right: none; padding-right: 0; } .step:not(:first-child) { padding-left: 28px; } }
+    .step .numeral {
+      font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+      font-size: 96px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--paper);
+      margin: 0 0 24px;
+    }
+    .step h3 { color: var(--paper); margin: 0 0 12px; }
+    .step p { color: rgba(247, 242, 236, 0.72); margin: 0 0 16px; font-size: 15px; line-height: 1.7; }
+    .step .tag {
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rose);
+    }
+
+    /* Seasonal */
+    .seasonal { background: var(--paper); }
+    .seasonal-inner {
+      display: grid;
+      gap: 32px;
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+    @media (min-width: 768px) { .seasonal-inner { grid-template-columns: 1fr 1.4fr; gap: 64px; } }
+    .seasonal p { color: var(--ink); margin: 0 0 16px; font-size: 17px; line-height: 1.75; }
+    .seasonal .bloom-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .seasonal .chip {
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-deep);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: var(--white);
+    }
+
+    /* Visit */
+    .visit { background: var(--paper-deep); }
+    .visit-grid {
+      display: grid;
+      gap: 32px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) { .visit-grid { grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: start; } }
+    .visit dl { margin: 24px 0 0; display: grid; grid-template-columns: 1fr; gap: 16px; }
+    .visit dt {
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-deep);
+      margin: 0 0 4px;
+    }
+    .visit dd { margin: 0 0 12px; color: var(--ink); font-size: 16px; }
+    .visit-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-m);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+    .visit-card .eyebrow { margin-bottom: 12px; }
+    .visit-card p { margin: 0 0 24px; color: var(--muted); }
+
+    /* Footer */
+    footer {
+      background: var(--espresso);
+      color: rgba(247, 242, 236, 0.7);
+      padding-block: 48px;
+    }
+    .foot-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    @media (min-width: 768px) {
+      .foot-inner { flex-direction: row; align-items: center; justify-content: space-between; }
+    }
+    footer .wordmark { color: var(--paper); }
+    footer .legal { font-size: 12px; letter-spacing: 0.04em; }
+    footer .social {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--paper);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    footer .social svg { width: 16px; height: 16px; }
+
+    /* Soft corner watermark */
+    .corner-watermark {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 90;
+      background: rgba(24,21,19,0.86);
+      color: var(--paper);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      pointer-events: none;
+    }
+
+    /* Focus styles */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Demo banner (fixed) -->
+  <div class="demo-banner" role="status" aria-live="polite">
+    Demo Preview — <span>Claim this website to make it live</span>
+  </div>
+
+  <!-- Nav -->
+  <nav class="site" aria-label="Primary">
+    <div class="container nav-inner">
+      <a class="wordmark" href="#" onclick="alert('Claim this website to make it live.');return false;" aria-disabled="true">Roy <em>Florist</em></a>
+      <ul class="nav-links">
+        <li><a href="#" onclick="alert('Claim this website to make it live.');return false;" aria-disabled="true">Order</a></li>
+        <li><a href="#" onclick="alert('Claim this website to make it live.');return false;" aria-disabled="true">Visit</a></li>
+        <li><a href="#" onclick="alert('Claim this website to make it live.');return false;" aria-disabled="true">Contact</a></li>
+      </ul>
+      <a class="btn btn-primary nav-cta" href="#" onclick="alert('Claim this website to make it live.');return false;" aria-disabled="true">View</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="ghost-monogram" aria-hidden="true">R</span>
+        <p class="eyebrow">Boutique Florist</p>
+        <h1>Hand-tied stems, <em>slow Saturdays</em>, and the right flower for the moment.</h1>
+        <p class="lede">A small shop arranging seasonal blooms for everyday gifting, weddings, and the quieter occasions — built around what is in the cooler that morning.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#" onclick="alert('Claim this website to make it live.');return false;" aria-disabled="true">Order a bouquet</a>
+          <a class="btn btn-ghost" href="#" onclick="alert('Claim this website to make it live.');return false;" aria-disabled="true">Plan a wedding</a>
+        </div>
+      </div>
+      <div class="hero-portrait">
+        <div class="arch-frame">
+          <img src="./images/hero.jpg" alt="A hand-tied bouquet of peonies and garden roses on a dark wood counter in a soft-lit florist shop.">
+        </div>
+        <div class="polaroid" aria-hidden="true">
+          <img src="./images/bridal.jpg" alt="">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">What we make</p>
+        <h2>Four kinds of <em>arrangements</em>, one quiet counter.</h2>
+        <p class="lede">Every order is built around what came in from the market that week. The list below is what we are most often asked to make.</p>
+      </div>
+      <div class="services-grid">
+        <article class="service-card">
+          <span class="num">STEM — 01</span>
+          <h3>Everyday bouquets</h3>
+          <p>Hand-tied bunches for birthdays, thank-yous, anniversaries, and the ordinary Wednesdays that deserve flowers.</p>
+        </article>
+        <article class="service-card">
+          <span class="num">STEM — 02</span>
+          <h3>Wedding florals</h3>
+          <p>Bridal bouquets, buttonholes, ceremony arches, and table arrangements designed around the season and the dress.</p>
+        </article>
+        <article class="service-card">
+          <span class="num">STEM — 03</span>
+          <h3>Sympathy &amp; tribute</h3>
+          <p>Quiet, considered arrangements for services, casket pieces, and the homes that need something gentle to look at.</p>
+        </article>
+        <article class="service-card">
+          <span class="num">STEM — 04</span>
+          <h3>Event florals</h3>
+          <p>Installations and table florals for launches, dinners, brand sets, and the events that need more than one vase.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured work -->
+  <section class="featured-section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">From the bench</p>
+        <h2>Recent <em>work</em>.</h2>
+        <p class="lede">A look at two arrangements from this season — one for a wedding, one for a service.</p>
+      </div>
+      <div class="featured-grid">
+        <figure class="featured">
+          <img src="./images/bridal.jpg" alt="A bridal-style bouquet of blush roses, white ranunculus, eucalyptus, and dusty miller on a kraft paper surface.">
+          <figcaption class="caption">Wedding florals</figcaption>
+        </figure>
+        <figure class="featured">
+          <img src="./images/sympathy.jpg" alt="A sympathy arrangement of white lilies, soft hydrangea, and eucalyptus in a cream ceramic vessel on draped linen.">
+          <figcaption class="caption">Sympathy &amp; tribute</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process (dark inversion) -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">How an order works</p>
+        <h2>Three steps, <em>no surprises</em>.</h2>
+        <p class="lede">From the first message to the handoff — here is what to expect when you order.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <p class="numeral">01</p>
+          <p class="tag">BATCH — ORDER</p>
+          <h3>Tell us about the occasion</h3>
+          <p>Drop a note with the date, the recipient, the feeling you want, and a budget. We will come back with what is in season and what fits.</p>
+        </div>
+        <div class="step">
+          <p class="numeral">02</p>
+          <p class="tag">BATCH — ARRANGE</p>
+          <h3>We build around the day</h3>
+          <p>For weddings and events we sketch the palette, source the stems, and confirm the count a week out. For everyday orders, we work with what walked in that morning.</p>
+        </div>
+        <div class="step">
+          <p class="numeral">03</p>
+          <p class="tag">BATCH — HANDOFF</p>
+          <h3>Pick up or delivered</h3>
+          <p>Pick up from the shop, or have it delivered in water. Wedding and event work is delivered and set up on the day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Seasonal -->
+  <section class="seasonal">
+    <div class="container seasonal-inner">
+      <div>
+        <p class="eyebrow">Seasonal note</p>
+        <h2 style="margin-top:8px;">What is <em>in</em> right now.</h2>
+      </div>
+      <div>
+        <p>The cooler changes with the week, and so does the work on the counter. Right now the stems we are reaching for are the ones that hold up in the heat and the ones that photograph at golden hour — peonies, garden roses, ranunculus, eucalyptus, dusty miller, soft hydrangea. If you have a colour or a feeling in mind, say so and we will work around what is freshest.</p>
+        <div class="bloom-row" aria-label="Seasonal stems">
+          <span class="chip">Peonies</span>
+          <span class="chip">Garden roses</span>
+          <span class="chip">Ranunculus</span>
+          <span class="chip">Eucalyptus</span>
+          <span class="chip">Dusty miller</span>
+          <span class="chip">Hydrangea</span>
+          <span class="chip">Sweet pea</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visit -->
+  <section class="visit" id="visit">
+    <div class="container visit-grid">
+      <div>
+        <p class="eyebrow">Visit the shop</p>
+        <h2 style="margin-top:8px;">Come in and <em>browse</em> the cooler.</h2>
+        <p class="lede">Walk in for a same-day bunch, or book ahead for weddings and events. Bring a swatch, a dress photo, or just an idea — we will work from there.</p>
+        <dl>
+          <div>
+            <dt>Address</dt>
+            <dd>[ Address shared on launch ]</dd>
+          </div>
+          <div>
+            <dt>Hours</dt>
+            <dd>[ Hours shared on launch ]</dd>
+          </div>
+          <div>
+            <dt>Phone</dt>
+            <dd>[ Number shared on launch ]</dd>
+          </div>
+        </dl>
+      </div>
+      <aside class="visit-card">
+        <p class="eyebrow">Plan a visit</p>
+        <h3>Have something in mind?</h3>
+        <p>Drop a note with the date, the occasion, and a rough idea of what you want. We will come back the same day with what we can do.</p>
+        <a class="btn btn-primary" href="#" onclick="alert('Claim this website to make it live.');return false;" aria-disabled="true">Plan a visit</a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot-inner">
+      <span class="wordmark">Roy <em style="color:var(--rose);">Florist</em></span>
+      <span class="legal">© 2026 Roy Florist — Demo concept by Seaway Sites</span>
+      <a class="social" href="#" onclick="alert('Claim this website to make it live.');return false;" aria-disabled="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+        Instagram
+      </a>
+    </div>
+  </footer>
+
+  <!-- Soft corner watermark -->
+  <div class="corner-watermark" aria-hidden="true">Roy Florist · Demo Preview</div>
+
+</body>
+</html>

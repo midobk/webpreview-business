@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quilles Nativité Bowling — Demo Preview</title>
+  <meta name="description" content="Unofficial preview concept for Quilles Nativité Bowling — a family bowling centre in Canada.">
+  <meta name="robots" content="noindex,nofollow">
+</head>
+<body>
+<style>
+  :root{
+    --court:#f4f2ec;
+    --panel:#ffffff;
+    --navy:#14204a;
+    --navy-deep:#0c1430;
+    --ink:#131a33;
+    --muted:#59607a;
+    --accent:#d81f2a;
+    --accent-deep:#a8141e;
+    --line:rgba(19,26,51,.15);
+    --shadow:0 22px 55px rgba(12,20,48,.16);
+    --radius:8px;
+    --display:"Avenir Next Condensed","Arial Narrow",system-ui,sans-serif;
+    --body:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--court);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  body{overflow-x:hidden}
+  img{max-width:100%;display:block;height:auto}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer;border:0;background:none}
+  h1,h2,h3{font-family:var(--display);font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:.01em;line-height:.95;color:var(--navy)}
+  .eyebrow{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:600}
+  .mono{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+  .container{width:100%;max-width:1180px;margin:0 auto;padding:0 20px}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+  /* Demo banner */
+  .demo-banner{background:var(--navy);color:var(--court);text-align:center;padding:10px 16px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+
+  /* Nav */
+  .nav{background:var(--court);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:1180px;margin:0 auto;gap:12px}
+  .wordmark{font-family:var(--display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:22px;letter-spacing:.02em;color:var(--navy);line-height:1}
+  .nav-ctas{display:flex;gap:8px;align-items:center}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:12px 18px;font-family:var(--display);font-weight:700;font-style:italic;text-transform:uppercase;letter-spacing:.04em;font-size:14px;border-radius:var(--radius);transition:transform .12s ease,background .12s ease,color .12s ease}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:var(--shadow)}
+  .btn-primary:hover{background:var(--accent-deep);transform:translateY(-1px)}
+  .btn-ghost{background:transparent;color:var(--navy);border:1.5px solid var(--navy)}
+  .btn-ghost:hover{background:var(--navy);color:var(--court)}
+  .btn-lg{padding:16px 26px;font-size:16px;min-height:52px}
+
+  /* Hero */
+  .hero{position:relative;background:var(--navy);color:var(--court);overflow:hidden;padding:48px 0 0}
+  .hero-grid{display:grid;grid-template-columns:1fr;gap:0;align-items:stretch}
+  .hero-text{padding:24px 20px 40px;position:relative;z-index:2}
+  .hero h1{font-size:clamp(56px,16vw,110px);color:#fff;margin:14px 0 18px;letter-spacing:-.01em}
+  .hero h1 em{color:var(--accent);font-style:italic}
+  .hero-lede{font-size:17px;line-height:1.6;color:#dfe2ef;max-width:36ch;margin-bottom:24px}
+  .hero-cta{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+  .hero-est{margin-top:22px;color:#b8bfd6}
+  .hero-image{position:relative;min-height:280px;background:#1a2553}
+  .hero-image img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;filter:contrast(1.05) saturate(.85)}
+  .hero-image::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,32,74,.55) 0%,rgba(20,32,74,.25) 60%,rgba(20,32,74,.7) 100%)}
+  .hero-chevron{height:14px;background:repeating-linear-gradient(45deg,var(--accent) 0 12px,transparent 12px 28px)}
+
+  /* Diagonal band — signature */
+  .diagonal-band{position:relative;background:var(--navy);color:var(--court);padding:22px 0;transform:skewY(-2deg);margin:0 -10px;z-index:5}
+  .diagonal-inner{transform:skewY(2deg);overflow:hidden;white-space:nowrap}
+  .ticker{display:inline-flex;gap:48px;animation:ticker 22s linear infinite;padding-left:24px}
+  .ticker-item{display:inline-flex;align-items:center;gap:14px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+  .ticker-item .num{color:transparent;-webkit-text-stroke:1.2px var(--court);font-weight:700;font-size:18px;letter-spacing:0}
+  .ticker-item .dot{color:var(--accent);font-size:18px;line-height:1}
+  @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* Section common */
+  section{position:relative}
+  .section-pad{padding:64px 0}
+  .chevron-strip{height:10px;background:repeating-linear-gradient(45deg,var(--accent) 0 10px,transparent 10px 22px)}
+  h2{font-size:clamp(36px,9vw,64px);margin-bottom:18px}
+  h2 em{color:var(--accent);font-style:italic}
+  .lede{font-size:17px;line-height:1.7;color:var(--ink);max-width:48ch}
+  .muted{color:var(--muted)}
+
+  /* Lanes */
+  .lanes{background:var(--court);position:relative;clip-path:polygon(0 0,100% 0,100% calc(100% - 28px),0 100%)}
+  .lanes-head{margin-bottom:32px}
+  .lanes-grid{display:grid;grid-template-columns:1fr;gap:18px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px}
+  .card h3{font-size:26px;line-height:1}
+  .card p{color:var(--ink);font-size:15.5px}
+  .pill{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--court);border:1px solid var(--line);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);font-weight:600;align-self:flex-start}
+  .pill.red{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .card-foot{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:auto;padding-top:8px;border-top:1px dashed var(--line)}
+
+  /* Parties */
+  .parties{background:var(--panel)}
+  .parties-grid{display:grid;grid-template-columns:1fr;gap:28px;align-items:center}
+  .parties-img{position:relative;aspect-ratio:1/1;border-radius:var(--radius);overflow:hidden;background:#1a2553;box-shadow:var(--shadow)}
+  .parties-img img{width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(.85)}
+  .parties-img::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(216,31,42,.45) 0%,rgba(20,32,74,.35) 100%)}
+  .included{list-style:none;margin:18px 0 24px;display:grid;gap:10px}
+  .included li{display:flex;align-items:center;gap:12px;font-size:15.5px;color:var(--ink)}
+  .included li::before{content:"";width:14px;height:14px;flex:none;background:var(--accent);clip-path:polygon(0 50%,40% 90%,100% 10%,90% 0,40% 65%,10% 30%)}
+
+  /* Craft */
+  .craft{background:var(--navy);color:var(--court);position:relative}
+  .craft h2{color:#fff}
+  .craft h2 em{color:var(--accent)}
+  .craft .lede{color:#cfd4e3}
+  .craft-grid{display:grid;grid-template-columns:1fr;gap:28px;align-items:center}
+  .craft-img{position:relative;aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;background:#0c1430;box-shadow:var(--shadow)}
+  .craft-img img{width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(.85)}
+  .craft-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,32,74,.25),rgba(20,32,74,.55))}
+  .craft-points{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+  .craft-point{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);padding:14px}
+  .craft-point .mono{color:var(--accent)}
+  .craft-point p{font-size:14px;line-height:1.5;color:#cfd4e3;margin-top:4px}
+
+  /* Visit */
+  .visit{background:var(--court)}
+  .visit-grid{display:grid;grid-template-columns:1fr;gap:22px}
+  .visit-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+  .visit-card h3{font-size:22px;margin-bottom:8px}
+  .visit-card p{color:var(--ink);font-size:15.5px}
+  .visit-card .mono{color:var(--accent);display:block;margin-bottom:6px}
+
+  /* Footer */
+  footer{background:var(--navy-deep);color:var(--court);padding:36px 0 28px;margin-top:0}
+  .foot-grid{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+  .foot-brand{font-family:var(--display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:20px;letter-spacing:.02em}
+  .foot-claim{display:inline-block;color:var(--accent);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--accent);padding-bottom:2px}
+  .foot-claim:hover{color:#fff;border-color:#fff}
+  .foot-meta{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#8a92ad}
+
+  /* Scroll reveal */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* Responsive */
+  @media (min-width:768px){
+    .container{padding:0 32px}
+    .nav-inner{padding:18px 32px}
+    .wordmark{font-size:26px}
+    .hero{padding:64px 0 0}
+    .hero-grid{grid-template-columns:1.05fr 1fr;min-height:520px}
+    .hero-text{padding:48px 32px 64px}
+    .hero h1{font-size:clamp(64px,8vw,96px)}
+    .hero-image{min-height:520px}
+    .hero-cta{flex-direction:row;align-items:center}
+    .lanes-grid{grid-template-columns:repeat(2,1fr);gap:22px}
+    .parties-grid{grid-template-columns:1fr 1.05fr;gap:48px}
+    .craft-grid{grid-template-columns:1.05fr 1fr;gap:48px}
+    .craft-points{grid-template-columns:repeat(2,1fr)}
+    .visit-grid{grid-template-columns:repeat(2,1fr)}
+    .foot-grid{flex-direction:row;justify-content:space-between;align-items:center}
+  }
+  @media (min-width:1024px){
+    .hero-grid{grid-template-columns:1.1fr 1fr;min-height:600px}
+    .hero-text{padding:80px 40px 96px}
+    .hero h1{font-size:108px}
+    .lanes-grid{grid-template-columns:repeat(4,1fr)}
+    .section-pad{padding:96px 0}
+    .parties-grid{grid-template-columns:1fr 1.1fr;gap:64px}
+    .craft-grid{grid-template-columns:1.1fr 1fr;gap:64px}
+    .visit-grid{grid-template-columns:repeat(4,1fr)}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+    .reveal{opacity:1;transform:none}
+    .ticker{animation:none}
+  }
+</style>
+
+<div class="demo-banner" role="status" aria-live="polite">Demo Preview — Claim this website to make it live</div>
+
+<header class="nav" role="banner">
+  <div class="nav-inner">
+    <a href="#" class="wordmark" aria-label="Quilles Nativité Bowling home">Quilles Nativité</a>
+    <div class="nav-ctas">
+      <a href="#parties" class="btn btn-ghost" onclick="alert('Claim this website to make it live'); return false;">Parties</a>
+      <a href="#book" class="btn btn-primary" onclick="alert('Claim this website to make it live'); return false;">Book a lane</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-grid container">
+      <div class="hero-text">
+        <span class="eyebrow">Open Bowling · Lanes · Cosmic · League</span>
+        <h1 id="hero-title">Knock it<br/><em>down.</em></h1>
+        <p class="hero-lede">Family lanes. Cosmic nights. Open bowling every day at Quilles Nativité — your local Canadian bowling centre.</p>
+        <div class="hero-cta">
+          <a href="#book" id="book" class="btn btn-primary btn-lg" onclick="alert('Claim this website to make it live'); return false;">Book a lane</a>
+          <a href="#parties" class="btn btn-ghost btn-lg" onclick="alert('Claim this website to make it live'); return false;">Plan a birthday party</a>
+        </div>
+        <p class="mono hero-est">Est. Nativité · Family-run centre</p>
+      </div>
+      <div class="hero-image" aria-hidden="false">
+        <img src="./images/hero.jpg" alt="A bowling lane at Quilles Nativité with pins set and warm overhead lights ready for a frame." />
+      </div>
+    </div>
+    <div class="hero-chevron" aria-hidden="true"></div>
+  </section>
+
+  <section class="diagonal-band" aria-label="Lane offerings marquee">
+    <div class="diagonal-inner">
+      <div class="ticker" aria-hidden="true">
+        <span class="ticker-item"><span class="num">01</span> Open Bowling</span>
+        <span class="ticker-item"><span class="dot">◆</span><span class="num">02</span> Cosmic Nights</span>
+        <span class="ticker-item"><span class="dot">◆</span><span class="num">03</span> Leagues</span>
+        <span class="ticker-item"><span class="dot">◆</span><span class="num">04</span> Birthday Parties</span>
+        <span class="ticker-item"><span class="dot">◆</span><span class="num">01</span> Open Bowling</span>
+        <span class="ticker-item"><span class="dot">◆</span><span class="num">02</span> Cosmic Nights</span>
+        <span class="ticker-item"><span class="dot">◆</span><span class="num">03</span> Leagues</span>
+        <span class="ticker-item"><span class="dot">◆</span><span class="num">04</span> Birthday Parties</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="lanes section-pad" aria-labelledby="lanes-title">
+    <div class="chevron-strip" aria-hidden="true"></div>
+    <div class="container" style="padding-top:36px">
+      <div class="lanes-head">
+        <span class="eyebrow">On the lanes</span>
+        <h2 id="lanes-title">Pick your<br/><em>game.</em></h2>
+        <p class="lede" style="margin-top:14px">Open lanes by the hour, weekend cosmic sessions, kids bumper lanes, and a full league calendar. Shoes on. Game on.</p>
+      </div>
+
+      <div class="lanes-grid">
+        <article class="card reveal">
+          <span class="pill">Open Lane</span>
+          <h3>Open Bowling</h3>
+          <p>Walk in, grab a lane, roll at your own pace. Perfect for families, first dates, and anyone who just wants to throw a few frames.</p>
+          <div class="card-foot">By the hour · All skill levels</div>
+        </article>
+
+        <article class="card reveal">
+          <span class="pill red">Cosmic</span>
+          <h3>Cosmic Nights</h3>
+          <p>Black lights, music, glowing pins. Our weekend cosmic sessions turn the alley into a late-night hang.</p>
+          <div class="card-foot">Weekend evenings</div>
+        </article>
+
+        <article class="card reveal">
+          <span class="pill">League</span>
+          <h3>Leagues</h3>
+          <p>Year-round leagues for adults, juniors, and mixed teams. Consistent schedules, automatic scoring, and a proper community.</p>
+          <div class="card-foot">Inquiries encouraged</div>
+        </article>
+
+        <article class="card reveal">
+          <span class="pill">Kids</span>
+          <h3>Kids Bumper Lanes</h3>
+          <p>Light balls, raised bumpers, and ramps available so the little ones can knock 'em down every time. Shoe rental on site.</p>
+          <div class="card-foot">Family-friendly</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="parties section-pad" id="parties" aria-labelledby="parties-title">
+    <div class="container">
+      <div class="parties-grid">
+        <div class="parties-img reveal">
+          <img src="./images/balls.jpg" alt="A row of coloured bowling balls lined up on the rack at the start of a lane." />
+        </div>
+        <div class="reveal">
+          <span class="eyebrow">Birthdays</span>
+          <h2 id="parties-title">Throw a<br/><em>better birthday.</em></h2>
+          <p class="lede" style="margin-top:14px">Reserve a block of lanes for your group. We handle the setup so the only thing you plan is the cake.</p>
+          <ul class="included" aria-label="What's included with a birthday party">
+            <li>Lane time reserved for your group</li>
+            <li>Bumpers and ramps for younger bowlers</li>
+            <li>Shoe rental included for the party</li>
+            <li>Access to our snack bar between frames</li>
+          </ul>
+          <a href="#book" class="btn btn-primary btn-lg" onclick="alert('Claim this website to make it live'); return false;">Plan a birthday party</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="craft section-pad" aria-labelledby="craft-title">
+    <div class="container">
+      <div class="craft-grid">
+        <div class="reveal">
+          <span class="eyebrow" style="color:var(--accent)">Behind the lanes</span>
+          <h2 id="craft-title">A local alley,<br/><em>not a chain.</em></h2>
+          <p class="lede" style="margin-top:14px">Quilles Nativité has been a family-run bowling centre since the late 1970s. Same lanes. New scoring. Real people running the desk.</p>
+          <p class="lede" style="margin-top:12px">Whether it's your first frame or your thousandth, our team is here to set you up, sort the shoes, and keep the snack bar open.</p>
+          <div class="craft-points">
+            <div class="craft-point">
+              <span class="mono">Since 70s</span>
+              <p>Original lanes, well-loved and re-finished.</p>
+            </div>
+            <div class="craft-point">
+              <span class="mono">Auto scoring</span>
+              <p>Modern screens at every lane, no paper math.</p>
+            </div>
+            <div class="craft-point">
+              <span class="mono">Snack bar</span>
+              <p>Snacks, drinks, and the classics between frames.</p>
+            </div>
+            <div class="craft-point">
+              <span class="mono">Family-run</span>
+              <p>Local owners, local bowlers, local hang.</p>
+            </div>
+          </div>
+        </div>
+        <div class="craft-img reveal">
+          <img src="./images/pins.jpg" alt="A fresh set of ten bowling pins standing at the end of a polished wooden lane." />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="visit section-pad" aria-labelledby="visit-title">
+    <div class="container">
+      <div class="lanes-head" style="margin-bottom:28px">
+        <span class="eyebrow">Plan a visit</span>
+        <h2 id="visit-title">Roll in<br/><em>any day.</em></h2>
+        <p class="lede" style="margin-top:14px">Open seven days a week. Walk-ins welcome. Leagues and parties by arrangement.</p>
+      </div>
+      <div class="visit-grid">
+        <div class="visit-card reveal">
+          <span class="mono">Open seven days</span>
+          <h3>Walk in, play</h3>
+          <p>No reservation needed for open bowling. Lanes are first come, first served — earlier is easier.</p>
+        </div>
+        <div class="visit-card reveal">
+          <span class="mono">Family-friendly</span>
+          <h3>All ages welcome</h3>
+          <p>Bumpers, ramps, and kid-sized balls. The whole family can bowl together on the same lane.</p>
+        </div>
+        <div class="visit-card reveal">
+          <span class="mono">League inquiries</span>
+          <h3>Join a league</h3>
+          <p>Openings for adult, junior, and mixed teams. Get in touch and we'll match you with a roster.</p>
+        </div>
+        <div class="visit-card reveal">
+          <span class="mono">Group bookings</span>
+          <h3>Parties & events</h3>
+          <p>Birthdays, team outings, and end-of-season nights. Reserve a block of lanes and we'll set up.</p>
+        </div>
+      </div>
+      <div style="margin-top:32px;display:flex;flex-wrap:wrap;gap:12px">
+        <a href="#book" class="btn btn-primary btn-lg" onclick="alert('Claim this website to make it live'); return false;">Book a lane</a>
+        <a href="#parties" class="btn btn-ghost btn-lg" onclick="alert('Claim this website to make it live'); return false;">Plan a birthday party</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer role="contentinfo">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Quilles Nativité</div>
+        <p class="foot-meta" style="margin-top:6px">Concept by Seaway Sites</p>
+      </div>
+      <a href="#" class="foot-claim" onclick="alert('Claim this website to make it live'); return false;">Claim this website</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal — gentle, no library
+  (function(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){
+      els.forEach(function(e){e.classList.add('in')});
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.classList.add('in');
+          io.unobserve(en.target);
+        }
+      });
+    },{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(e){io.observe(e)});
+  })();
+</script>
+</body>
+</html>

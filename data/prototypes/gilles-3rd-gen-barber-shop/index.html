@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gilles' 3rd Gen Barber Shop — Demo Preview</title>
+  <meta name="description" content="Unofficial preview concept for Gilles' 3rd Gen Barber Shop — a barber in Cornwall, Ontario.">
+  <meta name="robots" content="noindex,nofollow">
+  <style>*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+:root {
+  --char: #171310;
+  --char-lift: #211b17;
+  --cream: #f2e8da;
+  --cream-dim: rgba(242,232,218,0.66);
+  --accent: #d9a441;
+  --accent-deep: #b3822a;
+  --brass: rgba(217,164,65,0.34);
+  --line: rgba(242,232,218,0.14);
+}
+body{
+  background: radial-gradient(ellipse at 30% 20%, rgba(217,164,65,.10), transparent 60%), var(--char);
+  color: var(--cream);
+  font-family: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration: 0.001ms !important; transition-duration: 0.001ms !important}
+}
+</style>
+</head>
+<body>
+<style>
+  :root{
+    --char:#171310;
+    --char-lift:#211b17;
+    --char-2:#0e0b09;
+    --cream:#f2e8da;
+    --cream-dim:rgba(242,232,218,.66);
+    --cream-faint:rgba(242,232,218,.38);
+    --accent:#d9a441;
+    --accent-deep:#b3822a;
+    --brass:rgba(217,164,65,.34);
+    --brass-soft:rgba(217,164,65,.16);
+    --line:1px solid var(--brass);
+    --line-faint:1px solid rgba(217,164,65,.14);
+    --maxw:1180px;
+    --pad:1.25rem;
+    --rad:2px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--char);color:var(--cream);-webkit-font-smoothing:antialiased}
+  body{
+    font:16px/1.7 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-variant-numeric:tabular-nums;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(217,164,65,.06), transparent 60%),
+      radial-gradient(900px 500px at 0% 100%, rgba(217,164,65,.04), transparent 60%),
+      var(--char);
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;height:auto}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:.01em;line-height:1.15}
+  h1{font-size:clamp(2.1rem,7vw,3.6rem);color:var(--cream)}
+  h2{font-size:clamp(1.5rem,3.6vw,2.1rem);color:var(--cream)}
+  h3{font-family:Georgia,serif;font-weight:400;font-size:1.05rem;letter-spacing:.04em;color:var(--cream)}
+  em{font-style:italic;color:var(--accent)}
+  p{color:var(--cream-dim)}
+  small{color:var(--cream-faint);font-size:.82rem;letter-spacing:.04em}
+  hr.brass{height:1px;background:linear-gradient(90deg,transparent,var(--brass),transparent);border:0;margin:0}
+
+  /* Layout */
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+  section{padding:4.5rem 0;position:relative}
+  section + section{border-top:var(--line-faint)}
+
+  /* Demo banner */
+  .demo-banner{
+    display:block;width:100%;
+    background:linear-gradient(90deg,#3a2a10,#5a3f15 50%,#3a2a10);
+    color:var(--cream);
+    text-align:center;
+    padding:.65rem 1rem;
+    font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;
+    border-bottom:1px solid rgba(217,164,65,.45);
+  }
+  .demo-banner b{color:var(--accent);font-weight:500}
+
+  /* Nav */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(23,19,16,.86);
+    backdrop-filter:saturate(140%) blur(8px);
+    -webkit-backdrop-filter:saturate(140%) blur(8px);
+    border-bottom:var(--line-faint);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem var(--pad);max-width:var(--maxw);margin:0 auto}
+  .wordmark{
+    font-family:Georgia,serif;font-weight:400;font-size:1.15rem;
+    letter-spacing:.02em;color:var(--cream);
+    display:inline-flex;align-items:baseline;gap:.35rem;
+  }
+  .wordmark .gn{color:var(--accent);font-style:italic}
+  .wordmark small{font-family:ui-sans-serif,system-ui,sans-serif;font-size:.7rem;color:var(--cream-faint);letter-spacing:.18em;text-transform:uppercase;margin-left:.4rem}
+  .nav-cta{
+    display:inline-flex;align-items:center;gap:.5rem;
+    min-height:44px;padding:.55rem 1rem;
+    border:1px solid var(--accent);color:var(--accent);
+    font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;
+    border-radius:var(--rad);
+    transition:background .2s ease,color .2s ease,border-color .2s ease;
+  }
+  .nav-cta:hover,.nav-cta:focus-visible{background:var(--accent);color:var(--char);border-color:var(--accent)}
+  .nav-cta::after{content:"";width:6px;height:6px;border-top:1px solid currentColor;border-right:1px solid currentColor;transform:rotate(45deg);margin-left:.1rem}
+
+  /* Buttons */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+    min-height:52px;padding:1rem 1.6rem;
+    font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;
+    border-radius:var(--rad);
+    transition:transform .15s ease,background .2s ease,color .2s ease,border-color .2s ease,box-shadow .2s ease;
+  }
+  .btn-primary{background:var(--accent);color:var(--char);border:1px solid var(--accent);box-shadow:0 0 0 0 var(--brass-soft)}
+  .btn-primary:hover,.btn-primary:focus-visible{background:var(--accent-deep);border-color:var(--accent-deep);box-shadow:0 0 0 6px var(--brass-soft)}
+  .btn-ghost{background:transparent;color:var(--cream);border:1px solid var(--brass)}
+  .btn-ghost:hover,.btn-ghost:focus-visible{background:var(--char-lift);border-color:var(--accent);color:var(--cream)}
+  .btn::after{content:"";width:7px;height:7px;border-top:1px solid currentColor;border-right:1px solid currentColor;transform:rotate(45deg);margin-left:.15rem}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+  /* Hero */
+  .hero{position:relative;padding:2.5rem 0 3.5rem;overflow:hidden}
+  .hero-media{
+    position:relative;
+    border:var(--line);
+    aspect-ratio:4/5;
+    background:#0c0907;
+    overflow:hidden;
+    box-shadow:0 30px 80px -40px rgba(0,0,0,.8),inset 0 0 0 1px rgba(217,164,65,.06);
+  }
+  .hero-media img{width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(.85) brightness(.78);opacity:.88}
+  .hero-media::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(23,19,16,.15) 0%,rgba(23,19,16,.55) 70%,rgba(23,19,16,.9) 100%);
+    pointer-events:none;
+  }
+  .hero-content{padding-top:1.75rem;display:flex;flex-direction:column;gap:1.1rem}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:.6rem;
+    color:var(--accent);font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;
+  }
+  .eyebrow::before{content:"";width:24px;height:1px;background:var(--accent)}
+  .hero h1{max-width:18ch}
+  .hero .tag{color:var(--cream-dim);max-width:38ch;font-size:1.02rem}
+  .hero .addr{color:var(--cream-faint);font-size:.82rem;letter-spacing:.04em;display:inline-flex;align-items:center;gap:.5rem}
+  .hero .addr::before{content:"";width:5px;height:5px;background:var(--accent);border-radius:50%;box-shadow:0 0 8px var(--accent)}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.4rem}
+
+  /* Services */
+  .services{padding-top:4rem}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:1.75rem;padding-bottom:1rem;border-bottom:var(--line)}
+  .section-head h2{display:flex;align-items:baseline;gap:.6rem}
+  .section-head h2::before{content:"§";color:var(--accent);font-style:italic;font-size:1.1em;line-height:0}
+  .section-head small{white-space:nowrap}
+  .menu{
+    border:1px solid var(--brass);
+    background:linear-gradient(180deg,var(--char-lift),rgba(33,27,23,.4));
+    padding:1.5rem 1.25rem;
+  }
+  .menu-list{list-style:none}
+  .menu-item{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:baseline;
+    column-gap:.75rem;
+    padding:1rem 0;
+    border-bottom:var(--line-faint);
+  }
+  .menu-item:last-child{border-bottom:0}
+  .menu-item .num{
+    font-family:Georgia,serif;font-style:italic;color:var(--accent);
+    font-size:.9rem;width:2ch;
+  }
+  .menu-item .name{
+    font-family:Georgia,serif;font-weight:400;color:var(--cream);font-size:1.08rem;
+    position:relative;overflow:hidden;
+  }
+  .menu-item .name::after{
+    content:"";display:block;position:absolute;bottom:.45em;left:0;right:0;
+    border-bottom:1px dotted var(--brass);
+    z-index:0;opacity:.7;
+  }
+  .menu-item .name span{position:relative;z-index:1;background:transparent;padding-right:.6rem}
+  .menu-item .name .lbl{position:relative;z-index:1;background:linear-gradient(90deg,var(--char-lift) 70%,rgba(33,27,23,0));padding-right:.4rem}
+  .menu-item .desc{
+    display:block;font-size:.82rem;color:var(--cream-faint);font-style:italic;letter-spacing:.02em;margin-top:.25rem;
+  }
+  .menu-item .price{
+    font-family:Georgia,serif;font-weight:400;color:var(--accent);
+    font-size:1.05rem;font-variant-numeric:tabular-nums;
+    padding-left:.6rem;background:linear-gradient(90deg,rgba(33,27,23,0) 0%,var(--char-lift) 30%);
+    white-space:nowrap;position:relative;z-index:1;
+  }
+  .menu-item .price .cur{font-size:.75em;opacity:.75;margin-right:.1rem}
+
+  /* Two-col with image */
+  .split{display:grid;grid-template-columns:1fr;gap:1.75rem;align-items:start}
+  .split .frame{
+    aspect-ratio:4/5;border:var(--line);background:#0c0907;overflow:hidden;position:relative;
+  }
+  .split .frame img{width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(.82) brightness(.78);opacity:.9}
+  .split .frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,19,16,0) 60%,rgba(23,19,16,.5))}
+  .split .copy h2{margin-bottom:.9rem}
+  .split .copy p + p{margin-top:.9rem}
+  .pull{
+    margin-top:1.25rem;padding:1rem 0 1rem 1rem;border-left:2px solid var(--accent);
+    color:var(--cream);font-family:Georgia,serif;font-style:italic;font-size:1.05rem;line-height:1.5;
+  }
+
+  /* Visit */
+  .visit .frame{aspect-ratio:5/4}
+  .contact-list{list-style:none;display:grid;gap:.5rem;margin:1.1rem 0 1.5rem}
+  .contact-list li{display:grid;grid-template-columns:90px 1fr;gap:.75rem;align-items:baseline;padding:.55rem 0;border-bottom:var(--line-faint)}
+  .contact-list li:last-child{border-bottom:0}
+  .contact-list .k{color:var(--cream-faint);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase}
+  .contact-list .v{color:var(--cream);font-family:Georgia,serif;font-size:1.02rem}
+  .contact-list a.v{transition:color .2s ease}
+  .contact-list a.v:hover,.contact-list a.v:focus-visible{color:var(--accent)}
+
+  /* Hours */
+  .hours{display:grid;grid-template-columns:1fr;gap:1.25rem}
+  .hours-card{
+    border:var(--line);
+    background:linear-gradient(180deg,var(--char-lift),rgba(33,27,23,.4));
+    padding:1.5rem 1.25rem;
+  }
+  .hours-list{list-style:none;display:grid}
+  .hours-list li{
+    display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+    padding:.75rem 0;border-bottom:var(--line-faint);
+    color:var(--cream);
+  }
+  .hours-list li:last-child{border-bottom:0}
+  .hours-list .d{font-family:Georgia,serif;font-size:1.02rem}
+  .hours-list .d em{color:var(--cream-faint);font-style:normal;margin-left:.4rem;font-size:.9rem}
+  .hours-list .t{font-variant-numeric:tabular-nums;color:var(--accent);font-size:.95rem;letter-spacing:.04em}
+  .hours-list .closed{color:var(--cream-faint);font-style:italic;font-size:.92rem}
+  .hours-card .note{margin-top:1rem;color:var(--cream-dim);font-size:.88rem}
+
+  /* Footer */
+  footer{
+    border-top:var(--line);
+    background:var(--char-2);
+    padding:2rem 0 2.5rem;
+    margin-top:2rem;
+  }
+  .foot{display:flex;flex-direction:column;gap:.9rem;align-items:flex-start}
+  .foot .brand{font-family:Georgia,serif;color:var(--cream);font-size:1rem}
+  .foot .brand .gn{color:var(--accent);font-style:italic}
+  .foot p, .foot small{color:var(--cream-faint);font-size:.78rem;letter-spacing:.06em}
+  .foot a{color:var(--accent);border-bottom:1px dotted var(--brass);padding-bottom:1px}
+  .foot a:hover,.foot a:focus-visible{border-bottom-color:var(--accent)}
+
+  /* Decorative candle flicker on accent borders */
+  @keyframes flicker{
+    0%,100%{opacity:.9}
+    45%{opacity:.65}
+    55%{opacity:1}
+  }
+  .candle::before{
+    content:"";display:inline-block;width:8px;height:8px;border-radius:50%;
+    background:var(--accent);box-shadow:0 0 14px var(--accent),0 0 28px rgba(217,164,65,.5);
+    margin-right:.6rem;vertical-align:middle;animation:flicker 4.6s ease-in-out infinite;
+  }
+
+  @media (min-width:768px){
+    section{padding:6rem 0}
+    .hero{padding:4rem 0 5rem}
+    .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:3rem;align-items:center}
+    .hero-media{aspect-ratio:4/5}
+    .hero-content{padding-top:0}
+    .split{grid-template-columns:.9fr 1.1fr;gap:3rem;align-items:center}
+    .visit .split{grid-template-columns:1.1fr .9fr}
+    .visit .copy{order:-1}
+    .hours{grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+    .menu{padding:2.25rem 2.5rem}
+    .menu-item{padding:1.15rem 0}
+    .foot{flex-direction:row;align-items:center;justify-content:space-between}
+  }
+  @media (min-width:1024px){
+    :root{--pad:2rem}
+    .hero .wrap{gap:4.5rem}
+    h1{font-size:3.8rem}
+    .hero-media{aspect-ratio:5/6}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+</style>
+
+<div class="demo-banner" role="note" aria-label="Demo preview notice">
+  Demo Preview — <b>Claim this website to make it live</b>
+</div>
+
+<header class="nav" role="banner">
+  <div class="nav-inner">
+    <a href="#top" class="wordmark" aria-label="Gilles' 3rd Gen Barber Shop, home">
+      <span class="gn">Gilles'</span> 3rd Gen <small>Barber</small>
+    </a>
+    <a href="#visit" class="nav-cta" onclick="alert('Claim this website to make it live'); return false;">Book the chair</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <div class="hero-media">
+        <img src="./images/hero.jpg" alt="Close-up of a barber's hands holding a straight razor against a leather strop in warm low light.">
+      </div>
+      <div class="hero-content">
+        <span class="eyebrow">Cornwall, Ontario · Third Generation</span>
+        <h1 id="hero-title">Three generations of <em>clean</em> lines.</h1>
+        <p class="tag">A neighbourhood chair in Cornwall. Honest shaves, careful fades, and the kind of conversation that makes a Tuesday feel shorter.</p>
+        <a href="#visit" class="btn btn-primary" onclick="alert('Claim this website to make it live'); return false;">Book the chair</a>
+        <span class="addr">18307 Kilkenny Crescent · Cornwall, ON K6H 5R5</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="brass">
+
+  <section class="services" aria-labelledby="services-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="services-title">The chair, the razor, the price.</h2>
+        <small>Walk-in · Cash &amp; card</small>
+      </div>
+
+      <div class="menu" role="list">
+        <ul class="menu-list">
+
+          <li class="menu-item" role="listitem">
+            <span class="num">i.</span>
+            <div class="name"><span class="lbl">Classic Haircut</span><span class="desc">Consultation, scissor &amp; clipper work, hot towel finish.</span></div>
+            <span class="price"><span class="cur">$</span>28</span>
+          </li>
+
+          <li class="menu-item" role="listitem">
+            <span class="num">ii.</span>
+            <div class="name"><span class="lbl">Hot-Towel Shave</span><span class="desc">Steam, lather, and a straight razor to the skin.</span></div>
+            <span class="price"><span class="cur">$</span>35</span>
+          </li>
+
+          <li class="menu-item" role="listitem">
+            <span class="num">iii.</span>
+            <div class="name"><span class="lbl">Beard Trim &amp; Shape</span><span class="desc">Line work and length, finished with beard oil.</span></div>
+            <span class="price"><span class="cur">$</span>22</span>
+          </li>
+
+          <li class="menu-item" role="listitem">
+            <span class="num">iv.</span>
+            <div class="name"><span class="lbl">Senior Cut</span><span class="desc">A patient, unhurried cut with a slower neck shave.</span></div>
+            <span class="price"><span class="cur">$</span>24</span>
+          </li>
+
+          <li class="menu-item" role="listitem">
+            <span class="num">v.</span>
+            <div class="name"><span class="lbl">Father &amp; Son</span><span class="desc">Two cuts, one sitting. A small tradition kept going.</span></div>
+            <span class="price"><span class="cur">$</span>48</span>
+          </li>
+
+          <li class="menu-item" role="listitem">
+            <span class="num">vi.</span>
+            <div class="name"><span class="lbl">The Works</span><span class="desc">Haircut, beard shape, hot-towel shave, and a clean neck.</span></div>
+            <span class="price"><span class="cur">$</span>55</span>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="craft" aria-labelledby="craft-title">
+    <div class="wrap">
+      <div class="split">
+        <div class="frame">
+          <img src="./images/section_about.jpg" alt="A well-worn leather barber chair beneath a single brass lamp inside a small Cornwall shop.">
+        </div>
+        <div class="copy">
+          <span class="eyebrow">The shop</span>
+          <h2 id="craft-title">Same chair. Same razor. <em>New</em> hands.</h2>
+          <p>Gilles took the shop forward the year the sign out front needed repainting. He didn't change much. The lather is still hot, the radio is still turned just loud enough, and the same straight razor sits on the same marble counter by the register.</p>
+          <p>What you notice first is the quiet — a third-generation shop doesn't need to explain itself. The walk-ins keep coming, and a few of them bring their kids now too.</p>
+          <p class="pull">"If you leave looking like someone else, I haven't done my job. You leave looking like you, only tidier."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="visit" id="visit" aria-labelledby="visit-title">
+    <div class="wrap">
+      <div class="split">
+        <div class="copy">
+          <span class="eyebrow">Come in</span>
+          <h2 id="visit-title" class="candle">Walk-ins welcome. Call to <em>book</em>.</h2>
+
+          <ul class="contact-list">
+            <li>
+              <span class="k">Address</span>
+              <span class="v">18307 Kilkenny Crescent<br>Cornwall, ON K6H 5R5</span>
+            </li>
+            <li>
+              <span class="k">Phone</span>
+              <a class="v" href="tel:+16133304175" onclick="alert('Claim this website to make it live'); return false;">+1 613-330-4175</a>
+            </li>
+            <li>
+              <span class="k">Area</span>
+              <span class="v">Kilkenny Crescent · Cornwall, Ontario</span>
+            </li>
+            <li>
+              <span class="k">Parking</span>
+              <span class="v">Free lot out front</span>
+            </li>
+          </ul>
+
+          <a href="tel:+16133304175" class="btn btn-primary" onclick="alert('Claim this website to make it live'); return false;">Book the chair</a>
+        </div>
+        <div class="frame">
+          <img src="./images/section_services.jpg" alt="A polished chrome barber pole and a small wooden door sign marking Gilles' shop on Kilkenny Crescent.">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hours" aria-labelledby="hours-title">
+    <div class="wrap">
+      <div class="section-head" style="grid-column:1/-1">
+        <h2 id="hours-title">Hours.</h2>
+        <small>Eastern Time · Cornwall, ON</small>
+      </div>
+
+      <div class="hours-card" role="region" aria-label="Shop hours">
+        <ul class="hours-list">
+          <li><span class="d">Tuesday <em>–</em> Friday</span><span class="t">9:00 — 17:30</span></li>
+          <li><span class="d">Saturday</span><span class="t">9:00 — 15:00</span></li>
+          <li><span class="d">Sunday</span><span class="closed">Closed</span></li>
+          <li><span class="d">Monday</span><span class="closed">Closed</span></li>
+        </ul>
+        <p class="note">Last walk-in taken 30 minutes before close. Call ahead on Saturdays — the chair fills quickly.</p>
+      </div>
+
+      <div class="hours-card" role="region" aria-label="Booking notes">
+        <h3>Booking.</h3>
+        <p style="margin-top:.5rem">We take walk-ins all day. If you'd rather not wait, give the shop a ring in the morning and Gilles will set a time aside. Father &amp; Son and The Works are best booked ahead.</p>
+        <p style="margin-top:.75rem"><a href="tel:+16133304175" class="btn btn-ghost" style="min-height:44px;padding:.6rem 1.1rem;font-size:.78rem" onclick="alert('Claim this website to make it live'); return false;">Call +1 613-330-4175</a></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer role="contentinfo">
+  <div class="wrap foot">
+    <div>
+      <div class="brand"><span class="gn">Gilles'</span> 3rd Gen Barber Shop</div>
+      <p>18307 Kilkenny Crescent · Cornwall, ON K6H 5R5</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.5rem;align-items:flex-start">
+      <small>Gilles' Preview · Concept by Seaway Sites</small>
+      <small><a href="#" onclick="alert('Claim this website to make it live'); return false;">Claim this website</a></small>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

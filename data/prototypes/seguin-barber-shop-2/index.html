@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Seguin Barber Shop — Demo Preview</title>
+<meta name="description" content="Demo preview concept for Seguin Barber Shop, a barber shop on Pitt Street in Cornwall, Ontario.">
+<style>
+  :root {
+    --char: #171310;
+    --char-lift: #211b17;
+    --cream: #f2e8da;
+    --cream-dim: rgba(242, 232, 218, 0.66);
+    --accent: #d9a441;
+    --accent-deep: #b3822a;
+    --brass: rgba(217, 164, 65, 0.34);
+    --line: rgba(242, 232, 218, 0.14);
+    --shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    --radius: 10px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; }
+  img { max-width: 100%; height: auto; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    background: var(--char);
+    color: var(--cream-dim);
+    padding-top: 44px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a, button {
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .demo-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: #0a0807;
+    border-bottom: 1px solid var(--brass);
+    color: var(--cream);
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-align: center;
+    padding: 12px 16px;
+    line-height: 1.4;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* HEADER NAV */
+  .site-header {
+    position: absolute;
+    top: 44px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 20px 0;
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .logo {
+    font-family: Georgia, "Iowan Old Style", Didot, serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-size: 22px;
+    letter-spacing: 0.01em;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--brass);
+    color: var(--cream);
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .nav-cta:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(23,19,16,.4), rgba(23,19,16,.85)), url('./images/hero.jpg') center/cover no-repeat;
+    color: var(--cream);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 120px 24px 80px;
+  }
+
+  .eyebrow {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: Georgia, "Iowan Old Style", Didot, serif;
+    font-weight: 400;
+    font-size: clamp(38px, 8vw, 72px);
+    line-height: 1.05;
+    color: var(--cream);
+    margin: 0 0 28px;
+    letter-spacing: -0.01em;
+    max-width: 14ch;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero .lede {
+    font-size: clamp(16px, 2.2vw, 19px);
+    line-height: 1.65;
+    color: var(--cream-dim);
+    max-width: 46ch;
+    margin: 0 0 40px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 14px 28px;
+    border-radius: var(--radius);
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--char);
+    border-color: var(--accent);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-deep);
+    border-color: var(--accent-deep);
+  }
+
+  /* SERVICES - The Menu as Centerpiece */
+  .services {
+    background: var(--char);
+    padding: clamp(72px, 12vw, 96px) 0 clamp(56px, 10vw, 80px);
+  }
+
+  .services-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+
+  .services h2 {
+    font-family: Georgia, "Iowan Old Style", Didot, serif;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--cream);
+    font-size: clamp(30px, 5vw, 42px);
+    line-height: 1.15;
+    margin: 0 0 48px;
+    letter-spacing: -0.005em;
+  }
+
+  .menu {
+    border-top: 1px solid var(--line);
+  }
+
+  .menu-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+  }
+
+  .menu-name {
+    font-family: Georgia, "Iowan Old Style", Didot, serif;
+    font-weight: 400;
+    font-size: clamp(20px, 3.2vw, 26px);
+    color: var(--cream);
+    line-height: 1.3;
+    flex-shrink: 0;
+  }
+
+  .menu-leader {
+    flex-grow: 1;
+    border-bottom: 1px dotted var(--brass);
+    transform: translateY(-4px);
+    min-width: 24px;
+  }
+
+  .menu-price {
+    font-family: system-ui, sans-serif;
+    font-feature-settings: "tnum" 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    padding-left: 4px;
+  }
+
+  /* TOOLS STRIP */
+  .tools-strip {
+    position: relative;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, rgba(23,19,16,.55), rgba(23,19,16,.75)), url('./images/tools.jpg') center/cover no-repeat;
+    text-align: center;
+    padding: 60px 24px;
+  }
+
+  .tools-line {
+    font-family: Georgia, "Iowan Old Style", Didot, serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-size: clamp(22px, 4vw, 32px);
+    line-height: 1.3;
+    max-width: 22ch;
+    margin: 0;
+    letter-spacing: 0.01em;
+  }
+
+  /* CRAFT */
+  .craft {
+    background: var(--char);
+    padding: clamp(72px, 12vw, 96px) 0;
+  }
+
+  .craft-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .craft-image {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: var(--char-lift);
+  }
+
+  .craft-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .craft-text .eyebrow {
+    margin-bottom: 16px;
+  }
+
+  .craft-text h2 {
+    font-family: Georgia, "Iowan Old Style", Didot, serif;
+    font-weight: 400;
+    color: var(--cream);
+    font-size: clamp(28px, 4.5vw, 40px);
+    line-height: 1.15;
+    margin: 0 0 28px;
+    letter-spacing: -0.005em;
+  }
+
+  .craft-text p {
+    margin: 0 0 20px;
+    color: var(--cream-dim);
+    max-width: 52ch;
+  }
+
+  .craft-text p:last-child { margin-bottom: 0; }
+
+  /* VISIT */
+  .visit {
+    background: var(--char);
+    padding: 0 0 clamp(72px, 12vw, 96px);
+  }
+
+  .visit-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .visit-inner > h2 {
+    font-family: Georgia, "Iowan Old Style", Didot, serif;
+    font-weight: 400;
+    color: var(--cream);
+    font-size: clamp(28px, 4.5vw, 40px);
+    line-height: 1.15;
+    margin: 0 0 40px;
+    text-align: center;
+    letter-spacing: -0.005em;
+  }
+
+  .visit-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .visit-cell {
+    background: var(--char-lift);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+  }
+
+  .visit-cell .eyebrow {
+    margin-bottom: 12px;
+  }
+
+  .visit-cell .detail {
+    color: var(--cream);
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* CTA */
+  .cta {
+    background: var(--char);
+    padding: clamp(72px, 12vw, 96px) 0;
+    text-align: center;
+    border-top: 1px solid var(--line);
+  }
+
+  .cta-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .cta h2 {
+    font-family: Georgia, "Iowan Old Style", Didot, serif;
+    font-weight: 400;
+    color: var(--cream);
+    font-size: clamp(32px, 6vw, 52px);
+    line-height: 1.1;
+    margin: 0 0 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .cta h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .cta .lede {
+    color: var(--cream-dim);
+    font-size: 17px;
+    line-height: 1.65;
+    margin: 0 0 36px;
+    max-width: 50ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--cream);
+    border-color: var(--brass);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--cream);
+    color: var(--cream);
+  }
+
+  /* FOOTER */
+  .site-footer {
+    background: var(--char-lift);
+    padding: 48px 0;
+    text-align: center;
+    border-top: 1px solid var(--line);
+  }
+
+  .site-footer .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .footer-name {
+    font-family: Georgia, "Iowan Old Style", Didot, serif;
+    font-style: italic;
+    color: var(--accent);
+    font-size: 20px;
+    margin: 0 0 12px;
+  }
+
+  .footer-line {
+    color: var(--cream-dim);
+    font-size: 14px;
+    margin: 0 0 8px;
+    line-height: 1.6;
+  }
+
+  .footer-credit {
+    color: var(--cream-dim);
+    font-size: 13px;
+    margin: 16px 0 0;
+    opacity: 0.7;
+  }
+
+  /* CORNER WATERMARK */
+  .corner-watermark {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 99;
+    background: rgba(10, 8, 7, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: var(--cream);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    pointer-events: none;
+  }
+
+  /* TABLET & UP */
+  @media (min-width: 768px) {
+    .hero { min-height: 640px; }
+    .hero-inner { padding: 140px 24px 100px; }
+    .craft-grid {
+      grid-template-columns: 1fr 1.1fr;
+      gap: 64px;
+    }
+    .visit-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .cta-buttons {
+      flex-direction: row;
+      justify-content: center;
+      gap: 16px;
+    }
+  }
+
+  /* DESKTOP */
+  @media (min-width: 1024px) {
+    .container { padding: 0 32px; }
+    .nav-inner { padding: 0 32px; }
+    .hero-inner { padding: 160px 32px 120px; }
+    .craft-grid { gap: 88px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">Demo Preview — Claim this website to make it live</div>
+
+<header class="site-header">
+  <div class="nav-inner">
+    <button class="logo" type="button" onclick="alert('This is a demo preview. Claim this website to make it live at seawaysites.com.'); return false;">Seguin Barber Shop</button>
+    <button class="nav-cta" type="button" onclick="alert('This is a demo preview. Claim this website to make it live at seawaysites.com.'); return false;">Book the chair</button>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero" aria-label="Hero">
+    <div class="hero-inner">
+      <span class="eyebrow">Cornwall, Ontario · Pitt Street</span>
+      <h1>A proper cut, <em>the old way.</em></h1>
+      <p class="lede">Walk-in barbering in the heart of Cornwall. Hot towels, straight razors, and a chair that's been waiting.</p>
+      <button class="btn btn-primary" type="button" onclick="alert('This is a demo preview. Claim this website to make it live at seawaysites.com.'); return false;">Book the chair</button>
+    </div>
+  </section>
+
+  <section class="services" aria-label="Services and pricing">
+    <div class="services-inner">
+      <span class="eyebrow">The Menu</span>
+      <h2>What the chair costs.</h2>
+      <div class="menu" role="list">
+        <div class="menu-row" role="listitem">
+          <span class="menu-name">Classic Haircut</span>
+          <span class="menu-leader" aria-hidden="true"></span>
+          <span class="menu-price">$22 CAD</span>
+        </div>
+        <div class="menu-row" role="listitem">
+          <span class="menu-name">Beard Trim &amp; Shape</span>
+          <span class="menu-leader" aria-hidden="true"></span>
+          <span class="menu-price">$18 CAD</span>
+        </div>
+        <div class="menu-row" role="listitem">
+          <span class="menu-name">Hot Towel Shave</span>
+          <span class="menu-leader" aria-hidden="true"></span>
+          <span class="menu-price">$30 CAD</span>
+        </div>
+        <div class="menu-row" role="listitem">
+          <span class="menu-name">Senior Cut</span>
+          <span class="menu-leader" aria-hidden="true"></span>
+          <span class="menu-price">$20 CAD</span>
+        </div>
+        <div class="menu-row" role="listitem">
+          <span class="menu-name">Kids Cut</span>
+          <span class="menu-leader" aria-hidden="true"></span>
+          <span class="menu-price">$16 CAD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tools-strip" aria-label="Tools of the trade">
+    <p class="tools-line">Hot towel. Straight razor. <br>The chair, not the conveyor.</p>
+  </section>
+
+  <section class="craft" aria-label="The craft">
+    <div class="craft-grid">
+      <div class="craft-image">
+        <img src="./images/craft.jpg" alt="Barber carefully shaping a client's sideburn with a straight razor under warm shop light.">
+      </div>
+      <div class="craft-text">
+        <span class="eyebrow">The Craft</span>
+        <h2>The craft, not the conveyor.</h2>
+        <p>Every cut starts with a conversation. What you do for a living. How you wear it. The shape of your face. The barber listens before the clippers come out.</p>
+        <p>Hot towel, lather, straight razor where it belongs. The shave is a ritual — slow on the neckline, careful at the jaw, finished with a cold rinse and a clean line.</p>
+        <p>We work one chair at a time. No rushing, no upsell, no headphones. Just the work and a quiet shop on Pitt Street.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="visit" aria-label="Visit the shop">
+    <div class="visit-inner">
+      <h2>Find the chair.</h2>
+      <div class="visit-grid">
+        <div class="visit-cell">
+          <span class="eyebrow">Address</span>
+          <p class="detail">723 Pitt St<br>Cornwall, ON K6J 3S1</p>
+        </div>
+        <div class="visit-cell">
+          <span class="eyebrow">Hours</span>
+          <p class="detail">Tue–Fri 9–6<br>Sat 9–4<br>Sun–Mon Closed</p>
+        </div>
+        <div class="visit-cell">
+          <span class="eyebrow">Phone</span>
+          <p class="detail">+1 613-577-0882</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta" aria-label="Call to action">
+    <div class="cta-inner">
+      <h2>Your barber is <em>waiting.</em></h2>
+      <p class="lede">Walk in any time we're open. Or claim the website and let us take bookings online.</p>
+      <div class="cta-buttons">
+        <button class="btn btn-primary" type="button" onclick="alert('This is a demo preview. Claim this website to make it live at seawaysites.com.'); return false;">Claim this website</button>
+        <button class="btn btn-secondary" type="button" onclick="alert('This is a demo preview. Claim this website to make it live at seawaysites.com.'); return false;">Walk in instead</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p class="footer-name">Seguin Barber Shop</p>
+    <p class="footer-line">723 Pitt St, Cornwall, ON K6J 3S1 · +1 613-577-0882</p>
+    <p class="footer-credit">Concept preview by Seaway Sites</p>
+  </div>
+</footer>
+
+<div class="corner-watermark" aria-hidden="true">Seguin Barber Shop · Seaway Sites Preview</div>
+
+</body>
+</html>

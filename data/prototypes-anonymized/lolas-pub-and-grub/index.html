@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Restaurant & Café — Demo Preview</title>
+  <meta name="description" content="Unofficial preview concept for Local Restaurant & Café — restaurant in Cornwall.">
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    *,*::before,*::after { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; color: #1a1a1a; }
+    a { color: inherit; }
+    img { max-width: 100%; height: auto; }
+    .demo-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+  </style>
+</head>
+<body>
+<header style="background: linear-gradient(90deg, #1a1a2e, #16213e); color: #fff; text-align: center; padding: 10px; font-size: 14px; letter-spacing: 1px; position: sticky; top: 0; z-index: 1000;">
+  Demo Preview — Claim this website to make it live
+</header>
+
+<section class="hero" style="position: relative; min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; background-image: url('./images/hero.jpg'); background-size: cover; background-position: center;">
+  <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.55);"></div>
+  <div style="position: relative; z-index: 2; max-width: 800px; padding: 40px 20px;">
+    <h1 style="font-size: clamp(2.5rem, 6vw, 4.5rem); margin: 0 0 20px 0; font-weight: 800; letter-spacing: -1px;">Lola's Pub &amp; Grub</h1>
+    <p style="font-size: clamp(1.1rem, 2vw, 1.4rem); margin: 0 0 35px 0; opacity: 0.95;">Cornwall's favorite spot for hearty meals, cold drinks, and good times.</p>
+    <a href="#" onclick="alert('Claim this website to unlock the live version'); return false;" style="display: inline-block; background: #e94560; color: #fff; padding: 16px 36px; font-size: 1.1rem; font-weight: 600; text-decoration: none; border-radius: 50px; box-shadow: 0 6px 20px rgba(233,69,96,0.4); transition: transform 0.2s;">Claim this website to unlock</a>
+  </div>
+</section>
+
+<section class="services" style="padding: 80px 20px; max-width: 1200px; margin: 0 auto;">
+  <h2 style="text-align: center; font-size: clamp(1.8rem, 4vw, 2.5rem); margin: 0 0 50px 0; color: #1a1a2e;">What We Serve</h2>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px;">
+
+    <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: transform 0.3s;">
+      <img src="./images/section_1.jpg" alt="Burgers" style="width: 100%; height: 200px; object-fit: cover; display: block;" onerror="this.style.background='#16213e'; this.style.height='200px';">
+      <div style="padding: 25px;">
+        <h3 style="margin: 0 0 10px 0; color: #1a1a2e; font-size: 1.4rem;">Gourmet Burgers</h3>
+        <p style="margin: 0; color: #555; line-height: 1.6;">Juicy, hand-pressed patties topped with fresh, locally-sourced ingredients.</p>
+      </div>
+    </div>
+
+    <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: transform 0.3s;">
+      <img src="./images/section_2.jpg" alt="Pub Classics" style="width: 100%; height: 200px; object-fit: cover; display: block;" onerror="this.style.background='#16213e'; this.style.height='200px';">
+      <div style="padding: 25px;">
+        <h3 style="margin: 0 0 10px 0; color: #1a1a2e; font-size: 1.4rem;">Pub Classics</h3>
+        <p style="margin: 0; color: #555; line-height: 1.6;">Wings, nachos, fish &amp; chips — all your comfort food favorites done right.</p>
+      </div>
+    </div>
+
+    <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: transform 0.3s;">
+      <img src="./images/section_1.jpg" alt="Craft Beer" style="width: 100%; height: 200px; object-fit: cover; display: block;" onerror="this.style.background='#16213e'; this.style.height='200px';">
+      <div style="padding: 25px;">
+        <h3 style="margin: 0 0 10px 0; color: #1a1a2e; font-size: 1.4rem;">Craft Beer &amp; Cocktails</h3>
+        <p style="margin: 0; color: #555; line-height: 1.6;">An ever-rotating selection of local brews and signature cocktails.</p>
+      </div>
+    </div>
+
+    <div style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08); transition: transform 0.3s;">
+      <img src="./images/section_2.jpg" alt="Weekend Specials" style="width: 100%; height: 200px; object-fit: cover; display: block;" onerror="this.style.background='#16213e'; this.style.height='200px';">
+      <div style="padding: 25px;">
+        <h3 style="margin: 0 0 10px 0; color: #1a1a2e; font-size: 1.4rem;">Weekend Specials</h3>
+        <p style="margin: 0; color: #555; line-height: 1.6;">Live music, trivia nights, and chef's specials every Friday and Saturday.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="about" style="padding: 80px 20px; background: #f8f9fa;">
+  <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+    <h2 style="font-size: clamp(1.8rem, 4vw, 2.5rem); margin: 0 0 25px 0; color: #1a1a2e;">About Lola's Pub &amp; Grub</h2>
+    <p style="font-size: 1.1rem; line-height: 1.8; color: #444; margin: 0;">Lola's Pub &amp; Grub is a beloved local restaurant in Cornwall, Ontario, where neighbors gather over great food and cold drinks. With a welcoming atmosphere, generous portions, and a menu that mixes pub favorites with creative specials, we've become a go-to spot for families, friends, and anyone craving a hearty meal in a relaxed setting.</p>
+  </div>
+</section>
+
+<section class="book-call" style="padding: 80px 20px; max-width: 900px; margin: 0 auto; text-align: center;">
+  <h2 style="font-size: clamp(1.8rem, 4vw, 2.5rem); margin: 0 0 20px 0; color: #1a1a2e;">Want to chat?</h2>
+  <p style="font-size: 1.1rem; color: #555; margin: 0 0 30px 0;">Got questions or want to learn more? Book a quick call with us.</p>
+  <a href="#" onclick="alert('Claim this website to unlock the live version'); return false;" style="display: inline-block; background: #1a1a2e; color: #fff; padding: 14px 32px; font-size: 1rem; font-weight: 600; text-decoration: none; border-radius: 50px; margin-bottom: 40px;">Book a 5-min call</a>
+  <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+    <iframe src="https://cal.com/sitesprint/5min" width="100%" height="600" frameborder="0" style="border: 0; display: block;" onload="this.contentDocument.body && (this.contentDocument.body.style.opacity='0.5');"></iframe>
+  </div>
+</section>
+
+<footer style="background: #1a1a2e; color: #fff; text-align: center; padding: 30px 20px; font-size: 0.9rem; opacity: 0.9;">
+  Concept by SiteSprint · Demo Preview
+</footer>
+<div style="position:fixed;bottom:20px;right:20px;background:rgba(255,255,255,0.95);padding:8px 16px;border-radius:4px;font-size:12px;color:#666;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+  SiteSprint Preview · Local Restaurant & Café
+</div>
+</body>
+</html>

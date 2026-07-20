@@ -117,7 +117,7 @@ export async function POST(request: Request) {
     // Local development fallback only. Production needs a durable database.
     if (process.env.NODE_ENV === 'production') {
       return NextResponse.json(
-        { error: 'Draft requests are temporarily unavailable. Please email hello@seawaysites.com.' },
+        { error: 'Draft requests are temporarily unavailable. Please email mehdi@seawaysites.com.' },
         { status: 503 }
       );
     }
