@@ -29,7 +29,11 @@ contains "welcome," "quality," "premium," or the business's category said generi
 
 Draft three candidates, keep the one with the most specific noun. When producing several
 sites in one batch, rotate formulas — the fragment pair is the strongest and becomes a tic
-fastest; if the last site opened with one, this site doesn't.
+fastest; if the last site opened with one, this site doesn't. And the cap is on **cadence,
+not labels**: "Blue. Loose. Gone." filed under a different formula is still the staccato
+rhythm, and it counts. Across any set, at least a third of the headlines are full sentences
+with a verb in them — the staccato reads as a voice the first time and as a template by the
+fourth.
 
 **The "how did they know?" detail.** Every page carries at least one line only an insider
 could write — the tell that someone has actually stood in the place: "the door is the one
