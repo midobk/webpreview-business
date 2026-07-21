@@ -286,3 +286,10 @@ get_ad_accounts(limit=5, user_id="me")
 2. Open seawaysites.com?test_event_code=XXXXX in a browser, fill the form
 3. Events Manager should show the `Lead` event in the test panel
 4. Server logs (Vercel Functions) should show the CAPI POST with matching `event_id`
+
+### Post-launch token rotation (do this week)
+Both the CAPI access token (`EAAOZCAwKlMu...`) and the Resend API key were shared in chat to enable setup. Treat both as compromised and rotate within 7 days of first spend:
+
+1. **CAPI**: Events Manager → Datasets → Landing page pixel → Settings → Conversions API → "Generate access token" (this invalidates the old one). Update `META_CAPI_ACCESS_TOKEN` in Vercel env, redeploy.
+2. **Resend**: resend.com → API Keys → revoke old key, create new one. Update `RESEND_API_KEY` in Vercel env + your local `.env.local`, redeploy.
+3. **Meta access token** (`META_ACCESS_TOKEN`): if you've shared it anywhere beyond this Claude Code session, rotate via Business Manager → System Users → McpUser → Generate Token. Update `~/.zshrc`, restart any process that reads it.
