@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Plus_Jakarta_Sans, Fraunces } from "next/font/google";
 import Providers from "./providers";
 import "./globals.css";
+import MetaPixel from "@/components/MetaPixel";
 import { ThemeScript } from "./admin/_components/ThemeScript";
 import { SITE_URL } from '@/lib/site-config';
 
@@ -40,6 +41,13 @@ export const metadata: Metadata = {
       "Personalized website drafts and managed websites for Canadian small businesses.",
     type: "website",
   },
+  // Meta (Facebook) domain verification for the ad account. Renders
+  // <meta name="facebook-domain-verification" content="…" /> in <head>.
+  verification: {
+    other: {
+      "facebook-domain-verification": "0y6rrlx16wpjt61w9rq8t6zuqgi84p",
+    },
+  },
 };
 
 export default function RootLayout({
@@ -58,6 +66,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ThemeScript />
+        <MetaPixel />
         <Providers>{children}</Providers>
       </body>
     </html>

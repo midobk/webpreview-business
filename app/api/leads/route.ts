@@ -4,6 +4,8 @@ import path from 'path';
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabase';
 import { rateLimited, requestIp } from '@/lib/request-guard';
+import { sendMetaLeadEvent } from '@/lib/meta-capi';
+import { SITE_URL } from '@/lib/site-config';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const URL_PATTERN = /^https?:\/\/.+\..+/i;
@@ -14,6 +16,17 @@ const LIMITS = {
   message: 1_000,
 };
 const MAX_BODY_BYTES = 20_000;
+// Ad attribution captured by the landing page (lib/attribution.ts). Columns
+// exist on public.leads (migration 20260720130000_add_lead_attribution).
+const ATTRIBUTION_KEYS = [
+  'utm_source',
+  'utm_medium',
+  'utm_campaign',
+  'utm_content',
+  'utm_term',
+  'fbclid',
+] as const;
+const ATTRIBUTION_VALUE_MAX = 500;
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 5;
 
@@ -67,6 +80,13 @@ export async function POST(request: Request) {
     const email = readString(body?.email, LIMITS.email);
     const website = readString(body?.website, LIMITS.website);
     const message = readString(body?.message, LIMITS.message);
+    const attributionInput =
+      body?.attribution && typeof body.attribution === 'object' ? body.attribution : {};
+    const attribution: Record<string, string | null> = {};
+    for (const key of ATTRIBUTION_KEYS) {
+      attribution[key] = readString(attributionInput[key], ATTRIBUTION_VALUE_MAX) || null;
+    }
+    const metaEventId = readString(attributionInput.event_id, 64);
 
     if (!businessName || !email) {
       return NextResponse.json(
@@ -97,6 +117,7 @@ export async function POST(request: Request) {
       services: [],
       source_urls: [],
       status: 'new',
+      ...attribution,
       created_at: now,
       updated_at: now,
     };
@@ -111,6 +132,16 @@ export async function POST(request: Request) {
           { status: 500 }
         );
       }
+      // Mirror the browser pixel's Lead event server-side (deduped by
+      // event_id). No-op until the Meta env vars are configured.
+      await sendMetaLeadEvent({
+        email,
+        eventId: metaEventId || id,
+        ip: requestIp(request),
+        userAgent: request.headers.get('user-agent'),
+        fbclid: attribution.fbclid,
+        sourceUrl: `${SITE_URL}/`,
+      });
       return NextResponse.json({ message: 'Draft request received.' }, { status: 201 });
     }
 

@@ -39,7 +39,7 @@ export default function PrivacyPage() {
             website, why it is used and how to contact us about it.
           </p>
           <p className="mt-2 text-sm text-steel/70">
-            Last updated: July 13, 2026
+            Last updated: July 20, 2026
           </p>
         </header>
 
@@ -120,11 +120,19 @@ export default function PrivacyPage() {
           </p>
         </Section>
 
-        <Section title="Cookies and site operation">
+        <Section title="Cookies, site operation and advertising">
           <p>
             The website may use essential first-party cookies or similar browser storage for
-            functions such as administration, security and interface preferences. Material changes
-            to analytics or advertising practices will be reflected in this policy.
+            functions such as administration, security and interface preferences.
+          </p>
+          <p>
+            When we run advertising campaigns, the website also loads the Meta (Facebook) Pixel,
+            an advertising-measurement tool. It helps us understand which ads led to a draft
+            request, and when a request is submitted we may share a securely hashed version of
+            the submitted email address with Meta for that same measurement purpose. We do not
+            use it to build profiles for unrelated advertising. You can limit ad tracking in
+            your browser settings and in Meta&apos;s ad preferences. Material changes to
+            analytics or advertising practices will be reflected in this policy.
           </p>
         </Section>
 
