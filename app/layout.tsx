@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Plus_Jakarta_Sans, Fraunces } from "next/font/google";
 import Providers from "./providers";
 import "./globals.css";
+import MetaPixel from "@/components/MetaPixel";
 import { ThemeScript } from "./admin/_components/ThemeScript";
 import { SITE_URL } from '@/lib/site-config';
 
@@ -58,6 +59,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ThemeScript />
+        <MetaPixel />
         <Providers>{children}</Providers>
       </body>
     </html>
