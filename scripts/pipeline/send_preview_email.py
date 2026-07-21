@@ -12,6 +12,9 @@ Reads lead + prototype from Supabase, builds a personalized email, sends via Res
 """
 
 import argparse
+import base64
+import hashlib
+import hmac
 import json
 import os
 import sys
@@ -35,11 +38,29 @@ def _load_env():
 _load_env()
 
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
-RESEND_FROM = os.environ.get("RESEND_FROM_EMAIL", "hello@seawaysites.com")
+RESEND_FROM = os.environ.get("RESEND_FROM_EMAIL", "mehdi@seawaysites.com")
 SUPABASE_URL = os.environ.get("SUPABASE_URL") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 
 SITE_URL = "https://seawaysites.com"
+DRAFT_PREVIEW_SECRET = os.environ.get("DRAFT_PREVIEW_SECRET") or os.environ.get("OUTREACH_SIGNING_SECRET", "")
+
+# ─── Token signing (must match lib/draft-preview-token.ts) ───
+
+def create_draft_preview_token(slug: str) -> str | None:
+    """Generate a signed preview token matching the Next.js isValidDraftPreviewToken validator."""
+    if not DRAFT_PREVIEW_SECRET or not slug:
+        return None
+    import time
+    payload = {"v": 1, "slug": slug, "exp": int(time.time()) + 60 * 60 * 24 * 30}
+    encoded = base64.urlsafe_b64encode(json.dumps(payload).encode()).decode().rstrip("=")
+    sig = hmac.new(
+        DRAFT_PREVIEW_SECRET.encode(),
+        f"draft-preview:{encoded}".encode(),
+        hashlib.sha256,
+    ).digest()
+    sig_b64 = base64.urlsafe_b64encode(sig).decode().rstrip("=")
+    return f"{encoded}.{sig_b64}"
 
 
 # ─── Supabase helpers ───
@@ -108,9 +129,12 @@ def build_email_html(lead, prototype):
     industry = lead.get("industry", "service")
     city = lead.get("city", "your area")
     slug = lead.get("slug", "")
+    token = create_draft_preview_token(slug)
     preview_url = f"{SITE_URL}/preview/{slug}"
+    if token:
+        preview_url += f"?token={token}"
 
-    return f"""\
+    return f"""
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -159,7 +183,7 @@ def build_email_html(lead, prototype):
     <div style="text-align:center;margin:32px 0;">
       <p style="font-size:15px;color:#666;margin:0 0 8px;">This preview is <strong>100% free</strong>. If you like it:</p>
       <p style="font-size:15px;color:#666;margin:0;">
-        Setup from <strong>$299</strong> · Then <strong>$49/month</strong> hosting &amp; support
+        Setup from <strong>$399</strong> · Then <strong>$69/month</strong> hosting &amp; support
       </p>
     </div>
 
@@ -180,7 +204,10 @@ def build_email_text(lead, prototype):
     business_name = lead.get("business_name", "your business")
     first_name = business_name.split()[0] if business_name else "there"
     slug = lead.get("slug", "")
+    token = create_draft_preview_token(slug)
     preview_url = f"{SITE_URL}/preview/{slug}"
+    if token:
+        preview_url += f"?token={token}"
     industry = lead.get("industry", "service")
 
     return f"""\
@@ -192,7 +219,7 @@ We built a custom website concept designed for your industry — professional, m
 
 See it here: {preview_url}
 
-This preview is 100% free. If you like it, setup is from $299 + $49/month for hosting and support.
+This preview is 100% free. If you like it, setup is from $399 + $69/month for hosting and support.
 
 — Seaway Sites
 seawaysites.com"""
