@@ -647,9 +647,10 @@ Checklist:
 - **Google Places API** — live, project `sitesprint-leads`, billing account `0157E2-14E407-5CB61F`, $415 free trial credit, expires Sept 21, 2026. Discovery cost ~$1/run. Old project `sitesprintmehdi-500218` still has API enabled — disable ASAP.
 - **Image generation** — OpenAI gpt-image-1-mini verified working (2026-06-22 14:09)
 - **Telnyx** — from `+18253953636`, voice-call plugin enabled. Not yet wired to SMS drafts.
-- **AgentMail** — inbox script ready (`sitesprint-test@agentmail.to`), no API key provisioned yet.
+- **Email** — **Resend** chosen 2026-07-21 (replaces AgentMail). `RESEND_API_KEY` provided, from `Seaway Sites <mehdi@seawaysites.com>`. Send-path code swap pending (G2 in META_ADS_PLAN).
 - **Vercel deploy** — live at https://seawaysites.com (domain verified, redirects from webpreview-business.vercel.app)
 - **Local dev** — running on http://localhost:3000, password `1234` (per user — local only, Vercel unchanged).
+- **Meta ads** (2026-07-21): MCP authenticated against `SeawaySitesAdAccount` (act_1469618098544438, CAD, America/Toronto, fresh, $0 spent). Page = `Seaway Sites` (id 1175228509015042). Pixel ID `1530207232234428` provisioned (not yet in Vercel env). CAPI token still needed. Full plan in `docs/META_ADS_PLAN.md`.
 
 ### Deployment
 - **URL:** https://seawaysites.com
