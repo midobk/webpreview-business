@@ -39,6 +39,28 @@ export function captureAttribution() {
   }
 }
 
+/** A UUID for pairing the browser and server Lead events. crypto.randomUUID
+    needs a secure context and is missing on some older in-app WebViews — which
+    is exactly where Meta ad traffic lands (the FB/IG in-app browser). A missing
+    id must never block a submit, so we fall back gracefully and never throw. */
+export function newEventId(): string {
+  try {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      return crypto.randomUUID();
+    }
+    if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+      const b = crypto.getRandomValues(new Uint8Array(16));
+      b[6] = (b[6] & 0x0f) | 0x40; // version 4
+      b[8] = (b[8] & 0x3f) | 0x80; // variant
+      const hex = Array.from(b, (n) => n.toString(16).padStart(2, '0')).join('');
+      return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+    }
+  } catch {
+    /* fall through to the non-crypto fallback */
+  }
+  return `ev-${Date.now()}-${Math.random().toString(16).slice(2, 12)}`;
+}
+
 export function getAttribution(): Attribution {
   try {
     const raw = sessionStorage.getItem(STORAGE_KEY);

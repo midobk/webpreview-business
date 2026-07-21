@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import SuccessCheck from '@/components/motion/SuccessCheck';
-import { captureAttribution, getAttribution, trackLead } from '@/lib/attribution';
+import { captureAttribution, getAttribution, newEventId, trackLead } from '@/lib/attribution';
 
 type FormState = {
   businessName: string;
@@ -64,8 +64,9 @@ export default function LeadForm() {
     const honeypot =
       (formElement.elements.namedItem('honey_field_v2') as HTMLInputElement)?.value || '';
     // Shared browser/server event id so Meta deduplicates the pixel and
-    // Conversions API copies of the same Lead event.
-    const eventId = crypto.randomUUID();
+    // Conversions API copies of the same Lead event. Guarded fallback inside
+    // newEventId — never let id generation block the submit.
+    const eventId = newEventId();
 
     try {
       const response = await fetch('/api/leads', {
