@@ -2,7 +2,7 @@
 
 > Operational plan for the first paid-acquisition channel: Meta (Facebook + Instagram) lead-gen ads,
 > created and managed by an agent via the Meta MCP. Companion to AGENT_PLAN.md.
-> Status: decisions locked 2026-07-20 (§8). Code gates G3/G4/G7 done. Remaining blockers: Mehdi's account setup (G5), Meta MCP connection (G6), AgentMail key (G2). No spend until all gates green.
+> Status (2026-07-21): decisions locked (§8). Code gates G3/G4/G7 done + merged to `main` (PR #15). **G5 done** — account/payment/spending-limit created, `seawaysites.com` Meta-verified. Email provider is now **Resend** (key provided). **Remaining blockers: G6 (connect Meta MCP) and provisioning the Pixel ID/CAPI token; G2 needs the send-path code swapped to Resend.** No spend until all gates green.
 
 ## Decisions locked (2026-07-20)
 - **Budget:** Tier A — $20/day, 4-week test flight (~$600 CAD).
@@ -61,11 +61,11 @@
 | # | Gate | Status | Why it blocks launch |
 |---|------|--------|----------------------|
 | G1 | **Pricing drift fixed** | ✅ DONE 2026-07-20 | Resolved: live landing = source of truth. AGENT_PLAN §3 + MEMORY.md C4 rewritten to match ($399 + $69/mo / $899). No landing change needed. |
-| G2 | **Lead follow-up works end-to-end** — AGENTMAIL_API_KEY still missing; auto-reply/outreach sends blocked | ⛔ BLOCKED — Mehdi (key) | Paying for leads that never get a reply is the fastest way to waste the budget. Speed-to-lead (reply within minutes) is the single biggest conversion lever. Ties directly to the 2-day warm-up: leads arriving in the warm-up window must still get answered fast. |
+| G2 | **Lead follow-up works end-to-end** — email provider is **Resend** (key provided 2026-07-21). Send-path code still targets AgentMail. | 🟡 PARTIAL — key in hand, code swap + Resend domain-verify pending | Paying for leads that never get a reply is the fastest way to waste the budget. Speed-to-lead (reply within minutes) is the single biggest conversion lever, and ties to the 2-day warm-up. **To finish:** verify `seawaysites.com` in Resend (DKIM/SPF), set `RESEND_API_KEY` in Vercel, swap `scripts/send-outreach` from AgentMail to the Resend API. |
 | G3 | **Meta Pixel + Lead event live**, firing on form submit + server-side Conversions API (deduped by shared event_id) | ✅ CODE DONE — needs Pixel ID | `components/MetaPixel.tsx` (pixel), `lib/attribution.ts` (browser Lead event), `lib/meta-capi.ts` (server CAPI), wired into `app/layout.tsx`, `LeadForm.tsx`, `app/api/leads/route.ts`. Dormant until `NEXT_PUBLIC_META_PIXEL_ID` / `META_CAPI_ACCESS_TOKEN` are set. Build + typecheck pass. |
 | G4 | **UTM + fbclid attribution stored** on the Supabase lead row | ✅ DONE | Migration `20260720130000_add_lead_attribution` applied (6 columns live, verified). Captured first-touch on the landing page, written on insert. Supabase — not Ads Manager — is the CPL/CAC source of truth. |
-| G5 | **Business infrastructure** — Business Manager, FB Page, ad account, payment method, domain verified, **account-level spending limit set** | ⛔ BLOCKED — **Mehdi only** | Can't run ads without it. The spending limit is the hard safety cap under the agent. Account creation + payment are Mehdi's to do — the agent cannot. |
-| G6 | **Meta MCP connected**, tools verified (list/create paused campaign, read insights) | ⛔ BLOCKED — Mehdi connects | The management agent needs its hands. Not connected in this session. |
+| G5 | **Business infrastructure** — Business Manager, FB Page, ad account, payment method, domain verified, **account-level spending limit set** | ✅ DONE 2026-07-21 | All created by Mehdi. `seawaysites.com` verified to the Business Portfolio (meta-tag shipped in PR #15, live on prod). The account spending limit is the hard safety cap under the agent. |
+| G6 | **Meta MCP connected**, tools verified (list/create paused campaign, read insights) | ⛔ IN PROGRESS — Mehdi connecting | The management agent needs its hands. Being set up for both Claude Code (`.mcp.json` / `claude mcp add`) and Codex (`~/.codex/config.toml`). Token carries `ads_management` (can spend) — keep the human-approval gate. Last blocker gating campaign build. |
 | G7 | **Privacy page** pixel/advertising disclosure | ✅ DONE | `/privacy` now discloses the Meta Pixel and hashed-email sharing for ad measurement; "Last updated" bumped to 2026-07-20. |
 | G8 | **Landing conversion pass** — form is the obvious primary CTA, clean thank-you state, mobile speed | ◻️ TODO — agent | Ad clicks are wasted on a page that doesn't convert. Landing already has a working form + success state; do a focused mobile/CTA pass once G5/G6 unblock and creative is set.
 
@@ -222,10 +222,13 @@ Reporting cadence: daily one-liner (agent), weekly report (agent), end-of-flight
 3. ~~**Lead method**~~ → **website form** into the existing pipeline. ✅
 4. ~~**Geo**~~ → **all-Canada, English.** ✅
 
+### Progress 2026-07-21
+5. ~~**Account setup**~~ → **DONE.** Business Manager, FB Page, ad account + payment method, account spending limit, and `seawaysites.com` domain verification all complete. ✅
+6. ~~**Email provider**~~ → **Resend** chosen (replaces AgentMail); `RESEND_API_KEY` provided. Remaining email work: verify domain in Resend, set the key in Vercel, swap the send-path code (G2). 🟡
+
 ### Still needed from Mehdi (blockers to launch)
-5. **Account setup** (Mehdi only — agent cannot create accounts or enter payment details): Business Manager, Facebook Page for Seaway Sites, ad account + payment method, **account-level spending limit**, seawaysites.com domain verification, and the **Pixel ID** + a **Conversions API token**.
-6. **Meta MCP** — connect it (official Meta Ads MCP or third-party); the agent maps its tools on connection and verifies read/insights + create-paused-campaign before building anything.
-7. **AgentMail API key** (G2) — so ad-sourced leads actually get a fast reply. Highest-leverage remaining item.
+7. **Meta MCP** — connect it for both Claude Code and Codex (see the setup section at the end of this doc / chat). The agent maps its tools on connection and verifies read/insights + create-paused-campaign before building anything. **Last blocker gating campaign build.**
+8. **Pixel ID + Conversions API token** — from Meta Events Manager; then set `NEXT_PUBLIC_META_PIXEL_ID` / `META_CAPI_ACCESS_TOKEN` in Vercel.
 
 ### Once Mehdi provides the above, the agent will (all reversible, nothing spends):
 - Set `NEXT_PUBLIC_META_PIXEL_ID` + `META_CAPI_ACCESS_TOKEN` (Vercel env) and confirm the pixel fires a test Lead event end-to-end (browser + CAPI dedup).
