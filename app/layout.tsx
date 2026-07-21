@@ -41,6 +41,13 @@ export const metadata: Metadata = {
       "Personalized website drafts and managed websites for Canadian small businesses.",
     type: "website",
   },
+  // Meta (Facebook) domain verification for the ad account. Renders
+  // <meta name="facebook-domain-verification" content="…" /> in <head>.
+  verification: {
+    other: {
+      "facebook-domain-verification": "0y6rrlx16wpjt61w9rq8t6zuqgi84p",
+    },
+  },
 };
 
 export default function RootLayout({
