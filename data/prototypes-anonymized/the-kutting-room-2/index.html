@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barber Shop — Demo Preview</title>
+<meta name="description" content="Unofficial preview concept for Barber Shop — barber in Cornwall, Ontario.">
+<meta name="robots" content="noindex,nofollow">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: var(--char);
+  color: var(--cream);
+  line-height: 1.7;
+  font-size: 16px;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+:root{
+  --char: #171310;
+  --char-lift: #211b17;
+  --char-elev: #2a221d;
+  --cream: #f2e8da;
+  --cream-dim: rgba(242, 232, 218, 0.66);
+  --cream-low: rgba(242, 232, 218, 0.4);
+  --accent: #d9a441;
+  --accent-deep: #b3822a;
+  --brass: rgba(217, 164, 65, 0.34);
+  --line: rgba(242, 232, 218, 0.14);
+  --shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  --radius: 10px;
+  --serif: Georgia, "Iowan Old Style", Didot, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* ---------- DEMO LOCK: banner ---------- */
+.demo-banner{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--accent);
+  color: var(--char);
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--accent-deep);
+}
+.demo-banner a{
+  text-decoration: underline;
+  color: var(--char);
+  font-weight: 800;
+}
+
+/* ---------- DEMO LOCK: corner watermark ---------- */
+.watermark{
+  position: fixed;
+  bottom: 18px; right: 18px;
+  z-index: 99;
+  background: rgba(23, 19, 16, 0.78);
+  border: 1px solid var(--brass);
+  color: var(--cream-dim);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border-radius: 6px;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}
+
+/* ---------- DEMO LOCK: claim modal ---------- */
+.claim-modal{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+}
+.claim-modal.show{display:flex}
+.claim-modal .box{
+  background: var(--char-lift);
+  border: 1px solid var(--brass);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.claim-modal h3{
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 24px;
+  color: var(--accent);
+  margin-bottom: 12px;
+  font-weight: 400;
+}
+.claim-modal p{
+  color: var(--cream-dim);
+  font-size: 15px;
+  margin-bottom: 22px;
+}
+.claim-modal .close{
+  background: var(--accent);
+  color: var(--char);
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- NAV ---------- */
+.nav{
+  position: fixed;
+  top: 38px;
+  left: 0; right: 0;
+  z-index: 50;
+  padding: 16px 0;
+  background: rgba(23, 19, 16, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.logo{
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--cream);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.logo .ampersand{
+  color: var(--accent);
+  font-style: italic;
+}
+.nav-links{
+  display: none;
+  gap: 32px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+.nav-links a{
+  position: relative;
+  transition: color 0.3s;
+}
+.nav-links a::after{
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.nav-links a:hover{color: var(--cream)}
+.nav-links a:hover::after{transform: scaleX(1)}
+.nav-cta{
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 10px 18px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+.nav-cta:hover{background: var(--accent); color: var(--char)}
+
+@media (min-width: 768px){
+  .nav-links{display:flex}
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  position: relative;
+  min-height: 100vh;
+  padding: 120px 24px 60px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.hero::before{
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    linear-gradient(180deg, rgba(23,19,16,.5) 0%, rgba(23,19,16,.7) 60%, rgba(23,19,16,.95) 100%),
+    url('./images/hero.jpg') center/cover no-repeat;
+  z-index: 1;
+}
+.hero::after{
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 30% 20%, rgba(217,164,65,.12), transparent 60%);
+  z-index: 2;
+  pointer-events: none;
+}
+.hero-content{
+  position: relative;
+  z-index: 3;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+.hero-eyebrow{
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+  font-family: var(--mono);
+}
+.hero h1{
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(40px, 9vw, 88px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--cream);
+  margin-bottom: 24px;
+}
+.hero h1 em{
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 400;
+}
+.hero-lede{
+  font-size: clamp(16px, 2.4vw, 19px);
+  color: var(--cream-dim);
+  max-width: 520px;
+  margin: 0 auto 36px;
+  line-height: 1.6;
+}
+.hero-ctas{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+.btn-primary{
+  background: var(--accent);
+  color: var(--char);
+  padding: 16px 32px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: all 0.3s;
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+}
+.btn-primary:hover{background: var(--accent-deep); transform: translateY(-1px)}
+.btn-ghost{
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid var(--cream-low);
+  padding: 16px 32px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: all 0.3s;
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+}
+.btn-ghost:hover{border-color: var(--accent); color: var(--accent)}
+
+.hero-marquee{
+  position: relative;
+  z-index: 3;
+  margin-top: 56px;
+  padding: 14px 0;
+  background: rgba(23,19,16,0.5);
+  border-top: 1px solid var(--brass);
+  border-bottom: 1px solid var(--brass);
+  overflow: hidden;
+  white-space: nowrap;
+}
+.hero-marquee-track{
+  display: inline-block;
+  animation: marquee 32s linear infinite;
+  color: var(--cream-dim);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.hero-marquee-track span{margin: 0 32px; color: var(--accent)}
+@keyframes marquee{
+  from{transform: translateX(0)}
+  to{transform: translateX(-50%)}
+}
+
+/* ---------- SECTIONS ---------- */
+.section{
+  padding: clamp(64px, 12vw, 120px) 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-eyebrow{
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-eyebrow::before{
+  content: '';
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+.section h2{
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(32px, 6vw, 54px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin-bottom: 20px;
+  max-width: 720px;
+}
+.section h2 em{
+  font-style: italic;
+  color: var(--accent);
+}
+.section-lede{
+  font-size: 17px;
+  color: var(--cream-dim);
+  max-width: 600px;
+  margin-bottom: 56px;
+  line-height: 1.6;
+}
+
+/* ---------- SERVICES (menu) ---------- */
+.services{
+  background: var(--char-lift);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.menu-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 8px;
+}
+@media (min-width: 640px){
+  .menu-grid{grid-template-columns: 1fr 1fr}
+}
+.menu-item{
+  background: var(--char-lift);
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.menu-item-head{
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  justify-content: space-between;
+}
+.menu-item h3{
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+}
+.menu-dots{
+  flex: 1;
+  border-bottom: 1px dotted var(--brass);
+  margin: 0 8px;
+  position: relative;
+  top: -4px;
+  min-width: 24px;
+}
+.menu-item .price{
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.menu-item p{
+  font-size: 14px;
+  color: var(--cream-dim);
+  line-height: 1.5;
+}
+
+/* ---------- STORY (split) ---------- */
+.story-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+  align-items: center;
+}
+@media (min-width: 900px){
+  .story-grid{grid-template-columns: 1.05fr 1fr; gap: 72px}
+}
+.story-image{
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  aspect-ratio: 4 / 5;
+  background: var(--char-lift);
+}
+.story-image img{
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: saturate(0.85) contrast(1.05);
+}
+.story-image::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(23,19,16,.35));
+  pointer-events: none;
+}
+.story-image .badge{
+  position: absolute;
+  bottom: 18px; left: 18px;
+  background: var(--accent);
+  color: var(--char);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+.story-body p{
+  color: var(--cream-dim);
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+.story-body p strong{
+  color: var(--cream);
+  font-weight: 600;
+}
+
+/* ---------- CRAFT (3-col) ---------- */
+.craft-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 8px;
+}
+@media (min-width: 720px){
+  .craft-grid{grid-template-columns: repeat(3, 1fr)}
+}
+.craft-card{
+  background: var(--char-lift);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 32px 26px;
+  position: relative;
+  transition: transform 0.4s, border-color 0.4s;
+}
+.craft-card:hover{
+  transform: translateY(-3px);
+  border-color: var(--brass);
+}
+.craft-num{
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 40px;
+  color: var(--accent);
+  margin-bottom: 18px;
+  font-weight: 400;
+  line-height: 1;
+}
+.craft-card h3{
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  color: var(--cream);
+}
+.craft-card p{
+  color: var(--cream-dim);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+/* ---------- VISIT ---------- */
+.visit{
+  background: var(--char-lift);
+  border-top: 1px solid var(--line);
+}
+.visit-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: start;
+}
+@media (min-width: 800px){
+  .visit-grid{grid-template-columns: 1fr 1fr; gap: 64px}
+}
+.visit-card{
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px;
+  background: var(--char);
+}
+.visit-card h3{
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+.visit-row{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dotted var(--line);
+  font-size: 15px;
+  color: var(--cream-dim);
+}
+.visit-row:last-child{border-bottom:none}
+.visit-row strong{
+  color: var(--cream);
+  font-weight: 500;
+  text-align: right;
+}
+.visit-cta{
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ---------- FOOTER ---------- */
+.footer{
+  background: var(--char);
+  border-top: 1px solid var(--line);
+  padding: 40px 24px 80px;
+  text-align: center;
+}
+.footer-logo{
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+.footer-logo .ampersand{color: var(--accent); font-style: italic}
+.footer-tag{
+  font-size: 13px;
+  color: var(--cream-low);
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+.footer-line{
+  font-size: 11px;
+  color: var(--cream-low);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-family: var(--mono);
+}
+.footer-line .accent{color: var(--accent)}
+
+/* ---------- focus ---------- */
+a:focus-visible, button:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .hero-marquee-track{animation: none}
+}
+</style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner" role="status">
+  Demo Preview — <a href="#" onclick="showClaim();return false;">Claim this website to make it live</a>
+</div>
+
+<!-- CORNER WATERMARK -->
+<div class="watermark" aria-hidden="true">Barber Shop · Preview</div>
+
+<!-- CLAIM MODAL -->
+<div class="claim-modal" id="claimModal" role="dialog" aria-modal="true" aria-labelledby="claimTitle">
+  <div class="box">
+    <h3 id="claimTitle">This is a demo preview</h3>
+    <p>Calls, bookings, and form submissions are disabled. Own Barber Shop? Claim this design and we&rsquo;ll bring it to life in a week.</p>
+    <button class="close" onclick="hideClaim()">Got it</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Primary">
+  <div class="nav-inner">
+    <a href="#" class="logo" onclick="showClaim();return false;">
+      The Kutting <span class="ampersand">&amp;</span> Room
+    </a>
+    <div class="nav-links">
+      <a href="#services" onclick="showClaim();return false;">Services</a>
+      <a href="#story" onclick="showClaim();return false;">The Chair</a>
+      <a href="#visit" onclick="showClaim();return false;">Visit</a>
+    </div>
+    <a href="#visit" class="nav-cta" onclick="showClaim();return false;">Book the chair</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Est. Cornwall · Ontario</div>
+    <h1>A clean cut. <em>A quiet hour.</em> A seat that knows you.</h1>
+    <p class="hero-lede">Walk into a barber shop that still keeps its brass polished and its blades sharp. Hot towel, classic shave, the same chair waiting for you next time.</p>
+    <div class="hero-ctas">
+      <a href="#visit" class="btn-primary" onclick="showClaim();return false;">Book the chair</a>
+      <a href="#services" class="btn-ghost" onclick="showClaim();return false;">See the menu</a>
+    </div>
+  </div>
+
+  <div class="hero-marquee" aria-hidden="true">
+    <div class="hero-marquee-track">
+      <span>·</span>Classic Cut <span>·</span>Hot Towel Shave <span>·</span>Beard Trim <span>·</span>Kids Cut <span>·</span>Senior Cut <span>·</span>Walk-Ins Welcome <span>·</span>Classic Cut <span>·</span>Hot Towel Shave <span>·</span>Beard Trim <span>·</span>Kids Cut <span>·</span>Senior Cut <span>·</span>Walk-Ins Welcome
+    </div>
+  </div>
+</header>
+
+<!-- SERVICES (the menu centerpiece) -->
+<section class="services" id="services">
+  <div class="section">
+    <div class="section-eyebrow">The Menu</div>
+    <h2>Honest work, <em>priced like it should be.</em></h2>
+    <p class="section-lede">No upsell, no rushed chair. Every service is done with the same care we&rsquo;d give our own father&rsquo;s haircut.</p>
+
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-item-head">
+          <h3>Classic Cut</h3>
+          <span class="menu-dots" aria-hidden="true"></span>
+          <span class="price">$24</span>
+        </div>
+        <p>Consultation, scissor cut, clipper finish, neck shave, and a quick style. Twenty minutes, the way it should be.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-head">
+          <h3>Hot Towel Shave</h3>
+          <span class="menu-dots" aria-hidden="true"></span>
+          <span class="price">$28</span>
+        </div>
+        <p>Steam towel, pre-shave oil, straight-razor finish, cold towel close, and a moisturizing balm. Old school on purpose.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-head">
+          <h3>Cut &amp; Beard</h3>
+          <span class="menu-dots" aria-hidden="true"></span>
+          <span class="price">$36</span>
+        </div>
+        <p>The full chair. Hair, beard shape-up, hot towel, and lined edges. For the week you actually want to look like a human again.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-head">
+          <h3>Beard Trim</h3>
+          <span class="menu-dots" aria-hidden="true"></span>
+          <span class="price">$16</span>
+        </div>
+        <p>Shape, line, and oil. Ten minutes in and out, looking like you meant it.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-head">
+          <h3>Kids Cut</h3>
+          <span class="menu-dots" aria-hidden="true"></span>
+          <span class="price">$18</span>
+        </div>
+        <p>Twelve and under. Patient chair, no rushing, lollipop if the line comes out clean.</p>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-head">
+          <h3>Senior Cut</h3>
+          <span class="menu-dots" aria-hidden="true"></span>
+          <span class="price">$20</span>
+        </div>
+        <p>Same classic cut, easier on the wallet. The corner of the shop has been yours for years.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="section" id="story">
+  <div class="story-grid">
+    <div class="story-image">
+      <img src="./images/interior.jpg" alt="Barber Shop interior, warm amber lighting and a vintage leather barber chair">
+      <div class="badge">[Service Area], Cornwall</div>
+    </div>
+    <div class="story-body">
+      <div class="section-eyebrow">The Chair</div>
+      <h2>A shop that <em>still looks like a shop.</em></h2>
+      <p>Barber Shop sits on Belmont Street, a few blocks from the water. It&rsquo;s the kind of place where the radio is on low, the clippers are loud, and the chair remembers you.</p>
+      <p>You walk in, you get a nod, you sit down. There&rsquo;s no booking app to wrestle with, no scrolling through service tiers. <strong>You tell us what you want, and we cut it.</strong></p>
+      <p>That&rsquo;s the whole pitch.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CRAFT -->
+<section class="section">
+  <div class="section-eyebrow">What we keep on the shelf</div>
+  <h2>Three things, <em>done properly.</em></h2>
+  <p class="section-lede">No product lines, no memberships, no loyalty app. A straight razor, a hot towel, and a chair that doesn&rsquo;t spin when you don&rsquo;t ask it to.</p>
+
+  <div class="craft-grid">
+    <article class="craft-card">
+      <div class="craft-num">i.</div>
+      <h3>The straight razor</h3>
+      <p>Honoured on the leather strop before every shave. The edge is checked twice, the blade is changed weekly, and the line is set with a hand you can&rsquo;t rush.</p>
+    </article>
+    <article class="craft-card">
+      <div class="craft-num">ii.</div>
+      <h3>The hot towel</h3>
+      <p>Steamed, wrung, tested on the wrist. Two minutes on the face, cold towel to close. The shave feels different when the prep is real.</p>
+    </article>
+    <article class="craft-card">
+      <div class="craft-num">iii.</div>
+      <h3>The chair</h3>
+      <p>Vintage leather, brass footrest, and a hydraulic that holds. You&rsquo;ll spend twenty minutes in it, and you&rsquo;ll leave looking like the same person &mdash; just tidier.</p>
+    </article>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section class="visit" id="visit">
+  <div class="section">
+    <div class="section-eyebrow">Find the chair</div>
+    <h2>Come in. <em>We&rsquo;ll be ready.</em></h2>
+    <p class="section-lede">Walk-ins are welcome, and the corner of Belmont and Second is easy to find. If you&rsquo;d rather lock in a time, send us a note and we&rsquo;ll hold the chair.</p>
+
+    <div class="visit-grid">
+      <div class="visit-card">
+        <h3>The Shop</h3>
+        <div class="visit-row"><span>Address</span><strong>[Service Area], Cornwall, Cornwall</strong></div>
+        <div class="visit-row"><span>Phone</span><strong>[Contact via Seaway Sites]</strong></div>
+        <div class="visit-row"><span>Neighbourhood</span><strong>Downtown Cornwall</strong></div>
+        <div class="visit-row"><span>Walk-ins</span><strong>Always welcome</strong></div>
+      </div>
+      <div class="visit-card">
+        <h3>Hours</h3>
+        <div class="visit-row"><span>Mon &mdash; Fri</span><strong>9:00 &mdash; 6:00</strong></div>
+        <div class="visit-row"><span>Saturday</span><strong>9:00 &mdash; 4:00</strong></div>
+        <div class="visit-row"><span>Sunday</span><strong>Closed</strong></div>
+        <div class="visit-row"><span>Holidays</span><strong>Closed</strong></div>
+      </div>
+    </div>
+
+    <div class="visit-cta">
+      <a href="#" class="btn-primary" onclick="showClaim();return false;">Call the shop</a>
+      <a href="#" class="btn-ghost" onclick="showClaim();return false;">Send a message</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">The Kutting <span class="ampersand">&amp;</span> Room</div>
+  <div class="footer-tag">[Service Area], Cornwall, Cornwall, Ontario</div>
+  <div class="footer-line">Demo preview by <span class="accent">Seaway Sites</span> &middot; Claim to make it live</div>
+</footer>
+
+<script>
+function showClaim(){
+  document.getElementById('claimModal').classList.add('show');
+}
+function hideClaim(){
+  document.getElementById('claimModal').classList.remove('show');
+}
+document.getElementById('claimModal').addEventListener('click', function(e){
+  if(e.target === this) hideClaim();
+});
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') hideClaim();
+});
+</script>
+
+</body>
+</html>

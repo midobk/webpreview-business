@@ -196,12 +196,14 @@ def anonymize_html(html: str, lead: dict) -> str:
         html = html.replace("</body>", '<footer class="showcase-credit">Concept by Seaway Sites</footer></body>')
 
     # Replace tagline-style copy that mentions the real industry specifically
-    html = re.sub(
-        rf"family-owned since \d+ years? in {re.escape(city)}",
-        f"a {label.lower()} serving {city}",
-        html,
-        flags=re.IGNORECASE,
-    )
+    # Guard against None city — some leads have no city and re.escape would crash.
+    if city:
+        html = re.sub(
+            rf"family-owned since \d+ years? in {re.escape(city)}",
+            f"a {label.lower()} serving {city}",
+            html,
+            flags=re.IGNORECASE,
+        )
 
     return html
 

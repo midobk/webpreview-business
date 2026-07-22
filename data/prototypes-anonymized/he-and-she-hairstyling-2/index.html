@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barber Shop — Demo Preview</title>
+  <meta name="description" content="Unofficial preview concept for Barber Shop — a barber in Cornwall, Ontario.">
+  <meta name="robots" content="noindex,nofollow">
+  <style>*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+:root {
+  --char: #171310;
+  --char-lift: #211b17;
+  --cream: #f2e8da;
+  --cream-dim: rgba(242,232,218,0.66);
+  --accent: #d9a441;
+  --accent-deep: #b3822a;
+  --brass: rgba(217,164,65,0.34);
+  --line: rgba(242,232,218,0.14);
+}
+body{
+  background: radial-gradient(ellipse at 30% 20%, rgba(217,164,65,.10), transparent 60%), var(--char);
+  color: var(--cream);
+  font-family: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration: 0.001ms !important; transition-duration: 0.001ms !important}
+}
+</style>
+</head>
+<body>
+<style>
+:root {
+  --char: #171310;
+  --char-lift: #211b17;
+  --char-deep: #0d0a08;
+  --cream: #f2e8da;
+  --cream-dim: rgba(242,232,218,.66);
+  --cream-faint: rgba(242,232,218,.38);
+  --accent: #d9a441;
+  --accent-deep: #b3822a;
+  --brass: rgba(217,164,65,.34);
+  --brass-strong: rgba(217,164,65,.55);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--char);
+  color: var(--cream);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+ul { list-style: none; }
+*:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+.serif { font-family: Georgia, "Times New Roman", Times, serif; font-weight: 400; }
+.tabular { font-variant-numeric: tabular-nums; }
+.demo-banner {
+  background: var(--accent);
+  color: var(--char);
+  text-align: center;
+  padding: 11px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--brass);
+  background: var(--char);
+  gap: 16px;
+}
+.nav .wordmark {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  color: var(--cream);
+  line-height: 1.2;
+  letter-spacing: 0.005em;
+}
+.nav .wordmark em { font-style: italic; color: var(--accent); }
+.nav .cta {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0 16px;
+  height: 44px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+.nav .cta:hover { background: var(--accent); color: var(--char); }
+.hero { background: var(--char-deep); border-bottom: 1px solid var(--brass); }
+.hero-img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/5;
+  background:
+    radial-gradient(ellipse 60% 45% at 32% 32%, rgba(217,164,65,.22), transparent 70%),
+    linear-gradient(160deg, #2c2017 0%, #15100c 60%, #0a0806 100%);
+  overflow: hidden;
+}
+.hero-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+.hero-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(13,10,8,0) 45%, var(--char-deep) 100%);
+  pointer-events: none;
+}
+.hero-content { padding: 36px 22px 56px; }
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+.hero h1 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 38px;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--cream);
+  margin-bottom: 18px;
+  max-width: 14ch;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero .tagline {
+  color: var(--cream-dim);
+  font-size: 16px;
+  line-height: 1.65;
+  margin-bottom: 30px;
+  max-width: 36ch;
+}
+.cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--accent);
+  color: var(--char);
+  border: 1px solid var(--accent);
+  padding: 0 24px;
+  height: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+.cta-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+.cta-primary:active { transform: translateY(1px); }
+.hero .phone-line {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--cream-dim);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.hero .phone-line a {
+  color: var(--accent);
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 16px;
+  border-bottom: 1px solid var(--brass);
+  padding-bottom: 2px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.hero .phone-line a:hover { color: var(--accent-deep); border-color: var(--accent); }
+.hero .address-line {
+  margin-top: 28px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+}
+.hero .address-line span { color: var(--accent); margin: 0 8px; }
+.services { padding: 72px 22px 80px; background: var(--char); }
+.section-title {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--cream);
+  margin-bottom: 14px;
+  max-width: 18ch;
+}
+.section-rule {
+  width: 40px;
+  height: 1px;
+  background: var(--accent);
+  margin-bottom: 22px;
+}
+.section-intro {
+  color: var(--cream-dim);
+  font-size: 15px;
+  line-height: 1.65;
+  margin-bottom: 36px;
+  max-width: 38ch;
+}
+.service-list { border-top: 1px solid var(--brass); }
+.service-item { padding: 22px 0 24px; border-bottom: 1px solid var(--brass); }
+.service-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+.service-name {
+  font-family: Georgia, serif;
+  font-size: 21px;
+  color: var(--cream);
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+}
+.service-leader {
+  flex: 1 1 auto;
+  min-width: 20px;
+  height: 0;
+  border-bottom: 2px dotted var(--brass);
+  align-self: center;
+  margin: 0 4px;
+  transform: translateY(-1px);
+}
+.service-price {
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.service-desc {
+  color: var(--cream-dim);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 44ch;
+}
+.craft { background: var(--char-lift); border-top: 1px solid var(--brass); border-bottom: 1px solid var(--brass); }
+.craft-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background:
+    radial-gradient(circle at 70% 30%, rgba(217,164,65,.16), transparent 60%),
+    linear-gradient(150deg, #2a2017, #100c08);
+  overflow: hidden;
+}
+.craft-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.82; }
+.craft-content { padding: 40px 22px 72px; }
+.craft p {
+  color: var(--cream-dim);
+  font-size: 16px;
+  line-height: 1.75;
+  margin-bottom: 14px;
+  max-width: 38ch;
+}
+.craft p:last-child { margin-bottom: 0; }
+.craft p .accent {
+  color: var(--cream);
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+.visit { padding: 72px 22px 80px; background: var(--char); }
+.visit-img {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background:
+    radial-gradient(ellipse at 50% 60%, rgba(217,164,65,.12), transparent 70%),
+    linear-gradient(180deg, #1a130d, #0a0806);
+  overflow: hidden;
+  margin-bottom: 36px;
+}
+.visit-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.78; }
+.visit h2 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.25;
+  margin-bottom: 22px;
+  color: var(--cream);
+  max-width: 16ch;
+}
+.visit .addr {
+  font-family: Georgia, serif;
+  font-style: italic;
+  color: var(--cream);
+  font-size: 19px;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+.visit .city {
+  color: var(--cream-dim);
+  font-size: 15px;
+  margin-bottom: 24px;
+}
+.visit .phone {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  font-size: 22px;
+  font-family: Georgia, serif;
+  letter-spacing: 0.01em;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--brass);
+  padding-bottom: 6px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  min-height: 44px;
+}
+.visit .phone:hover { color: var(--accent-deep); border-color: var(--accent); }
+.visit .note {
+  color: var(--cream-dim);
+  font-size: 14px;
+  line-height: 1.65;
+  margin-bottom: 30px;
+  max-width: 34ch;
+}
+.cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid var(--brass-strong);
+  padding: 0 22px;
+  height: 48px;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.cta-secondary:hover { color: var(--accent); border-color: var(--accent); background: rgba(217,164,65,.05); }
+.hours { padding: 64px 22px 72px; background: var(--char-deep); border-top: 1px solid var(--brass); }
+.hours-list { border-top: 1px solid var(--brass); max-width: 420px; }
+.hours-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--brass);
+  font-size: 15px;
+  gap: 16px;
+}
+.hours-list .day { font-family: Georgia, serif; color: var(--cream); }
+.hours-list .time {
+  font-variant-numeric: tabular-nums;
+  color: var(--cream-dim);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.hours-list li.closed .time {
+  color: var(--cream-faint);
+  font-style: italic;
+  font-family: Georgia, serif;
+  font-variant-numeric: normal;
+}
+.footer {
+  padding: 44px 22px 36px;
+  text-align: center;
+  background: var(--char);
+  border-top: 1px solid var(--brass);
+}
+.footer .seal {
+  font-family: Georgia, serif;
+  font-style: italic;
+  color: var(--cream-dim);
+  font-size: 14px;
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+.footer .demo {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream-faint);
+  margin-bottom: 22px;
+}
+.footer .claim {
+  display: inline-flex;
+  align-items: center;
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-bottom: 1px dotted var(--brass);
+  padding: 14px 6px;
+  min-height: 44px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.footer .claim:hover { color: var(--accent-deep); border-color: var(--accent); }
+@media (min-width: 768px) {
+  .nav { padding: 22px 36px; }
+  .nav .wordmark { font-size: 19px; }
+  .hero-img { aspect-ratio: 16/8; }
+  .hero-content { padding: 56px 36px 72px; max-width: 760px; }
+  .hero h1 { font-size: 54px; }
+  .hero .tagline { font-size: 17px; }
+  .services, .visit, .hours { padding-left: 36px; padding-right: 36px; }
+  .services .inner, .craft .inner, .visit .inner, .hours .inner { max-width: 1080px; margin: 0 auto; }
+  .section-title { font-size: 36px; }
+  .service-name { font-size: 23px; }
+  .service-price { font-size: 17px; }
+  .craft .inner { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; }
+  .craft-img { aspect-ratio: auto; height: 100%; min-height: 480px; }
+  .craft-content { padding: 64px 0 64px 56px; display: flex; flex-direction: column; justify-content: center; }
+  .visit .inner { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+  .visit-img { aspect-ratio: 4/5; margin-bottom: 0; }
+  .visit h2 { font-size: 30px; }
+  .hours { padding: 80px 36px 88px; }
+  .hours-list { max-width: 480px; }
+  .hours-list li { font-size: 16px; padding: 18px 0; }
+}
+@media (min-width: 1024px) {
+  .nav { padding: 24px 48px; }
+  .hero-content { padding: 72px 48px 88px; }
+  .hero h1 { font-size: 64px; }
+  .services { padding: 112px 48px 120px; }
+  .craft-content { padding-left: 80px; padding-right: 48px; }
+  .visit { padding: 112px 48px 120px; }
+  .hours { padding: 96px 48px 104px; }
+  .section-title { font-size: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+
+<div class="demo-banner" role="status">Demo Preview — Claim this website to make it live</div>
+
+<header class="nav" role="banner">
+  <a class="wordmark" href="#">He &amp; She <em>Hairstyling</em></a>
+  <a class="cta" href="#" onclick="alert('Claim this website to unlock the live version'); return false;">Call to book</a>
+</header>
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-img">
+    <img src="./images/hero.jpg" alt="Warm low-light interior of He &amp; She Hairstyling on Brookdale Avenue, with a barber chair and brass fixtures glowing under a single pendant." />
+  </div>
+  <div class="hero-content">
+    <p class="eyebrow">Cornwall · Ontario</p>
+    <h1 id="hero-title">Honest hair on <em>Brookdale</em>.</h1>
+    <p class="tagline">A neighbourhood hairstyling salon for cuts, colour, and styling — walk in, or call ahead to hold your chair.</p>
+    <a class="cta-primary" href="#" onclick="alert('Claim this website to unlock the live version'); return false;">Call to book</a>
+    <p class="phone-line">or call <a href="tel:[Contact via Seaway Sites]" onclick="alert('Claim this website to unlock the live version'); return false;">[Contact via Seaway Sites]</a></p>
+    <p class="address-line">[Service Area], Cornwall<span>·</span> Cornwall</p>
+  </div>
+</section>
+
+<section class="services" aria-labelledby="services-title">
+  <div class="inner">
+    <p class="eyebrow">The Menu</p>
+    <h2 id="services-title" class="section-title">Services &amp; prices</h2>
+    <div class="section-rule" aria-hidden="true"></div>
+    <p class="section-intro">Modest prices, honest work. No add-ons, no upsell — just the chair, the scissors, and the time it takes to do it right.</p>
+    <ul class="service-list">
+      <li class="service-item">
+        <div class="service-row">
+          <span class="service-name">Haircut</span>
+          <span class="service-leader" aria-hidden="true"></span>
+          <span class="service-price">$28</span>
+        </div>
+        <p class="service-desc">Wash, precision cut, and a clean finish. About forty minutes from chair to door.</p>
+      </li>
+      <li class="service-item">
+        <div class="service-row">
+          <span class="service-name">Wash &amp; Style</span>
+          <span class="service-leader" aria-hidden="true"></span>
+          <span class="service-price">$22</span>
+        </div>
+        <p class="service-desc">Shampoo, blow-dry, and a quiet conversation. For the days you just want to be set right.</p>
+      </li>
+      <li class="service-item">
+        <div class="service-row">
+          <span class="service-name">Colour</span>
+          <span class="service-leader" aria-hidden="true"></span>
+          <span class="service-price">$85</span>
+        </div>
+        <p class="service-desc">Single-process colour, roots to ends. A proper sitting with a proper read of the mirror.</p>
+      </li>
+      <li class="service-item">
+        <div class="service-row">
+          <span class="service-name">Beard Trim</span>
+          <span class="service-leader" aria-hidden="true"></span>
+          <span class="service-price">$18</span>
+        </div>
+        <p class="service-desc">Shape up, tidy, and a straight-razor finish. Pairs well with a haircut.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="craft" aria-labelledby="craft-title">
+  <div class="inner">
+    <div class="craft-img">
+      <img src="./images/craft.jpg" alt="A close view of a barber's hands at work, with brass clippers resting on a dark leather strop." />
+    </div>
+    <div class="craft-content">
+      <p class="eyebrow">The Chair</p>
+      <h2 id="craft-title" class="section-title">What a visit feels like.</h2>
+      <div class="section-rule" aria-hidden="true"></div>
+      <p>Pull the door and the street noise falls away. <span class="accent">The light is low, the music familiar,</span> and the chair holds the shape of a hundred quiet afternoons.</p>
+      <p>Forty minutes later, you walk out looking like the day you had in mind — and not a minute before.</p>
+    </div>
+  </div>
+</section>
+
+<section class="visit" aria-labelledby="visit-title">
+  <div class="inner">
+    <div class="visit-img">
+      <img src="./images/storefront.jpg" alt="The He &amp; She Hairstyling storefront on Brookdale Avenue in Cornwall, with a warmly lit window display." />
+    </div>
+    <div class="visit-content">
+      <p class="eyebrow">Find Us</p>
+      <h2 id="visit-title" class="section-title">Stop by the shop.</h2>
+      <div class="section-rule" aria-hidden="true"></div>
+      <p class="addr">[Service Area], Cornwall</p>
+      <p class="city">Cornwall, ON K6J 4P4</p>
+      <a class="phone" href="tel:[Contact via Seaway Sites]" onclick="alert('Claim this website to unlock the live version'); return false;">[Contact via Seaway Sites]</a>
+      <p class="note">Walk-ins welcome. Call ahead to hold your chair for cuts and colour.</p>
+      <a class="cta-secondary" href="#" onclick="alert('Claim this website to unlock the live version'); return false;">Get directions</a>
+    </div>
+  </div>
+</section>
+
+<section class="hours" aria-labelledby="hours-title">
+  <div class="inner">
+    <p class="eyebrow">When</p>
+    <h2 id="hours-title" class="section-title">Hours</h2>
+    <div class="section-rule" aria-hidden="true"></div>
+    <ul class="hours-list">
+      <li><span class="day">Tuesday – Friday</span><span class="time">9:00 – 17:30</span></li>
+      <li><span class="day">Saturday</span><span class="time">9:00 – 15:00</span></li>
+      <li class="closed"><span class="day">Sunday</span><span class="time">Closed</span></li>
+      <li class="closed"><span class="day">Monday</span><span class="time">Closed</span></li>
+    </ul>
+  </div>
+</section>
+
+<footer class="footer" role="contentinfo">
+  <p class="seal">Concept by Seaway Sites</p>
+  <p class="demo">Demo Preview</p>
+  <a class="claim" href="#" onclick="alert('Claim this website to unlock the live version'); return false;">Claim this website</a>
+</footer>
+</body>
+</html>
