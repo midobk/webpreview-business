@@ -1,11 +1,11 @@
 {
   "app/admin/_components/AdminShell.tsx": {
-    "mtime": 1783976427.5209737,
+    "mtime": 1784658446.8853338,
     "ast_hash": "95b5d71220bfdd9ad402aed713e6e877",
     "semantic_hash": ""
   },
   "app/admin/_components/AuthShell.tsx": {
-    "mtime": 1783962422.7469358,
+    "mtime": 1784658446.885432,
     "ast_hash": "18d21d39437177d7c6f8566bbcf15cfe",
     "semantic_hash": ""
   },
@@ -15,12 +15,12 @@
     "semantic_hash": "72f1c293ff8e545085295fe89d86d4f2"
   },
   "app/admin/_components/LeadDetailDrawer.tsx": {
-    "mtime": 1783976163.9803874,
-    "ast_hash": "bbc363d75fd363f011e7def3b033a11d",
+    "mtime": 1784658446.8857977,
+    "ast_hash": "8d7fd51be861b34e1d5692885b708c75",
     "semantic_hash": ""
   },
   "app/admin/_components/PrototypeCard.tsx": {
-    "mtime": 1783976189.3877282,
+    "mtime": 1784658446.8864121,
     "ast_hash": "f343affdd4a2b4a9c88c812bd7901167",
     "semantic_hash": ""
   },
@@ -30,7 +30,7 @@
     "semantic_hash": "e47a20c11bfdb8a6deda6b646be12e1a"
   },
   "app/admin/_components/StatusBadge.tsx": {
-    "mtime": 1783975933.4299154,
+    "mtime": 1784658446.8866622,
     "ast_hash": "4587f5931b6d3d285bd35e662bed3e3f",
     "semantic_hash": ""
   },
@@ -55,28 +55,28 @@
     "semantic_hash": "c11a31c6d4bca6b64bb95086099320cb"
   },
   "app/admin/_components/types.ts": {
-    "mtime": 1783975991.7162464,
+    "mtime": 1784658446.8870971,
     "ast_hash": "0c6a499541ea8026726215425d20306b",
     "semantic_hash": ""
   },
   "app/admin/dashboard/page.tsx": {
-    "mtime": 1783976171.7038932,
-    "ast_hash": "62c5df215aac7fa64b66a55238df7d92",
+    "mtime": 1784658446.8873734,
+    "ast_hash": "ed11f4329101211b3bfedfe6e60c5a47",
     "semantic_hash": ""
   },
   "app/admin/page.tsx": {
-    "mtime": 1783609846.080027,
-    "ast_hash": "dd25fb1a1ad75166cf6f75e1dc1a8c8d",
-    "semantic_hash": "dd25fb1a1ad75166cf6f75e1dc1a8c8d"
+    "mtime": 1784658446.8876388,
+    "ast_hash": "d4e1f5c3d0b50d51cf9a265aaeae2252",
+    "semantic_hash": ""
   },
   "app/admin/prototypes/page.tsx": {
-    "mtime": 1784043230.9440544,
-    "ast_hash": "c477aa00bc4ba78438be0b3c56af3d3e",
+    "mtime": 1784658446.8883655,
+    "ast_hash": "39ec60629d46d62422510422739bfd3b",
     "semantic_hash": ""
   },
   "app/admin/setup/page.tsx": {
-    "mtime": 1784043222.2714612,
-    "ast_hash": "ab53b4844532ea0861c6dccf23682b62",
+    "mtime": 1784658446.8886666,
+    "ast_hash": "a9724383ec24279c3a4b1693dc150600",
     "semantic_hash": ""
   },
   "app/api/admin/check-setup/route.ts": {
@@ -85,58 +85,58 @@
     "semantic_hash": "1eb29ebe9a791991910dc672e1b91ae8"
   },
   "app/api/admin/leads/route.ts": {
-    "mtime": 1784043195.9862978,
-    "ast_hash": "fdead4b16154d085a0e584df81b9cd03",
+    "mtime": 1784658446.8900611,
+    "ast_hash": "a7813c71f6c685479250163ab64cfff4",
     "semantic_hash": ""
   },
   "app/api/admin/login/route.ts": {
-    "mtime": 1784043195.9898214,
-    "ast_hash": "4386fbe2945fdc1689b09b3a70479adc",
+    "mtime": 1784658446.8903096,
+    "ast_hash": "111b09eac699e1cc9d63cfe3db58f692",
     "semantic_hash": ""
   },
   "app/api/admin/prototypes/route.ts": {
-    "mtime": 1784048057.0983746,
-    "ast_hash": "dbf938ee9c702f2adb2ab67c903dce1a",
+    "mtime": 1784658446.890933,
+    "ast_hash": "1977d14730e973c08b6011498bb10c7a",
     "semantic_hash": ""
   },
   "app/api/admin/setup/route.ts": {
-    "mtime": 1784043208.7389333,
-    "ast_hash": "fd625e66fbfc40368738266f8abb026e",
+    "mtime": 1784658446.8913107,
+    "ast_hash": "79437c77749aa1843b218f02bb727724",
     "semantic_hash": ""
   },
   "app/api/leads/route.ts": {
-    "mtime": 1783976395.5980551,
-    "ast_hash": "db9fed3664eff32fa7d03832c30909ff",
+    "mtime": 1784676880.9556131,
+    "ast_hash": "e08733a598f572204f5e15827dc4626b",
     "semantic_hash": ""
   },
   "app/api/preview-image/route.ts": {
-    "mtime": 1784043101.414618,
-    "ast_hash": "535f6c2986dcb299e03fc6595377c314",
+    "mtime": 1784658446.8920212,
+    "ast_hash": "3f1776f030de54c48ddb27d13992630c",
     "semantic_hash": ""
   },
   "app/api/showcase-image/route.ts": {
-    "mtime": 1784048057.1011581,
-    "ast_hash": "b32a3f3058858ef143a3b2879c0a77f7",
+    "mtime": 1784658446.892766,
+    "ast_hash": "b22ad040d95a78a535f479f05fcd9c02",
     "semantic_hash": ""
   },
   "app/layout.tsx": {
-    "mtime": 1783963456.684584,
-    "ast_hash": "f00bb4e7870daf9eb307bb7846d3c3f2",
+    "mtime": 1784676880.9559526,
+    "ast_hash": "17e053c363d9450edadc0886358920a6",
     "semantic_hash": ""
   },
   "app/page.tsx": {
-    "mtime": 1783963456.684236,
-    "ast_hash": "84f3ebc9982f891b440b75de9f5b8c76",
+    "mtime": 1784658446.8939838,
+    "ast_hash": "2ca79bce7bcf8637164876f9a17c8715",
     "semantic_hash": ""
   },
   "app/preview/[slug]/page.tsx": {
-    "mtime": 1784048057.1014602,
-    "ast_hash": "215245e4c47b222fca79da6513805a32",
+    "mtime": 1784658446.894587,
+    "ast_hash": "c71f94014cc615a0968e81204ff8947d",
     "semantic_hash": ""
   },
   "app/privacy/page.tsx": {
-    "mtime": 1783963558.8263743,
-    "ast_hash": "87a4581bd0976885ac2301043b74a8d3",
+    "mtime": 1784676880.956219,
+    "ast_hash": "014c62f82cf716a9e3f4cb2a622b7c0f",
     "semantic_hash": ""
   },
   "app/providers.tsx": {
@@ -145,22 +145,22 @@
     "semantic_hash": "6f943b5d295ddb5d30469bbd2e87bf83"
   },
   "app/showcase/_components/ShowcaseCTA.tsx": {
-    "mtime": 1783962422.7504761,
-    "ast_hash": "2de2abc81a108d4084fdd23e337647d8",
+    "mtime": 1784658446.8953626,
+    "ast_hash": "f4fa35a99785b9d17d475441abde11eb",
     "semantic_hash": ""
   },
   "app/showcase/_components/ShowcaseGrid.tsx": {
-    "mtime": 1783963389.3232436,
+    "mtime": 1784658446.8956637,
     "ast_hash": "ccc968fdd38a9a925e172367bcdb15a0",
     "semantic_hash": ""
   },
   "app/showcase/_components/ShowcaseHero.tsx": {
-    "mtime": 1783962422.7510033,
+    "mtime": 1784658446.8957732,
     "ast_hash": "b37a31e7ea313e4be28599bc79b0792a",
     "semantic_hash": ""
   },
   "app/showcase/page.tsx": {
-    "mtime": 1784048057.099463,
+    "mtime": 1784676880.9565294,
     "ast_hash": "ce153a4ca945f0bed205d266ac47e210",
     "semantic_hash": ""
   },
@@ -175,7 +175,7 @@
     "semantic_hash": "a88e3d65b7a113d3e5eefc65ce6e8509"
   },
   "components/motion/CountUp.tsx": {
-    "mtime": 1783962840.6334896,
+    "mtime": 1784658446.8969364,
     "ast_hash": "0579f254b124fcac5c396267fd8c03b3",
     "semantic_hash": ""
   },
@@ -230,8 +230,8 @@
     "semantic_hash": "58ac0e0fda1845d557039a3700ba8092"
   },
   "data/leads.json": {
-    "mtime": 1784041261.126188,
-    "ast_hash": "3d26a5dac42fd35325c737cb908f7b24",
+    "mtime": 1784658446.8984022,
+    "ast_hash": "5a4fdddecf7d1710ca12f7a05efa9ba5",
     "semantic_hash": ""
   },
   "data/outreach/bellas-hair-studio/email.json": {
@@ -350,14 +350,14 @@
     "semantic_hash": "b7fc8099926a4ce838b65008ca168592"
   },
   "data/outreach_logs.json": {
-    "mtime": 1783609846.0924222,
-    "ast_hash": "558587b1eeb8c4ed07e423a18e61abea",
-    "semantic_hash": "558587b1eeb8c4ed07e423a18e61abea"
+    "mtime": 1784658446.8990932,
+    "ast_hash": "c62764d9646041c70ea56c56e88f0609",
+    "semantic_hash": ""
   },
   "data/prototypes.json": {
-    "mtime": 1783611296.7751708,
-    "ast_hash": "837292b89a9a7f371d4856ae6b3d28f9",
-    "semantic_hash": "837292b89a9a7f371d4856ae6b3d28f9"
+    "mtime": 1784676880.9579363,
+    "ast_hash": "9ea06c903e9524cb4d5263f5957e06f3",
+    "semantic_hash": ""
   },
   "data/prototypes/seaway-cleaning-services/package.json": {
     "mtime": 1782245751.2875936,
@@ -365,32 +365,32 @@
     "semantic_hash": "44cce0ed107ad82d51c7c3d8ebad9b3e"
   },
   "eslint.config.mjs": {
-    "mtime": 1784044179.65045,
-    "ast_hash": "1d8af0cd4b5bfaec67b269190b23aba5",
+    "mtime": 1784658447.046697,
+    "ast_hash": "1ccf87b248a476366e8a53a750ff10d8",
     "semantic_hash": ""
   },
   "lib/auth-edge.ts": {
-    "mtime": 1783979712.410539,
-    "ast_hash": "dfcd725db9ba72a19b113942353f6754",
+    "mtime": 1784658447.0499027,
+    "ast_hash": "b4d0ffabd0c1c03c6722ae8a5934106d",
     "semantic_hash": ""
   },
   "lib/auth-server.ts": {
-    "mtime": 1784043195.9757257,
-    "ast_hash": "73e367962115bfde56863dc7324794b8",
+    "mtime": 1784658447.0503902,
+    "ast_hash": "3323fbcadcee122f601a13b8f02ced02",
     "semantic_hash": ""
   },
   "lib/auth.ts": {
-    "mtime": 1782245751.2925339,
-    "ast_hash": "92132dd6056d14d807ec7d6c9a71a670",
-    "semantic_hash": "92132dd6056d14d807ec7d6c9a71a670"
+    "mtime": 1784658447.050845,
+    "ast_hash": "023a96b22d0c64900e026476db81d621",
+    "semantic_hash": ""
   },
   "lib/cal-booking.ts": {
-    "mtime": 1783962422.752799,
-    "ast_hash": "8dbc993e13d41e680ae1512513a9a862",
+    "mtime": 1784658447.051632,
+    "ast_hash": "47b3acc61262d6e0d9cb383ad2e87ee4",
     "semantic_hash": ""
   },
   "lib/data-source.ts": {
-    "mtime": 1784043793.711991,
+    "mtime": 1784658447.05256,
     "ast_hash": "0d2f88c32c579eb6622e89666069d1c0",
     "semantic_hash": ""
   },
@@ -405,19 +405,19 @@
     "semantic_hash": "9575e8ccb4c9a5030777d8918b687541"
   },
   "lib/supabase.ts": {
-    "mtime": 1783962422.7529125,
+    "mtime": 1784658447.0544004,
     "ast_hash": "5a243da10831fed2f076807abe2ed9cd",
     "semantic_hash": ""
   },
   "lib/sync.ts": {
-    "mtime": 1782245751.2927907,
-    "ast_hash": "788d7fe7a7f95eab77f72bb160e05b9b",
-    "semantic_hash": "788d7fe7a7f95eab77f72bb160e05b9b"
+    "mtime": 1784658447.0546203,
+    "ast_hash": "f0d3cd12141c4465a5e4f9634e690fcc",
+    "semantic_hash": ""
   },
   "next.config.ts": {
-    "mtime": 1782245751.3061059,
-    "ast_hash": "9b77af189a21a7a64e4bd7a426f64176",
-    "semantic_hash": "9b77af189a21a7a64e4bd7a426f64176"
+    "mtime": 1784676880.9590368,
+    "ast_hash": "3d9b73d7465878015fc1584ebad330d4",
+    "semantic_hash": ""
   },
   "openclaw-workspace-state.json": {
     "mtime": 1783609846.0962183,
@@ -425,8 +425,8 @@
     "semantic_hash": "8d264d5d5b4197d831d0e2c6af15f61c"
   },
   "package.json": {
-    "mtime": 1783962422.753151,
-    "ast_hash": "96d20ae328b269f1c4457c50fc12bb2a",
+    "mtime": 1784658447.0579467,
+    "ast_hash": "287f29272ed8e3a1fd5b9b0dde5dd07f",
     "semantic_hash": ""
   },
   "postcss.config.mjs": {
@@ -450,17 +450,17 @@
     "semantic_hash": "e7eed3f23c2804072a9f341ba36b1a10"
   },
   "scripts/discover-leads/discover_places.py": {
-    "mtime": 1783962422.753661,
-    "ast_hash": "65fdc8a8ba6caaa4f166b78dd792107b",
+    "mtime": 1784658447.4138982,
+    "ast_hash": "bbe634337134506c1c879d74fe6f055e",
     "semantic_hash": ""
   },
   "scripts/draft-emails/draft_personalized_emails.py": {
-    "mtime": 1783962422.753991,
+    "mtime": 1784658447.4140537,
     "ast_hash": "bfb82dcfb6d9fbfed5cff975de18aee9",
     "semantic_hash": ""
   },
   "scripts/draft-sms/draft_sms.py": {
-    "mtime": 1783962422.75435,
+    "mtime": 1784658447.4141853,
     "ast_hash": "a0848828e9c781cbfd810f03813cc01a",
     "semantic_hash": ""
   },
@@ -470,18 +470,18 @@
     "semantic_hash": "a6d7efbb997bae94e67742b02acb4c0e"
   },
   "scripts/generate-prototype/generate.py": {
-    "mtime": 1783976257.512846,
-    "ast_hash": "68cbf89da9e89d44748c4bdc195b8c4e",
+    "mtime": 1784658447.414491,
+    "ast_hash": "2b0ae185ea7190684eb361e15c354a4c",
     "semantic_hash": ""
   },
   "scripts/generate-variant/generate_variant.py": {
-    "mtime": 1783976163.983563,
-    "ast_hash": "83df3a04e8b2c05439b1c7aef90258d2",
+    "mtime": 1784658447.4149203,
+    "ast_hash": "e3770f3d86feaff92bae3868c08c35e9",
     "semantic_hash": ""
   },
   "scripts/migrate_to_supabase.py": {
-    "mtime": 1783962422.7550356,
-    "ast_hash": "e73bce475c4ee5c511080f2025526a82",
+    "mtime": 1784658447.4152288,
+    "ast_hash": "3b19814c55079a25583624b7ad7be52d",
     "semantic_hash": ""
   },
   "scripts/regenerate-images/regenerate_images.py": {
@@ -505,9 +505,9 @@
     "semantic_hash": "51003ee4b328ee86ffccf7e070d5b3f7"
   },
   "scripts/screenshot/capture.js": {
-    "mtime": 1782245751.3111722,
-    "ast_hash": "8afe4f4e95493abe9c3c43d1706bf63d",
-    "semantic_hash": "8afe4f4e95493abe9c3c43d1706bf63d"
+    "mtime": 1784658447.4164402,
+    "ast_hash": "67b1b06a0db27f837d0ac3759f369a2f",
+    "semantic_hash": ""
   },
   "scripts/screenshot/playground.mjs": {
     "mtime": 1783610800.667762,
@@ -520,8 +520,8 @@
     "semantic_hash": "d0ea75f70dacddcba28b7ca403d97bbe"
   },
   "scripts/send-outreach/templates.ts": {
-    "mtime": 1784043781.5585837,
-    "ast_hash": "0dac28bf229d94a2511d498d290e858d",
+    "mtime": 1784658447.41708,
+    "ast_hash": "91965c5f61201bbacbacd606650a919a",
     "semantic_hash": ""
   },
   "scripts/setup-agentmail/setup_agentmail_test.py": {
@@ -530,17 +530,17 @@
     "semantic_hash": "a81161d87df69859ecdf01a8ba04fb19"
   },
   "scripts/showcase-score/score_showcase.py": {
-    "mtime": 1784043101.4218705,
+    "mtime": 1784658447.417387,
     "ast_hash": "76afceb11788fdea75b31290c599b868",
     "semantic_hash": ""
   },
   "scripts/supabase-schema.sql": {
-    "mtime": 1783975944.2380695,
-    "ast_hash": "c5840691dda508fd3613e1ab64a66a23",
+    "mtime": 1784658447.4179642,
+    "ast_hash": "4ad60cd0a2a0258fedc6cea78dda3500",
     "semantic_hash": ""
   },
   "scripts/sync_to_supabase.py": {
-    "mtime": 1783962422.7561421,
+    "mtime": 1784658447.4189277,
     "ast_hash": "74fb72ac61fea81340a82be31152004d",
     "semantic_hash": ""
   },
@@ -560,92 +560,92 @@
     "semantic_hash": "02fc19ad21338c2ab820a70136310db4"
   },
   "app/_landing/BeforeAfter.tsx": {
-    "mtime": 1783962981.797175,
+    "mtime": 1784658446.8829732,
     "ast_hash": "ba8e7abe056c672992d7027db649176b",
     "semantic_hash": ""
   },
   "app/_landing/LeadForm.tsx": {
-    "mtime": 1783976391.0168793,
-    "ast_hash": "fe67196bda625fc67bcccf38a37cc14b",
+    "mtime": 1784682273.2588067,
+    "ast_hash": "b8f4374c8863272ccc165db29a5d63ba",
     "semantic_hash": ""
   },
   "app/_landing/ProductionDemo.tsx": {
-    "mtime": 1783962959.26593,
-    "ast_hash": "5fff438a6c8833be6eabb55eb078ce8f",
+    "mtime": 1784658446.8835588,
+    "ast_hash": "39f5e5720c65d7b9d14a8cc414fdde34",
     "semantic_hash": ""
   },
   "app/_landing/ProductionProcess.tsx": {
-    "mtime": 1783962959.2650156,
+    "mtime": 1784658446.8838637,
     "ast_hash": "8a260ff31f4dc00ca3d1d09a92bead39",
     "semantic_hash": ""
   },
   "app/_landing/V2Landing.tsx": {
-    "mtime": 1783963541.394543,
-    "ast_hash": "04f8a63ac43b285beb5f2e2c8607ea72",
+    "mtime": 1784682932.049617,
+    "ast_hash": "34a8f84277911070e5a6e7984f8e72ed",
     "semantic_hash": ""
   },
   "app/_landing/content.ts": {
-    "mtime": 1783962959.2669647,
+    "mtime": 1784658446.8842704,
     "ast_hash": "2fc32dbd6026123df50676046722a6f5",
     "semantic_hash": ""
   },
   "app/classic/layout.tsx": {
-    "mtime": 1783962422.7486904,
+    "mtime": 1784658446.8932486,
     "ast_hash": "c01b5e9f74a712fe8bbccc004b17641d",
     "semantic_hash": ""
   },
   "app/classic/page.tsx": {
-    "mtime": 1783962422.7487698,
+    "mtime": 1784658446.893312,
     "ast_hash": "0fd53eaeb52d5c7e1858ec3d45e2ddc4",
     "semantic_hash": ""
   },
   "app/llms.txt/route.ts": {
-    "mtime": 1783962422.7491999,
-    "ast_hash": "a7030b6c3216c757520dd4ecb45ca52a",
+    "mtime": 1784658446.8937988,
+    "ast_hash": "61f6a10469457bcf3335b0eeadf04d64",
     "semantic_hash": ""
   },
   "app/opengraph-image.tsx": {
-    "mtime": 1783962422.7492733,
+    "mtime": 1784658446.893867,
     "ast_hash": "653d83b92a262f209a8693c3e47d550b",
     "semantic_hash": ""
   },
   "app/robots.ts": {
-    "mtime": 1783963456.6851246,
-    "ast_hash": "a4bd82496420c8fd5de522f8d1ecace7",
+    "mtime": 1784658446.8950844,
+    "ast_hash": "85f086240f6bff28614a5b7c7e5a12cb",
     "semantic_hash": ""
   },
   "app/showcase/layout.tsx": {
-    "mtime": 1783962422.7510679,
+    "mtime": 1784658446.8958426,
     "ast_hash": "94826339417594691eb349263c8df2b3",
     "semantic_hash": ""
   },
   "app/sitemap.ts": {
-    "mtime": 1783963456.6849382,
-    "ast_hash": "893e334cba011e783307b5cf9582ac82",
+    "mtime": 1784658446.8961656,
+    "ast_hash": "2b4c67057094ea319f94ed72abc834c4",
     "semantic_hash": ""
   },
   "app/v2/page.tsx": {
-    "mtime": 1783962422.75158,
+    "mtime": 1784658446.8962786,
     "ast_hash": "69630ad752f81a4e34cbc03134765021",
     "semantic_hash": ""
   },
   "data/showcase-source-overrides.json": {
-    "mtime": 1783962422.7524614,
+    "mtime": 1784658447.0447786,
     "ast_hash": "2913203d96feab69278c747310b3462a",
     "semantic_hash": ""
   },
   "scripts/sync-prototypes-to-supabase.mjs": {
-    "mtime": 1784043101.421329,
-    "ast_hash": "ab0ff448ad7f96505ce0a896a506250e",
+    "mtime": 1784658447.4188,
+    "ast_hash": "5ebf2a14c6db87e5f6323c2b979cfdda",
     "semantic_hash": ""
   },
   "supabase/migrations/20260710232500_add_prototype_industry.sql": {
-    "mtime": 1783962422.7563138,
+    "mtime": 1784658447.4190845,
     "ast_hash": "9356080bb35a6e708cc10a48e3833ecd",
     "semantic_hash": ""
   },
   "supabase/migrations/20260710234500_harden_public_helper_functions.sql": {
-    "mtime": 1783962422.7565327,
+    "mtime": 1784658447.4191463,
     "ast_hash": "d38d926fe337ddf8bbee28100148e4bc",
     "semantic_hash": ""
   },
@@ -655,7 +655,7 @@
     "semantic_hash": ""
   },
   ".github/workflows/showcase-integrity.yml": {
-    "mtime": 1783962422.744821,
+    "mtime": 1784658446.8806725,
     "ast_hash": "9761c3199ddd19ccef2355de4e7399e1",
     "semantic_hash": ""
   },
@@ -665,8 +665,8 @@
     "semantic_hash": ""
   },
   "AGENT_PLAN.md": {
-    "mtime": 1783975854.8079076,
-    "ast_hash": "d8a8dde3171d3977fff2a687c06a9a41",
+    "mtime": 1784681759.3959172,
+    "ast_hash": "a326a183eb0656074cc3e5eb9df8f755",
     "semantic_hash": ""
   },
   "CLAUDE.md": {
@@ -675,17 +675,17 @@
     "semantic_hash": ""
   },
   "IDENTITY.md": {
-    "mtime": 1782245751.2257826,
-    "ast_hash": "79512f221df65a1824c78a72f64e046a",
+    "mtime": 1784658446.8818989,
+    "ast_hash": "6c1c5cd32422631b97a4947b4850e570",
     "semantic_hash": ""
   },
   "MEMORY.md": {
-    "mtime": 1783962422.7452033,
-    "ast_hash": "148234da030344e714381d0fb6a09254",
+    "mtime": 1784676880.954989,
+    "ast_hash": "026cf20e7a20d4bd5e407546ab518c9d",
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1784043866.6345947,
+    "mtime": 1784658446.8824735,
     "ast_hash": "ecec1df40c98c31d3f061add6d25c411",
     "semantic_hash": ""
   },
@@ -800,7 +800,7 @@
     "semantic_hash": ""
   },
   "data/prototypes/bellas-hair-studio/index.html": {
-    "mtime": 1783962422.7519991,
+    "mtime": 1784658446.8999789,
     "ast_hash": "ad4f3d142c7b960f046cb76c90c39365",
     "semantic_hash": ""
   },
@@ -845,7 +845,7 @@
     "semantic_hash": ""
   },
   "data/prototypes/seaway-cleaning-services/index.html": {
-    "mtime": 1783962422.752378,
+    "mtime": 1784658447.002102,
     "ast_hash": "f568cb1e1a9fdb9e30667aaf7aa636f2",
     "semantic_hash": ""
   },
@@ -880,8 +880,8 @@
     "semantic_hash": ""
   },
   "docs/PROTOTYPE_QA.md": {
-    "mtime": 1783975854.8058202,
-    "ast_hash": "8925a3b1487eec39d0ea6cf4b751a280",
+    "mtime": 1784658447.0458195,
+    "ast_hash": "0526ee5a63933fb216d09484af94588f",
     "semantic_hash": ""
   },
   "docs/PROTOTYPE_RULES.md": {
@@ -895,7 +895,7 @@
     "semantic_hash": ""
   },
   "docs/SECURITY_REVIEW.md": {
-    "mtime": 1783976055.9143069,
+    "mtime": 1784658447.0462062,
     "ast_hash": "352158ed55969019d99b1d80dc44af3e",
     "semantic_hash": ""
   },
@@ -905,8 +905,8 @@
     "semantic_hash": ""
   },
   "docs/SHOWCASE_SYNC_AND_SUPABASE_RUNBOOK.md": {
-    "mtime": 1784043866.6476533,
-    "ast_hash": "b0ae09b21718832a9cb95668ee183a19",
+    "mtime": 1784658447.0464494,
+    "ast_hash": "92d688bb4ffab8f28e27f3049e2fa539",
     "semantic_hash": ""
   },
   "docs/TOOL_RESEARCH.md": {
@@ -925,8 +925,8 @@
     "semantic_hash": ""
   },
   "scripts/send-outreach/README.md": {
-    "mtime": 1782245751.3112717,
-    "ast_hash": "501cc195dc806b0320d4a81fdf4c2378",
+    "mtime": 1784658447.4169447,
+    "ast_hash": "6841a589cc8b49aae921a69490aa86a8",
     "semantic_hash": ""
   },
   "data/prototypes/bellas-hair-studio/images/hero.jpg": {
@@ -1205,7 +1205,7 @@
     "semantic_hash": ""
   },
   "public/prototype-screenshots/bellas-hair-studio-desktop.svg": {
-    "mtime": 1783962422.753283,
+    "mtime": 1784658447.2492654,
     "ast_hash": "3cd553bb55acf023b092dab9ade1e12b",
     "semantic_hash": ""
   },
@@ -1330,7 +1330,7 @@
     "semantic_hash": ""
   },
   "public/prototype-screenshots/seaway-cleaning-services-desktop.svg": {
-    "mtime": 1783962422.7533932,
+    "mtime": 1784658447.3663952,
     "ast_hash": "e2d727384e3aff820dcdcffd2f3447d2",
     "semantic_hash": ""
   },
@@ -1370,28 +1370,28 @@
     "semantic_hash": ""
   },
   "lib/site-config.ts": {
-    "mtime": 1783963456.6834552,
+    "mtime": 1784658447.054261,
     "ast_hash": "05507aaba09f8f6b9fb6147d476c38c1",
     "semantic_hash": ""
   },
   "app/api/revision-requests/route.ts": {
-    "mtime": 1784043902.0864434,
-    "ast_hash": "636895dc8a2c053b4cea1e15bb50a9c5",
+    "mtime": 1784658446.8922467,
+    "ast_hash": "c1db74e92e46e9c046c35e1df7e50edd",
     "semantic_hash": ""
   },
   "app/preview/[slug]/RevisionRequest.tsx": {
-    "mtime": 1783975933.4281802,
-    "ast_hash": "208da44e92d3c2c8aef2ba5f7b8eca83",
+    "mtime": 1784658446.8942206,
+    "ast_hash": "a2a0710ccb867d9e18a7cbd49044900d",
     "semantic_hash": ""
   },
   "supabase/migrations/20260713120000_add_revision_requests.sql": {
-    "mtime": 1783975933.4303122,
-    "ast_hash": "0a51205bc4fa98e5f7b015b47fd849db",
+    "mtime": 1784658447.4194288,
+    "ast_hash": "e76c484330e0389f9a1058bfc9ce2ff9",
     "semantic_hash": ""
   },
   "docs/PROTOTYPE_GENERATION_PLAYBOOK.md": {
-    "mtime": 1783975854.8048027,
-    "ast_hash": "eee92e1cbaffdc6d537c5a458ec1d17d",
+    "mtime": 1784658447.0452354,
+    "ast_hash": "45a89eac6910b32c4103e6f6cb8ed820",
     "semantic_hash": ""
   },
   ".playwright-cli/page-2026-07-13T20-58-44-292Z.yml": {
@@ -1410,28 +1410,848 @@
     "semantic_hash": ""
   },
   "app/api/admin/check-session/route.ts": {
-    "mtime": 1784041163.1032598,
+    "mtime": 1784658446.8897617,
     "ast_hash": "e5398f436c0ea964e8647870f028537b",
     "semantic_hash": ""
   },
   "app/api/unsubscribe/route.ts": {
-    "mtime": 1784043249.5116246,
-    "ast_hash": "e32cfee7148020c71efdffbf90959592",
+    "mtime": 1784658446.8931394,
+    "ast_hash": "bbed218e00485ba38375910e101ba720",
     "semantic_hash": ""
   },
   "lib/request-guard.ts": {
-    "mtime": 1784043195.9727287,
-    "ast_hash": "9df041d86b48afe1b56de9a5f153c54b",
+    "mtime": 1784658447.0537505,
+    "ast_hash": "ddf164825c49ebb7283f2fa7c6c0a51f",
     "semantic_hash": ""
   },
   "proxy.ts": {
-    "mtime": 1784043397.8102236,
-    "ast_hash": "692f3e1e5e5b607dd833ae5569821880",
+    "mtime": 1784658447.2491252,
+    "ast_hash": "bbbb507602c3ce1191810864ed16532c",
     "semantic_hash": ""
   },
   "lib/showcase-policy.ts": {
-    "mtime": 1784048057.0976458,
+    "mtime": 1784658447.0539382,
     "ast_hash": "b87628a2d4015dda9ca09b2e4bb8866b",
+    "semantic_hash": ""
+  },
+  ".agents/skills/frontier-web-craft/scripts/render_check.py": {
+    "mtime": 1784658446.8798354,
+    "ast_hash": "354070f0b2b19a373965624a51730fac",
+    "semantic_hash": ""
+  },
+  ".agents/skills/frontier-web-craft/scripts/review_page.py": {
+    "mtime": 1784658446.8799279,
+    "ast_hash": "38bb8a471cce958605294e8bdb47728e",
+    "semantic_hash": ""
+  },
+  ".mcp.json": {
+    "mtime": 1784660944.0398798,
+    "ast_hash": "fc8c9892f7bb337c321f0eaa21004029",
+    "semantic_hash": ""
+  },
+  "components/MetaPixel.tsx": {
+    "mtime": 1784676880.956746,
+    "ast_hash": "aef1a861ed1bc4d4f838121af917122f",
+    "semantic_hash": ""
+  },
+  "data/outreach/bro\u2019s-fade-2/email.json": {
+    "mtime": 1784658446.8985732,
+    "ast_hash": "deb573654a715094098288dffa6bc5fe",
+    "semantic_hash": ""
+  },
+  "data/outreach/captain-georges-fish-and-chips-cornwall/email.json": {
+    "mtime": 1784658446.8986738,
+    "ast_hash": "75e1c71bd399c94c5d8490b07b912a15",
+    "semantic_hash": ""
+  },
+  "data/outreach/lolas-pub-and-grub/email.json": {
+    "mtime": 1784658446.8987727,
+    "ast_hash": "ef59abae13eade7382fe07eb44991c67",
+    "semantic_hash": ""
+  },
+  "data/outreach/louis-pizzeria/email.json": {
+    "mtime": 1784658446.8988688,
+    "ast_hash": "9f756352cecfd972ff7372263757d324",
+    "semantic_hash": ""
+  },
+  "data/outreach/the-spicy-pearl/email.json": {
+    "mtime": 1784658446.8989656,
+    "ast_hash": "b24dc95aa58da4c278240cab9afb38e0",
+    "semantic_hash": ""
+  },
+  "lib/attribution.ts": {
+    "mtime": 1784676880.9585578,
+    "ast_hash": "efaed7a0ba1f95b63c165a12a50bc749",
+    "semantic_hash": ""
+  },
+  "lib/draft-preview-token.ts": {
+    "mtime": 1784658447.0533812,
+    "ast_hash": "14b36618f86c80933c57c0dd78ed8434",
+    "semantic_hash": ""
+  },
+  "lib/meta-capi.ts": {
+    "mtime": 1784676880.958811,
+    "ast_hash": "2ff2c3a7b5405ab9fe87f4db21a54fb9",
+    "semantic_hash": ""
+  },
+  "lib/unsubscribe-token.ts": {
+    "mtime": 1784658447.0549347,
+    "ast_hash": "0808b58d9ea200debb21153ca0f2b010",
+    "semantic_hash": ""
+  },
+  "scripts/pipeline/_gen_gilles.py": {
+    "mtime": 1784658447.4153588,
+    "ast_hash": "d1fa6f84204651f1a10ac62ee4e8aa6a",
+    "semantic_hash": ""
+  },
+  "scripts/pipeline/_gen_he_and_she.py": {
+    "mtime": 1784658447.415449,
+    "ast_hash": "12c4a51f4a0b07a1f3ae0b066496e645",
+    "semantic_hash": ""
+  },
+  "scripts/pipeline/_gen_posh_nosh.py": {
+    "mtime": 1784658447.4155614,
+    "ast_hash": "cce20d63746882833dc2d176f53bdddf",
+    "semantic_hash": ""
+  },
+  "scripts/pipeline/_gen_quilles.py": {
+    "mtime": 1784658447.4156322,
+    "ast_hash": "7f1f43ed1233fec2a181dcb1421c802d",
+    "semantic_hash": ""
+  },
+  "scripts/pipeline/screenshot_proto.mjs": {
+    "mtime": 1784658447.4157293,
+    "ast_hash": "4acc8e727773b1d4a2c70a52442e9323",
+    "semantic_hash": ""
+  },
+  "scripts/pipeline/send_preview_email.py": {
+    "mtime": 1784676880.9595442,
+    "ast_hash": "52262afd1392c7b51abc0ac2d5103e92",
+    "semantic_hash": ""
+  },
+  "scripts/pipeline/supabase_client.py": {
+    "mtime": 1784658447.4158974,
+    "ast_hash": "96dbf41cab984d5d5ea472299b3dcdba",
+    "semantic_hash": ""
+  },
+  "scripts/run-with-env.sh": {
+    "mtime": 1784658447.4161499,
+    "ast_hash": "e929dd90f84a26aca6b28248f01b8eb4",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/20260714120000_add_append_lead_note.sql": {
+    "mtime": 1784658447.4196577,
+    "ast_hash": "ecc2e0eff5f12475c746191684c79f95",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/20260720130000_add_lead_attribution.sql": {
+    "mtime": 1784676880.9597373,
+    "ast_hash": "f3c2aa7e0beb36cf755aff6db59d3da5",
+    "semantic_hash": ""
+  },
+  ".agents/skills/frontend-design/LICENSE.txt": {
+    "mtime": 1784658446.877386,
+    "ast_hash": "2ee41112a44fe7014dce33e26468ba93",
+    "semantic_hash": ""
+  },
+  ".agents/skills/frontend-design/SKILL.md": {
+    "mtime": 1784658446.878264,
+    "ast_hash": "0765634f998125d1d7bfe259f31ba3c1",
+    "semantic_hash": ""
+  },
+  ".agents/skills/frontier-web-craft/SKILL.md": {
+    "mtime": 1784658446.8784404,
+    "ast_hash": "cd31c6bbd507dd362299cfaac7304dc8",
+    "semantic_hash": ""
+  },
+  ".agents/skills/frontier-web-craft/assets/skeleton.html": {
+    "mtime": 1784658446.8785872,
+    "ast_hash": "216af6512df55f8ce931cf186beba278",
+    "semantic_hash": ""
+  },
+  ".agents/skills/frontier-web-craft/references/copywriting.md": {
+    "mtime": 1784676880.951769,
+    "ast_hash": "ae8052b026046a47e8d18b433019461b",
+    "semantic_hash": ""
+  },
+  ".agents/skills/frontier-web-craft/references/design-directions.md": {
+    "mtime": 1784658446.8789885,
+    "ast_hash": "93284689362e5cd16310ef846d0d6ac1",
+    "semantic_hash": ""
+  },
+  ".agents/skills/frontier-web-craft/references/page-anatomy.md": {
+    "mtime": 1784676880.95239,
+    "ast_hash": "951bc48ae7c0e3424a0417fb2d2ea515",
+    "semantic_hash": ""
+  },
+  ".agents/skills/frontier-web-craft/references/quality-gate.md": {
+    "mtime": 1784658446.8796945,
+    "ast_hash": "e749ddda4e492d6816802ceda52bcf6d",
+    "semantic_hash": ""
+  },
+  ".agents/skills/premium-saas-design/SKILL.md": {
+    "mtime": 1784658446.8802469,
+    "ast_hash": "879fcc7325b574b6037f551a2b2e4596",
+    "semantic_hash": ""
+  },
+  ".playwright-cli/page-2026-07-22T00-42-53-343Z.yml": {
+    "mtime": 1784680973.3484526,
+    "ast_hash": "bb281753902856b676d159c0b4914b45",
+    "semantic_hash": ""
+  },
+  ".playwright-cli/page-2026-07-22T00-44-00-161Z.yml": {
+    "mtime": 1784681040.1641285,
+    "ast_hash": "5bcf1de284af9e4eea04b128e14a09d5",
+    "semantic_hash": ""
+  },
+  ".playwright-cli/page-2026-07-22T00-53-43-194Z.yml": {
+    "mtime": 1784681623.1949604,
+    "ast_hash": "0d17cd0b6a3a31d9a6f6b3d690352713",
+    "semantic_hash": ""
+  },
+  ".playwright-cli/page-2026-07-22T00-56-40-690Z.yml": {
+    "mtime": 1784681800.6912475,
+    "ast_hash": "bb281753902856b676d159c0b4914b45",
+    "semantic_hash": ""
+  },
+  ".playwright-cli/page-2026-07-22T00-58-31-549Z.yml": {
+    "mtime": 1784681911.5563757,
+    "ast_hash": "bb281753902856b676d159c0b4914b45",
+    "semantic_hash": ""
+  },
+  ".playwright-mcp/page-2026-07-22T01-07-44-943Z.yml": {
+    "mtime": 1784682464.9450533,
+    "ast_hash": "c9a06754e3f8ee19b5c90e15ff94a5ab",
+    "semantic_hash": ""
+  },
+  ".playwright-mcp/page-2026-07-22T01-09-18-739Z.yml": {
+    "mtime": 1784682558.7416759,
+    "ast_hash": "2f3a270ec9506cefdf6f488ee4fa4eed",
+    "semantic_hash": ""
+  },
+  ".playwright-mcp/page-2026-07-22T01-09-59-476Z.yml": {
+    "mtime": 1784682599.4790828,
+    "ast_hash": "2f3a270ec9506cefdf6f488ee4fa4eed",
+    "semantic_hash": ""
+  },
+  ".playwright-mcp/page-2026-07-22T01-10-31-943Z.yml": {
+    "mtime": 1784682631.9490976,
+    "ast_hash": "6e1b8005c1ee4a7d5b0003c9bd13e24d",
+    "semantic_hash": ""
+  },
+  ".playwright-mcp/page-2026-07-22T01-10-57-361Z.yml": {
+    "mtime": 1784682657.3641129,
+    "ast_hash": "bcaf58e8709342618059c1f702534711",
+    "semantic_hash": ""
+  },
+  ".playwright-mcp/page-2026-07-22T01-11-46-086Z.yml": {
+    "mtime": 1784682706.090734,
+    "ast_hash": "6caaea562280288237c79282cbbc9d5e",
+    "semantic_hash": ""
+  },
+  ".playwright-mcp/page-2026-07-22T01-12-23-210Z.yml": {
+    "mtime": 1784682743.2152019,
+    "ast_hash": "6caaea562280288237c79282cbbc9d5e",
+    "semantic_hash": ""
+  },
+  ".playwright-mcp/page-2026-07-22T01-12-55-881Z.yml": {
+    "mtime": 1784682775.88766,
+    "ast_hash": "fd9809fd48a105bee48974094e39379e",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/bro\u2019s-fade-2/index.html": {
+    "mtime": 1784658446.899224,
+    "ast_hash": "f4443def8a5fd5285b94eb02ee8886cc",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/captain-georges-fish-and-chips-cornwall/index.html": {
+    "mtime": 1784658446.8993418,
+    "ast_hash": "7e466c0ea40e8ddd347a2e7ed43da3f3",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/lolas-pub-and-grub/index.html": {
+    "mtime": 1784658446.8994656,
+    "ast_hash": "b5348f551080c6b89a0913772c747c8d",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/louis-pizzeria/index.html": {
+    "mtime": 1784658446.8995821,
+    "ast_hash": "2829768518ccdb52d88e79c807f2d81e",
+    "semantic_hash": ""
+  },
+  "data/prototypes-anonymized/the-spicy-pearl/index.html": {
+    "mtime": 1784658446.899689,
+    "ast_hash": "c82e036f291fe3339ced1df160028d3f",
+    "semantic_hash": ""
+  },
+  "data/prototypes/bro\u2019s-fade-2/index.html": {
+    "mtime": 1784658446.9003105,
+    "ast_hash": "f07b4faf6ab259a0454ec280bede807e",
+    "semantic_hash": ""
+  },
+  "data/prototypes/captain-georges-fish-and-chips-cornwall/index.html": {
+    "mtime": 1784658446.9006166,
+    "ast_hash": "cae1413f19d23276f3170dc2d384be72",
+    "semantic_hash": ""
+  },
+  "data/prototypes/chop-hair-design-2/index.html": {
+    "mtime": 1784658446.9120762,
+    "ast_hash": "7e4a7989b7a54a74ae6f725387fd9264",
+    "semantic_hash": ""
+  },
+  "data/prototypes/frofade/index.html": {
+    "mtime": 1784658446.925636,
+    "ast_hash": "9e9f5886d34fa0ece418cfb46e595c4f",
+    "semantic_hash": ""
+  },
+  "data/prototypes/gilles-3rd-gen-barber-shop/index.html": {
+    "mtime": 1784658446.934945,
+    "ast_hash": "d56307d518450af8812c2910a6e22420",
+    "semantic_hash": ""
+  },
+  "data/prototypes/he-and-she-hairstyling-2/index.html": {
+    "mtime": 1784658446.9508913,
+    "ast_hash": "01efa4a2157296e193936797ca36433c",
+    "semantic_hash": ""
+  },
+  "data/prototypes/kika-hairstylist-for-all-2/index.html": {
+    "mtime": 1784658446.967719,
+    "ast_hash": "025382537cfcdf1a4b547a7f1260e9f1",
+    "semantic_hash": ""
+  },
+  "data/prototypes/kreative-kuts-2/index.html": {
+    "mtime": 1784658446.9804177,
+    "ast_hash": "05ac7708cb63337dcf58529594cfed57",
+    "semantic_hash": ""
+  },
+  "data/prototypes/lolas-pub-and-grub/index.html": {
+    "mtime": 1784658446.9807937,
+    "ast_hash": "b00b00cf44827d9539976a3c70bffd47",
+    "semantic_hash": ""
+  },
+  "data/prototypes/louis-pizzeria/index.html": {
+    "mtime": 1784658446.9811342,
+    "ast_hash": "5c3da9330e8162967d9672b911f5b950",
+    "semantic_hash": ""
+  },
+  "data/prototypes/posh-nosh-pastry-confectionery-f0d98ed6/index.html": {
+    "mtime": 1784658446.9858015,
+    "ast_hash": "9607747173b6eea4e046422d8ef970af",
+    "semantic_hash": ""
+  },
+  "data/prototypes/prestige-cuts-2/index.html": {
+    "mtime": 1784658446.992614,
+    "ast_hash": "88ec600f3214f6c1c45da79f92b9b6d6",
+    "semantic_hash": ""
+  },
+  "data/prototypes/quilles-nativit-bowling-ad6e7e78/index.html": {
+    "mtime": 1784658446.9965768,
+    "ast_hash": "785396ca984fa8ab9a886071223d07ff",
+    "semantic_hash": ""
+  },
+  "data/prototypes/roy-florist-fc481a49/index.html": {
+    "mtime": 1784658447.0019498,
+    "ast_hash": "285fd185afd4427adf54cbeadb7cd091",
+    "semantic_hash": ""
+  },
+  "data/prototypes/seguin-barber-shop-2/index.html": {
+    "mtime": 1784658447.013685,
+    "ast_hash": "fa637d0932d17d5dec3b3685b863e4aa",
+    "semantic_hash": ""
+  },
+  "data/prototypes/sigma-hairstyling-2/index.html": {
+    "mtime": 1784658447.0294805,
+    "ast_hash": "90ac833de20afbd6ce11b7b5fd94d383",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-kutting-room-2/index.html": {
+    "mtime": 1784658447.0443451,
+    "ast_hash": "ff66a47d27f03bed7b51eff7e385edcd",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-spicy-pearl/index.html": {
+    "mtime": 1784658447.0447092,
+    "ast_hash": "346c3318f938b366387213611b9cb9b5",
+    "semantic_hash": ""
+  },
+  "docs/META_ADS_PLAN.md": {
+    "mtime": 1784681759.396848,
+    "ast_hash": "56564ddc8c98814860ff065f49ecdca2",
+    "semantic_hash": ""
+  },
+  "memory/2026-07-13-2211.md": {
+    "mtime": 1784658447.0571792,
+    "ast_hash": "b4b36ea6fb7ef241fe9118655502d841",
+    "semantic_hash": ""
+  },
+  "memory/2026-07-13-2231.md": {
+    "mtime": 1784658447.0572453,
+    "ast_hash": "fe4cc04885e622460c5ada6207ff6960",
+    "semantic_hash": ""
+  },
+  "data/prototypes/bro\u2019s-fade-2/images/hero.jpg": {
+    "mtime": 1784658446.9001265,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/bro\u2019s-fade-2/images/section_1.jpg": {
+    "mtime": 1784658446.9001837,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/bro\u2019s-fade-2/images/section_2.jpg": {
+    "mtime": 1784658446.9002411,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/captain-georges-fish-and-chips-cornwall/images/hero.jpg": {
+    "mtime": 1784658446.9004467,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/captain-georges-fish-and-chips-cornwall/images/section_1.jpg": {
+    "mtime": 1784658446.9005032,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/captain-georges-fish-and-chips-cornwall/images/section_2.jpg": {
+    "mtime": 1784658446.9005573,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/chop-hair-design-2/images/detail.png": {
+    "mtime": 1784658446.9053307,
+    "ast_hash": "915d73490d93b2e3c5374a1dd24eaf54",
+    "semantic_hash": ""
+  },
+  "data/prototypes/chop-hair-design-2/images/hero.png": {
+    "mtime": 1784658446.9075286,
+    "ast_hash": "f38d373ea7096ae11beab1ffe6376f14",
+    "semantic_hash": ""
+  },
+  "data/prototypes/chop-hair-design-2/images/service.png": {
+    "mtime": 1784658446.9117427,
+    "ast_hash": "45f749fd408056e31faa4953b83eb075",
+    "semantic_hash": ""
+  },
+  "data/prototypes/frofade/images/hero.jpg": {
+    "mtime": 1784658446.9154534,
+    "ast_hash": "6279f97c4fc297014803b7ae0f5701bf",
+    "semantic_hash": ""
+  },
+  "data/prototypes/frofade/images/result.jpg": {
+    "mtime": 1784658446.9201522,
+    "ast_hash": "1643bc52ef3824531cf8fe3a67169cea",
+    "semantic_hash": ""
+  },
+  "data/prototypes/frofade/images/tools.jpg": {
+    "mtime": 1784658446.9252303,
+    "ast_hash": "8fdf25148fcb64a3a070f5970e9a97ba",
+    "semantic_hash": ""
+  },
+  "data/prototypes/gilles-3rd-gen-barber-shop/images/hero.jpg": {
+    "mtime": 1784658446.9283307,
+    "ast_hash": "aeeca27de2fdb184acce888a498f050c",
+    "semantic_hash": ""
+  },
+  "data/prototypes/gilles-3rd-gen-barber-shop/images/section_about.jpg": {
+    "mtime": 1784658446.9306147,
+    "ast_hash": "529fe5907f1bf34a01ef32f1c31803d1",
+    "semantic_hash": ""
+  },
+  "data/prototypes/gilles-3rd-gen-barber-shop/images/section_services.jpg": {
+    "mtime": 1784658446.93475,
+    "ast_hash": "dbec06cbea1f0dfa5888b4ac78344be1",
+    "semantic_hash": ""
+  },
+  "data/prototypes/he-and-she-hairstyling-2/images/craft.jpg": {
+    "mtime": 1784658446.9414685,
+    "ast_hash": "83308e8e4eb1492c74c74f0b7b9582c8",
+    "semantic_hash": ""
+  },
+  "data/prototypes/he-and-she-hairstyling-2/images/hero.jpg": {
+    "mtime": 1784658446.945573,
+    "ast_hash": "b29a2e3de0bc2e1323a6d9d0d991601e",
+    "semantic_hash": ""
+  },
+  "data/prototypes/he-and-she-hairstyling-2/images/storefront.jpg": {
+    "mtime": 1784658446.9505906,
+    "ast_hash": "a747fc46fd7fb67a13bc429b04bf3bc7",
+    "semantic_hash": ""
+  },
+  "data/prototypes/kika-hairstylist-for-all-2/images/chair.jpg": {
+    "mtime": 1784658446.955618,
+    "ast_hash": "ab2cd409ffd778db911e95f472302fa1",
+    "semantic_hash": ""
+  },
+  "data/prototypes/kika-hairstylist-for-all-2/images/tools.jpg": {
+    "mtime": 1784658446.9623072,
+    "ast_hash": "0d75e838063a06f40d7e7af688823a36",
+    "semantic_hash": ""
+  },
+  "data/prototypes/kika-hairstylist-for-all-2/images/towel.jpg": {
+    "mtime": 1784658446.967609,
+    "ast_hash": "9130d2ffd813714ad564b35d2d82422b",
+    "semantic_hash": ""
+  },
+  "data/prototypes/kreative-kuts-2/images/hero.jpg": {
+    "mtime": 1784658446.9716766,
+    "ast_hash": "2e84f707f81aa386a523a69c4576e3d9",
+    "semantic_hash": ""
+  },
+  "data/prototypes/kreative-kuts-2/images/shop.jpg": {
+    "mtime": 1784658446.9751937,
+    "ast_hash": "7f567e063d3f59fe454e9b435929d1c1",
+    "semantic_hash": ""
+  },
+  "data/prototypes/kreative-kuts-2/images/tools.jpg": {
+    "mtime": 1784658446.980047,
+    "ast_hash": "74e84c8ef2bdf79837cb61f2f922bd9e",
+    "semantic_hash": ""
+  },
+  "data/prototypes/lolas-pub-and-grub/images/hero.jpg": {
+    "mtime": 1784658446.980585,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/lolas-pub-and-grub/images/section_1.jpg": {
+    "mtime": 1784658446.9806454,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/lolas-pub-and-grub/images/section_2.jpg": {
+    "mtime": 1784658446.9807036,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/louis-pizzeria/images/hero.jpg": {
+    "mtime": 1784658446.9809277,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/louis-pizzeria/images/section_1.jpg": {
+    "mtime": 1784658446.9809883,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/louis-pizzeria/images/section_2.jpg": {
+    "mtime": 1784658446.9810483,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/posh-nosh-pastry-confectionery-f0d98ed6/images/cake.jpg": {
+    "mtime": 1784658446.9826484,
+    "ast_hash": "4931896561a63fac9fd9e57b3eabc61c",
+    "semantic_hash": ""
+  },
+  "data/prototypes/posh-nosh-pastry-confectionery-f0d98ed6/images/hero.jpg": {
+    "mtime": 1784658446.984082,
+    "ast_hash": "b890b05cf2bba172d63e99d71c689542",
+    "semantic_hash": ""
+  },
+  "data/prototypes/posh-nosh-pastry-confectionery-f0d98ed6/images/macarons.jpg": {
+    "mtime": 1784658446.9855323,
+    "ast_hash": "41aa9ddebe124672190309776aa0acb2",
+    "semantic_hash": ""
+  },
+  "data/prototypes/prestige-cuts-2/images/hero.jpg": {
+    "mtime": 1784658446.9878433,
+    "ast_hash": "c9daad44dca0c67a8c508735007346f7",
+    "semantic_hash": ""
+  },
+  "data/prototypes/prestige-cuts-2/images/interior.jpg": {
+    "mtime": 1784658446.9892066,
+    "ast_hash": "1cbf025a785a7910897315c5936c8d69",
+    "semantic_hash": ""
+  },
+  "data/prototypes/prestige-cuts-2/images/tools.jpg": {
+    "mtime": 1784658446.9919598,
+    "ast_hash": "75b4528c0922ebd804afd0c2badc0962",
+    "semantic_hash": ""
+  },
+  "data/prototypes/quilles-nativit-bowling-ad6e7e78/images/balls.jpg": {
+    "mtime": 1784658446.9938576,
+    "ast_hash": "78d1d5b978bfad4327826cca896a482e",
+    "semantic_hash": ""
+  },
+  "data/prototypes/quilles-nativit-bowling-ad6e7e78/images/hero.jpg": {
+    "mtime": 1784658446.9944701,
+    "ast_hash": "e8270aea91ba3a645c6ce64da614b0ba",
+    "semantic_hash": ""
+  },
+  "data/prototypes/quilles-nativit-bowling-ad6e7e78/images/pins.jpg": {
+    "mtime": 1784658446.996111,
+    "ast_hash": "72a497592c0c62c400ea0a4e1ec2e9e3",
+    "semantic_hash": ""
+  },
+  "data/prototypes/roy-florist-fc481a49/images/bridal.jpg": {
+    "mtime": 1784658446.9971855,
+    "ast_hash": "9b6e76909960b9294aa0b02edade235c",
+    "semantic_hash": ""
+  },
+  "data/prototypes/roy-florist-fc481a49/images/hero.jpg": {
+    "mtime": 1784658446.9995456,
+    "ast_hash": "795cf6baf2bd89f9c365ed0bf956b1d8",
+    "semantic_hash": ""
+  },
+  "data/prototypes/roy-florist-fc481a49/images/sympathy.jpg": {
+    "mtime": 1784658447.001696,
+    "ast_hash": "50f0b8cdc40b8aae6fcf4f5f784e2eb6",
+    "semantic_hash": ""
+  },
+  "data/prototypes/seguin-barber-shop-2/images/craft.jpg": {
+    "mtime": 1784658447.006346,
+    "ast_hash": "87631451807fb4144e284f4522f00dc4",
+    "semantic_hash": ""
+  },
+  "data/prototypes/seguin-barber-shop-2/images/hero.jpg": {
+    "mtime": 1784658447.0104373,
+    "ast_hash": "acf33ada6aa8c0dca43e5f9f8f346ef6",
+    "semantic_hash": ""
+  },
+  "data/prototypes/seguin-barber-shop-2/images/tools.jpg": {
+    "mtime": 1784658447.0129352,
+    "ast_hash": "503ee6dc5ad61a4376e616dfc98b3663",
+    "semantic_hash": ""
+  },
+  "data/prototypes/sigma-hairstyling-2/images/hero.jpg": {
+    "mtime": 1784658447.017731,
+    "ast_hash": "2266e9e6e47406e0ebdf78b370e2efac",
+    "semantic_hash": ""
+  },
+  "data/prototypes/sigma-hairstyling-2/images/result.jpg": {
+    "mtime": 1784658447.0200408,
+    "ast_hash": "f1585501366ceadbe86b1476cbe28c4f",
+    "semantic_hash": ""
+  },
+  "data/prototypes/sigma-hairstyling-2/images/tools.jpg": {
+    "mtime": 1784658447.029348,
+    "ast_hash": "1bddd3bdf7b6e05078607af8be9bd053",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-kutting-room-2/images/hero.jpg": {
+    "mtime": 1784658447.0345705,
+    "ast_hash": "0fdfda1f8479819e57b4c10819b8f276",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-kutting-room-2/images/interior.jpg": {
+    "mtime": 1784658447.0378792,
+    "ast_hash": "432cba0959d34a173e8408edee0731fc",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-kutting-room-2/images/tools.jpg": {
+    "mtime": 1784658447.0439975,
+    "ast_hash": "cd2ccb0a73a39c25ba92ac4682718fc4",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-spicy-pearl/images/hero.jpg": {
+    "mtime": 1784658447.044497,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-spicy-pearl/images/section_1.jpg": {
+    "mtime": 1784658447.0445602,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "data/prototypes/the-spicy-pearl/images/section_2.jpg": {
+    "mtime": 1784658447.0446193,
+    "ast_hash": "5aa1ffb327eb4af705dbada84ea62e56",
+    "semantic_hash": ""
+  },
+  "media/inbound/openclaw-staged-f788a034-217c-437b-b213-06b32698fbfb/6e276540-5e2d-4f19-93b5-cd4f063caa53.jpg": {
+    "mtime": 1784658447.057021,
+    "ast_hash": "41c7a2919e5f0f189b4ecd844c345845",
+    "semantic_hash": ""
+  },
+  "output/playwright/g8-before-desktop-fold.png": {
+    "mtime": 1784681861.7180064,
+    "ast_hash": "b966974db87ee2543bf871f0d8464d0e",
+    "semantic_hash": ""
+  },
+  "output/playwright/g8-before-desktop.png": {
+    "mtime": 1784681830.7162418,
+    "ast_hash": "5154a7a46a52850ec0af55fd62c9d2ad",
+    "semantic_hash": ""
+  },
+  "output/playwright/g8-before-mobile-fold.png": {
+    "mtime": 1784681858.8372443,
+    "ast_hash": "a8e0a573f8fc3781575bf707e86f2d03",
+    "semantic_hash": ""
+  },
+  "output/playwright/g8-before-mobile.png": {
+    "mtime": 1784681828.2909443,
+    "ast_hash": "57c15d7ea2fd2f11283c9e971453311d",
+    "semantic_hash": ""
+  },
+  "output/playwright/g8-desktop-fold.png": {
+    "mtime": 1784682810.0885048,
+    "ast_hash": "054f5f48bf89a5c7b84d7f95cb702982",
+    "semantic_hash": ""
+  },
+  "output/playwright/g8-desktop-form.png": {
+    "mtime": 1784682840.280717,
+    "ast_hash": "bb19460f598b55a4a5a7230aa2d9058a",
+    "semantic_hash": ""
+  },
+  "output/playwright/g8-mobile-fold.png": {
+    "mtime": 1784682578.3867261,
+    "ast_hash": "406eced99aed55f0cde207bf562813f8",
+    "semantic_hash": ""
+  },
+  "output/playwright/g8-mobile-success-stable.png": {
+    "mtime": 1784682749.6175938,
+    "ast_hash": "c360ff198224d4a777561f1ff229b3ac",
+    "semantic_hash": ""
+  },
+  "output/playwright/g8-mobile-success.png": {
+    "mtime": 1784682723.9457357,
+    "ast_hash": "c073f92325c561cede641cc972d08545",
+    "semantic_hash": ""
+  },
+  "output/playwright/g8-production-fold.png": {
+    "mtime": 1784681926.7343273,
+    "ast_hash": "2092c328abc0f6eaa244674523ce04b8",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/chop-hair-design-2-desktop.png": {
+    "mtime": 1784658447.0740051,
+    "ast_hash": "a754e1067d1eed2c27f96cb9963d3e92",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/chop-hair-design-2-mobile.png": {
+    "mtime": 1784658447.0782194,
+    "ast_hash": "2df770c71aa7134bbee053bb726dfd3d",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/frofade-desktop.png": {
+    "mtime": 1784658447.1001623,
+    "ast_hash": "38f0d78d0cc2826cd8b5ac8dc2d6191f",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/frofade-mobile.png": {
+    "mtime": 1784658447.1049335,
+    "ast_hash": "11c3be6b33f8e3d8fc81818dede99ca6",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/gilles-3rd-gen-barber-shop-desktop.png": {
+    "mtime": 1784658447.113934,
+    "ast_hash": "59548dfcf5944e83bc09b12d124b516c",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/gilles-3rd-gen-barber-shop-mobile.png": {
+    "mtime": 1784658447.1197217,
+    "ast_hash": "abec628cd37dfe8f78a8a561d24f85f4",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/kika-hairstylist-for-all-2-desktop.png": {
+    "mtime": 1784658447.1334472,
+    "ast_hash": "25590f41d634d1a706937cdb9c6d8b40",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/kika-hairstylist-for-all-2-mobile.png": {
+    "mtime": 1784658447.1394968,
+    "ast_hash": "48fc238ed76b2188cad2e342e181ddfc",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/posh-nosh-pastry-confectionery-f0d98ed6-desktop.png": {
+    "mtime": 1784658447.1501715,
+    "ast_hash": "163e9bbf73d4c71f1330ec772d97d11c",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/posh-nosh-pastry-confectionery-f0d98ed6-mobile.png": {
+    "mtime": 1784658447.1542225,
+    "ast_hash": "a6f5686516d7778d23ee9438504f4078",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/prestige-cuts-2-desktop.png": {
+    "mtime": 1784658447.1607087,
+    "ast_hash": "e412779fdc6feff21d0e95a3d6a3e8cd",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/prestige-cuts-2-mobile.png": {
+    "mtime": 1784658447.1631465,
+    "ast_hash": "7d11e224eb6ee70f3df20d50744ff141",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/quilles-nativit-bowling-ad6e7e78-desktop.png": {
+    "mtime": 1784658447.1678262,
+    "ast_hash": "0557989e13178787a83c2a46537cea71",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/quilles-nativit-bowling-ad6e7e78-mobile.png": {
+    "mtime": 1784658447.1691294,
+    "ast_hash": "a1c70f4b7258e091c6ced7b543ef74c6",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/roy-florist-fc481a49-desktop.png": {
+    "mtime": 1784658447.181877,
+    "ast_hash": "66f986f5f8af087622b42be1fb687140",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/roy-florist-fc481a49-mobile.png": {
+    "mtime": 1784658447.1864526,
+    "ast_hash": "9115a3136ad4b5b855f82fc6ab4eea8d",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/seguin-barber-shop-2-desktop.png": {
+    "mtime": 1784658447.2166135,
+    "ast_hash": "7f918df96afcb68dc86be0eb82e7e438",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/seguin-barber-shop-2-mobile.png": {
+    "mtime": 1784658447.2310972,
+    "ast_hash": "b2720160173a84651989277dcad856bd",
+    "semantic_hash": ""
+  },
+  "prototype-screenshots/the-kutting-room-2-desktop.png": {
+    "mtime": 1784658447.2487504,
+    "ast_hash": "79295be3bd79be743424e76c0c1d6eb7",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/he-and-she-hairstyling-2-desktop.png": {
+    "mtime": 1784658447.2773206,
+    "ast_hash": "dbe459764cc5bed9cccbea05eb5205d1",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/he-and-she-hairstyling-2-mobile.png": {
+    "mtime": 1784658447.2872314,
+    "ast_hash": "04447e5406205fa2021cc23f755fbf9f",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/kreative-kuts-2-bot-crop.png": {
+    "mtime": 1784658447.2920458,
+    "ast_hash": "cb5b2c3be576d4808d47c75a971ef566",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/kreative-kuts-2-desktop.png": {
+    "mtime": 1784658447.3294206,
+    "ast_hash": "2b03faca1a4dd72e468db298c965bf6d",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/kreative-kuts-2-menu-crop.png": {
+    "mtime": 1784658447.3372746,
+    "ast_hash": "2f330b0186ba849d00f3e1f2bdbb6b56",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/kreative-kuts-2-mobile.png": {
+    "mtime": 1784658447.3519924,
+    "ast_hash": "152178373bb2f28b311a909d99170e5e",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/kreative-kuts-2-top-crop.png": {
+    "mtime": 1784658447.366247,
+    "ast_hash": "72d19349246898f29f299a650e10deb0",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/sigma-hairstyling-2-desktop.png": {
+    "mtime": 1784658447.399467,
+    "ast_hash": "0b22bc965160f7e1947ef7097892975b",
+    "semantic_hash": ""
+  },
+  "public/prototype-screenshots/sigma-hairstyling-2-mobile.png": {
+    "mtime": 1784658447.4134123,
+    "ast_hash": "97be97bf2a90c51f16b943b0b254e344",
     "semantic_hash": ""
   }
 }
