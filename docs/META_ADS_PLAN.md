@@ -295,3 +295,32 @@ Both the CAPI access token (`EAAOZCAwKlMu...`) and the Resend API key were share
 1. **CAPI**: Events Manager → Datasets → Landing page pixel → Settings → Conversions API → "Generate access token" (this invalidates the old one). Update `META_CAPI_ACCESS_TOKEN` in Vercel env, redeploy.
 2. **Resend**: resend.com → API Keys → revoke old key, create new one. Update `RESEND_API_KEY` in Vercel env + your local `.env.local`, redeploy.
 3. **Meta access token** (`META_ACCESS_TOKEN`): if you've shared it anywhere beyond this Claude Code session, rotate via Business Manager → System Users → McpUser → Generate Token. Update `~/.zshrc`, restart any process that reads it.
+
+---
+
+## 10. HANDOFF — next agent (Codex) picks up here
+
+**Everything infrastructural is done and verified (2026-07-21).** The tracking stack is LIVE on production, the Meta MCP is authenticated for both Claude Code and Codex (Codex inherits `META_ACCESS_TOKEN` from the shell env via `~/.codex/config.toml` — run `get_ad_accounts(user_id="me")`, expect `act_1469618098544438`). Your job is to take it from "wired" to "a paused campaign ready for Mehdi's review," then stop.
+
+### ⛔ HARD GUARDRAIL — read first
+**Do NOT activate any spend.** Build everything in `PAUSED` status. Activation, any budget increase, and any new campaign each require a fresh, explicit "go" from Mehdi in chat (§3.1, §3.4). The account-level spending limit is the hard cap, but you must not rely on it — build paused, report, and wait. The token carries `ads_management` (it *can* spend); the gate is behavioural, and it's on you.
+
+### Ordered task list
+1. **Live end-to-end test event (30 min).** Submit the landing form once on prod with a clearly-marked test entry (e.g. business "ZZ CAPI Test"), confirm: (a) browser `Lead` event in Events Manager → Test Events, (b) server CAPI event with the *same* `event_id` (dedup works), (c) row lands in Supabase with attribution columns. **Then delete the test row from Supabase** (the pipeline chokes on test fixtures — see MEMORY.md). Pixel `1530207232234428`, CAPI verified, both live.
+2. **Draft the 3 creative angles → get Mehdi's approval.** Copy is drafted in §2.2 (Risk-reversal / Before-after / Owner-empathy). Refine, produce the 6 feed images (1080×1080) + 3 story (1080×1920) — real prototype screenshots from `public/prototype-screenshots/` beat stock (see the 5 flagship anonymized concepts: meridian-auto-works, nocturne-hair-studio, stillwater-ledger-tax, grand-current-electric, bluewater-plumbing). **Copy rule: never claim AI-built — fast human service only** (MEMORY.md / [[no-ai-positioning]]). No income/guarantee claims (Meta policy). Canva MCP is available in Codex if you want it. Show Mehdi before building.
+3. **G8 — landing mobile/CTA conversion pass.** Form must be the obvious primary CTA, clean thank-you state, fast on mobile. Branch off `main`, own PR. Ad clicks are wasted on a page that doesn't convert.
+4. **Build the campaign PAUSED via the MCP** per §2.3: Campaign "Free Preview — CA Lead Gen v1" (objective: Leads) → Ad set A (Broad Advantage+, $10/day) + Ad set B (Interest stack, $10/day), all-Canada English, Page id `1175228509015042`, Advantage+ placements. 3 ads per set from the approved creative. Everything `PAUSED`. Report the structure to Mehdi in Ads Manager terms.
+5. **Wait for Mehdi's explicit "go"** before activating. Then follow §3.1 (2-day warm-up, report from day 1, optimize day 3) and the §3.2 pause-only daily routine.
+
+### State / IDs you need
+- Ad account: `act_1469618098544438` (SeawaySitesAdAccount, CAD, America/Toronto, $0 spent)
+- Page: `Seaway Sites` id `1175228509015042` (@seawaysites)
+- Pixel: `1530207232234428` · CAPI token set in Vercel env (verified)
+- Vercel: project `prj_RKz3owsHUtzDYTJ9an9Y60u8yylX`, team `team_gEH5FXIh3E6XkRttxTsLmLqq`, all 4 env vars set + redeployed
+- Budget: Tier A $20/day, 4 weeks (~$600 CAD). CPL target ≤ $20 CAD.
+- Open PR #17 (this doc's updates) — merge or keep building on `claude/meta-pixel-id-and-creative`; coordinate with Mehdi.
+- Pricing = live landing (`app/_landing/content.ts`): Free Draft / Managed $399 + $69/mo / Own $899.
+
+### Operational items still on Mehdi (not blockers for building paused)
+- Verify `seawaysites.com` in Resend (DKIM/SPF) so lead-reply mail sends.
+- Rotate the CAPI + Resend keys within a week (shared in chat) — §9 rotation steps.
