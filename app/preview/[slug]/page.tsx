@@ -4,7 +4,7 @@ import fs from 'fs';
 import { readdir } from 'fs/promises';
 import { cookies } from 'next/headers';
 import { isValidDraftPreviewToken } from '@/lib/draft-preview-token';
-import { isShowcaseVisible } from '@/lib/showcase-policy';
+import { isShowcaseVisibleForSlug } from '@/lib/showcase-policy';
 import { isValidAdminSession } from '@/lib/auth-server';
 import { getPrototypes } from '@/lib/data-source';
 import { RevisionRequest } from './RevisionRequest';
@@ -32,16 +32,6 @@ type LeadRecord = {
 
 const SLUG_PATTERN = /^[a-z0-9][a-z0-9&_-]{0,159}$/i;
 
-type PrototypeRecord = {
-  id?: string;
-  prototype_url?: string;
-  screenshot_url?: string;
-  generation_status?: string;
-  showcase_approved?: boolean;
-  showcase_eligible?: boolean;
-  anonymized?: boolean;
-};
-
 type ResolvedPrototype = {
   filePath: string;
   requiresRuntimeAnonymization: boolean;
@@ -54,23 +44,6 @@ function readJsonFile<T>(filePath: string, fallback: T): T {
   } catch {
     return fallback;
   }
-}
-
-async function loadPrototypeRecord(slug: string): Promise<PrototypeRecord | null> {
-  // Use the live data source (Supabase when configured, build-bundle fallback)
-  // so that admin approvals made after deploy are reflected here.
-  const prototypes = await getPrototypes();
-  return prototypes.find((p) => {
-    if (p.id === slug) return true;
-    const urlSlug = slugFromAssetUrl(p.prototype_url) || slugFromAssetUrl(p.screenshot_url);
-    return urlSlug === slug;
-  }) || null;
-}
-
-function slugFromAssetUrl(value: unknown): string | null {
-  if (typeof value !== 'string') return null;
-  const match = value.match(/(?:data\/prototypes(?:-anonymized)?|\/preview)\/([^/?#]+)/i);
-  return match?.[1] ? decodeURIComponent(match[1]) : null;
 }
 
 function loadSourceOverrides(): ShowcaseSourceOverrides {
@@ -127,9 +100,11 @@ async function resolvePrototypePath(
 
   // Public showcase access requires the prototype record to pass the shared
   // showcase visibility policy (approved, eligible, anonymized, completed).
-  // Uses the live data source so post-deploy approvals are reflected.
-  const record = await loadPrototypeRecord(slug);
-  const showcaseAuthorized = record ? isShowcaseVisible(record) : false;
+  // Check every matching record because legacy duplicates can share a slug and
+  // Supabase does not guarantee row order without an explicit ordering clause.
+  const showcaseAuthorized = (await getPrototypes()).some((prototype) =>
+    isShowcaseVisibleForSlug(prototype, slug)
+  );
 
   if (showcaseAuthorized && override?.useSourcePrototype && fs.existsSync(sourcePath)) {
     return {
