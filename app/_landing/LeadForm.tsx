@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SuccessCheck from '@/components/motion/SuccessCheck';
+import { captureAttribution, getAttribution, newEventId, trackLead } from '@/lib/attribution';
 
 type FormState = {
   businessName: string;
@@ -23,6 +24,12 @@ export default function LeadForm() {
     email?: boolean;
     website?: boolean;
   }>({});
+
+  // Ad-click params (utm_*, fbclid) are captured on mount so paid leads stay
+  // attributable even if the visitor browses around before submitting.
+  useEffect(() => {
+    captureAttribution();
+  }, []);
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email);
   const urlValid = form.website === '' || /^https?:\/\/.+\..+/.test(form.website);
@@ -56,6 +63,10 @@ export default function LeadForm() {
     // this input; only a bot does.
     const honeypot =
       (formElement.elements.namedItem('honey_field_v2') as HTMLInputElement)?.value || '';
+    // Shared browser/server event id so Meta deduplicates the pixel and
+    // Conversions API copies of the same Lead event. Guarded fallback inside
+    // newEventId — never let id generation block the submit.
+    const eventId = newEventId();
 
     try {
       const response = await fetch('/api/leads', {
@@ -67,6 +78,7 @@ export default function LeadForm() {
           website: form.website.trim(),
           message: form.message.trim(),
           honey_field_v2: honeypot,
+          attribution: { ...getAttribution(), event_id: eventId },
         }),
       });
 
@@ -76,6 +88,7 @@ export default function LeadForm() {
         return;
       }
 
+      trackLead(eventId);
       setSubmittedEmail(form.email.trim());
       setSubmitted(true);
     } catch {

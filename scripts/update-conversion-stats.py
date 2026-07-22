@@ -48,7 +48,11 @@ def main():
     leads = load_json(LEADS_PATH, [])
     prototypes = load_json(PROTOS_PATH, [])
     outreach_log = load_json(OUTREACH_PATH, {"logs": []})
-    outreach_records = outreach_log.get("logs", [])
+    # Some pipelines store outreach as a bare list; normalize to list of records.
+    if isinstance(outreach_log, list):
+        outreach_records = outreach_log
+    else:
+        outreach_records = outreach_log.get("logs", [])
 
     # Lead -> prototype count map
     protos_by_lead = defaultdict(list)

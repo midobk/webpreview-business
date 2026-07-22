@@ -130,7 +130,11 @@ def sync_prototypes(sb):
 
 def sync_outreach(sb):
     log = load_json(OUTREACH_PATH, {"logs": []})
-    records = log.get("logs", [])
+    # outreach_logs.json may be stored as a bare list; normalize.
+    if isinstance(log, list):
+        records = log
+    else:
+        records = log.get("logs", [])
     print(f"[outreach_logs] {len(records)} records", end=" ")
     rows = []
     for r in records:

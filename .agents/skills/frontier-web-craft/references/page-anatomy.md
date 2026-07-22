@@ -73,7 +73,10 @@ per site (guided by the direction), never inherit it:
 - *Section-head alignment*: left · centered · split two-column (eyebrow+h2 left, lede right).
 
 One combination per site, used everywhere on that site. Two sites from the same batch should
-never share the full combination.
+never share the full combination — and two sites in the **same direction** must not share the
+heading-accent treatment specifically: it is the most recognizable atom on the page, and an
+italic + solid + outlined headline repeated across two Porcelain sites makes them twins no
+matter how much the navs differ.
 
 **Buttons.** One `.btn` base (min-height 46–48px, inline-flex, caps 12px 700–800, tracked,
 radius per direction) with `-primary` (accent bg, accent-tinted shadow) and `-ghost` (1px line
@@ -324,3 +327,6 @@ twelve. So vary deliberately across the set, and track it:
   tell. The others open straight into the nav.
 - Keep a one-line ledger per site (direction / archetype / nav / conceit / headline formula)
   and check a new site against it before building.
+- **If you publish a summary of the set** (a gallery page, an index), its stats describe the
+  set, not the skill: "9 directions" when seven were used is a facts-ledger violation about
+  your own work. Count what actually shipped.

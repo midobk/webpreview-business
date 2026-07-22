@@ -42,7 +42,10 @@ def main():
     args = parser.parse_args()
 
     leads = load_json(LEADS_PATH, [])
-    log = load_json(OUTREACH_LOG, {"logs": []})
+    log = load_json(OUTREACH_LOG, [])
+    # Normalize: accept flat array or legacy dict wrapper
+    if isinstance(log, dict):
+        log = log.get("logs", [])
 
     # Find leads that: have email drafted, score >= 70, no SMS sent yet
     targets = []
@@ -55,14 +58,14 @@ def main():
         # Already have an SMS drafted or sent?
         already_sms = any(
             r.get("lead_id") == lead["id"] and r.get("channel") == "sms"
-            for r in log.get("logs", [])
+            for r in log
         )
         if already_sms:
             continue
         # Has email drafted?
         has_email = any(
             r.get("lead_id") == lead["id"] and r.get("channel") == "email"
-            for r in log.get("logs", [])
+            for r in log
         )
         if not has_email:
             continue
@@ -111,7 +114,7 @@ def main():
             json.dump(sms, f, indent=2)
 
         log_entry = {
-            "id": f"sms-{len(log.get('logs', [])) + 1:04d}",
+            "id": f"sms-{sum(1 for r in log if r.get('channel') == 'sms') + 1:04d}",
             "lead_id": lead["id"],
             "lead_slug": slug,
             "channel": "sms",
@@ -127,7 +130,7 @@ def main():
             "replied_at": None,
             "outcome": None,
         }
-        log.setdefault("logs", []).append(log_entry)
+        log.append(log_entry)
         drafted += 1
         print(f"  ✓ {business_name}: {len(msg)} chars -> {sms['to_phone']}")
 

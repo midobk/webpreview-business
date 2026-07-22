@@ -46,12 +46,17 @@ def load_prototypes():
 
 def load_outreach_log():
     if not os.path.exists(OUTREACH_LOG):
-        return {"_schema_version": "1.0", "logs": []}
+        return []
     with open(OUTREACH_LOG) as f:
-        return json.load(f)
+        data = json.load(f)
+    # Accept both legacy dict wrapper and flat-array format
+    if isinstance(data, dict):
+        return data.get("logs", [])
+    return data
 
 
 def save_outreach_log(log):
+    # Persist as flat array (current convention; matches other writers)
     with open(OUTREACH_LOG, "w") as f:
         json.dump(log, f, indent=2)
 
@@ -59,7 +64,7 @@ def save_outreach_log(log):
 def lead_has_draft(slug, log):
     return any(
         r.get("lead_slug") == slug and r.get("status") in ("drafted", "sent", "replied", "won")
-        for r in log.get("logs", [])
+        for r in log
     )
 
 
@@ -221,10 +226,11 @@ def main():
     prototypes = load_prototypes()
     log = load_outreach_log()
 
+    # Draft even if email is null — mark send_blocked_reason. Lets us queue
+    # copy work ahead of contact discovery (Yelp scrape, social DM, etc).
     targets = [
         l for l in leads
         if lead_has_prototype(l, prototypes)
-        and l.get("email")
         and not lead_has_draft(l["slug"], log)
     ][:args.limit]
 
@@ -258,20 +264,22 @@ def main():
 
         # Append to log
         log_entry = {
-            "id": f"outreach-{len(log.get('logs', [])) + 1:04d}",
+            "id": f"outreach-{len(log) + 1:04d}",
             "lead_id": lead["id"],
             "lead_slug": lead["slug"],
             "channel": "email",
             "status": "drafted",
             "subject": email["subject"],
             "angle": email.get("angle", "personalized"),
+            "to_email": lead.get("email"),
+            "send_blocked_reason": "no_public_email" if not lead.get("email") else None,
             "provider": args.provider,
             "created_at": email["created_at"],
             "sent_at": None,
             "replied_at": None,
             "outcome": None,
         }
-        log.setdefault("logs", []).append(log_entry)
+        log.append(log_entry)
 
         # Update lead status
         lead["status"] = "email_drafted"
