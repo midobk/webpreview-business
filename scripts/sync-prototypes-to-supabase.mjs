@@ -228,45 +228,58 @@ async function upsertMetadataOnly(supabase, prototypes, { existingIds = new Set(
     }
   }
 
-  let newCount = 0;
-  const rows = prototypes.map((row) => {
+  // Split into two row sets and upsert them in SEPARATE batches. A single
+  // mixed bulk upsert is unsafe here: Supabase/PostgREST derives the conflict
+  // update column set from the union of keys across the whole batch, so
+  // mixing admin-bearing (new) rows with metadata-only (existing) rows would
+  // pull the admin-owned columns into the update applied to existing rows
+  // and overwrite the remote approval/eligibility state this path is meant
+  // to preserve. Keeping the two shapes in separate upsert calls keeps the
+  // existing-row update column set strictly metadata-only.
+  const existingRows = [];
+  const newRows = [];
+  for (const row of prototypes) {
     const filtered = { id: row.id };
     for (const col of METADATA_COLUMNS) {
       if (Object.hasOwn(row, col)) {
         filtered[col] = TIMESTAMP_COLUMNS.has(col) ? normalizeTimestamp(row[col]) : row[col];
       }
     }
-    // Seed admin-owned approval fields for rows not yet in Supabase so newly
-    // committed showcase concepts are visible on /showcase after the build.
-    // Existing rows deliberately omit these to preserve the remote admin
-    // decision (the original `--auto` guarantee).
-    const isNew = !existingIds.has(row.id);
-    if (isNew) {
-      newCount += 1;
+    // Include timestamps so new records get created_at.
+    if (Object.hasOwn(row, 'created_at')) {
+      filtered.created_at = normalizeTimestamp(row.created_at);
+    }
+    if (existingIds.has(row.id)) {
+      existingRows.push(filtered);
+    } else {
+      // Seed admin-owned approval fields for rows not yet in Supabase so
+      // newly committed showcase concepts are visible on /showcase after
+      // the build. Existing rows deliberately omit these (above) to
+      // preserve the remote admin decision (the original `--auto` guarantee).
       for (const col of ADMIN_OWNED_COLUMNS) {
         if (Object.hasOwn(row, col)) {
           filtered[col] = TIMESTAMP_COLUMNS.has(col) ? normalizeTimestamp(row[col]) : row[col];
         }
       }
+      newRows.push(filtered);
     }
-    // Include timestamps so new records get created_at.
-    if (Object.hasOwn(row, 'created_at')) {
-      filtered.created_at = normalizeTimestamp(row.created_at);
-    }
-    return filtered;
-  });
-
-  const batchSize = 100;
-  for (let offset = 0; offset < rows.length; offset += batchSize) {
-    const batch = rows.slice(offset, offset + batchSize);
-    const { error } = await supabase.from('prototypes').upsert(batch, { onConflict: 'id' });
-    if (error) throw new Error(`Supabase metadata upsert failed: ${error.message}`);
   }
 
-  const preservedCount = rows.length - newCount;
+  const batchSize = 100;
+  const upsertBatch = async (rows, label) => {
+    for (let offset = 0; offset < rows.length; offset += batchSize) {
+      const batch = rows.slice(offset, offset + batchSize);
+      const { error } = await supabase.from('prototypes').upsert(batch, { onConflict: 'id' });
+      if (error) throw new Error(`Supabase metadata upsert failed (${label}): ${error.message}`);
+    }
+  };
+  await upsertBatch(existingRows, 'existing');
+  await upsertBatch(newRows, 'new');
+
   console.log(
-    `✓ Upserted ${rows.length} prototype metadata records ` +
-      `(preserved admin fields on ${preservedCount} existing, seeded approval on ${newCount} new).`
+    `✓ Upserted ${existingRows.length + newRows.length} prototype metadata records ` +
+      `(${existingRows.length} existing preserving admin fields, ${newRows.length} new seeding approval) ` +
+      `in separate batches.`
   );
 }
 
