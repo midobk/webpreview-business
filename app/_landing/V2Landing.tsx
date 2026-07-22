@@ -1,16 +1,29 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useReducedMotion, useScroll, useSpring } from 'motion/react';
 import MagneticButton from '@/components/motion/MagneticButton';
 import CountUp from '@/components/motion/CountUp';
 import BeforeAfter from './BeforeAfter';
 import LeadForm from './LeadForm';
-import ProductionDemo from './ProductionDemo';
 import ProductionProcess from './ProductionProcess';
 import { FAQS, PRICING } from './content';
 
 const ease = [0.16, 1, 0.3, 1] as const;
+
+const ProductionDemo = dynamic(() => import('./ProductionDemo'), {
+  loading: () => (
+    <div
+      className="v2lb-frame flex min-h-[390px] items-center justify-center px-6 text-center sm:min-h-[460px]"
+      role="status"
+    >
+      <span className="v2-mono text-[10px] text-[var(--v2-cream-faint)]">
+        Preparing the production demo…
+      </span>
+    </div>
+  ),
+});
 
 function Reveal({
   children,
@@ -162,33 +175,30 @@ function MobileCta() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    let pastHero = false;
+    let primaryVisible = true;
     let formVisible = false;
-    const update = () => setShow(pastHero && !formVisible);
+    const update = () => setShow(!primaryVisible && !formVisible);
 
-    const onScroll = () => {
-      pastHero = window.scrollY > 640;
-      update();
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
+    const primary = document.getElementById('hero-primary-cta');
     const form = document.getElementById('preview');
     const observer =
       typeof IntersectionObserver !== 'undefined'
         ? new IntersectionObserver(
             (entries) => {
-              formVisible = entries[0]?.isIntersecting ?? false;
+              for (const entry of entries) {
+                if (entry.target === primary) primaryVisible = entry.isIntersecting;
+                if (entry.target === form) formVisible = entry.isIntersecting;
+              }
               update();
             },
             { threshold: 0.15 }
           )
         : null;
 
+    if (primary && observer) observer.observe(primary);
     if (form && observer) observer.observe(form);
 
     return () => {
-      window.removeEventListener('scroll', onScroll);
       observer?.disconnect();
     };
   }, []);
@@ -211,7 +221,7 @@ function MobileCta() {
         tabIndex={show ? 0 : -1}
         className="v2-btn v2-btn-primary w-full justify-center !py-3.5 text-[15px] shadow-[0_10px_40px_-8px_rgba(205,244,99,0.45)]"
       >
-        Request my free draft
+        Request my free preview
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -278,11 +288,11 @@ export default function V2Landing() {
                 <a href="/showcase" className="transition-colors hover:text-[var(--v2-cream)]">Showcase</a>
               </nav>
               <a href="#preview" className="v2-btn v2-btn-primary !px-4 !py-2 text-sm">
-                Free draft
+                Free preview
               </a>
               <button
                 type="button"
-                className="v2-menu-button md:hidden"
+                className="v2-menu-button inline-flex md:hidden"
                 aria-expanded={menuOpen}
                 aria-controls="mobile-page-nav"
                 aria-label={menuOpen ? 'Close page menu' : 'Open page menu'}
@@ -373,21 +383,23 @@ export default function V2Landing() {
               }}
               className="mt-6 flex flex-wrap items-center gap-4"
             >
-              <MagneticButton href="#preview" className="v2-btn v2-btn-primary">
-                Request my free draft
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4"
-                  aria-hidden="true"
-                >
-                  <path d="M5 12h14M13 6l6 6-6 6" />
-                </svg>
-              </MagneticButton>
+              <span id="hero-primary-cta" className="inline-flex">
+                <MagneticButton href="#preview" className="v2-btn v2-btn-primary">
+                  Request my free preview
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-4 w-4"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </MagneticButton>
+              </span>
               <a href="#process" className="v2-btn v2-btn-ghost">See the process ↓</a>
             </motion.div>
 
@@ -403,20 +415,62 @@ export default function V2Landing() {
             </motion.p>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 44 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease, delay: 0.45 }}
-            className="mx-auto mt-10 max-w-4xl sm:mt-12"
-          >
-            <div className="v2-mono mb-3 text-[10px] text-[var(--v2-cream-faint)]">
-              fig. 01 — illustrative Seaway Sites production demo
-            </div>
-            <p className="v2-mono mb-3 text-[9px] text-[var(--v2-cream-faint)]">
-              Example businesses, phone numbers and review counts are placeholders.
-            </p>
-            <ProductionDemo />
-          </motion.div>
+          <div className="mt-10 grid gap-8 sm:mt-12 lg:grid-cols-[minmax(0,1.3fr)_minmax(360px,0.7fr)] lg:items-start">
+            <motion.div
+              initial={{ opacity: 0, y: 44 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, ease, delay: 0.45 }}
+              className="order-2 min-w-0 lg:order-1"
+            >
+              <div className="v2-mono mb-3 text-[10px] text-[var(--v2-cream-faint)]">
+                fig. 01 — illustrative Seaway Sites production demo
+              </div>
+              <p className="v2-mono mb-3 text-[9px] text-[var(--v2-cream-faint)]">
+                Example businesses, phone numbers and review counts are placeholders.
+              </p>
+              <ProductionDemo />
+            </motion.div>
+
+            <motion.aside
+              id="preview"
+              aria-labelledby="preview-heading"
+              initial={{ opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease, delay: 0.3 }}
+              className="relative order-1 min-w-0 scroll-mt-24 lg:order-2 lg:sticky lg:top-28"
+            >
+              <span id="request-preview" className="absolute -top-24" aria-hidden="true" />
+              <div className="mb-5">
+                <div className="v2-mono text-[10px] text-[var(--v2-lume)]">
+                  fig. 01·b — start here
+                </div>
+                <h2
+                  id="preview-heading"
+                  tabIndex={-1}
+                  className="v2-serif mt-3 text-3xl font-medium leading-tight outline-none"
+                >
+                  Start with the essentials.
+                </h2>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--v2-cream-dim)]">
+                  Two required fields. About 60 seconds. We&apos;ll prepare a personalized first
+                  direction for your business.
+                </p>
+                <ul className="mt-4 grid gap-2 text-xs text-[var(--v2-cream-dim)] sm:grid-cols-2 lg:grid-cols-1">
+                  {[
+                    'Free personalized preview',
+                    'No credit card or sales call',
+                    'One follow-up, ever',
+                  ].map((line) => (
+                    <li key={line} className="flex items-center gap-2">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[var(--v2-lume)]" aria-hidden="true" />
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <LeadForm />
+            </motion.aside>
+          </div>
         </div>
       </section>
 
@@ -733,38 +787,24 @@ export default function V2Landing() {
         </div>
       </section>
 
-      <section id="preview" className="scroll-mt-24 relative overflow-hidden border-t border-[var(--v2-line)] py-24 sm:py-32">
-        <span id="request-preview" className="absolute top-0 block h-0 scroll-mt-24" aria-hidden="true" />
+      <section className="relative overflow-hidden border-t border-[var(--v2-line)] py-24 sm:py-32">
         <div className="v2-glow absolute inset-0 rotate-180" aria-hidden="true" />
-        <div className="relative mx-auto grid max-w-6xl gap-14 px-5 sm:px-8 lg:grid-cols-2 lg:items-center">
-          <Reveal>
+        <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
+          <Reveal className="flex flex-col items-center">
             <Kicker fig="08">your turn</Kicker>
-            <h2
-              id="preview-heading"
-              tabIndex={-1}
-              className="v2-serif mt-5 text-[clamp(2.6rem,6vw,5rem)] font-medium leading-[0.98] outline-none"
-            >
-              See yours.
+            <h2 className="v2-serif mt-5 text-[clamp(2.6rem,6vw,5rem)] font-medium leading-[0.98]">
+              Ready when you are.
               <span className="block italic font-light text-[var(--v2-cream-dim)]">
-                Before you pay a dollar.
+                Your free preview starts above.
               </span>
             </h2>
-            <ul className="mt-8 space-y-3 text-[15px] text-[var(--v2-cream-dim)]">
-              {[
-                'One personalized initial draft — free',
-                'Most eligible requests delivered within the hour during service hours',
-                'No credit card and no sales call',
-                'One follow-up email, then silence',
-              ].map((line) => (
-                <li key={line} className="flex items-center gap-3">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[var(--v2-lume)]" aria-hidden="true" />
-                  {line}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-          <Reveal delay={0.12}>
-            <LeadForm />
+            <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-[var(--v2-cream-dim)] sm:text-base">
+              Share the business name and your email. We&apos;ll do the research, shape the first
+              direction and send it to your inbox — free.
+            </p>
+            <a href="#preview" className="v2-btn v2-btn-primary mt-8">
+              Request my free preview ↑
+            </a>
           </Reveal>
         </div>
       </section>
