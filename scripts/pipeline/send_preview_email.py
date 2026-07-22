@@ -38,7 +38,16 @@ def _load_env():
 _load_env()
 
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
-RESEND_FROM = os.environ.get("RESEND_FROM_EMAIL", "mehdi@seawaysites.com")
+# Read the sender configured on Vercel. `RESEND_FROM_ADDRESS` is the var set
+# in the Vercel env (see docs/META_ADS_PLAN.md §9); fall back to the legacy
+# `RESEND_FROM_EMAIL` name, then to the hardcoded sender so the script still
+# works locally without any env. Without this, a from-address/diplay-name
+# rotation set in Vercel would be silently ignored.
+RESEND_FROM = (
+    os.environ.get("RESEND_FROM_ADDRESS")
+    or os.environ.get("RESEND_FROM_EMAIL")
+    or "mehdi@seawaysites.com"
+)
 SUPABASE_URL = os.environ.get("SUPABASE_URL") or os.environ.get("NEXT_PUBLIC_SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
 
