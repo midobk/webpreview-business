@@ -437,8 +437,9 @@ export default function V2Landing() {
               initial={{ opacity: 0, y: 32 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease, delay: 0.3 }}
-              className="order-1 min-w-0 scroll-mt-24 lg:order-2 lg:sticky lg:top-28"
+              className="relative order-1 min-w-0 scroll-mt-24 lg:order-2 lg:sticky lg:top-28"
             >
+              <span id="request-preview" className="absolute -top-24" aria-hidden="true" />
               <div className="mb-5">
                 <div className="v2-mono text-[10px] text-[var(--v2-lume)]">
                   fig. 01·b — start here

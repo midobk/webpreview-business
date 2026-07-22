@@ -20,6 +20,7 @@ export default function LeadForm() {
   const [submittedEmail, setSubmittedEmail] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const [touched, setTouched] = useState<{
     businessName?: boolean;
     email?: boolean;
@@ -57,6 +58,7 @@ export default function LeadForm() {
     setTouched({ businessName: true, email: true, website: true });
 
     if (!businessNameValid || !emailValid || !urlValid) {
+      if (!urlValid) setDetailsOpen(true);
       setError('Please fix the highlighted fields and try again.');
       return;
     }
@@ -216,7 +218,11 @@ export default function LeadForm() {
         )}
       </div>
 
-      <details className="v2-form-details">
+      <details
+        open={detailsOpen}
+        onToggle={(event) => setDetailsOpen(event.currentTarget.open)}
+        className="v2-form-details"
+      >
         <summary>
           <span>Add a website or notes</span>
           <span className="v2-form-details-icon" aria-hidden="true">+</span>
