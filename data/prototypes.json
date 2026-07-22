@@ -1200,6 +1200,8 @@
     "created_at": "2026-07-20T18:10:39.343938+00:00",
     "updated_at": "2026-07-20T18:10:39.343938+00:00",
     "industry": "plumber"
+  },
+  {
     "id": "proto-zeytoon-restaurant",
     "lead_id": "lead-669",
     "variant": 1,
