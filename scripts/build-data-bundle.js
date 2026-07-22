@@ -34,9 +34,15 @@ function readJson(file, fallback) {
 }
 
 function jsonToTs(obj) {
-  // Compact JSON for smaller bundle, but use JSON.stringify for safety.
-  // The compiler treats this as a constant expression.
-  return JSON.stringify(obj, null, 2);
+  // Emit the data as `JSON.parse("…")` rather than an inline object/array
+  // literal. With a large, heterogeneous array (2k+ leads), the inline
+  // literal makes TypeScript compute a union of every element's shape and
+  // fail during `next build` type-check with TS2590 "Expression produces a
+  // union type that is too complex to represent" — even with a `: any[]`
+  // annotation on the binding. `JSON.parse` is typed `any`, so no literal-
+  // element union is ever computed. The data is still bundled (as a string
+  // constant) and parsed once at module load.
+  return `JSON.parse(${JSON.stringify(JSON.stringify(obj))})`;
 }
 
 console.log('Building data bundle...');
