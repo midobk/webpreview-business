@@ -662,9 +662,10 @@ Checklist:
 - **Google Places API** — live, project `sitesprint-leads`, billing account `0157E2-14E407-5CB61F`, $415 free trial credit, expires Sept 21, 2026. Discovery cost ~$1/run. Old project `sitesprintmehdi-500218` still has API enabled — disable ASAP.
 - **Image generation** — OpenAI gpt-image-1-mini verified working (2026-06-22 14:09)
 - **Telnyx** — from `+18253953636`, voice-call plugin enabled. Not yet wired to SMS drafts.
-- **AgentMail** — inbox script ready (`sitesprint-test@agentmail.to`), no API key provisioned yet.
+- **Email** — **Resend** chosen 2026-07-21 (replaces AgentMail). `RESEND_API_KEY` + `RESEND_FROM_ADDRESS` set on Vercel Prod+Preview (2026-07-21), from `Seaway Sites <mehdi@seawaysites.com>`. Lead-reply send path (`scripts/pipeline/send_preview_email.py`) uses the Resend API and now reads `RESEND_FROM_ADDRESS` from env (was `RESEND_FROM_EMAIL`, which the configured Vercel var didn't match). G2 is **🟡 blocked, not green**: code is done, but `seawaysites.com` is not yet DKIM/SPF-verified in Resend, so lead replies can't actually deliver — this is a pre-spend blocker. Proactive outreach (`scripts/send-outreach`) still targets AgentMail — separate PR. Remaining for true end-to-end: verify the Resend domain (DKIM/SPF) + rotate the shared key.
 - **Vercel deploy** — live at https://seawaysites.com (domain verified, redirects from webpreview-business.vercel.app)
 - **Local dev** — running on http://localhost:3000, password `1234` (per user — local only, Vercel unchanged).
+- **Meta ads** (2026-07-21): MCP authenticated against `SeawaySitesAdAccount` (act_1469618098544438, CAD, America/Toronto, fresh, $0 spent) — auth + read-only account tools confirmed; MCP write/insights not yet exercised (**G6 partial**). Page = `Seaway Sites` (id 1175228509015042). Pixel `1530207232234428` + CAPI access token both provisioned and set on Vercel Prod+Preview; browser pixel confirmed in prod HTML and the CAPI token is valid (a test event was accepted by Meta), but the app's server-side `Lead` event + browser/CAPI dedup are not yet verified end-to-end (**G3 partial**). Full plan + how to close G3/G6 in `docs/META_ADS_PLAN.md`.
 
 ### Deployment
 - **URL:** https://seawaysites.com

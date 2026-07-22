@@ -2,7 +2,7 @@
 
 > Operational plan for the first paid-acquisition channel: Meta (Facebook + Instagram) lead-gen ads,
 > created and managed by an agent via the Meta MCP. Companion to AGENT_PLAN.md.
-> Status (2026-07-21): decisions locked (§8). Code gates G3/G4/G7 done + merged to `main` (PR #15). **G5 done** — account/payment/spending-limit created, `seawaysites.com` Meta-verified. Email provider is now **Resend** (key provided). **Remaining blockers: G6 (connect Meta MCP) and provisioning the Pixel ID/CAPI token; G2 needs the send-path code swapped to Resend.** No spend until all gates green.
+> Status (2026-07-21, late): **Browser Pixel + tracking env LIVE on production; app-level CAPI Lead event and MCP write/insights still to verify.** Meta MCP authenticated for `SeawaySitesAdAccount` (act_1469618098544438, CAD, America/Toronto, $0 spent) — auth + read-only account tools confirmed; MCP **write** (create paused campaign) and **insights read** not yet exercised (G6). Pixel `1530207232234428` fires on every page load (verified in prod HTML). The CAPI token is valid at the token level (a manual test event was accepted by Meta), but the app's own server-side `Lead` event on form submit + browser/CAPI dedup are **not yet verified end-to-end** (G3). All 4 env vars (`NEXT_PUBLIC_META_PIXEL_ID`, `META_CAPI_ACCESS_TOKEN`, `RESEND_API_KEY`, `RESEND_FROM_ADDRESS`) set on Vercel Production+Preview and redeployed. **Remaining before spend: G2 — verify `seawaysites.com` in Resend (DKIM/SPF) so leads can actually be emailed (lead follow-up is NOT live until this is done); G3 — prove the deduped `Lead` event via a live form-submit test (§9 / §10 task 1); G6 — a paused-create dry run + one insights read; then draft creative (§2.2), landing mobile/CTA pass (G8), build the paused campaign. No spend until ALL gates green and Mehdi says go.** Post-launch: rotate the CAPI + Resend keys (shared in chat) — see §9.
 
 ## Decisions locked (2026-07-20)
 - **Budget:** Tier A — $20/day, 4-week test flight (~$600 CAD).
@@ -61,11 +61,11 @@
 | # | Gate | Status | Why it blocks launch |
 |---|------|--------|----------------------|
 | G1 | **Pricing drift fixed** | ✅ DONE 2026-07-20 | Resolved: live landing = source of truth. AGENT_PLAN §3 + MEMORY.md C4 rewritten to match ($399 + $69/mo / $899). No landing change needed. |
-| G2 | **Lead follow-up works end-to-end** — email provider is **Resend** (key provided 2026-07-21). Send-path code still targets AgentMail. | 🟡 PARTIAL — key in hand, code swap + Resend domain-verify pending | Paying for leads that never get a reply is the fastest way to waste the budget. Speed-to-lead (reply within minutes) is the single biggest conversion lever, and ties to the 2-day warm-up. **To finish:** verify `seawaysites.com` in Resend (DKIM/SPF), set `RESEND_API_KEY` in Vercel, swap `scripts/send-outreach` from AgentMail to the Resend API. |
-| G3 | **Meta Pixel + Lead event live**, firing on form submit + server-side Conversions API (deduped by shared event_id) | ✅ CODE DONE — needs Pixel ID | `components/MetaPixel.tsx` (pixel), `lib/attribution.ts` (browser Lead event), `lib/meta-capi.ts` (server CAPI), wired into `app/layout.tsx`, `LeadForm.tsx`, `app/api/leads/route.ts`. Dormant until `NEXT_PUBLIC_META_PIXEL_ID` / `META_CAPI_ACCESS_TOKEN` are set. Build + typecheck pass. |
+| G2 | **Lead follow-up works end-to-end** — email provider is **Resend** (key provided 2026-07-21). | 🟡 **BLOCKED — code done, delivery NOT verified** (pre-spend blocker) | `scripts/pipeline/send_preview_email.py` already POSTs to `api.resend.com` with `RESEND_API_KEY` and reads `RESEND_FROM_ADDRESS` from env (migrated `c1a28fa`, signed-token + sender `918763b`). Code is wired and deployed, but Resend won't deliver from an unverified domain, so leads cannot actually be emailed yet. **Remaining operational work (not code, blocks spend):** (1) Mehdi verifies `seawaysites.com` in Resend (DKIM/SPF) — the actual end-to-end blocker; (2) Mehdi rotates the Resend key in the dashboard (the key was shared in chat, so treat it as compromised — see §9). `RESEND_API_KEY` + `RESEND_FROM_ADDRESS` are set on Vercel Prod+Preview (2026-07-21). Do not treat G2 as green until a lead-reply email is observed to deliver. |
+| G3 | **Meta Pixel + Lead event live**, firing on form submit + server-side Conversions API (deduped by shared event_id) | 🟡 **PARTIAL 2026-07-21** — browser Pixel live on prod; app-level CAPI `Lead` event + dedup NOT yet verified (pre-spend blocker) | **Verified:** Pixel `1530207232234428` fires in prod HTML (`fbq('init', …)` + `connect.facebook.net`); the CAPI token is valid at the token level (a manual test event returned `events_received:1`); `NEXT_PUBLIC_META_PIXEL_ID` + `META_CAPI_ACCESS_TOKEN` set on Vercel Prod+Preview, redeployed (`dpl_C2LFcTAsm4Bk…`). Code: `components/MetaPixel.tsx`, `lib/attribution.ts`, `lib/meta-capi.ts`. **NOT verified:** the app's own server-side `Lead` event on form submit and its browser↔CAPI deduplication — the app sends no `test_event_code` and logs no successful CAPI post, so this can't be proven through Events Manager → Test Events yet. Keep G3 partial (not green) until a live form-submit test runs with temporary server-side test-code + redacted-success-log plumbing and the deduped `Lead` event is observed (§9 "Browser Pixel + intake test", §10 task 1). Until then, do not treat conversion tracking as measurement-ready. |
 | G4 | **UTM + fbclid attribution stored** on the Supabase lead row | ✅ DONE | Migration `20260720130000_add_lead_attribution` applied (6 columns live, verified). Captured first-touch on the landing page, written on insert. Supabase — not Ads Manager — is the CPL/CAC source of truth. |
 | G5 | **Business infrastructure** — Business Manager, FB Page, ad account, payment method, domain verified, **account-level spending limit set** | ✅ DONE 2026-07-21 | All created by Mehdi. `seawaysites.com` verified to the Business Portfolio (meta-tag shipped in PR #15, live on prod). The account spending limit is the hard safety cap under the agent. |
-| G6 | **Meta MCP connected**, tools verified (list/create paused campaign, read insights) | ⛔ IN PROGRESS — Mehdi connecting | The management agent needs its hands. Being set up for both Claude Code (`.mcp.json` / `claude mcp add`) and Codex (`~/.codex/config.toml`). Token carries `ads_management` (can spend) — keep the human-approval gate. Last blocker gating campaign build. |
+| G6 | **Meta MCP connected**, tools verified (list/create paused campaign, read insights) | 🟡 **PARTIAL 2026-07-21** — auth + read-only account tools verified; write (create paused campaign) + insights read NOT yet exercised | **Verified:** MCP wired through `.mcp.json` (Claude Code) and `~/.codex/config.toml` (Codex), both inheriting `META_ACCESS_TOKEN` from shell env (no secrets on disk); auth confirmed via `get_ad_accounts` (returns `act_1469618098544438`), plus `get_account_info` and `get_account_pages`. **NOT verified:** the gate's write path (create a *paused* campaign/ad set/ad) and an insights read — a fresh ad account can still be missing an `ads_management` asset grant, or hit an unmapped MCP tool, in ways that only surface at build time. Keep G6 partial (not green) until a paused-create dry run and one `get_insights` read both succeed (done as part of §10 task 4, before handing the structure to Mehdi). Token carries `ads_management` (can spend) — keep the human-approval gate. Account-level spending limit (set by Mehdi) is the hard cap above the agent's reach. |
 | G7 | **Privacy page** pixel/advertising disclosure | ✅ DONE | `/privacy` now discloses the Meta Pixel and hashed-email sharing for ad measurement; "Last updated" bumped to 2026-07-20. |
 | G8 | **Landing conversion pass** — form is the obvious primary CTA, clean thank-you state, mobile speed | ◻️ TODO — agent | Ad clicks are wasted on a page that doesn't convert. Landing already has a working form + success state; do a focused mobile/CTA pass once G5/G6 unblock and creative is set.
 
@@ -227,11 +227,101 @@ Reporting cadence: daily one-liner (agent), weekly report (agent), end-of-flight
 6. ~~**Email provider**~~ → **Resend** chosen (replaces AgentMail); `RESEND_API_KEY` provided. Remaining email work: verify domain in Resend, set the key in Vercel, swap the send-path code (G2). 🟡
 
 ### Still needed from Mehdi (blockers to launch)
-7. **Meta MCP** — connect it for both Claude Code and Codex (see the setup section at the end of this doc / chat). The agent maps its tools on connection and verifies read/insights + create-paused-campaign before building anything. **Last blocker gating campaign build.**
-8. **Pixel ID + Conversions API token** — from Meta Events Manager; then set `NEXT_PUBLIC_META_PIXEL_ID` / `META_CAPI_ACCESS_TOKEN` in Vercel.
+7. ~~**Meta MCP**~~ → **Mehdi's part DONE** 2026-07-21 (System User token + ad-account asset grant provided). MCP auth + read-only account tools verified (`get_ad_accounts`, `get_account_info`, `get_account_pages`); the write path (paused create) + an insights read are still to be exercised by the agent at build time — **G6 partial** (§2.1). Page = `Seaway Sites` (id `1175228509015042`).
+8. ~~**Pixel ID + Conversions API token**~~ → **Mehdi's part DONE 2026-07-21.** Pixel `1530207232234428` + CAPI token both provisioned and set on Vercel (Prod+Preview) along with the Resend vars; production redeployed and the browser pixel is confirmed live in the prod HTML (the token also accepted a manual test event). The app's own server-side `Lead` event + browser/CAPI dedup are still to be verified end-to-end by the agent — **G3 partial** (§2.1).
 
 ### Once Mehdi provides the above, the agent will (all reversible, nothing spends):
-- Set `NEXT_PUBLIC_META_PIXEL_ID` + `META_CAPI_ACCESS_TOKEN` (Vercel env) and confirm the pixel fires a test Lead event end-to-end (browser + CAPI dedup).
+- Confirm the browser Pixel `Lead` and the Supabase intake through Events Manager's website test flow; application-level CAPI deduplication needs temporary test plumbing before it can be claimed.
 - Draft the 3-angle creative set (§2.2) for approval.
 - Build the campaign → 2 ad sets → 6–9 ads **paused** via the MCP for review.
 - Nothing activates until Mehdi says go in chat (§3.1).
+
+---
+
+## 9. Operational reference — MCP wiring + ad-account ID
+
+For the next agent (or Mehdi on a fresh machine) to bring the Meta MCP back online:
+
+**Ad account (verified 2026-07-21):**
+- `act_1469618098544438` — `SeawaySitesAdAccount`
+- Currency CAD, timezone America/Toronto, country CA
+- Page: `Seaway Sites` (id `1175228509015042`, @seawaysites, category: Web Designer)
+- Fresh account, $0 spent, ACTIVE
+
+**Pixel:**
+- Pixel ID `1530207232234428` (browser-side, safe to commit)
+- CAPI token: see Vercel env `META_CAPI_ACCESS_TOKEN` (server-side secret, never committed)
+
+**MCP setup (Claude Code + Codex, transient shell env, no secrets on disk):**
+
+1. In the terminal session that will launch the agent, enter the System User token without putting its value in shell history (these are `bash` commands; under zsh, run `bash` first or use `read -rs META_ACCESS_TOKEN` with a separately-printed prompt):
+   ```bash
+   read -rsp 'Paste the System User token: ' META_ACCESS_TOKEN
+   export META_ACCESS_TOKEN
+   ```
+   Get the token from **Business Manager → Users → System Users → McpUser → Generate Token** with scope `ads_management`. The System User must be granted **Manage** access to the ad account (Users → System Users → Add Assets → Ad Accounts → Manage) BEFORE the token is generated; tokens don't pick up asset grants retroactively.
+
+2. Launch Claude Code or Codex from that same terminal. To rotate the token, fully quit the agent, start a new terminal session, and repeat step 1 — running processes do not inherit changes made later.
+
+3. Verify in that shell:
+   ```bash
+   printf %s "$META_ACCESS_TOKEN" | wc -c   # expect 202
+   ```
+
+4. The `.mcp.json` (Claude Code) and `~/.codex/config.toml` (Codex) entries both reference `${META_ACCESS_TOKEN}` and inherit the value from the shell env — no secret in either file.
+
+**Quick auth check from the agent:**
+```python
+get_ad_accounts(limit=5, user_id="me")
+# expect: data[0].id == "act_1469618098544438"
+```
+
+**Vercel env (Production + Preview) — ✅ all set 2026-07-21:**
+- `NEXT_PUBLIC_META_PIXEL_ID=1530207232234428` (plain)
+- `META_CAPI_ACCESS_TOKEN=<token from Events Manager>` (encrypted)
+- `RESEND_API_KEY=<from .env.local>` (encrypted)
+- `RESEND_FROM_ADDRESS=Seaway Sites <mehdi@seawaysites.com>` (plain)
+
+Set programmatically via the Vercel REST API using the local CLI token (`~/Library/Application Support/com.vercel.cli/auth.json`). Project `prj_RKz3owsHUtzDYTJ9an9Y60u8yylX`, team `team_gEH5FXIh3E6XkRttxTsLmLqq`. To update later: `npx vercel login` to refresh the token, then re-run `scratchpad/set_vercel_env.py` (or the Vercel dashboard). Remaining operational item: verify `seawaysites.com` in Resend (DKIM/SPF) so mail actually sends.
+
+**Browser Pixel + intake test (after deploy):**
+1. In Events Manager → Test Events, use the website test flow to open the landing page and submit the form.
+2. Confirm the browser `Lead` event in the test panel and the corresponding row (including attribution) in Supabase; then delete the marked test row.
+3. Do not use a `?test_event_code=` URL or Vercel logs to claim CAPI verification: the current app neither passes `test_event_code` to CAPI nor logs successful CAPI responses.
+4. To prove the application-level CAPI event and its deduplication, first add a short-lived, server-only test-event-code input and a redacted success log, deploy it, run the test, then remove that plumbing.
+
+### Post-launch token rotation (do this week)
+Both the CAPI access token (`EAAOZCAwKlMu...`) and the Resend API key were shared in chat to enable setup. Treat both as compromised and rotate within 7 days of first spend:
+
+1. **CAPI**: Events Manager → Datasets → Landing page pixel → Settings → Conversions API → "Generate access token" (this invalidates the old one). Update `META_CAPI_ACCESS_TOKEN` in Vercel env, redeploy.
+2. **Resend**: resend.com → API Keys → revoke old key, create new one. Update `RESEND_API_KEY` in Vercel env + your local `.env.local`, redeploy.
+3. **Meta access token** (`META_ACCESS_TOKEN`): if you've shared it anywhere beyond this Claude Code session, rotate via Business Manager → System Users → McpUser → Generate Token. Start a new terminal session with the replacement token; never add it to `~/.zshrc`.
+
+---
+
+## 10. HANDOFF — next agent (Codex) picks up here
+
+**Infrastructure is wired and mostly verified (2026-07-21) — two gates are still partial, close them as you go.** The browser Pixel + tracking env are LIVE on production and the Meta MCP is authenticated for both Claude Code and Codex (Codex inherits `META_ACCESS_TOKEN` from the shell env via `~/.codex/config.toml` — run `get_ad_accounts(user_id="me")`, expect `act_1469618098544438`). Two gates are **not** green yet: **G3** — the app's server-side CAPI `Lead` event + browser/CAPI dedup are unverified (close it in task 1); **G6** — MCP write (create paused campaign) + insights read are unexercised (close it in task 4). Your job is to take it from "wired" to "a paused campaign ready for Mehdi's review," verifying G3 and G6 along the way, then stop.
+
+### ⛔ HARD GUARDRAIL — read first
+**Do NOT activate any spend.** Build everything in `PAUSED` status. Activation, any budget increase, and any new campaign each require a fresh, explicit "go" from Mehdi in chat (§3.1, §3.4). The account-level spending limit is the hard cap, but you must not rely on it — build paused, report, and wait. The token carries `ads_management` (it *can* spend); the gate is behavioural, and it's on you.
+
+### Ordered task list
+1. **Live browser + intake test (20 min) — closes G3.** Submit the landing form once on prod with a clearly-marked test entry (e.g. business "ZZ CAPI Test"), confirm: (a) browser `Lead` event in Events Manager → Test Events and (b) a row in Supabase with attribution columns. **Then delete the test row from Supabase** (the pipeline chokes on test fixtures — see MEMORY.md). The current code cannot prove its CAPI event or deduplication through Test Events; add temporary server-side test-code and redacted-success-log plumbing, observe the deduped server-side `Lead` event, then remove the plumbing — only then flip G3 to green.
+2. **Draft the 3 creative angles → get Mehdi's approval.** Copy is drafted in §2.2 (Risk-reversal / Before-after / Owner-empathy). Refine, produce the 6 feed images (1080×1080) + 3 story (1080×1920) — real prototype screenshots from `public/prototype-screenshots/` beat stock (see the 5 flagship anonymized concepts: meridian-auto-works, nocturne-hair-studio, stillwater-ledger-tax, grand-current-electric, bluewater-plumbing). **Copy rule: never claim AI-built — fast human service only** (MEMORY.md / [[no-ai-positioning]]). No income/guarantee claims (Meta policy). Canva MCP is available in Codex if you want it. Show Mehdi before building.
+3. **G8 — landing mobile/CTA conversion pass.** Form must be the obvious primary CTA, clean thank-you state, fast on mobile. Branch off `main`, own PR. Ad clicks are wasted on a page that doesn't convert.
+4. **Build the campaign PAUSED via the MCP — closes G6** per §2.3: Campaign "Free Preview — CA Lead Gen v1" (objective: Leads) → Ad set A (Broad Advantage+, $10/day) + Ad set B (Interest stack, $10/day), all-Canada English, Page id `1175228509015042`, Advantage+ placements. 3 ads per set from the approved creative. Everything `PAUSED`. The successful paused create is the write-path dry run G6 needs — also run one `get_insights` read on the account/campaign to confirm the insights tool before flipping G6 green. Report the structure to Mehdi in Ads Manager terms.
+5. **Wait for Mehdi's explicit "go"** before activating. Then follow §3.1 (2-day warm-up, report from day 1, optimize day 3) and the §3.2 pause-only daily routine.
+
+### State / IDs you need
+- Ad account: `act_1469618098544438` (SeawaySitesAdAccount, CAD, America/Toronto, $0 spent)
+- Page: `Seaway Sites` id `1175228509015042` (@seawaysites)
+- Pixel: `1530207232234428` (browser pixel live in prod) · CAPI token set in Vercel env (token valid; app `Lead` event + dedup unverified — G3)
+- Vercel: project `prj_RKz3owsHUtzDYTJ9an9Y60u8yylX`, team `team_gEH5FXIh3E6XkRttxTsLmLqq`, all 4 env vars set + redeployed
+- Budget: Tier A $20/day, 4 weeks (~$600 CAD). CPL target ≤ $20 CAD.
+- Open PR #17 (this doc's updates) — merge or keep building on `claude/meta-pixel-id-and-creative`; coordinate with Mehdi.
+- Pricing = live landing (`app/_landing/content.ts`): Free Draft / Managed $399 + $69/mo / Own $899.
+
+### Operational items still on Mehdi (not blockers for building paused)
+- Verify `seawaysites.com` in Resend (DKIM/SPF) so lead-reply mail sends.
+- Rotate the CAPI + Resend keys within a week (shared in chat) — §9 rotation steps.
