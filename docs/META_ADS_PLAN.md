@@ -61,11 +61,11 @@
 | # | Gate | Status | Why it blocks launch |
 |---|------|--------|----------------------|
 | G1 | **Pricing drift fixed** | ✅ DONE 2026-07-20 | Resolved: live landing = source of truth. AGENT_PLAN §3 + MEMORY.md C4 rewritten to match ($399 + $69/mo / $899). No landing change needed. |
-| G2 | **Lead follow-up works end-to-end** — email provider is **Resend** (key provided 2026-07-21). | ✅ CODE DONE 2026-07-21 — `scripts/pipeline/send_preview_email.py` already uses the Resend API (POSTs to `api.resend.com` with `RESEND_API_KEY` from env; was migrated in commit `c1a28fa` and signed-token + sender update in `918763b`). | **Remaining operational work (not code):** (1) Mehdi rotates the Resend key in the Resend dashboard (was shared in chat); (2) Mehdi verifies `seawaysites.com` in Resend (DKIM/SPF) so emails can actually send; (3) set `RESEND_API_KEY` + `RESEND_FROM_ADDRESS` in Vercel env. The send path is wired and ready — it just needs the operational keys to land. |
+| G2 | **Lead follow-up works end-to-end** — email provider is **Resend** (key provided 2026-07-21). | ✅ CODE DONE 2026-07-21 — `scripts/pipeline/send_preview_email.py` already uses the Resend API (POSTs to `api.resend.com` with `RESEND_API_KEY` from env; was migrated in commit `c1a28fa` and signed-token + sender update in `918763b`). | **Remaining operational work (not code):** (1) Mehdi rotates the Resend key in the Resend dashboard (the key was shared in chat, so treat it as compromised — see §9); (2) Mehdi verifies `seawaysites.com` in Resend (DKIM/SPF) — this is the actual end-to-end blocker, since Resend won't deliver from an unverified domain. `RESEND_API_KEY` + `RESEND_FROM_ADDRESS` are now set on Vercel Prod+Preview (2026-07-21), so the send path is wired and deployed — it just needs the verified domain to actually deliver. |
 | G3 | **Meta Pixel + Lead event live**, firing on form submit + server-side Conversions API (deduped by shared event_id) | ✅ DONE 2026-07-21 — LIVE on prod | Pixel `1530207232234428` verified in prod HTML (`fbq('init', …)` + `connect.facebook.net`). CAPI token verified against Meta (test event `events_received:1`). `NEXT_PUBLIC_META_PIXEL_ID` + `META_CAPI_ACCESS_TOKEN` set on Vercel Prod+Preview, redeployed (`dpl_C2LFcTAsm4Bk…`). Code: `components/MetaPixel.tsx`, `lib/attribution.ts`, `lib/meta-capi.ts`. The current app does not send `test_event_code` or log successful CAPI posts, so its browser+CAPI deduplication cannot be verified through Test Events without temporary test plumbing. |
 | G4 | **UTM + fbclid attribution stored** on the Supabase lead row | ✅ DONE | Migration `20260720130000_add_lead_attribution` applied (6 columns live, verified). Captured first-touch on the landing page, written on insert. Supabase — not Ads Manager — is the CPL/CAC source of truth. |
 | G5 | **Business infrastructure** — Business Manager, FB Page, ad account, payment method, domain verified, **account-level spending limit set** | ✅ DONE 2026-07-21 | All created by Mehdi. `seawaysites.com` verified to the Business Portfolio (meta-tag shipped in PR #15, live on prod). The account spending limit is the hard safety cap under the agent. |
-| G6 | **Meta MCP connected**, tools verified (list/create paused campaign, read insights) | ✅ DONE 2026-07-21 — `SeawaySitesAdAccount` (act_1469618098544438) reachable; pixel + CAPI gate (G3) still needs Vercel env set | Wired through `.mcp.json` (Claude Code) and `~/.codex/config.toml` (Codex), both inheriting `META_ACCESS_TOKEN` from shell env (no secrets on disk). Token carries `ads_management` (can spend) — keep the human-approval gate. Account-level spending limit (set by Mehdi) is the hard cap above the agent's reach. |
+| G6 | **Meta MCP connected**, tools verified (list/create paused campaign, read insights) | ✅ DONE 2026-07-21 — `SeawaySitesAdAccount` (act_1469618098544438) reachable; G3 env is set on Vercel and the tracking stack is live | Wired through `.mcp.json` (Claude Code) and `~/.codex/config.toml` (Codex), both inheriting `META_ACCESS_TOKEN` from shell env (no secrets on disk). Token carries `ads_management` (can spend) — keep the human-approval gate. Account-level spending limit (set by Mehdi) is the hard cap above the agent's reach. |
 | G7 | **Privacy page** pixel/advertising disclosure | ✅ DONE | `/privacy` now discloses the Meta Pixel and hashed-email sharing for ad measurement; "Last updated" bumped to 2026-07-20. |
 | G8 | **Landing conversion pass** — form is the obvious primary CTA, clean thank-you state, mobile speed | ◻️ TODO — agent | Ad clicks are wasted on a page that doesn't convert. Landing already has a working form + success state; do a focused mobile/CTA pass once G5/G6 unblock and creative is set.
 
@@ -254,11 +254,10 @@ For the next agent (or Mehdi on a fresh machine) to bring the Meta MCP back onli
 
 **MCP setup (Claude Code + Codex, transient shell env, no secrets on disk):**
 
-1. In the terminal session that will launch the agent, enter the System User token without putting its value in shell history:
+1. In the terminal session that will launch the agent, enter the System User token without putting its value in shell history (these are `bash` commands; under zsh, run `bash` first or use `read -rs META_ACCESS_TOKEN` with a separately-printed prompt):
    ```bash
-   read -rs 'META_ACCESS_TOKEN?Paste the System User token: '
+   read -rsp 'Paste the System User token: ' META_ACCESS_TOKEN
    export META_ACCESS_TOKEN
-   echo
    ```
    Get the token from **Business Manager → Users → System Users → McpUser → Generate Token** with scope `ads_management`. The System User must be granted **Manage** access to the ad account (Users → System Users → Add Assets → Ad Accounts → Manage) BEFORE the token is generated; tokens don't pick up asset grants retroactively.
 
@@ -266,7 +265,7 @@ For the next agent (or Mehdi on a fresh machine) to bring the Meta MCP back onli
 
 3. Verify in that shell:
    ```bash
-   print -rn -- "$META_ACCESS_TOKEN" | wc -c   # expect 202
+   printf %s "$META_ACCESS_TOKEN" | wc -c   # expect 202
    ```
 
 4. The `.mcp.json` (Claude Code) and `~/.codex/config.toml` (Codex) entries both reference `${META_ACCESS_TOKEN}` and inherit the value from the shell env — no secret in either file.
