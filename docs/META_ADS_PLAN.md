@@ -2,7 +2,7 @@
 
 > Operational plan for the first paid-acquisition channel: Meta (Facebook + Instagram) lead-gen ads,
 > created and managed by an agent via the Meta MCP. Companion to AGENT_PLAN.md.
-> Status (2026-07-21, late): **Meta MCP authenticated and verified** for the `SeawaySitesAdAccount` (id `act_1469618098544438`, CAD, America/Toronto, fresh account, $0 spent). **Pixel ID provisioned:** `1530207232234428` — pending Vercel env set + a test Lead event. Remaining: generate the Conversions API access token in Events Manager, set Vercel env, finish the Resend code swap (G2), build the paused campaign, and do the landing mobile/CTA pass (G8). **No spend until all gates green.**
+> Status (2026-07-21, late): **Tracking stack LIVE on production.** Meta MCP authenticated for `SeawaySitesAdAccount` (act_1469618098544438, CAD, America/Toronto, $0 spent). Pixel `1530207232234428` fires on every page load (verified in prod HTML). CAPI token generated + verified (test event accepted by Meta). All 4 env vars (`NEXT_PUBLIC_META_PIXEL_ID`, `META_CAPI_ACCESS_TOKEN`, `RESEND_API_KEY`, `RESEND_FROM_ADDRESS`) set on Vercel Production+Preview and redeployed. **Remaining before spend: draft creative (§2.2), landing mobile/CTA pass (G8), build the paused campaign. No spend until Mehdi says go.** Post-launch: rotate the CAPI + Resend keys (shared in chat) — see §9.
 
 ## Decisions locked (2026-07-20)
 - **Budget:** Tier A — $20/day, 4-week test flight (~$600 CAD).
@@ -62,7 +62,7 @@
 |---|------|--------|----------------------|
 | G1 | **Pricing drift fixed** | ✅ DONE 2026-07-20 | Resolved: live landing = source of truth. AGENT_PLAN §3 + MEMORY.md C4 rewritten to match ($399 + $69/mo / $899). No landing change needed. |
 | G2 | **Lead follow-up works end-to-end** — email provider is **Resend** (key provided 2026-07-21). | ✅ CODE DONE 2026-07-21 — `scripts/pipeline/send_preview_email.py` already uses the Resend API (POSTs to `api.resend.com` with `RESEND_API_KEY` from env; was migrated in commit `c1a28fa` and signed-token + sender update in `918763b`). | **Remaining operational work (not code):** (1) Mehdi rotates the Resend key in the Resend dashboard (was shared in chat); (2) Mehdi verifies `seawaysites.com` in Resend (DKIM/SPF) so emails can actually send; (3) set `RESEND_API_KEY` + `RESEND_FROM_ADDRESS` in Vercel env. The send path is wired and ready — it just needs the operational keys to land. |
-| G3 | **Meta Pixel + Lead event live**, firing on form submit + server-side Conversions API (deduped by shared event_id) | ✅ CODE DONE — needs Pixel ID | `components/MetaPixel.tsx` (pixel), `lib/attribution.ts` (browser Lead event), `lib/meta-capi.ts` (server CAPI), wired into `app/layout.tsx`, `LeadForm.tsx`, `app/api/leads/route.ts`. Dormant until `NEXT_PUBLIC_META_PIXEL_ID` / `META_CAPI_ACCESS_TOKEN` are set. Build + typecheck pass. |
+| G3 | **Meta Pixel + Lead event live**, firing on form submit + server-side Conversions API (deduped by shared event_id) | ✅ DONE 2026-07-21 — LIVE on prod | Pixel `1530207232234428` verified in prod HTML (`fbq('init', …)` + `connect.facebook.net`). CAPI token verified against Meta (test event `events_received:1`). `NEXT_PUBLIC_META_PIXEL_ID` + `META_CAPI_ACCESS_TOKEN` set on Vercel Prod+Preview, redeployed (`dpl_C2LFcTAsm4Bk…`). Code: `components/MetaPixel.tsx`, `lib/attribution.ts`, `lib/meta-capi.ts`. Still worth a live Events-Manager Test-Events confirmation on a real form submit. |
 | G4 | **UTM + fbclid attribution stored** on the Supabase lead row | ✅ DONE | Migration `20260720130000_add_lead_attribution` applied (6 columns live, verified). Captured first-touch on the landing page, written on insert. Supabase — not Ads Manager — is the CPL/CAC source of truth. |
 | G5 | **Business infrastructure** — Business Manager, FB Page, ad account, payment method, domain verified, **account-level spending limit set** | ✅ DONE 2026-07-21 | All created by Mehdi. `seawaysites.com` verified to the Business Portfolio (meta-tag shipped in PR #15, live on prod). The account spending limit is the hard safety cap under the agent. |
 | G6 | **Meta MCP connected**, tools verified (list/create paused campaign, read insights) | ✅ DONE 2026-07-21 — `SeawaySitesAdAccount` (act_1469618098544438) reachable; pixel + CAPI gate (G3) still needs Vercel env set | Wired through `.mcp.json` (Claude Code) and `~/.codex/config.toml` (Codex), both inheriting `META_ACCESS_TOKEN` from shell env (no secrets on disk). Token carries `ads_management` (can spend) — keep the human-approval gate. Account-level spending limit (set by Mehdi) is the hard cap above the agent's reach. |
@@ -228,7 +228,7 @@ Reporting cadence: daily one-liner (agent), weekly report (agent), end-of-flight
 
 ### Still needed from Mehdi (blockers to launch)
 7. ~~**Meta MCP**~~ → ✅ **DONE** 2026-07-21. `SeawaySitesAdAccount` (act_1469618098544438) reachable, MCP tools verified (`get_ad_accounts`, `get_account_info`, `get_account_pages`). Page = `Seaway Sites` (id `1175228509015042`).
-8. **Pixel ID + Conversions API token** — **Pixel ID provisioned: `1530207232234428`** (Browser-side, public in page source). **CAPI token still needed** (Events Manager → Settings → Conversions API → Generate access token). Then set `NEXT_PUBLIC_META_PIXEL_ID=1530207232234428` and `META_CAPI_ACCESS_TOKEN=<token>` in Vercel project env. The code is already wired (`components/MetaPixel.tsx`, `lib/meta-capi.ts`) and dormant until those env vars are set.
+8. ~~**Pixel ID + Conversions API token**~~ → ✅ **DONE 2026-07-21.** Pixel `1530207232234428` + CAPI token both provisioned, verified, and set on Vercel (Prod+Preview) along with the Resend vars; production redeployed and the pixel is confirmed live in the prod HTML.
 
 ### Once Mehdi provides the above, the agent will (all reversible, nothing spends):
 - Confirm the pixel fires a test Lead event end-to-end (browser + CAPI dedup) via the Events Manager "Test Events" tool.
@@ -275,11 +275,13 @@ get_ad_accounts(limit=5, user_id="me")
 # expect: data[0].id == "act_1469618098544438"
 ```
 
-**Vercel env to set (Production + Preview):**
-- `NEXT_PUBLIC_META_PIXEL_ID=1530207232234428`
-- `META_CAPI_ACCESS_TOKEN=<token from Events Manager>`
-- `RESEND_API_KEY=<from .env.local>`
-- `RESEND_FROM_ADDRESS=Seaway Sites <mehdi@seawaysites.com>`
+**Vercel env (Production + Preview) — ✅ all set 2026-07-21:**
+- `NEXT_PUBLIC_META_PIXEL_ID=1530207232234428` (plain)
+- `META_CAPI_ACCESS_TOKEN=<token from Events Manager>` (encrypted)
+- `RESEND_API_KEY=<from .env.local>` (encrypted)
+- `RESEND_FROM_ADDRESS=Seaway Sites <mehdi@seawaysites.com>` (plain)
+
+Set programmatically via the Vercel REST API using the local CLI token (`~/Library/Application Support/com.vercel.cli/auth.json`). Project `prj_RKz3owsHUtzDYTJ9an9Y60u8yylX`, team `team_gEH5FXIh3E6XkRttxTsLmLqq`. To update later: `npx vercel login` to refresh the token, then re-run `scratchpad/set_vercel_env.py` (or the Vercel dashboard). Remaining operational item: verify `seawaysites.com` in Resend (DKIM/SPF) so mail actually sends.
 
 **Pixel fire test (after deploy):**
 1. Events Manager → Test Events → copy the `test_event_code`
