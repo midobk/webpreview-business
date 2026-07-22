@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grand &amp; Current Electric — Demo Preview</title>
+<meta name="description" content="Sample website concept for a licensed residential electrician — panels, pot lights, EV chargers. Anonymized Seaway Sites demo." />
+<meta name="robots" content="noindex,nofollow" />
+<!-- design plan · direction: Fieldstone (re-hued navy + safety amber) · hero: C typographic · nav: standard · conceit: panel schedule · eyebrow: index number · accent: outlined text · buttons: caps square -->
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+button, input, select { font: inherit; }
+a { color: inherit; text-decoration: none; }
+
+:root {
+  --bone: #f1eee6;
+  --card: #faf8f2;
+  --navy: #1b2b4a;
+  --navy-deep: #12203a;
+  --ink: #161a24;
+  --muted: #5a5f6b;
+  --accent: #c78a1a;       /* safety amber — large text & marks */
+  --accent-deep: #8f6104;  /* small accent text */
+  --line: rgba(22, 26, 36, 0.16);
+  --rule: #161a24;
+  --shadow: 0 20px 50px rgba(18, 32, 58, 0.16);
+  --radius: 6px;
+  --bone-92: rgba(241, 238, 230, 0.92);
+  --white: #ffffff;
+  --amber-hover: #b57a10;
+  --inv-bright: rgba(241, 238, 230, 0.85);
+  --inv-dim: rgba(241, 238, 230, 0.75);
+  --inv-soft: rgba(241, 238, 230, 0.72);
+  --inv-line: rgba(241, 238, 230, 0.25);
+  --inv-faint: rgba(241, 238, 230, 0.45);
+  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 40px; --s5: 64px; --s6: 96px;
+}
+
+body {
+  background: var(--bone);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16.5px;
+  line-height: 1.65;
+}
+.display {
+  font-family: "Avenir Next Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
+  font-weight: 800; text-transform: uppercase; letter-spacing: 0.005em; line-height: 0.95;
+}
+.mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
+h1, h2, h3, p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+.container { width: min(1160px, calc(100% - 48px)); margin-inline: auto; }
+.section { padding-block: clamp(60px, 8vw, 104px); }
+
+.idx { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--accent-deep); }
+.section-head { max-width: 720px; margin-bottom: var(--s5); }
+.section-head h2 { margin-top: var(--s2); font-size: clamp(32px, 5vw, 58px); }
+.section-head h2 .out { -webkit-text-stroke: 2px var(--ink); color: transparent; }
+@supports not (-webkit-text-stroke: 2px black) { .section-head h2 .out { color: var(--accent-deep); } }
+.section-head .lede { margin-top: var(--s2); color: var(--muted); max-width: 560px; }
+
+.btn {
+  cursor: pointer;
+  min-height: 48px; padding: 0 24px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  border: 2px solid var(--rule); border-radius: var(--radius);
+  background: var(--ink); color: var(--bone);
+  font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+}
+.btn:hover { background: var(--navy-deep); border-color: var(--navy-deep); }
+.btn-amber { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+.btn-amber:hover { background: var(--amber-hover); border-color: var(--amber-hover); color: var(--ink); }
+.btn-ghost { background: transparent; color: var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: var(--bone); }
+
+:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+  }
+}
+
+.demo-ribbon {
+  min-height: 38px; padding: 9px 20px;
+  background: var(--navy-deep); color: var(--inv-bright);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; text-align: center;
+}
+.demo-ribbon b { color: var(--accent); }
+.watermark {
+  position: fixed; left: 14px; bottom: 14px; z-index: 60;
+  padding: 6px 10px; border: 2px solid var(--line); border-radius: var(--radius);
+  background: var(--bone-92); color: var(--muted);
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  pointer-events: none;
+}
+
+.nav { position: sticky; top: 0; z-index: 50; background: var(--bone-92); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 3px solid var(--rule); }
+.nav-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-mark { width: 36px; height: 36px; background: var(--navy); color: var(--accent); display: grid; place-items: center; border-radius: var(--radius); }
+.brand-mark svg { width: 20px; height: 20px; }
+.brand-name { font-family: "Avenir Next Condensed", "Arial Narrow", sans-serif; font-weight: 800; text-transform: uppercase; font-size: 18px; letter-spacing: 0.03em; }
+.brand-sub { display: block; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-top: 2px; font-family: -apple-system, sans-serif; font-weight: 600; }
+.nav-links { display: none; gap: 26px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+.nav-links a { border-bottom: 2px solid transparent; padding-bottom: 4px; }
+.nav-links a:hover { border-bottom-color: var(--accent); }
+.nav-cta { display: none; }
+@media (min-width: 900px) { .nav-links { display: flex; } .nav-cta { display: inline-flex; } }
+
+/* hero — C typographic */
+.hero { border-bottom: 3px solid var(--rule); padding-block: clamp(52px, 7vw, 90px) clamp(44px, 6vw, 76px); position: relative; overflow: hidden; }
+.hero .idx { display: block; margin-bottom: var(--s3); }
+.hero h1 { font-size: clamp(52px, 9.2vw, 116px); max-width: 12ch; }
+.hero h1 .solid-navy { color: var(--navy); }
+.hero h1 .out { -webkit-text-stroke: 2.5px var(--ink); color: transparent; }
+@supports not (-webkit-text-stroke: 2px black) { .hero h1 .out { color: var(--accent-deep); } }
+.hero-lede { margin-top: var(--s3); max-width: 540px; font-size: 18px; color: var(--muted); }
+.hero-lede b { color: var(--ink); }
+.hero-ctas { margin-top: var(--s4); display: flex; flex-wrap: wrap; gap: 12px; }
+.hero-strip {
+  margin-top: var(--s5); border: 2px solid var(--rule); background: var(--card);
+  display: grid; grid-template-columns: 1fr;
+}
+@media (min-width: 720px) { .hero-strip { grid-template-columns: repeat(3, 1fr); } }
+.strip-cell { padding: 16px 18px; border-bottom: 2px solid var(--line); }
+.strip-cell:last-child { border-bottom: 0; }
+@media (min-width: 720px) { .strip-cell { border-bottom: 0; border-right: 2px solid var(--line); } .strip-cell:last-child { border-right: 0; } }
+.strip-cell .k { font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-deep); }
+.strip-cell .v { display: block; margin-top: 4px; font-weight: 700; font-size: 15px; }
+
+/* services */
+.services { background: var(--card); border-bottom: 3px solid var(--rule); }
+.svc-grid { display: grid; grid-template-columns: 1fr; gap: var(--s3); }
+@media (min-width: 820px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
+.svc { background: var(--bone); border: 2px solid var(--rule); border-radius: var(--radius); padding: var(--s4); }
+.svc:hover { background: var(--card); }
+.svc-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s2); }
+.svc h3 { font-family: "Avenir Next Condensed", "Arial Narrow", sans-serif; font-weight: 800; text-transform: uppercase; font-size: 24px; letter-spacing: 0.02em; }
+.svc p { margin-top: 10px; color: var(--muted); font-size: 15px; }
+.svc .svc-note { margin-top: 14px; font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-deep); }
+.svc svg { width: 40px; height: 40px; color: var(--navy); flex: none; }
+
+/* panel schedule — signature inversion */
+.panel { background: var(--navy); color: var(--bone); border-bottom: 3px solid var(--rule); }
+.panel .idx { color: var(--accent); }
+.panel .section-head h2 { color: var(--white); }
+.panel .section-head h2 .out { -webkit-text-stroke: 2px var(--accent); color: transparent; }
+@supports not (-webkit-text-stroke: 2px black) { .panel .section-head h2 .out { color: var(--accent); } }
+.panel .section-head .lede { color: var(--inv-soft); }
+.steps { display: grid; grid-template-columns: 1fr; gap: var(--s4); border-top: 3px solid var(--bone); padding-top: var(--s4); }
+@media (min-width: 820px) { .steps { grid-template-columns: repeat(3, 1fr); gap: var(--s5); } }
+.step .n {
+  font-family: "Avenir Next Condensed", "Arial Narrow", sans-serif; font-weight: 800;
+  font-size: clamp(72px, 10vw, 116px); line-height: 0.85;
+  -webkit-text-stroke: 2px var(--bone); color: transparent;
+}
+@supports not (-webkit-text-stroke: 2px black) { .step .n { color: var(--accent); } }
+.step .n.fill { -webkit-text-stroke: 0; color: var(--accent); }
+.step h3 { margin-top: var(--s2); font-family: "Avenir Next Condensed", "Arial Narrow", sans-serif; font-weight: 800; text-transform: uppercase; font-size: 22px; color: var(--white); }
+.step p { margin-top: 8px; color: var(--inv-dim); font-size: 14.5px; max-width: 34ch; }
+.sched {
+  margin-top: var(--s5); border: 2px solid var(--bone);
+  display: grid; grid-template-columns: 1fr;
+}
+@media (min-width: 720px) { .sched { grid-template-columns: repeat(4, 1fr); } }
+.sched-cell { padding: 18px; border-bottom: 1px solid var(--inv-line); }
+.sched-cell:last-child { border-bottom: 0; }
+@media (min-width: 720px) { .sched-cell { border-bottom: 0; border-right: 1px solid var(--inv-line); } .sched-cell:last-child { border-right: 0; } }
+.sched-cell .k { font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+.sched-cell .v { display: block; margin-top: 5px; font-weight: 700; font-size: 14px; color: var(--bone); }
+
+/* trust */
+.trust-grid { display: grid; grid-template-columns: 1fr; gap: var(--s4); }
+@media (min-width: 880px) { .trust-grid { grid-template-columns: 1.1fr 0.9fr; gap: var(--s6); align-items: center; } }
+.trust-list { border-top: 2px solid var(--rule); }
+.trow { display: flex; gap: var(--s2); padding: 14px 0; border-bottom: 2px solid var(--line); align-items: baseline; }
+.trow .idx { flex: none; }
+.trow p { font-size: 15px; color: var(--ink); }
+.trow p b { font-weight: 700; }
+.trust-aside { background: var(--navy); color: var(--bone); border-radius: var(--radius); padding: var(--s4); box-shadow: var(--shadow); }
+.trust-aside h3 { font-family: "Avenir Next Condensed", "Arial Narrow", sans-serif; font-weight: 800; text-transform: uppercase; font-size: 22px; color: var(--white); }
+.trust-aside p { margin-top: 10px; color: var(--inv-dim); font-size: 14.5px; }
+.trust-aside .k { margin-top: var(--s3); font-size: 10px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+
+/* cta */
+.cta-band { background: var(--card); border-top: 3px solid var(--rule); }
+.cta-grid { display: grid; grid-template-columns: 1fr; gap: var(--s4); align-items: center; }
+@media (min-width: 880px) { .cta-grid { grid-template-columns: 1.3fr 0.7fr; } }
+.cta-grid h2 { font-size: clamp(34px, 5vw, 60px); }
+.cta-grid h2 .amber { color: var(--accent-deep); }
+.cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (min-width: 880px) { .cta-actions { justify-content: flex-end; } }
+
+.foot { background: var(--navy-deep); color: var(--inv-soft); padding-block: var(--s4); font-size: 13.5px; }
+.foot-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s3); }
+.foot b { color: var(--bone); }
+.foot .fine { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--inv-faint); }
+
+.claim-modal { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(18,32,58,0.6); }
+.claim-modal.open { display: flex; }
+.modal-card { width: min(500px, 100%); background: var(--bone); border: 2px solid var(--rule); border-radius: var(--radius); padding: 36px; text-align: center; }
+.modal-card h3 { font-family: "Avenir Next Condensed", "Arial Narrow", sans-serif; font-weight: 800; text-transform: uppercase; font-size: 26px; }
+.modal-card p { margin: 12px auto 22px; max-width: 380px; color: var(--muted); font-size: 14.5px; }
+body.modal-open { overflow: hidden; }
+</style>
+</head>
+<body>
+
+<div class="demo-ribbon">Demo preview · <b>claim this website to make it live</b> · Seaway Sites sample concept</div>
+<div class="watermark" aria-hidden="true">Grand &amp; Current · Preview</div>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="brand" aria-label="Grand and Current Electric, home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M13 2 L6 13 H11 L9.5 22 L18 10 H12.5 Z"/></svg>
+      </span>
+      <span><span class="brand-name">Grand &amp; Current</span><span class="brand-sub">Licensed electrical · Cornwall ON</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#services">Services</a>
+      <a href="#schedule">The visit</a>
+      <a href="#trust">Why us</a>
+    </nav>
+    <button class="btn btn-amber nav-cta" onclick="openClaimModal()">Get a written quote</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="h1">
+    <div class="container">
+      <span class="idx">01 — RESIDENTIAL · LICENSED &amp; INSURED</span>
+      <h1 class="display" id="h1">
+        <span class="solid-navy">Panel to</span><br />
+        pot lights.<br />
+        <span class="out">Booked this week.</span>
+      </h1>
+      <p class="hero-lede">
+        A small licensed crew for houses around Cornwall — panel upgrades, EV chargers,
+        renovation wiring, and the breaker that trips every time the kettle's on.
+        <b>Every panel labeled before we leave.</b>
+      </p>
+      <div class="hero-ctas">
+        <button class="btn btn-amber" onclick="openClaimModal()">Get a written quote</button>
+        <button class="btn btn-ghost" onclick="openClaimModal()">See the services</button>
+      </div>
+      <div class="hero-strip">
+        <div class="strip-cell"><span class="k">Licence</span><span class="v">ECRA/ESA shown on the live site</span></div>
+        <div class="strip-cell"><span class="k">Quotes</span><span class="v">Written, itemized, fixed</span></div>
+        <div class="strip-cell"><span class="k">Tidy</span><span class="v">Drop sheets &amp; a shop vac</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section services" id="services" aria-labelledby="svc-h">
+    <div class="container">
+      <div class="section-head">
+        <span class="idx">02 — SERVICES</span>
+        <h2 class="display" id="svc-h">The work we <span class="out">book most.</span></h2>
+        <p class="lede">Residential first. If it's behind your walls or on your panel, it's ours.</p>
+      </div>
+      <div class="svc-grid">
+        <article class="svc">
+          <div class="svc-top"><h3>Panel upgrades</h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h6M9 11h6M9 15h3"/></svg></div>
+          <p>100A to 200A, aluminum remediation, and the tidy labeled panel that makes every future job cheaper.</p>
+          <p class="svc-note">ESA permit &amp; inspection handled</p>
+        </article>
+        <article class="svc">
+          <div class="svc-top"><h3>EV chargers</h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 21V5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v16M6 21h9M15 9h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V9l-3-3"/><path d="M9 10 L11 6 L10.5 9 L12.5 9 L10 13.5 L10.8 10 Z" fill="currentColor" stroke="none"/></svg></div>
+          <p>Load calculation first, then the charger mounted where the cable actually reaches the car.</p>
+          <p class="svc-note">Level 2 · garage or driveway</p>
+        </article>
+        <article class="svc">
+          <div class="svc-top"><h3>Lighting &amp; pot lights</h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="10" r="5"/><path d="M12 2v1.5M4.5 10H3M21 10h-1.5M6.5 4.5l1 1M17.5 4.5l-1 1M10 18h4M10.5 21h3"/></svg></div>
+          <p>Layouts planned on paper before a single hole is cut — dimmers included, swiss-cheese ceilings avoided.</p>
+          <p class="svc-note">Kitchens · basements · exteriors</p>
+        </article>
+        <article class="svc">
+          <div class="svc-top"><h3>Troubleshooting</h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 12h4l2-5 3 10 2-5h5"/></svg></div>
+          <p>The warm outlet, the flickering hallway, the mystery breaker — found, explained, and fixed with the cause in writing.</p>
+          <p class="svc-note">Diagnosed before parts are sold</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section panel" id="schedule" aria-labelledby="p-h">
+    <div class="container">
+      <div class="section-head">
+        <span class="idx">03 — THE VISIT</span>
+        <h2 class="display" id="p-h">Runs like a <span class="out">panel schedule.</span></h2>
+        <p class="lede">Three circuits, no surprises. The quote you sign is the invoice you get.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><p class="n fill">01</p><h3>Walkthrough</h3><p>We look, measure, and listen — then the itemized quote lands in writing within two business days.</p></div>
+        <div class="step"><p class="n">02</p><h3>The work</h3><p>On the day we said, with drop sheets down and circuits planned so the fridge never sits warm.</p></div>
+        <div class="step"><p class="n">03</p><h3>Labeled &amp; swept</h3><p>Every breaker named in the panel door, the ESA paperwork in your inbox, floors cleaner than we found them.</p></div>
+      </div>
+      <div class="sched" role="list" aria-label="At a glance">
+        <div class="sched-cell" role="listitem"><span class="k">Area</span><span class="v">Cornwall · Long Sault · Ingleside</span></div>
+        <div class="sched-cell" role="listitem"><span class="k">Book-out</span><span class="v">Typically inside two weeks</span></div>
+        <div class="sched-cell" role="listitem"><span class="k">Permits</span><span class="v">Filed by us, always</span></div>
+        <div class="sched-cell" role="listitem"><span class="k">Panel door</span><span class="v">Labeled before we leave</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="trust" aria-labelledby="t-h">
+    <div class="container trust-grid">
+      <div>
+        <div class="section-head" style="margin-bottom: var(--s4);">
+          <span class="idx">04 — WHY US</span>
+          <h2 class="display" id="t-h">Boring, in the <span class="out">best way.</span></h2>
+        </div>
+        <div class="trust-list">
+          <div class="trow"><span class="idx">4.1</span><p><b>Licensed &amp; insured.</b> Licence and insurance numbers shown on the live site — and on the quote.</p></div>
+          <div class="trow"><span class="idx">4.2</span><p><b>Fixed written quotes.</b> If we find something mid-job, work stops until you've approved the change in writing.</p></div>
+          <div class="trow"><span class="idx">4.3</span><p><b>One crew, start to finish.</b> The electrician who quotes it is the one in your basement.</p></div>
+          <div class="trow"><span class="idx">4.4</span><p><b>Permits, always.</b> If a job needs an ESA permit, it gets one. No cash-deal wiring in your walls.</p></div>
+        </div>
+      </div>
+      <aside class="trust-aside" aria-label="Service promise">
+        <h3>The label promise</h3>
+        <p>Every visit ends the same way: the panel door labeled in plain words — "kitchen counters, east wall" — so the next trip, ours or anyone's, starts ten minutes faster.</p>
+        <p class="k">Small thing. Tells you everything.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section cta-band" aria-labelledby="cta-h">
+    <div class="container cta-grid">
+      <h2 class="display" id="cta-h">Breaker tripping?<br /><span class="amber">Stop resetting it.</span></h2>
+      <div class="cta-actions">
+        <button class="btn btn-amber" onclick="openClaimModal()">Get a written quote</button>
+        <button class="btn btn-ghost" onclick="openClaimModal()">Describe the problem</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="container foot-grid">
+    <div><b>Grand &amp; Current Electric</b> · Cornwall, Ontario</div>
+    <div>Mon–Fri 7–5 · Emergency line on the live site</div>
+    <div class="fine">Sample concept · Seaway Sites demo · details illustrative</div>
+  </div>
+</footer>
+
+<div class="claim-modal" id="claim-modal" role="dialog" aria-modal="true" aria-labelledby="claim-title" onclick="closeOnBackdrop(event)">
+  <div class="modal-card">
+    <h3 id="claim-title">This is a design preview.</h3>
+    <p>Quotes and the emergency line turn on when the business claims this website. Like the concept? Seaway Sites will make it live for the real crew.</p>
+    <div><button class="btn btn-amber" onclick="closeClaimModal()">Got it</button></div>
+  </div>
+</div>
+
+<script>
+var modal = document.getElementById('claim-modal');
+function openClaimModal() { modal.classList.add('open'); document.body.classList.add('modal-open'); }
+function closeClaimModal() { modal.classList.remove('open'); document.body.classList.remove('modal-open'); }
+function closeOnBackdrop(e) { if (e.target === modal) closeClaimModal(); }
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeClaimModal(); });
+</script>
+
+</body>
+</html>

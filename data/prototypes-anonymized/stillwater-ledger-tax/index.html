@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stillwater Ledger &amp; Tax — Demo Preview</title>
+<meta name="description" content="Sample website concept for a small-town accounting firm — bookkeeping, payroll, year-end and tax. Anonymized Seaway Sites demo." />
+<meta name="robots" content="noindex,nofollow" />
+<!-- design plan · direction: Ledger · hero: A split · nav: masthead · conceit: filing calendar · eyebrow: boxed tag · accent: solid word · buttons: square cells -->
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; -webkit-font-smoothing: antialiased; }
+img, svg { display: block; max-width: 100%; }
+button, input, select { font: inherit; }
+a { color: inherit; text-decoration: none; }
+
+:root {
+  --bone: #f4f2ed;
+  --panel: #fbfaf7;
+  --ink: #151515;
+  --muted: #585858;
+  --accent: #c14a10;
+  --accent-deep: #963807;
+  --line: #151515;
+  --soft-line: rgba(21, 21, 21, 0.16);
+  --bone-92: rgba(244, 242, 237, 0.94);
+  --white: #ffffff;
+  --inv-accent: #e88a5a;
+  --inv-dim: rgba(244, 242, 237, 0.7);
+  --inv-line-strong: rgba(244, 242, 237, 0.3);
+  --inv-line: rgba(244, 242, 237, 0.2);
+  --inv-faint: rgba(244, 242, 237, 0.45);
+  --s1: 8px; --s2: 16px; --s3: 24px; --s4: 40px; --s5: 64px; --s6: 96px;
+}
+
+body {
+  background: var(--bone);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16.5px;
+  line-height: 1.65;
+}
+.display { font-family: system-ui, "Helvetica Neue", Arial, sans-serif; font-weight: 800; letter-spacing: -0.02em; line-height: 1.0; }
+.mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
+h1, h2, h3, p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+.container { width: min(1140px, calc(100% - 48px)); margin-inline: auto; }
+.section { padding-block: clamp(60px, 8vw, 100px); }
+
+.tag {
+  display: inline-block; padding: 5px 10px;
+  border: 1px solid var(--line);
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+}
+.tag.tint { color: var(--accent-deep); border-color: var(--accent-deep); }
+.section-head { max-width: 700px; margin-bottom: var(--s5); }
+.section-head h2 { margin-top: var(--s3); font-size: clamp(30px, 4.4vw, 52px); }
+.section-head h2 em { font-style: normal; color: var(--accent); }
+.section-head .lede { margin-top: var(--s2); color: var(--muted); max-width: 560px; }
+
+.btn {
+  cursor: pointer;
+  min-height: 48px; padding: 0 24px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  border: 1px solid var(--line); border-radius: 0;
+  background: var(--ink); color: var(--bone);
+  font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  transition: none;
+}
+.btn:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: var(--white); }
+.btn-ghost { background: transparent; color: var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: var(--bone); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+  }
+}
+
+.demo-ribbon {
+  min-height: 38px; padding: 9px 20px;
+  background: var(--ink); color: var(--bone);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; text-align: center;
+}
+.demo-ribbon b { color: var(--white); }
+.watermark {
+  position: fixed; left: 14px; bottom: 14px; z-index: 60;
+  padding: 6px 10px; border: 1px solid var(--soft-line);
+  background: var(--bone-92); color: var(--muted);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; letter-spacing: 0.1em;
+  pointer-events: none;
+}
+
+/* masthead nav */
+.masthead { border-bottom: 1px solid var(--line); background: var(--bone-92); }
+.mast-top { text-align: center; padding: 22px 20px 14px; }
+.mast-brand { font-family: system-ui, "Helvetica Neue", Arial, sans-serif; font-weight: 800; font-size: clamp(26px, 4vw, 40px); letter-spacing: -0.02em; }
+.mast-brand em { font-style: normal; color: var(--accent); }
+.mast-sub { margin-top: 6px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+.mast-nav { border-top: 1px solid var(--line); }
+.mast-nav-inner { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; }
+.mast-nav a, .mast-nav button.linklike {
+  padding: 13px 20px; border-left: 1px solid var(--soft-line);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  background: none; border-top: 0; border-bottom: 0; border-right: 0; cursor: pointer; color: var(--ink);
+}
+.mast-nav a:first-child { border-left: 0; }
+.mast-nav a:hover { background: var(--ink); color: var(--bone); }
+.mast-nav button.linklike { color: var(--accent-deep); }
+.mast-nav button.linklike:hover { background: var(--accent-deep); color: var(--white); }
+
+/* hero — A split with ledger table */
+.hero { border-bottom: 1px solid var(--line); }
+.hero-grid { display: grid; grid-template-columns: 1fr; gap: var(--s5); align-items: start; padding-block: clamp(48px, 7vw, 90px); }
+@media (min-width: 960px) { .hero-grid { grid-template-columns: 1fr 1fr; gap: var(--s6); } }
+.hero h1 { margin-top: var(--s3); font-size: clamp(36px, 5vw, 64px); max-width: 15ch; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero-lede { margin-top: var(--s3); color: var(--muted); max-width: 480px; font-size: 17.5px; }
+.hero-ctas { margin-top: var(--s4); display: flex; flex-wrap: wrap; gap: 10px; }
+.hero-note { margin-top: var(--s3); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
+/* the filing calendar — signature table */
+.ledger-table { border: 1px solid var(--line); background: var(--panel); }
+.lt-head { display: flex; justify-content: space-between; gap: var(--s2); padding: 14px 16px; border-bottom: 1px solid var(--line); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }
+.lt-head .r { color: var(--accent-deep); }
+.lt-row { display: grid; grid-template-columns: 92px 1fr auto; gap: var(--s2); align-items: baseline; padding: 13px 16px; border-bottom: 1px solid var(--soft-line); }
+.lt-row:last-child { border-bottom: 0; }
+.lt-row .when { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; font-weight: 700; color: var(--accent-deep); letter-spacing: 0.04em; }
+.lt-row .what { font-size: 14.5px; font-weight: 600; }
+.lt-row .what small { display: block; font-weight: 400; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
+.lt-row .who { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.lt-foot { padding: 12px 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+
+/* services — bordered cells */
+.services { border-bottom: 1px solid var(--line); background: var(--panel); }
+.svc-grid { display: grid; grid-template-columns: 1fr; border: 1px solid var(--line); }
+@media (min-width: 760px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
+.svc { padding: var(--s4); border-bottom: 1px solid var(--line); background: var(--bone); }
+.svc:hover { background: var(--panel); }
+@media (min-width: 760px) {
+  .svc { border-right: 1px solid var(--line); }
+  .svc:nth-child(2n) { border-right: 0; }
+  .svc:nth-last-child(-n+2) { border-bottom: 0; }
+}
+@media (max-width: 759px) { .svc:last-child { border-bottom: 0; } }
+.svc .idx { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--accent-deep); }
+.svc h3 { margin-top: 10px; font-size: 21px; font-weight: 800; letter-spacing: -0.01em; }
+.svc p { margin-top: 8px; color: var(--muted); font-size: 14.5px; }
+.svc .for { margin-top: 14px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); font-weight: 700; }
+.svc .for b { color: var(--accent-deep); }
+
+/* method — inversion */
+.method { background: var(--ink); color: var(--bone); }
+.method .tag { color: var(--bone); border-color: var(--bone); }
+.method .section-head h2 { color: var(--white); }
+.method .section-head h2 em { color: var(--inv-accent); }
+.method .section-head .lede { color: var(--inv-dim); }
+.mrow { display: grid; grid-template-columns: 1fr; gap: 0; border: 1px solid var(--inv-line-strong); }
+@media (min-width: 820px) { .mrow { grid-template-columns: repeat(3, 1fr); } }
+.mcell { padding: var(--s4); border-bottom: 1px solid var(--inv-line); }
+.mcell:last-child { border-bottom: 0; }
+@media (min-width: 820px) { .mcell { border-bottom: 0; border-right: 1px solid var(--inv-line); } .mcell:last-child { border-right: 0; } }
+.mcell .k { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11px; letter-spacing: 0.14em; color: var(--inv-accent); }
+.mcell h3 { margin-top: 10px; font-size: 20px; color: var(--white); font-weight: 800; }
+.mcell p { margin-top: 8px; font-size: 14.5px; color: var(--inv-dim); }
+
+/* cta band */
+.cta-band { border-top: 1px solid var(--line); background: var(--panel); }
+.cta-grid { display: grid; grid-template-columns: 1fr; gap: var(--s4); align-items: center; }
+@media (min-width: 880px) { .cta-grid { grid-template-columns: 1.4fr 0.6fr; } }
+.cta-grid h2 { font-size: clamp(30px, 4.4vw, 52px); }
+.cta-grid h2 em { font-style: normal; color: var(--accent); }
+.cta-grid p { margin-top: var(--s2); color: var(--muted); max-width: 52ch; }
+.cta-actions { display: flex; flex-direction: column; gap: 10px; }
+
+.foot { background: var(--ink); color: var(--inv-dim); padding-block: var(--s4); font-size: 13.5px; }
+.foot-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s3); }
+.foot b { color: var(--bone); }
+.foot .fine { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--inv-faint); }
+
+.claim-modal { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(21,21,21,0.6); }
+.claim-modal.open { display: flex; }
+.modal-card { width: min(500px, 100%); background: var(--bone); border: 1px solid var(--line); padding: 36px; text-align: center; }
+.modal-card h3 { font-size: 25px; font-weight: 800; letter-spacing: -0.01em; }
+.modal-card p { margin: 12px auto 22px; max-width: 380px; color: var(--muted); font-size: 14.5px; }
+body.modal-open { overflow: hidden; }
+</style>
+</head>
+<body>
+
+<div class="demo-ribbon">Demo preview · <b>claim this website to make it live</b> · Seaway Sites sample concept</div>
+<div class="watermark" aria-hidden="true">STILLWATER LEDGER · PREVIEW</div>
+
+<header class="masthead">
+  <div class="mast-top">
+    <p class="mast-brand">Stillwater <em>Ledger</em> &amp; Tax</p>
+    <p class="mast-sub">Chartered bookkeeping · payroll · year-end — Cornwall, Ontario</p>
+  </div>
+  <nav class="mast-nav" aria-label="Sections">
+    <div class="container mast-nav-inner">
+      <a href="#services">Services</a>
+      <a href="#calendar">The calendar</a>
+      <a href="#method">How we work</a>
+      <button class="linklike" onclick="openClaimModal()">Book a sit-down</button>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="h1">
+    <div class="container hero-grid">
+      <div>
+        <span class="tag tint">Small-business accounting</span>
+        <h1 class="display" id="h1">Your year-end closes in <em>February,</em> not June.</h1>
+        <p class="hero-lede">
+          Bookkeeping, payroll, and tax for owner-run businesses — kept current every month,
+          so the filing season is a formality instead of a scramble.
+        </p>
+        <div class="hero-ctas">
+          <button class="btn" onclick="openClaimModal()">Book a sit-down</button>
+          <button class="btn btn-ghost" onclick="openClaimModal()">See the services</button>
+        </div>
+        <p class="hero-note">First meeting is a look at your books, not a pitch.</p>
+      </div>
+
+      <div class="ledger-table" role="table" aria-label="Filing calendar — typical Canadian small-business deadlines (illustrative)">
+        <div class="lt-head"><span>THE FILING CALENDAR</span><span class="r">TYPICAL DATES · ILLUSTRATIVE</span></div>
+        <div class="lt-row" role="row"><span class="when">JAN 15</span><span class="what">Q4 payroll remittance<small>Last one of the old year.</small></span><span class="who">PAYROLL</span></div>
+        <div class="lt-row" role="row"><span class="when">FEB 28</span><span class="what">T4s &amp; T5s out the door<small>Your staff file on time because you did.</small></span><span class="who">SLIPS</span></div>
+        <div class="lt-row" role="row"><span class="when">APR 30</span><span class="what">Personal tax filed &amp; paid<small>June 15 to file if self-employed — pay by April.</small></span><span class="who">T1</span></div>
+        <div class="lt-row" role="row"><span class="when">QUARTERLY</span><span class="what">HST collected, filed, banked<small>Never spent by accident.</small></span><span class="who">HST</span></div>
+        <div class="lt-row" role="row"><span class="when">+6 MO</span><span class="what">Corporate year-end<small>Filed six months after your fiscal close.</small></span><span class="who">T2</span></div>
+        <div class="lt-foot">We keep this calendar for you. You keep running the business.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section services" id="services" aria-labelledby="svc-h">
+    <div class="container">
+      <div class="section-head">
+        <span class="tag">Services</span>
+        <h2 class="display" id="svc-h">Four ledgers, <em>one desk.</em></h2>
+        <p class="lede">Owner-run businesses only — trades, shops, clinics, and farms. If you issue invoices and lose Saturdays to paperwork, this is for you.</p>
+      </div>
+      <div class="svc-grid">
+        <article class="svc"><p class="idx">A-01</p><h3>Monthly bookkeeping</h3><p>Receipts in, categorized, reconciled. A one-page summary lands in your inbox the first week of every month.</p><p class="for"><b>FOR</b> · owners doing it at the kitchen table</p></article>
+        <article class="svc"><p class="idx">A-02</p><h3>Payroll</h3><p>Staff paid on the same weekday every time, remittances scheduled, T4s ready before anyone asks.</p><p class="for"><b>FOR</b> · crews of two to twenty</p></article>
+        <article class="svc"><p class="idx">A-03</p><h3>Year-end &amp; corporate tax</h3><p>The T2, the statements, and a plain-English walkthrough of what changed and what to do about it.</p><p class="for"><b>FOR</b> · incorporated shops</p></article>
+        <article class="svc"><p class="idx">A-04</p><h3>Personal &amp; farm returns</h3><p>Owner returns done alongside the business books, so nothing falls between the two.</p><p class="for"><b>FOR</b> · families &amp; sole proprietors</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section method" id="method" aria-labelledby="m-h">
+    <div class="container">
+      <div class="section-head">
+        <span class="tag">How we work</span>
+        <h2 class="display" id="m-h">Receipts chased in <em>October.</em></h2>
+        <p class="lede">The whole trick of a calm filing season is that it was handled in the fall.</p>
+      </div>
+      <div class="mrow">
+        <div class="mcell"><p class="k">M-01</p><h3>Monthly close</h3><p>Books reconciled every month — not rebuilt every April. Questions get asked while the receipt is still findable.</p></div>
+        <div class="mcell"><p class="k">M-02</p><h3>Fixed-fee quotes</h3><p>Priced by the engagement, in writing, before we start. The invoice never invents a line the quote didn't have.</p></div>
+        <div class="mcell"><p class="k">M-03</p><h3>Plain answers</h3><p>Every filing comes with the two-minute version: what went in, what it means, what to set aside.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta-band" aria-labelledby="cta-h">
+    <div class="container cta-grid">
+      <div>
+        <h2 class="display" id="cta-h">Bring the shoebox. <em>Seriously.</em></h2>
+        <p>Wherever your books are — a shoebox, a spreadsheet, or software you fight with — the first sit-down sorts out what shape they're in and what it would take to keep them current.</p>
+      </div>
+      <div class="cta-actions">
+        <button class="btn" onclick="openClaimModal()">Book a sit-down</button>
+        <button class="btn btn-ghost" onclick="openClaimModal()">Ask about fees</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="container foot-grid">
+    <div><b>Stillwater Ledger &amp; Tax</b> · Cornwall, Ontario</div>
+    <div>Mon–Fri 9–5 · Filing-season Saturdays</div>
+    <div class="fine">Sample concept · Seaway Sites demo · dates &amp; details illustrative</div>
+  </div>
+</footer>
+
+<div class="claim-modal" id="claim-modal" role="dialog" aria-modal="true" aria-labelledby="claim-title" onclick="closeOnBackdrop(event)">
+  <div class="modal-card">
+    <h3 id="claim-title">This is a design preview.</h3>
+    <p>Booking and contact turn on when the firm claims this website. Like the concept? Seaway Sites will make it live for the real practice.</p>
+    <div><button class="btn" onclick="closeClaimModal()">Got it</button></div>
+  </div>
+</div>
+
+<script>
+var modal = document.getElementById('claim-modal');
+function openClaimModal() { modal.classList.add('open'); document.body.classList.add('modal-open'); }
+function closeClaimModal() { modal.classList.remove('open'); document.body.classList.remove('modal-open'); }
+function closeOnBackdrop(e) { if (e.target === modal) closeClaimModal(); }
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeClaimModal(); });
+</script>
+
+</body>
+</html>

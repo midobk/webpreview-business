@@ -32,6 +32,9 @@ const INDUSTRY_LABELS: Record<string, string> = {
   home_services: 'Modern Home Services',
   ecommerce_product: 'Modern E-commerce Brand',
   online_course: 'Modern Online Course',
+  accounting: 'Local Accounting Firm',
+  electrician: 'Licensed Electrician',
+  plumber: 'Local Plumbing Company',
   default: 'Local Service Business',
 };
 
@@ -54,6 +57,9 @@ const INDUSTRY_TAGLINES: Record<string, string> = {
   home_services: 'Service selector, instant quote, guarantees, and verified reviews.',
   ecommerce_product: 'Interactive product options, comparison table, reviews, and checkout CTAs.',
   online_course: 'Course outcomes, curriculum timeline, instructor proof, FAQ, and enrollment tiers.',
+  accounting: 'Filing-calendar centerpiece, fixed-fee services, plain-answer positioning, and consult CTA.',
+  electrician: 'Licence trust strip, written-quote promise, labeled-panel detail, and quote CTA.',
+  plumber: 'Route-board sample day, flat-fee promises, service-area pills, and booking CTA.',
   default: 'Clean one-page website with services, contact, and CTA.',
 };
 

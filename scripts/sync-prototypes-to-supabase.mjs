@@ -193,13 +193,31 @@ async function upsertPrototypes(supabase, prototypes) {
   console.log(`✓ Synced ${rows.length} prototype records to Supabase.`);
 }
 
-// Upsert only metadata columns, preserving remote admin-owned fields.
-// Used in `--auto` so newly generated prototypes appear in Supabase without
-// overwriting live approval decisions.
-async function upsertMetadataOnly(supabase, prototypes) {
-  // Defensive guard: refuse to ship an admin-owned field even if a future
-  // edit accidentally adds it to METADATA_COLUMNS. The inverse allowlist
-  // below is the primary defense; this is belt-and-suspenders.
+// Return the set of prototype ids that already exist in Supabase, so the
+// `--auto` path can distinguish a brand-new row (insert — seed approval from
+// the local snapshot) from an existing row (update — preserve the remote
+// admin-owned approval decision).
+async function fetchExistingPrototypeIds(supabase, prototypes) {
+  const ids = prototypes.map((prototype) => prototype.id);
+  const { data, error } = await supabase.from('prototypes').select('id').in('id', ids);
+  if (error) throw new Error(`Supabase existing-id query failed: ${error.message}`);
+  return new Set((data || []).map((row) => row.id));
+}
+
+// Upsert only metadata columns, preserving remote admin-owned fields for
+// rows that already exist in Supabase. Used in `--auto` so newly generated
+// prototypes appear in Supabase without overwriting live approval decisions.
+//
+// For rows that are NOT yet in Supabase (a brand-new committed concept), the
+// admin-owned approval fields are seeded from the local snapshot. There is
+// no remote admin decision to preserve for a new row, and the local JSON is
+// the source of truth for repo-curated anonymized showcase concepts — so
+// seeding lets the committed rollout path publish them on /showcase without
+// requiring a manual out-of-band full sync.
+async function upsertMetadataOnly(supabase, prototypes, { existingIds = new Set() } = {}) {
+  // Defensive guard: refuse to ship an admin-owned field via METADATA_COLUMNS
+  // even if a future edit accidentally adds it. The inverse allowlist below
+  // is the primary defense; this is belt-and-suspenders.
   const adminSet = new Set(ADMIN_OWNED_COLUMNS);
   for (const col of METADATA_COLUMNS) {
     if (adminSet.has(col)) {
@@ -210,7 +228,17 @@ async function upsertMetadataOnly(supabase, prototypes) {
     }
   }
 
-  const rows = prototypes.map((row) => {
+  // Split into two row sets and upsert them in SEPARATE batches. A single
+  // mixed bulk upsert is unsafe here: Supabase/PostgREST derives the conflict
+  // update column set from the union of keys across the whole batch, so
+  // mixing admin-bearing (new) rows with metadata-only (existing) rows would
+  // pull the admin-owned columns into the update applied to existing rows
+  // and overwrite the remote approval/eligibility state this path is meant
+  // to preserve. Keeping the two shapes in separate upsert calls keeps the
+  // existing-row update column set strictly metadata-only.
+  const existingRows = [];
+  const newRows = [];
+  for (const row of prototypes) {
     const filtered = { id: row.id };
     for (const col of METADATA_COLUMNS) {
       if (Object.hasOwn(row, col)) {
@@ -221,17 +249,38 @@ async function upsertMetadataOnly(supabase, prototypes) {
     if (Object.hasOwn(row, 'created_at')) {
       filtered.created_at = normalizeTimestamp(row.created_at);
     }
-    return filtered;
-  });
-
-  const batchSize = 100;
-  for (let offset = 0; offset < rows.length; offset += batchSize) {
-    const batch = rows.slice(offset, offset + batchSize);
-    const { error } = await supabase.from('prototypes').upsert(batch, { onConflict: 'id' });
-    if (error) throw new Error(`Supabase metadata upsert failed: ${error.message}`);
+    if (existingIds.has(row.id)) {
+      existingRows.push(filtered);
+    } else {
+      // Seed admin-owned approval fields for rows not yet in Supabase so
+      // newly committed showcase concepts are visible on /showcase after
+      // the build. Existing rows deliberately omit these (above) to
+      // preserve the remote admin decision (the original `--auto` guarantee).
+      for (const col of ADMIN_OWNED_COLUMNS) {
+        if (Object.hasOwn(row, col)) {
+          filtered[col] = TIMESTAMP_COLUMNS.has(col) ? normalizeTimestamp(row[col]) : row[col];
+        }
+      }
+      newRows.push(filtered);
+    }
   }
 
-  console.log(`✓ Upserted ${rows.length} prototype metadata records (preserving admin fields).`);
+  const batchSize = 100;
+  const upsertBatch = async (rows, label) => {
+    for (let offset = 0; offset < rows.length; offset += batchSize) {
+      const batch = rows.slice(offset, offset + batchSize);
+      const { error } = await supabase.from('prototypes').upsert(batch, { onConflict: 'id' });
+      if (error) throw new Error(`Supabase metadata upsert failed (${label}): ${error.message}`);
+    }
+  };
+  await upsertBatch(existingRows, 'existing');
+  await upsertBatch(newRows, 'new');
+
+  console.log(
+    `✓ Upserted ${existingRows.length + newRows.length} prototype metadata records ` +
+      `(${existingRows.length} existing preserving admin fields, ${newRows.length} new seeding approval) ` +
+      `in separate batches.`
+  );
 }
 
 // `checkVisibility` controls the showcase visibility count check, which
@@ -331,13 +380,18 @@ async function main() {
       return;
     }
 
-    // Production prebuild: upsert metadata only (preserve admin-owned fields),
-    // then verify metadata drift only. The visibility/count check is skipped
-    // (`checkVisibility: false`) because admin approval state lives in
-    // Supabase and is deliberately not overwritten from the local JSON
-    // snapshot — asserting local == remote approval counts would fail every
-    // build after any admin approval or unpublish made since the snapshot.
-    await upsertMetadataOnly(supabase, prototypes);
+    // Production prebuild: upsert metadata only, preserving admin-owned
+    // fields for rows that already exist in Supabase. Brand-new rows
+    // (e.g. a newly committed showcase concept) get their admin-owned
+    // approval fields seeded from the local snapshot so they appear on
+    // /showcase without a manual full sync. Then verify metadata drift
+    // only. The visibility/count check is skipped (`checkVisibility: false`)
+    // because admin approval state for EXISTING rows lives in Supabase and
+    // is deliberately not overwritten from the local JSON snapshot —
+    // asserting local == remote approval counts would fail every build
+    // after any admin approval or unpublish made since the snapshot.
+    const existingIds = await fetchExistingPrototypeIds(supabase, prototypes);
+    await upsertMetadataOnly(supabase, prototypes, { existingIds });
     await verifyNoDrift(supabase, prototypes, { checkVisibility: false });
   }
 }
