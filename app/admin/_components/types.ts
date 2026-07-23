@@ -21,6 +21,13 @@ export interface Lead {
   description?: string;
   phone?: string;
   source_urls?: string[];
+  // Joined from `purchases` in /api/admin/leads when Supabase is configured.
+  // Absent or null on leads with no purchase yet, OR on the build-bundle
+  // (Phase 1) data source where the purchases table doesn't exist.
+  has_purchase?: boolean;
+  purchase_plan?: 'managed' | 'own' | 'unknown' | null;
+  stripe_customer_id?: string | null;
+  stripe_subscription_id?: string | null;
 }
 
 export interface Prototype {

@@ -19,9 +19,12 @@ export function LeadDetailDrawer({
   updating: boolean;
 }) {
   const [note, setNote] = useState(lead.notes || '');
+  const [portalLoading, setPortalLoading] = useState(false);
+  const [portalError, setPortalError] = useState<string | null>(null);
 
   useEffect(() => {
     setNote(lead.notes || '');
+    setPortalError(null);
   }, [lead.id, lead.notes]);
 
   useEffect(() => {
@@ -34,6 +37,33 @@ export function LeadDetailDrawer({
 
   const status = (lead.status || 'unknown').toLowerCase();
   const score = lead.lead_score ?? 0;
+
+  async function openPortal() {
+    setPortalLoading(true);
+    setPortalError(null);
+    try {
+      const response = await fetch('/api/stripe/portal/admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ lead_id: lead.id }),
+      });
+      const data = (await response.json().catch(() => ({}))) as {
+        url?: string;
+        error?: string;
+      };
+      if (!response.ok || !data.url) {
+        setPortalError(data.error || 'Failed to open Stripe customer portal.');
+        return;
+      }
+      window.location.href = data.url;
+    } catch (error) {
+      setPortalError(
+        error instanceof Error ? error.message : 'Failed to open Stripe customer portal.'
+      );
+    } finally {
+      setPortalLoading(false);
+    }
+  }
 
   return (
     <div
@@ -209,6 +239,47 @@ export function LeadDetailDrawer({
               </ActionButton>
             </div>
           </Section>
+
+          {lead.has_purchase && (
+            <Section title="Subscription">
+              <div className="space-y-2 text-sm">
+                <Row label="Plan">
+                  {lead.purchase_plan === 'managed'
+                    ? 'Managed Website'
+                    : lead.purchase_plan === 'own'
+                    ? 'Own Your Website'
+                    : 'Unknown'}
+                </Row>
+                {lead.stripe_subscription_id && (
+                  <Row label="Subscription">
+                    <span
+                      className="font-mono text-[11px] inline-block max-w-[260px] truncate align-middle"
+                      title={lead.stripe_subscription_id}
+                    >
+                      {lead.stripe_subscription_id}
+                    </span>
+                  </Row>
+                )}
+                <button
+                  onClick={openPortal}
+                  disabled={portalLoading || !lead.stripe_customer_id}
+                  className="text-xs font-semibold py-2 px-3 rounded-lg transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
+                  style={{
+                    background: 'var(--adm-accent-soft)',
+                    color: 'var(--adm-accent)',
+                    boxShadow: 'inset 0 0 0 1px rgba(158,59,38,0.30)',
+                  }}
+                >
+                  {portalLoading ? 'Opening…' : 'Open Stripe customer portal'}
+                </button>
+                {portalError && (
+                  <p className="text-xs" style={{ color: 'var(--adm-danger)' }}>
+                    {portalError}
+                  </p>
+                )}
+              </div>
+            </Section>
+          )}
 
           <Section
             title="Notes"
