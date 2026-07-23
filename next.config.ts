@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
       './data/prototypes/**/*',
       './data/prototypes-anonymized/**/*',
     ],
+    '/api/showcase-image': ['./data/prototypes/**/*'],
+    '/api/preview-image': ['./data/prototypes/**/*'],
   },
 };
 
