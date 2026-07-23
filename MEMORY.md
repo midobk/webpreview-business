@@ -126,7 +126,7 @@ User flagged 4 issues. All verified against actual repo state. None were previou
   - Add a `screenshot-prototype.js` step that uses Playwright directly on the local HTML file (file:// URL — no server needed), OR
   - Wire `capture.js` into the prototype-generation cron as a second step
 
-### C4. Pricing — $49 only, no first-payment tier (RE-OPENED 2026-07-20)
+### C4. Pricing — $49 only, no first-payment tier (RESOLVED 2026-07-22)
 - **Originally reported (2026-06-23):** "Why am I seeing only the $49 with no 1st payment of (200-300$)??"
 - **Original truth (2026-06-23):** `app/page.tsx` lines 115-156 defined `pricingTiers`: Preview=Free, Managed=$49/mo (featured), One-time=$599.
 - **Current truth (2026-07-20):** Per MEMORY.md 7/12 note, the night-studio landing now serves `/` (components in `app/_landing/`). The current `app/_landing/content.ts` PRICING array shows: **Free Draft**=Free, **Managed Website**=$399 setup + **$69/mo** (early-client pricing, featured), **Own Your Website**=$899 paid once.
@@ -135,6 +135,7 @@ User flagged 4 issues. All verified against actual repo state. None were previou
 - **Re-opened in AGENT_PLAN.md as J.3** (discovered 2026-07-20 by the daily plan-maintenance cron).
 - **Fix needed (user decision required):** Either (a) restore §3 numbers verbatim in `app/_landing/content.ts`, or (b) adopt the new landing numbers and update §3 to match. Until resolved, **PR #4 (`claude/landing-page-design-ixddwp`) is blocked** because its review checklist says "confirm pricing still matches §3" — which it currently does not.
 - **Why wasn't this applied originally?** Because `app/page.tsx` was last polished by the 2026-06-22 07:35 EDT cron run (GLM 5.2), and that pass rewrote the marketing page based on different assumptions than what's in AGENT_PLAN.md. The two docs diverged silently. The 7/12 landing swap moved the pricing into `app/_landing/content.ts` and the numbers drifted further.
+- **Resolved 2026-07-22:** User chose option (b) — `app/_landing/content.ts` is the source of truth and stays untouched; AGENT_PLAN.md §3 was rewritten to match it exactly. §3 now reads: **Free Draft**=Free, **Managed Website**=$399 setup + $69/mo (early-client pricing), **Own Your Website**=$899 paid once (source files included). The old §3 names (Managed Starter, Standard, Full Handoff) are retired — Standard had no live-site equivalent and was dropped rather than remapped. AGENT_PLAN.md §19 J.3 and J.6 retracted as resolved. `app/page.tsx`'s old `pricingTiers` array (referenced in the "Original truth" bullet above) no longer exists — `app/page.tsx` now imports `PRICING` directly from `app/_landing/content.ts`, and `/classic` (the retired warm-print homepage) has no pricing UI at all — so there is no third stale copy anywhere in the app.
 
 ---
 
