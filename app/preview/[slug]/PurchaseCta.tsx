@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { encodeSlugReference } from '@/lib/stripe-reference';
 
 type PurchaseCtaProps = {
   slug: string;
@@ -32,8 +33,10 @@ export function PurchaseCta({ slug, token, managedUrl, ownUrl, contactEmail }: P
 
   const checkoutUrl = (base: string) => {
     // Stripe client_reference_id allows only [a-zA-Z0-9_-]; the slug charset
-    // additionally allows '&', so sanitize before appending.
-    const reference = slug.replace(/[^a-zA-Z0-9_-]/g, '-').slice(0, 200);
+    // additionally allows '&'. Reversibly base64url-encode (with a `b64_`
+    // prefix) so the webhook can recover the exact slug and match the lead —
+    // a lossy sanitize would drop `&` and break the lookup.
+    const reference = encodeSlugReference(slug);
     return `${base}${base.includes('?') ? '&' : '?'}client_reference_id=${encodeURIComponent(reference)}`;
   };
 

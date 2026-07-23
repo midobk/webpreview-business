@@ -2,6 +2,7 @@ import { createHmac, timingSafeEqual } from 'crypto';
 import { NextResponse } from 'next/server';
 import { getSupabase } from '@/lib/supabase';
 import { findLeadForPurchase } from '@/lib/lead-lookup';
+import { decodeSlugReference } from '@/lib/stripe-reference';
 
 /**
  * Stripe webhook for the preview-page purchase flow.
@@ -187,7 +188,10 @@ async function handleCheckoutEvent(
   const session = event.data?.object as CheckoutSession | undefined;
   if (!session?.id) throw new Error('Missing checkout session.');
 
-  const slug = session.client_reference_id?.trim() || null;
+  // Decode the reversible `b64_`-prefixed reference (see lib/stripe-reference)
+  // so we look up the original slug. Legacy raw/sanitized references pass
+  // through unchanged.
+  const slug = decodeSlugReference(session.client_reference_id?.trim() || '') || null;
   const email = session.customer_details?.email?.trim().toLowerCase() || null;
   const paymentStatus =
     event.type === 'checkout.session.async_payment_failed'
@@ -347,7 +351,15 @@ async function handleSubscriptionEvent(
   }
 
   if (!note) return;
-  const marker = `[sub:${subscriptionId}:${event.type}${newStatus ? ':' + newStatus : ''}]`;
+  // Dedup key per Stripe *event*, not per (type, status). Stripe redelivers
+  // the same event with the same `event.id`, so including it makes true
+  // retries no-ops while letting each distinct recurring invoice / dunning
+  // cycle record its own note. The previous (type, status) marker silently
+  // dropped every recurring `invoice.paid`/`invoice.payment_failed` after the
+  // first, and any same-status `subscription.updated` after one dunning round.
+  // Fall back to (type, status) only if a malformed event somehow lacks an id.
+  const eventKey = event.id ?? `${event.type}${newStatus ? ':' + newStatus : ''}`;
+  const marker = `[sub:${subscriptionId}:${eventKey}]`;
   const { error: rpcError } = await supabase.rpc('update_lead_from_subscription_event', {
     p_lead_id: leadId,
     p_new_status: newStatus,
