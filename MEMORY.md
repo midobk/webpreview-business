@@ -130,6 +130,7 @@ User flagged 4 issues. All verified against actual repo state. None were previou
 - **Originally reported (2026-06-23):** "Why am I seeing only the $49 with no 1st payment of (200-300$)??"
 - **Original truth (2026-06-23):** `app/page.tsx` lines 115-156 defined `pricingTiers`: Preview=Free, Managed=$49/mo (featured), One-time=$599.
 - **Current truth (2026-07-20):** Per MEMORY.md 7/12 note, the night-studio landing now serves `/` (components in `app/_landing/`). The current `app/_landing/content.ts` PRICING array shows: **Free Draft**=Free, **Managed Website**=$399 setup + **$69/mo** (early-client pricing, featured), **Own Your Website**=$899 paid once.
+- **Historical (pre-2026-07-22, superseded — see the Resolved bullet below):** the following described the drift while J.3 was still open. §3 has since been rewritten to match `app/_landing/content.ts`, and J.3/J.6 have been retracted, so these bullets no longer reflect current state.
 - **Compared to AGENT_PLAN.md §3 ("Packages"):** Managed Starter: $299–399 CAD + $49/mo; Standard: $500 one-time; Full Handoff: $700–900 one-time.
 - **The pricing in `app/_landing/content.ts` does NOT match §3.** Three numbers have drifted: (a) one-time setup $299–399 → $399, (b) monthly $49 → $69 with new "early-client pricing" framing, (c) full-handoff $700–900 → $899. This is a **user-visible inconsistency on the live site**.
 - **Re-opened in AGENT_PLAN.md as J.3** (discovered 2026-07-20 by the daily plan-maintenance cron).
