@@ -543,6 +543,7 @@ Checklist:
 - [ ] Dashboard approval workflow
 - [ ] Anonymized versions
 - [ ] Public showcase page
+- [ ] **Screenshot freshness** — see §26 for the regeneration rule (when to re-shoot, the command, and the acceptance check).
 
 ### Phase 12 — Review + Iterate
 **Goal:** Safe, reliable MVP.
@@ -1666,3 +1667,43 @@ The detailed quality and implementation notes are in `docs/PROTOTYPE_GENERATION_
 | 2026-07-20 04:35 EDT | seaway-prototype-pipeline cron (minimax-m3) | **PROTOTYPE RUN ABORTED — IMAGE GENERATION OUTAGE (7th consecutive abort)** — `git pull` clean (Already up to date); `auto-enrich` → "No new leads to enrich"; `ready-without-protos` → same 5 fixture rows as every prior run today (PR10 Connection Test, Honeypot Smoke Test, POSH NOSH Pastry Confectionery, Real User, Test From Website). Probed all 5 configured image providers with a tiny 1:1 test before committing to a build: (a) `openai/gpt-image-1-mini` → HTTP 429 `usage_limit_reached`, (b) `google/gemini-3.1-flash-image-preview` → HTTP 403 `PERMISSION_DENIED` (suspended), (c) `minimax/image-01` → HTTP 2056 `Token Plan usage limit reached`, (d) `openai/gpt-image-2` → HTTP 429 `usage_limit_reached`, (e) `openrouter/google/gemini-3.1-flash-image-preview` → HTTP 402 `insufficient credits` (only 46 of 58965 tokens). Other providers (minimax-portal, fal, comfy, litellm, vydra, xai, microsoft-foundry) are listed but unconfigured. Per `PROTOTYPE_QA.md` "NEVER use placeholder images" and cron rule "If generation fails, log the error and stop — don't leave half-baked work": aborted before HTML generation, before reading skill docs, before creating the prototype directory. No Supabase writes except appending a run-failure note to the POSH NOSH lead's `notes` field. Lead remains at `ready_for_prototype`. Telegram sent to Mehdi (message id 1204). **7th consecutive abort in ~5h on the same root cause.** | (none — aborted) | restore at least one image provider OR pause the cron | image generation outage across all 5 providers (7th consecutive abort) |
 
 | 2026-07-20 05:23 EDT | seaway-prototype-pipeline cron (minimax-m3) | **PROTOTYPE RUN ABORTED — FIXTURE-ONLY QUEUE (8th consecutive abort)** — `git pull` clean (Already up to date, HEAD=`064a383`); `auto-enrich` → "No new leads to enrich"; `ready-without-protos` → **4 rows** (down from 5 — `f0d98ed6 POSH NOSH Pastry Confectionery` was successfully prototyped in `064a383` at 1:21 EDT, ~2 min before this run, and is no longer in the queue). Remaining 4: (1) PR10 Connection Test `01e15b92` (codex-pr10-test-1783964073@example.com), (2) Honeypot Smoke Test `aa2d3a2d` (honey-smoke@test.dev), (3) Real User `514801bb` (real@example.com), (4) Test From Website `1b8a87dc` (test@test.com). All 4: city/address/phone/website=NULL, industry=service (default), contact_safety_status=NULL. Image generation not even probed — same 4-provider outage as the prior 7 aborts (OpenAI 429, Google 403 suspended, MiniMax 2056 quota, OpenRouter 402 out of credits). Per pipeline "if none, reply and stop" rule + no-spam/no-impersonation principle: no prototype generated, no HTML written, no Supabase writes, no emails sent, no leftover directories. Telegram sent to Mehdi (message id 1222). **8th consecutive abort in ~9h.** **State note:** the historical backlog of 10 real ready_for_prototype leads from the 07-16 audit is STILL not reachable from this script — the 4 fixture rows are the entire `ready-without-protos` output today. The only successful prototype in this window was POSH NOSH, which is the agent's own self-submission (test fixture that happened to be the highest-quality row). **Mehdi action items (unchanged from #5–#7):** (1) clean the 4 test fixtures from Supabase `leads` OR restore the historical 10 real ready_for_prototype leads, (2) top up or restore at least one image-gen provider, (3) consider a circuit-breaker probe in the cron that skips the run when ready-without-protos returns only test fixtures (would save ~9 abort commits today). | (none — aborted) | clean Supabase test fixtures OR restore historical ready_for_prototype backlog; restore at least one image provider | fixture-only queue; image-gen outage (8th consecutive abort) |
+
+## 26. Showcase screenshot regeneration rule — 2026-07-23
+
+The public showcase at `/showcase` serves **PNG screenshots** from `public/prototype-screenshots/<slug>-{desktop,mobile}.png` for every approved prototype. These are static assets bundled into the Vercel build — **Vercel is read-only at runtime**, so screenshots MUST be regenerated locally and committed. There is no automatic regeneration step; the agent that changes a landing page is responsible for re-shooting the matching screenshot(s).
+
+**When to regenerate.** Any of the following is a trigger:
+
+1. **HTML change** in `data/prototypes-anonymized/<slug>/index.html` for a slug currently visible on `/showcase` (visible = passes `isShowcaseVisible` in `lib/showcase-policy.ts`: `showcase_approved && generation_status === 'completed' && showcase_eligible && anonymized`).
+2. **Image asset change** in `data/prototypes-anonymized/<slug>/images/*` (the anonymized hero/section JPEGs the HTML references).
+3. **Status flip** in `data/prototypes.json` or Supabase `prototypes` from `pending_review` to `showcase_approved` (the newly-visible prototype has no `screenshot_url` and the showcase will skip it, OR a stale `screenshot_url` points at a now-irrelevant PNG).
+4. **Monthly freshness sweep** — even without an explicit trigger, run the script at least every 30 days so the thumbnails don't silently rot (the play pipeline updates HTMLs more often than screenshots).
+
+**Command.** Single line, no dev server required (Playwright opens `file://` URLs directly):
+
+```bash
+node scripts/screenshot/playground.mjs [<slug>…]
+```
+
+- No args → captures all 9 default playground slugs (`flowdesk-saas`, `premier-real-estate`, `harvest-table-restaurant`, `bright-smile-dental`, `summit-fitness-gym`, `meridian-law-firm`, `allied-home-services`, `northwind-ecommerce`, `catalyst-online-course`).
+- With args → captures only the listed slugs. Both desktop (1280×800) and mobile (390×844) PNGs are written per slug.
+- The non-playground showcase slugs (e.g. `bluewater-plumbing`, `grand-current-electric`, `meridian-auto-works`, `nocturne-hair-studio`, `stillwater-ledger-tax`) are not in `DEFAULT_SLUGS` — pass them explicitly when you need to re-shoot them.
+- The script reads from `data/prototypes-anonymized/<slug>/index.html`, NOT from `data/prototypes/<slug>/index.html`. Make sure the anonymized copy is in sync with the source (per PR #22 the `data/prototypes-anonymized` dir mirrors `data/prototypes` after every prototype-generation pipeline run).
+
+**What ships.** `public/prototype-screenshots/<slug>-{desktop,mobile}.png`. These are committed to the repo; `next build` will hash and serve them. Output sizes are typically 200–900 KB per PNG (full-page captures).
+
+**Acceptance check.** Before merging any commit that touches the inputs above, confirm every approved showcase slug has a fresh PNG. Paste this one-liner:
+
+```bash
+for s in flowdesk-saas premier-real-estate harvest-table-restaurant bright-smile-dental summit-fitness-gym meridian-law-firm allied-home-services northwind-ecommerce catalyst-online-course bluewater-plumbing grand-current-electric meridian-auto-works nocturne-hair-studio stillwater-ledger-tax seaway-cleaning-services bellas-hair-studio; do
+  f=public/prototype-screenshots/$s-desktop.png
+  test -f "$f" && stat -f '%Sm  %N' "$f" || echo "MISSING  $f"
+done
+```
+
+- Every line should show a date within the last 30 days.
+- Any `MISSING` line means the showcase would skip that card (no thumbnail).
+
+**Why this rule exists.** The drift pattern this prevents: PR #22 (2026-07-22) refreshed the anonymized HTMLs for `harvest-table-restaurant` and `premier-real-estate` with new JPEGs and copy fixes, but the `public/prototype-screenshots/<slug>-desktop.png` files were not re-shot. The 2 cards served pre-refresh thumbnails for an unknown period until a later session happened to re-run `playground.mjs`. The `SHOWCASE_THUMBNAIL_OVERRIDES` map (removed 2026-07-23 in the same PR) also caused the cleaning + bellas cards to ship a 640x360 hand-drawn SVG instead of their real HTML-rendered PNG. Both classes of drift are now prevented by the trigger conditions above.
+
+**Related.** The pre-existing `scripts/screenshot/screenshot-prototype.js` (file://-based, viewport 1440×900) targets the prototype pipeline rather than the showcase — it reads from `data/prototypes/` not `data/prototypes-anonymized/`, and is meant for capturing previews shown in outreach emails, not the public showcase. The showcase always uses `playground.mjs`.

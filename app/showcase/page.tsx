@@ -63,16 +63,6 @@ const INDUSTRY_TAGLINES: Record<string, string> = {
   default: 'Clean one-page website with services, contact, and CTA.',
 };
 
-// Some legacy prototype records still reference their original generated PNG.
-// Keep repository-owned artwork overrides here so upgraded concepts can ship a
-// new showcase thumbnail without mutating the canonical Supabase metadata.
-const SHOWCASE_THUMBNAIL_OVERRIDES: Record<string, string> = {
-  'proto-002': '/prototype-screenshots/seaway-cleaning-services-desktop.svg',
-  'proto-seaway-cleaning-services': '/prototype-screenshots/seaway-cleaning-services-desktop.svg',
-  'proto-003': '/prototype-screenshots/bellas-hair-studio-desktop.svg',
-  'proto-bellas-hair-studio': '/prototype-screenshots/bellas-hair-studio-desktop.svg',
-};
-
 interface Prototype {
   id: string;
   lead_id: string | null;
@@ -148,7 +138,7 @@ async function loadShowcase(): Promise<
       tagline: taglineFor(p, lead, industry),
       industry,
       prototypeUrl: p.prototype_url,
-      screenshotUrl: SHOWCASE_THUMBNAIL_OVERRIDES[p.id] ?? p.screenshot_url,
+      screenshotUrl: p.screenshot_url,
       prototypeScore: p.prototype_score,
       createdAt: p.created_at,
     };
