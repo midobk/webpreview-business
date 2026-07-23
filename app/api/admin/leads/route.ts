@@ -38,6 +38,30 @@ export async function GET(request: Request) {
       outreachByLead.set(r.lead_id, list);
     }
 
+    // Map purchases to leads (most recent wins). Only joined when Supabase
+    // is configured; in Phase 1 (build-bundle) the table doesn't exist.
+    const supabase = getSupabase();
+    const purchaseByLead = new Map<string, any>();
+    if (supabase) {
+      const { data: purchaseRows, error: purchaseError } = await supabase
+        .from('purchases')
+        .select('lead_id, plan, stripe_customer_id, stripe_subscription_id, payment_status, created_at')
+        .not('lead_id', 'is', null);
+      if (purchaseError) {
+        // Don't fail the whole leads list on a purchases table hiccup —
+        // the page is still useful without subscription info.
+        console.error('Purchase join failed:', purchaseError);
+      } else {
+        for (const row of purchaseRows ?? []) {
+          if (!row.lead_id) continue;
+          const current = purchaseByLead.get(row.lead_id);
+          if (!current || (row.created_at ?? '') > (current.created_at ?? '')) {
+            purchaseByLead.set(row.lead_id, row);
+          }
+        }
+      }
+    }
+
     const synced = leads.map((lead: any) => {
       const protos = prototypeByLead.get(lead.id) ?? [];
       const completedProto = protos.find((p) => p.generation_status === "completed");
@@ -48,6 +72,7 @@ export async function GET(request: Request) {
         (b.created_at || "").localeCompare(a.created_at || "")
       );
       const lastRecord = sorted[0];
+      const purchase = purchaseByLead.get(lead.id);
 
       return {
         ...lead,
@@ -60,6 +85,10 @@ export async function GET(request: Request) {
         prototype_anonymized: completedProto?.anonymized ?? false,
         outreach_status: lastRecord?.status ?? "none",
         outreach_id: lastRecord?.id ?? null,
+        has_purchase: !!purchase,
+        purchase_plan: purchase?.plan ?? null,
+        stripe_customer_id: purchase?.stripe_customer_id ?? null,
+        stripe_subscription_id: purchase?.stripe_subscription_id ?? null,
       };
     });
 
