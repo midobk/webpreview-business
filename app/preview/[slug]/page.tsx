@@ -8,6 +8,7 @@ import { isShowcaseVisibleForSlug } from '@/lib/showcase-policy';
 import { isValidAdminSession } from '@/lib/auth-server';
 import { getPrototypes } from '@/lib/data-source';
 import { RevisionRequest } from './RevisionRequest';
+import { PurchaseCta } from './PurchaseCta';
 
 interface PreviewPageProps {
   params: Promise<{ slug: string }>;
@@ -275,7 +276,18 @@ export default async function PreviewPage({ params, searchParams }: PreviewPageP
         sandbox="allow-scripts"
         referrerPolicy="no-referrer"
       />
-      {!publicShowcasePreview && <RevisionRequest slug={slug} token={token} />}
+      {!publicShowcasePreview && (
+        <div className="fixed bottom-5 right-5 z-20 flex flex-wrap items-center justify-end gap-3">
+          <RevisionRequest slug={slug} token={token} />
+          <PurchaseCta
+            slug={slug}
+            token={token}
+            managedUrl={process.env.STRIPE_PAYMENT_LINK_MANAGED}
+            ownUrl={process.env.STRIPE_PAYMENT_LINK_OWN}
+            contactEmail={process.env.CONTACT_EMAIL}
+          />
+        </div>
+      )}
     </div>
   );
 }
