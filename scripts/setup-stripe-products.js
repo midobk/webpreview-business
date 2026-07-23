@@ -448,7 +448,11 @@ async function ensureCustomerPortalConfig() {
   console.log('\n[stripe-setup] done. paste these into .env.local:\n');
   console.log(`STRIPE_PAYMENT_LINK_MANAGED=${managedLinkUrl}`);
   console.log(`STRIPE_PAYMENT_LINK_OWN=${ownLinkUrl}`);
-  console.log(`STRIPE_WEBHOOK_SECRET=${endpoint.secret ? endpoint.secret : '<reveal at https://dashboard.stripe.com/webhooks/' + endpoint.id + '>'}`);
+  // Never echo the signing secret to the terminal (shell history / CI logs).
+  // Point at the dashboard reveal for both the newly-created and reused cases.
+  console.log(
+    `STRIPE_WEBHOOK_SECRET=<reveal at https://dashboard.stripe.com/webhooks/${endpoint.id}>`
+  );
 })().catch((err) => {
   console.error('\n[stripe-setup] FAILED:', err.message);
   process.exit(1);

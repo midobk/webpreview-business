@@ -1,7 +1,7 @@
-import Stripe from 'stripe';
 import { NextResponse } from 'next/server';
 import { requireAdmin, requireSameOrigin } from '@/lib/auth-server';
 import { getSupabase } from '@/lib/supabase';
+import { rakStripe, portalReturnUrl } from '@/lib/stripe-server';
 
 /**
  * /api/stripe/portal/admin — open a Stripe Customer Portal session for a lead.
@@ -19,29 +19,6 @@ import { getSupabase } from '@/lib/supabase';
  */
 
 const MAX_BODY_BYTES = 2_000;
-
-function rakStripe(): Stripe | null {
-  const key = process.env.STRIPE_RESTRICTED_KEY || process.env.STRIPE_SECRET_KEY;
-  if (!key) return null;
-  if (
-    !process.env.STRIPE_RESTRICTED_KEY &&
-    process.env.NODE_ENV === 'production'
-  ) {
-    console.warn(
-      '[stripe/portal] STRIPE_RESTRICTED_KEY unset in production; falling back to STRIPE_SECRET_KEY. Provision a RAK with billing_portal.sessions.create + customers.read + subscriptions.read.'
-    );
-  }
-  // apiVersion is omitted to use the SDK's default (matches the Stripe API
-  // version shipped with the installed stripe-node major). Pinning a custom
-  // version here would force the route to track every API bump; the SDK
-  // default is the right level of forward-compat for an MVP route.
-  return new Stripe(key);
-}
-
-function returnUrl(): string {
-  const base = (process.env.NEXT_PUBLIC_SITE_URL || 'https://seawaysites.com').replace(/\/$/, '');
-  return `${base}/thank-you`;
-}
 
 export async function POST(request: Request) {
   const denied = requireAdmin(request);
@@ -95,7 +72,7 @@ export async function POST(request: Request) {
   try {
     const session = await stripe.billingPortal.sessions.create({
       customer: purchase.stripe_customer_id,
-      return_url: returnUrl(),
+      return_url: portalReturnUrl(),
     });
     return NextResponse.json({ url: session.url });
   } catch (error) {

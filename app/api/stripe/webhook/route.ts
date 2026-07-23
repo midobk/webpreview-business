@@ -246,7 +246,17 @@ async function handleCheckoutEvent(
       p_lead_id: leadId,
       p_marker: marker,
       p_entry: entry,
-      p_new_status: paid ? 'purchased' : null,
+      // Flip to 'purchased' once paid. For a FAILED checkout on the one-time
+      // "Own" plan there is no subscription, so no later subscription.* /
+      // invoice.* event will ever flag the failure — flip to 'payment_failed'
+      // here so the admin sees it in status, not just in notes. Managed-plan
+      // failed checkouts are left to the subscription lifecycle (Stripe sends
+      // a deletion/canceled event). Pending async debits stay null.
+      p_new_status: paid
+        ? 'purchased'
+        : plan === 'own' && paymentStatus === 'failed'
+          ? 'payment_failed'
+          : null,
     });
     if (noteError) throw noteError;
   }
@@ -274,10 +284,16 @@ async function handleSubscriptionEvent(
     return;
   }
 
+  // Most-recent purchase wins, and limit(1) guards against a duplicate
+  // stripe_subscription_id (e.g. an upgrade opens a new checkout for the same
+  // subscription) — .maybeSingle() would otherwise throw on >1 row and send
+  // the webhook into a Stripe retry loop.
   const { data: purchase, error: lookupError } = await supabase
     .from('purchases')
     .select('id, lead_id, slug, email, plan')
     .eq('stripe_subscription_id', subscriptionId)
+    .order('created_at', { ascending: false })
+    .limit(1)
     .maybeSingle();
   if (lookupError) throw lookupError;
   if (!purchase?.lead_id) {
@@ -293,11 +309,19 @@ async function handleSubscriptionEvent(
   const leadId = purchase.lead_id as string;
 
   let newStatus: 'cancelled' | 'payment_failed' | 'purchased' | null = null;
+  // Optional status guard forwarded to the RPC's p_only_if_status. When set,
+  // the RPC only changes `status` if the lead's current status already equals
+  // this value — so manual admin overrides (e.g. a dunning lead chased offline
+  // and marked 'done') are not clobbered by a stale read here, and the
+  // past_due→payment_failed / payment_failed→purchased transitions are
+  // atomic. The note is always appended regardless of the guard.
+  let onlyIfStatus: 'purchased' | 'payment_failed' | null = null;
   let note: string | null = null;
   const now = new Date().toISOString();
 
   switch (event.type) {
     case 'customer.subscription.deleted': {
+      // Cancellation is terminal and authoritative from Stripe — always flip.
       newStatus = 'cancelled';
       note = `[${now}] Stripe subscription ${subscriptionId} was deleted (full cancellation). Lead marked cancelled.`;
       break;
@@ -309,24 +333,30 @@ async function handleSubscriptionEvent(
         newStatus = 'cancelled';
         note = `[${now}] Stripe subscription ${subscriptionId} set to cancel (status=canceled).`;
       } else if (status === 'unpaid' || status === 'past_due') {
+        // Only flip to payment_failed from the active ('purchased') state —
+        // a manual admin override is preserved. The note is still appended so
+        // the dunning event is auditable either way.
         newStatus = 'payment_failed';
+        onlyIfStatus = 'purchased';
         note = `[${now}] Stripe subscription ${subscriptionId} is ${status} (payment failed / in dunning).`;
       } else if (status === 'active') {
-        // Recovery from past_due/unpaid: only flip back to 'purchased' if
-        // the lead is currently in 'payment_failed'. Manual admin overrides
-        // (any other status) are preserved. The marker still drops the note
-        // on re-fire so this is idempotent.
+        // Recovery from past_due/unpaid: ask the RPC to flip back to
+        // 'purchased' only if the lead is still in 'payment_failed'. The guard
+        // lives in the RPC so a concurrent admin override between this point
+        // and the update cannot be clobbered (the old read-then-write was a
+        // TOCTOU). We still read once to pick honest note wording (recovered
+        // vs. merely active) — that read is cosmetic, not load-bearing.
         const { data: lead } = await supabase
           .from('leads')
           .select('status')
           .eq('id', leadId)
           .maybeSingle();
-        if (lead?.status === 'payment_failed') {
-          newStatus = 'purchased';
-          note = `[${now}] Stripe subscription ${subscriptionId} is active again (recovered from dunning).`;
-        } else {
-          note = `[${now}] Stripe subscription ${subscriptionId} is active.`;
-        }
+        newStatus = 'purchased';
+        onlyIfStatus = 'payment_failed';
+        note =
+          lead?.status === 'payment_failed'
+            ? `[${now}] Stripe subscription ${subscriptionId} is active again (recovered from dunning).`
+            : `[${now}] Stripe subscription ${subscriptionId} is active.`;
       }
       break;
     }
@@ -365,6 +395,7 @@ async function handleSubscriptionEvent(
     p_new_status: newStatus,
     p_marker: marker,
     p_entry: note,
+    p_only_if_status: onlyIfStatus,
   });
   if (rpcError) throw rpcError;
 }

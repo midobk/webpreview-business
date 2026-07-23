@@ -1,8 +1,8 @@
-import Stripe from 'stripe';
 import { NextResponse } from 'next/server';
 import { isValidDraftPreviewToken } from '@/lib/draft-preview-token';
 import { getSupabase } from '@/lib/supabase';
 import { findLeadForPurchase } from '@/lib/lead-lookup';
+import { rakStripe, portalReturnUrl } from '@/lib/stripe-server';
 
 /**
  * /api/stripe/portal/customer — open a Stripe Customer Portal session for a
@@ -20,14 +20,19 @@ import { findLeadForPurchase } from '@/lib/lead-lookup';
  *
  * Stripe: same RAK + same SDK as the admin route. No local-fallback (this
  * route always requires Supabase; production has it configured).
+ *
+ * Info-leak note: the no-lead and no-purchase cases return the SAME generic
+ * 404 body. A signed-token holder who hasn't bought must not be able to probe
+ * whether a subscription exists for the slug, so we don't distinguish "no
+ * draft" from "no subscription".
  */
 
 const MAX_BODY_BYTES = 2_000;
 
-function returnUrl(): string {
-  const base = (process.env.NEXT_PUBLIC_SITE_URL || 'https://seawaysites.com').replace(/\/$/, '');
-  return `${base}/thank-you`;
-}
+// Generic, indistinguishable body for the no-lead and no-purchase cases —
+// see the info-leak note above.
+const UNAVAILABLE =
+  'Manage subscription is unavailable for this link.';
 
 export async function POST(request: Request) {
   if (Number(request.headers.get('content-length') || 0) > MAX_BODY_BYTES) {
@@ -57,7 +62,7 @@ export async function POST(request: Request) {
     return null;
   });
   if (!lead) {
-    return NextResponse.json({ error: 'No draft found for that link.' }, { status: 404 });
+    return NextResponse.json({ error: UNAVAILABLE }, { status: 404 });
   }
 
   const { data: purchase, error: purchaseError } = await supabase
@@ -73,25 +78,18 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Failed to look up customer.' }, { status: 500 });
   }
   if (!purchase?.stripe_customer_id) {
-    return NextResponse.json(
-      {
-        error:
-          'No Stripe customer yet. The portal becomes available after your first successful charge.',
-      },
-      { status: 404 }
-    );
+    return NextResponse.json({ error: UNAVAILABLE }, { status: 404 });
   }
 
-  const key = process.env.STRIPE_RESTRICTED_KEY || process.env.STRIPE_SECRET_KEY;
-  if (!key) {
+  const stripe = rakStripe();
+  if (!stripe) {
     return NextResponse.json({ error: 'Stripe is not configured.' }, { status: 503 });
   }
-  const stripe = new Stripe(key);
 
   try {
     const session = await stripe.billingPortal.sessions.create({
       customer: purchase.stripe_customer_id,
-      return_url: returnUrl(),
+      return_url: portalReturnUrl(),
     });
     return NextResponse.json({ url: session.url });
   } catch (error) {

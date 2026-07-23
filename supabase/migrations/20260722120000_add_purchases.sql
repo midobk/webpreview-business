@@ -14,12 +14,21 @@ create table if not exists public.purchases (
   payment_status text not null default 'pending',
   stripe_subscription_id text,
   stripe_payment_link_id text,
+  -- Customer Portal lookup key (see 20260723100000_add_subscription_rpc_and
+  -- _customer_id.sql). Defined here, in the base purchases migration, so that
+  -- a Supabase project built from this file alone already has the column the
+  -- checkout webhook writes on every checkout event — otherwise the first
+  -- checkout upsert after applying only this migration would 500.
+  stripe_customer_id text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
 
 create index if not exists idx_purchases_lead on public.purchases(lead_id, created_at desc);
 create index if not exists idx_purchases_slug on public.purchases(slug, created_at desc);
+create index if not exists idx_purchases_customer
+  on public.purchases(stripe_customer_id)
+  where stripe_customer_id is not null;
 alter table public.purchases enable row level security;
 
 create or replace trigger trg_purchases_updated

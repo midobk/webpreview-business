@@ -24,6 +24,9 @@
 
 const PREFIX = 'b64_';
 
+// Stripe caps client_reference_id at 200 chars of [a-zA-Z0-9_-].
+const MAX_REFERENCE_LENGTH = 200;
+
 function toBase64Url(input: string): string {
   // UTF-8 safe: encode to bytes first, then base64.
   const bytes = new TextEncoder().encode(input);
@@ -43,9 +46,23 @@ function fromBase64Url(input: string): string {
  * Encode a prototype slug for use as Stripe `client_reference_id`.
  * Returns `b64_<base64url(slug)>`. Slugs are short (`<base>-<uuid8>`), so the
  * encoded form stays well under Stripe's 200-char limit.
+ *
+ * Edge case: an unusually long slug (>~147 chars) would push the base64url
+ * form past the 200-char cap and Stripe would reject the checkout URL
+ * outright. Reversible encoding can't be truncated, so we fall back to the
+ * lossy sanitize (strip to Stripe's allowed charset) — no worse than the
+ * pre-encoding behaviour, and `decodeSlugReference` treats any non-`b64_`
+ * value as a raw legacy reference. Real slugs never hit this branch.
  */
 export function encodeSlugReference(slug: string): string {
-  return `${PREFIX}${toBase64Url(slug)}`;
+  const encoded = `${PREFIX}${toBase64Url(slug)}`;
+  if (encoded.length <= MAX_REFERENCE_LENGTH) return encoded;
+  if (typeof console !== 'undefined' && console.warn) {
+    console.warn(
+      `[stripe-reference] encoded slug exceeds Stripe's 200-char client_reference_id cap (${encoded.length} chars); falling back to lossy sanitize.`
+    );
+  }
+  return slug.replace(/[^a-zA-Z0-9_-]/g, '-').slice(0, MAX_REFERENCE_LENGTH);
 }
 
 /**
